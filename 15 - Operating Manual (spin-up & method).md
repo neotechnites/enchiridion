@@ -1,6 +1,6 @@
 # 15 - Operating Manual (spin-up & method)
 
-> For a fresh Claude: read [[00 - START HERE]] → [[13 - Session 3 Findings (2026-07-22)]] → [[14 - Data & Infrastructure (Session 3)]] → this. Then you're live. This doc encodes HOW Ryan wants the work run — it was learned the hard way in Session 3 (2026-07-22).
+> The read order lives in ONE place: [[18 - LIVE STATE (2026-07-23)]] (or its dated successor) — go there first if you haven't. This doc encodes HOW Ryan wants the work run — it was learned the hard way in Session 3 (2026-07-22).
 
 ## The mandate
 - **North star: "where is an edge" — a big one.** Never say unlikely/impossible; be the helper, not the limiter. Don't restrict to markets/ideas Ryan has mentioned — anything on any venue is in scope (he explicitly asked "should we be a market maker? I don't know — don't limit yourself").

@@ -12,4 +12,6 @@ This is what any fresh Claude reads to spin up cold.
 - Verdicts are DATED and change weekly by design (kill-scan). The newest dated note wins every conflict.
 - Secrets never live here: keys are in `SECRETS.local.md` (untracked, gitignored).
 
+Superseded/historical notes live in `archive/` (wikilinks still resolve — Obsidian links are name-based). The root holds only LIVE notes; if a note is in the root, it is current doctrine or current state.
+
 This folder is also an Obsidian vault — open it in Obsidian for graph/backlinks.
