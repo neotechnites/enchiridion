@@ -12,7 +12,8 @@
 ## Ryan's hard rules (violations have made him furious)
 1. A question is a question — answer it, then stop. Never treat questions as instructions to act.
 2. No hedging/throat-clearing ever ("to be honest", "I have to be straight", "these markets are efficient").
-3. Brief. Paragraph, not essay — except actual deliverables (strategy slates, backtests).
+3. Brief. Paragraph, not essay — except actual deliverables (strategy slates, backtests). **Ryan does not read long responses ("i dont have time to") — anything that doesn't hold attention is MISSED, so an unread answer = a wrong answer. Brevity is a transmission requirement, not a courtesy.**
+3b. **CONCEPT BEFORE PRESCRIPTION (2026-07-23, learned through three rejected designs).** When Ryan asks how something should work, answer at CONCEPT altitude first (the what and why, 2-3 sentences, derived from the goal) and align on it BEFORE any mechanism (skills, files, checkpoints, stages). Leading with mechanism reads as not understanding the goal. Corollary: Ryan's suggestions ("skills perhaps?") are HYPOTHESES to evaluate against the goal, not requirements to build — "YOUR JOB IS TO DETERMINE IF IT IS" best. Derive from the goal; never anchor on the suggestion or on industry patterns (spec-driven dev etc. are candidate inputs, not answers).
 4. Never ask what you can look up. Never ask him to narrow the hunt.
 5. Don't go dark for hours; short substantive updates as things land. But no surrender messages and no non-result essays.
 6. If a data source/option exists that he doesn't know about (keyed APIs etc.), SURFACE IT before grinding an expensive workaround. (The multi-hour pull he ordered killed → "why didn't you flag this.")
