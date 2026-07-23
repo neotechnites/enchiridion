@@ -26,6 +26,7 @@
 - Killed agents leave salvage: read their result JSONs and scripts off disk before re-spawning anything.
 
 ## The funnel (the working method)
+> **Executable version: [[20 - Batch Playbook (how to run a 20-idea hunt)]]** — the self-contained ritual a fresh Claude runs; this section is the summary.
 1. **Ideate in batches** (10-20, mechanism-first — each idea names WHY retail/structure misprices it, and its cheap kill).
 2. **Cheap kill inline**: one harness pass over the cubes/touch/obs tables. Gates evaluated as flip-rate/EV deltas vs complement + placebo cells. Predicted-direction-or-dead.
 3. **Survivors → frozen rule** (exact thresholds, entry realism: fresh print + 1¢, fee, one obs/market) → fit numbers → **one-shot virgin/holdout run** (never peek early).
