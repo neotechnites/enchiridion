@@ -28,5 +28,8 @@ Machines RUN from `~/kalshi_data/scripts/` under launchd (`com.nestor.machines`)
 - Old vault path `~/Documents/Obsidian/nestor` is a SYMLINK to `senate/enchiridion` (compat for anything holding the old path). The vault is standalone now — open `senate/enchiridion` in Obsidian directly.
 - nestor's git had pre-existing uncommitted WIP (kalshi.rs, state.rs) from the implementor Claude — theirs to commit.
 
+## The structure is a working asset
+Per the charter (note 21, bootstrap doctrine): this file layout, the note structure, memory patterns — ALL permanently on the table. Restructure whenever it serves the result; the files are the inputs and the inputs are the business.
+
 ## ⭐ THE ALWAYS-UPDATE DOCTRINE (Ryan-ordered 2026-07-23, standing, no exceptions)
 **Every time new understanding lands — an architecture decision, a bug found, a doctrine, a verdict, a caught mistake, a model of how we work — it gets written into enchiridion IMMEDIATELY, without Ryan saying go.** Project-relative knowledge only (not other projects). Update the relevant note (or create a dated one), append Ryan's input to the log (note 17), and **commit + push** — the manual's git history must stay as honest as its content. Rationale: knowledge that exists only in a conversation dies with the context window; this vault is the only memory that survives. Ryan's words: "everytime you come to new understanding you must mark it down so that it is not forgotten... always updating it so that these things arent lost."
