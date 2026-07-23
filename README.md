@@ -1,6 +1,6 @@
 # Enchiridion
 
-The handbook of **Pantheon** — the shared knowledge between
+The handbook of **the Senate** — the shared knowledge between
 [athena](https://github.com/neotechnites/athena) (research) and
 [nestor](https://github.com/neotechnites/nestor) (execution): strategy verdicts,
 doctrines, backtest conclusions, operating method, and the live project state.

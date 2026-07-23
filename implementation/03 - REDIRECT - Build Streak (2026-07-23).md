@@ -1,6 +1,6 @@
 # 03 — REDIRECT: Build Streak ≤44¢ (2026-07-23)
 
-> **This file is the current build order for `~/Documents/pantheon/nestor/`. It supersedes the README's sleeve plan, [[00 - Implementation Overview]], and any docs/tickets that conflict. Written 2026-07-23 by the research session after reading your actual code (crates/engine, crates/lock, crates/weather, nestor_bin). Research grounding: [[18 - LIVE STATE (2026-07-23)]].**
+> **This file is the current build order for `~/Documents/senate/nestor/`. It supersedes the README's sleeve plan, [[00 - Implementation Overview]], and any docs/tickets that conflict. Written 2026-07-23 by the research session after reading your actual code (crates/engine, crates/lock, crates/weather, nestor_bin). Research grounding: [[18 - LIVE STATE (2026-07-23)]].**
 
 ## Why the plan changed (verdicts are dated — this is the lesson)
 - **Lock edge: DEAD by DECAY.** It was real when you built it (the 2026-07-15 forward test was honest). The weekly by-week kill-scan then measured it decaying: **+1.72¢/contract (first 6 wks) → −1.07¢/contract (last 4 wks)**. Competition ate it. Do not run it. Keep the crate; it's benched with re-entry criteria in the vault.

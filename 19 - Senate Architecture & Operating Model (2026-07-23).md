@@ -1,8 +1,8 @@
-# 19 - Pantheon Architecture & Operating Model (2026-07-23)
+# 19 - Senate Architecture & Operating Model (2026-07-23)
 
 > How the whole operation is structured as software. Read with [[18 - LIVE STATE (2026-07-23)]] (strategy state) — this note is the SYSTEM state. Named by Ryan 2026-07-23.
 
-## The trinity (`~/Documents/pantheon/`, all on GitHub under `neotechnites`)
+## The trinity (`~/Documents/senate/`, all on GitHub under `neotechnites`)
 | repo | role | language | data it owns |
 |---|---|---|---|
 | **nestor** | execution — implements proven rules, places bets | Rust (cargo workspace: `crates/engine` + one crate per strategy + `nestor_bin`) | **participation record**: fills, misses, partials, fees, submit/ack/fill latencies, decision-moment book snapshots, observation log of its own polls (`data/`, compressed nightly, keep everything) |
@@ -25,7 +25,7 @@ Machines RUN from `~/kalshi_data/scripts/` under launchd (`com.nestor.machines`)
 
 ## Operational facts
 - GitHub access: SSH alias `github-olympus` (key `~/.ssh/olympus_ed25519`) authenticates as `neotechnites`; the `gh` CLI is a DIFFERENT account (RyanStackIntegrated) and cannot create neotechnites repos — Ryan creates empty repos on github.com, Claude pushes.
-- Old vault path `~/Documents/Obsidian/nestor` is a SYMLINK to `pantheon/enchiridion` (compat for anything holding the old path). The vault is standalone now — open `pantheon/enchiridion` in Obsidian directly.
+- Old vault path `~/Documents/Obsidian/nestor` is a SYMLINK to `senate/enchiridion` (compat for anything holding the old path). The vault is standalone now — open `senate/enchiridion` in Obsidian directly.
 - nestor's git had pre-existing uncommitted WIP (kalshi.rs, state.rs) from the implementor Claude — theirs to commit.
 
 ## ⭐ THE ALWAYS-UPDATE DOCTRINE (Ryan-ordered 2026-07-23, standing, no exceptions)
