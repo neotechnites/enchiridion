@@ -24,4 +24,6 @@ IOC guarantee (no code path can rest an order — sole order POST hardcodes IOC+
 - secrets/ were world-readable → `chmod 600` applied same evening.
 - Paper state at review time: bankroll $95.97 after one honest $4 paper loss — fee accounting and settlement working live.
 
-**Gate:** live money only after the must-fix branch passes tests + my audit and Ryan reads this note. Then: prod key (subaccount + trade-only) → $1 selftest → $100 week.
+**FIXES LANDED (same night, merged to main after audit — 85 tests, clippy clean):** every must-fix above is implemented: lost-ack recovery (`RecoveredFill` path — fills-probe before any OrderError verdict), exchange-truth reconciliation each sweep (orphans auto-adopted conservatively + alert), $2 bankroll-vs-balance divergence breaker, duplicate-position guard, persist-failure halts, live refuses missing state without `--fresh-state`, live bankroll mandatory and capped at $100, GET-only backoff (2→60s) + 5-consecutive-error sticky halt + 401 clock-skew alert, pre-order balance check, 5s in-window call timeouts, all standalone strategy subcommands gated out of live. **The last unknown closed empirically: duplicate client_order_id → HTTP 409 `order_already_exists` on demo — Kalshi rejects, never echoes; the double-book branch does not exist.**
+
+**Gate status: CODE-READY.** Remaining before live money: Ryan reads this note → creates prod key (subaccount-restricted + write::trade-only, fund with the $100) → $1 selftest → $100 week.
