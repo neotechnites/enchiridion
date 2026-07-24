@@ -22,6 +22,7 @@
 - Fee = ceil-per-ORDER of 0.07·P·(1−P) — quadratic, maximal at 50¢, near-zero at extremes; maker 25%/often exempt (but maker = pickoff, see graveyard). Sizing has fee-floors: tiny clips at extreme prices pay 5× (C* floors).
 - Settlement identities: 15m and hourly-rung settle on the SAME print when thresholds order correctly (T≤K / T≥K guards) — dutch locks; range-buckets overlap ladders; any two contracts sharing a settle source are a potential book.
 - 60s settlement averaging (crypto) = a variance filter that makes late leads stickier than the book prices. Poly's point-settle lacks it. ANY venue-pair settling the same event by DIFFERENT rules is a free option catalog — this generalizes beyond crypto.
+- Post-close status progression (KXBTC15M, measured 2026-07-24): closed (0-10s) → finalized WITH result (~10s) → visible in status=settled filter (36s+). Any strategy needing fresh results must query time-bounded and status-agnostic — the settled filter eats half an entry window.
 - Kalshi kills API surfaces without warning (410'd the order endpoint July 2026); most public tooling is silently broken RIGHT NOW — competitors running dead endpoints is itself an edge window.
 - New listings are sloppy for ~48h: wide books, unmodeled rules, no bots. The mention-ratchet lived there. A listing monitor is a strategy-generator.
 - Trades retention ~10 weeks; books unrecorded by the exchange — CAPTURED data is proprietary. What athena records, nobody else has.
