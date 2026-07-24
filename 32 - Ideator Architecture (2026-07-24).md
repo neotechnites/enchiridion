@@ -18,6 +18,7 @@ The interactive "creativity sprint" turned dozens of ideas into ~10 TRADE/PROMIS
 - **Specialized archetype ideators** (roster §3) — each a distinct METHOD *and* a distinct NEW-market mandate, replacing the two generic lanes.
 - **Slate rule (Ryan 2026-07-24): NOTHING about ideation is hard-banned — nothing.** Re-skinning the existing slate is a *weak* batch, so the slate is **de-focused / steered away from**, never prohibited: an ideator may revisit any market or strategy that has a genuinely new angle. Familiar markets (BTC 15m, commodity dailies) are capped, not banned — a deliberate minority still throws at 15m crypto (the "10%-every-time" premise). The steer shapes *emphasis*, never *scope*.
 - **Mandatory conditional gate-hunt** on every non-structural kill before any DEAD verdict (note 15 taxonomy). This is where Session 3's winners came from.
+- **Restore the scout sub-agent layer.** The overnight run forbade ideators from spawning sub-agents (cost) — which pinned them to on-disk data and is a direct cause of the capture-bound / stuck-in-slate failure. The playbook's model is a main ideating mind + specialist scouts for foreign data (~20%). Each archetype ideator may spawn `researcher` scouts to reach NEW off-disk markets/feeds (≤5 concurrent, kicked synchronously — they stall on monitors). No blanket sub-agent ban.
 
 ## 3. ARCHETYPE ROSTER (open — nothing fixed, nothing exhaustive, nothing banned)
 Archetypes are *ways of thinking* — drawn from great minds AND from strategy patterns, deliberately broad and NOT limited to quant traders. Ryan named a starting persona set (2026-07-24); more exist that he didn't state, including strategy-based (non-person) ones. The roster steers **style**, never restricts **scope** — an archetype may ideate anything.
@@ -45,7 +46,13 @@ Session 3 won partly on data breadth. We expand athena's captures — but **capt
 
 Standing candidate (verification, NOT slate-deepening): live commodity-daily book/quote capture to VERIFY the unproven maker survivors (A6/A3/S7, notes 28-31) — CONDITIONAL and un-provable without live fills. That's the one pre-identified gap, and it earns its place by verifying an *unproven* edge, not by feeding a winner.
 
-Cut from the earlier draft: weather-book + new-listing captures pre-listed as "targets." That was reflexively backfilling known territory (weather is already a PROMISING slate strategy) — exactly the trap this note fixes. Ryan caught it. Let the run lead.
+Merit candidates (judged on their own edge, NOT pre-committed as a priority list):
+- **KXHIGH weather-book capture** — for W2 (the monotone-lock), a *distinct* capture-gated thread, NOT the ensemble strategy. Has merit; restored after an earlier over-cut (I mis-read a question as a kill — it wasn't).
+- **New-listing sloppiness monitor** — feeds the venue-mechanics / house archetypes.
+
+Standing verification gap: commodity-daily books (above). All of these still wait on the ideation run to show real demand before a daemon is built — capture is demand-led, but "demand-led" ≠ "cut anything slate-adjacent." Merit decides.
+
+**Window-validity rule (Ryan 2026-07-24):** any edge found on athena's short high-fidelity capture window (100ms books, days-weeks old) is NOT cross-era verified — it must be confirmed on ≥2yr pulled history, or flagged window-limited pending more accrued capture. The durable slate (gas/streak/wings/lock/ensemble) cleared 2yr; the microstructure lane (dutch/maker/burst/cross-venue) has not. Longer capture-duration is what upgrades the latter.
 
 ## 6. TRACKING SCAFFOLD (so archetypes can eventually be graded)
 Every idea carries its **archetype tag** from birth. The ledger records: `archetype · idea · mechanism · kill-test · verdict · [gate] · → deploy-to-nestor? · → live P&L`. Per-archetype rollups accrue in a standing note so that, once nestor deployment begins, the token-ROI cull (§4) has real numbers. No idea is anonymous; no archetype's track record is guessed.
