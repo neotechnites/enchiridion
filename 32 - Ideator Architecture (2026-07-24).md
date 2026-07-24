@@ -59,3 +59,13 @@ Every idea carries its **archetype tag** from birth. The ledger records: `archet
 
 ## Build order (pending confirm)
 1. ~~Diagnosis + design~~ (this note). 2. Ryan confirms roster (§3) + capture targets (§5). 3. Build the archetype ideator harness (`researcher`/high, per-idea archetype tagging, gate-hunt enforced, slate-forbidden/markets-capped) + the tracking scaffold. 4. Build capture daemons in priority order. 5. Run the first archetype night at 3× budget.
+
+
+## 7. FABLE AS THE INPUT + THE STEERING LOOP (Ryan-ordered 2026-07-24)
+Ryan: "if my context helped you ideate, you need to be that input for these claudes... the enchiridion somewhat worked, it didnt get that claude literally to the level of you. it needs to be able to do that."
+- **The Mesh (note 33)** is the context-transfer organ: the top mind's colliding-facts working memory, written at full density, read COMPLETELY by every ideator, and appended by every session that learns a colliding fact. Summaries don't collide; the Mesh does.
+- **The steering loop replicates Ryan-steering-Fable as Fable-steering-ideators:** nights run in TWO BURSTS (workflow `athena/workflows/night_archetypes.js`). Burst 1 → the top mind reviews every lane ledger and writes per-lane redirects (work/steer-burstN.md) → burst 2 runs corrected → synthesis judges, writes the night note, pushes. The correction cycle — not the prompt — is what made Session 3's batches good.
+- **Honest limit:** a bootstrapped worker asymptotically approaches, never equals, the top mind (context is experiential). The compensation IS this architecture: densest-possible transfer + live steering + accumulated per-archetype ledgers.
+
+## 8. THE ARENA (charter-level, Ryan 2026-07-24)
+"a claude can do what pretty much any of those people in those orgs can do, but it can do it 24/7, and for literal pennies. im sure im not the first person to realize this... we need to be the best, do it best, have the best ideas, so we can win in the arena. i believe we have the early to market advantage, but that wont last long." — Speed of iteration on the utilization system is itself the moat. Every night the harness doesn't improve is ground given to whoever else is building this.
