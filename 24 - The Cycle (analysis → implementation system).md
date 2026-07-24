@@ -28,3 +28,7 @@ Confirming a thin edge's death takes hundreds of trades (2-4 weeks) — binary k
 3. ~~Weekend: streak live~~ **AHEAD OF SCHEDULE (Jul 23 evening): the redirect is fully built, audited, and merged (nestor main `3f105b1`) — paper mode is RUNNING and catching signals (first paper fill: NO@39¢ post-up-streak, fee ceil'd correctly). Remaining before live: Ryan's prod key → $1 selftest → $100 week. Demo env supported via KALSHI_API_BASE (plumbing-grade only).**
 4. Next week: first full Ryan-triggered cycle, run on a week of accumulated material.
 5. Sliding allocation specced into nestor at strategy #2.
+
+
+## Deployment gate addendum (2026-07-24, after the settled-filter miss)
+Reviews verify code against our MODEL of the exchange; only operation verifies the model against reality. Two defect classes, two nets: **code-vs-spec** (adversarial review catches) and **spec-vs-reality** (only measurement catches — undocumented latencies, filter semantics, field drift). Standing gate for every strategy: before live, a **decision-stream conformance check** — run paper long enough for expected signals, then reconcile OBSERVED entry/skip/frequency rates against backtest expectations and read the skip-reason histogram; every divergence explained before money. The settled-filter bug was sitting in paper's own logs for hours (repeated prev_not_settled + zero entries vs ~2-4 expected/day) — we had the data and lacked the ritual of asking it the question.
