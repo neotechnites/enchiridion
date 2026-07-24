@@ -25,6 +25,6 @@ Confirming a thin edge's death takes hundreds of trades (2-4 weeks) — binary k
 ## Current build order (2026-07-23)
 1. Tonight: ONE night-ideator rep (1-2 Opus-medium workers, capped, ledgers by morning) — tests the whole pipeline before "constant" scales.
 2. This week: data-correctness audit of every capture stream (everything downstream inherits its errors).
-3. Weekend: streak live ($100 mechanics week) on the existing redirect rails.
+3. ~~Weekend: streak live~~ **AHEAD OF SCHEDULE (Jul 23 evening): the redirect is fully built, audited, and merged (nestor main `3f105b1`) — paper mode is RUNNING and catching signals (first paper fill: NO@39¢ post-up-streak, fee ceil'd correctly). Remaining before live: Ryan's prod key → $1 selftest → $100 week. Demo env supported via KALSHI_API_BASE (plumbing-grade only).**
 4. Next week: first full Ryan-triggered cycle, run on a week of accumulated material.
 5. Sliding allocation specced into nestor at strategy #2.
