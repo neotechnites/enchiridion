@@ -15,7 +15,7 @@
 - **Weather:** nobody models ensembles vs the settle station; forecast-error is city-specific and calibratable; books go one-sided/degenerate. Fish = whoever quotes without reading NWS.
 - **Index dailies:** priced efficiently EXCEPT event days — CPI/PCE/NFP mornings misprice the realized-move distribution (buy wings T-15min); earnings gaps flow into NDX bins next morning.
 - **Sports:** pre-game = sharps + bots, arbed at every size (proven at all tiers). In-game = the open question (tonight's fixed watcher decides). Fish, if any, lives only in the seconds after events.
-- **Politics/mentions/counts:** settlement is RULES-LAWYERING. COUNT-type contracts reward literal reading; the crowd trades vibes. New COUNT listings are the watchlist trigger.
+- **Politics/mentions/counts:** settlement is RULES-LAWYERING. COUNT-type contracts reward literal reading; the crowd trades vibes. COUNT-family truth (verified 2026-07-24, 555-event lock-scan): observable/publicized counts (votes, launches, rate cuts) are wire-reported and EFFICIENT — 29/29 locked rungs priced ≥98¢, zero free locks. The ratchet edge lives ONLY in the SPOKEN-COUNT subset: words/topics on a broadcast, settled on a LAGGED TRANSCRIPT (LASTWORDCOUNT +39.5¢, KXFEDMENTION). Gate = transcript-lag, not count-lag.
 - **Everything at 90-99¢:** the fee-cheap zone (fee ≈0.3¢ at 95 vs 1.75¢ at 50). Ryan's dream shape lives here: "when X, resolves this way 99%, priced 95."
 
 ## STRUCTURE FACTS (the collision fuel)

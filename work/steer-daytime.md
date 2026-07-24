@@ -3,3 +3,4 @@
 - BUFFETT B4/B9 capture requests (KXAPRPOTUS pre-close quotes; synchronized multi-leg ladder quotes) + MUSK M7 (monotone-accumulator feed capture) + COUNT-triad catalog = the demand-led capture queue. Build order decided at tonight's synthesis.
 - COUNT-lag scanner (R111) = flagship: next INFO-CHANNEL or VENUE-MECHANICS lane should catalog the 679 COUNT/MENTION/VOTE series for the triad (stays-open-after-lock / obscure source / OI>0) via open_interest_fp not volume.
 - EVENT-VOL: liquid-ladder jump-buying dead (EV1/EV2). Jul 30 index event-wings KEEP (own backtest) but adjacent kills = context; EV4/EV5 discrete point-ladder scout = tonight; graveyard correction: rep-29 L1 is a 5-event artifact — synthesis must mark it.
+- IC2 KXFEDMENTION Jul29: build the post-presser paper-capture (book snapshots ~19:00-24:00Z + live word-tally protocol) — tonight synthesis ranks it top of capture queue. IC6 Federal-Register map + IC5 revision-history = scout pulls tonight.
