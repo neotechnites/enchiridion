@@ -20,6 +20,9 @@
 7. **Fees:** extremes (90–99¢) are the cheap zone (fee = 0.07·P·(1−P), max 1.75¢ at 50¢, ~0 at wings). He mis-stated once and corrected: favor the ENDS of odds. His dream shape: "when X condition, it resolves this way 99% of the time, priced 95" + high frequency + a natural market rule baked in.
 8. **VENUES (hard rule, 2026-07-22):** strategies may place bets ONLY on Kalshi or US Polymarket. Global Polymarket is allowed as a research lab, signal source, and arb reference (betting Kalshi off a global-Poly signal is fine) — but never as a betting venue.
 
+## Money-impact claims (2026-07-24, after the "3 missed entries" error)
+**Any statement of money impact — missed, made, lost, would-have — requires RECONSTRUCTION, never inference.** A skip record proves a skip, not a signal; an error proves a defect, not a cost. The full chain (signal condition + price gate + actual results, replayed from data) must be computed before a dollar figure is spoken, or the claim is labeled UNVERIFIED. Defect and impact are separate claims with separate evidence. The Claude told Ryan "3 valid signals missed, ~+$3" from skip records alone; reconstruction showed zero valid signals and $0 — in the money domain, an invented number is indistinguishable from a lie.
+
 ## Cost discipline (Session-3 lesson: 5 Fable sub-agents burned the org's monthly spend cap)
 - **Sub-agents: ALWAYS the `researcher` agent type** (`~/.claude/agents/researcher.md` — Opus, high effort). Never Fable, never xhigh. Main loop stays Fable.
 - Sub-agent = foreign-data scout (new market categories, feeds, calendars), ~20% of the work. Each prompt must include: mission, data map + machine quirks, RESUME-from-disk instruction (`ls -t ~/kalshi_data/scripts | head -20`), cost block (cheapest decisive test first, ONE strategy per lane, no sweeps), and the report format (rule / mechanism / n / win% / EV net / split / verdict TRADE-PROMISING-DEAD / file paths).
