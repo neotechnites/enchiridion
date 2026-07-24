@@ -6,6 +6,8 @@
 - **Prior tonight:** note 27 (rep 0 A+B). This rep walks FRESH doors rep-0 B did not: rep-0 covered mempool/DVOL/funding/kimchi/momentum-calm(same-asset)/velocity-reflexivity/PAXG. I do NOT repeat those.
 - **Method:** wing-fade = BUY NO on 3–25¢ YES rungs, entry (1−px)·100+1¢, fee 0.07·P(1−P), one obs/market, dt=3300 fresh only. Each gate: low/high tercile EV + hash placebo + honest early/late era split. Predicted-direction-or-dead. Placebo floor (note 27 calibration): BTC ±0.84¢, ETH ±3.5¢ at these n.
 
+> **Resume note (relaunch 2026-07-24 ~06:1x UTC):** I1–I8 + survivors below are the completed 05:48 rep, preserved intact. On relaunch I walked THREE fresh attention/calendar/clock doors (F1 weekend, F2 bid-ask spread, F3 equity-hours cross-condition) that neither rep-0 (note 27) nor the 05:48 rep covered — appended as the "RELAUNCH continuation" section at the bottom. Harness `scripts/laneB_r1_fresh.py`. Net: 0 new independent edges — all three collapse onto the already-known low-realized-vol / calm-clock factor (F1 proven collinear on disk).
+
 ## Ledger
 
 | id | idea | mechanism (who's wrong) | kill-test | n | win% | EV-net | verdict | files |
@@ -40,3 +42,25 @@
 - "X-while-A" cross-asset (I2) fails predicted direction — the other coin's move does NOT foreshadow exploitable wing vol; if anything mildly inverted, ⊂ placebo. Cross-asset lead-lag graveyard (1s) corroborates.
 - Placebo calibration held: BTC sub-0.84¢ and ETH sub-3.5¢ "edges" correctly killed as noise (I2/I3/I5 ETH).
 - Cost: 3 inline passes, 0 pulls, 0 sub-agents. Cap respected.
+
+---
+
+## RELAUNCH continuation — fresh attention/calendar/clock doors (2026-07-24)
+
+Three doors neither rep-0 (note 27: mempool/DVOL/contagion/funding/kimchi/momentum-calm/reflexivity/PAXG) nor the 05:48 rep (rv24/cross-momentum/streak/EIA/directional-streak/Poly-lead/offshore/IV-RV) walked. Same wing-fade base (BUY NO px 3–25¢, entry (1−px)·100+1¢, fee 7·px(1−px)¢, dt=3300 fresh, one obs/mkt). Harness `scripts/laneB_r1_fresh.py`. Placebo floors held: BTC ±0.84¢, ETH ±3.5¢.
+
+| id | idea | mechanism (who's wrong) | kill-test | n | win% | EV-net | verdict | files |
+|----|------|------------------------|-----------|---|------|--------|---------|-------|
+| F1 | **Weekend attention gate** — sell crypto wings on Sat/Sun (UTC) when informed/institutional desks are OFF, leaving a retail-only regime → wings stale-rich | weekend vs weekday buyNO EV + placebo + era split + **rv24 collinearity cross-tab** | BTC 800 wknd / 1357 wk | 91.8 | WEEKEND **+1.61** vs weekday +0.06 (spread +1.55 > 0.84 placebo) | **CONDITIONAL-collinear (SUBSUMED by I1 rv24; not a new door)** — disk cross-tab: weekend-fraction is **0.70 inside LOW-rv24 tercile vs 0.12 inside HIGH**, and weekend EV inside HIGH-rv24 = **−3.88**. Weekend IS the low-realized-vol regime wearing a calendar mask. Also era-fragile (early wknd +0.51<wk +1.51 INVERTED; only late era carries it +2.72 vs −1.38 = regime-fake trap). ETH weekend −0.46 wrong-dir. Adds nothing over the existing I1/calm-clock survivor. | `scripts/laneB_r1_fresh.py` |
+| F2 | **Bid-ask spread as attention/thinness gate** — wide-spread wings = less-watched/abandoned book = stale-rich | spread-width tercile buyNO EV + placebo, both coins | BTC 775 tight / 1169 wide · ETH | 88.9 | BTC WIDE +1.27 vs TIGHT +0.12 (spread +1.15); **ETH +0.06** | **DEAD-as-stated** — BTC spread +1.15¢ barely clears the 0.84¢ placebo and is price/depth-confounded (wider spread = deeper/cheaper rung = mechanically richer wing already captured by the engine, cf. A1 thinness). ETH null (+0.06). Not cross-asset, confounded → no independent attention edge. | `scripts/laneB_r1_fresh.py` |
+| F3 | **Equity-hours cross-condition ("wing-fade while TradFi awake")** — sell crypto wings only when US cash equities are CLOSED; during 13:30–20:00 UTC macro desks are watching and reprice the wing | eq-hours vs non-eq buyNO EV + placebo + era split, both coins | BTC 209 eq / 1948 non | 83.3 | BTC EQ-HOURS **−0.70** vs non-eq +0.78 (spread −1.48, predicted direction ✓) | **CONDITIONAL-collinear with calm-clock (BTC-only)** — the ONE fresh door that is era-robust: eq-hours adverse in BOTH halves (early −0.21 vs +1.28; late −1.17 vs +0.28). But eq-hours (13:30–20:00 UTC) is the exact inverse-image of the slate calm-clock window (22–12 UTC) — this re-derives the calm-clock exclusion from an independent (attention) direction rather than being a new edge. ETH null (eq +0.49 vs +0.42). Practical value = independent confirmation of the calm-clock, not incremental EV. | `scripts/laneB_r1_fresh.py` |
+
+### Continuation tally
+3 fresh doors · **1 DEAD-as-stated** (F2, confounded + not cross-asset) · **2 CONDITIONAL-collinear** (F1 subsumed-by-rv24, F3 re-skins calm-clock) · **0 new independent edges** · 0 TRADE, 0 holdout.
+
+### Frozen kill numbers (continuation survivors)
+- **F1 weekend — collinearity kill (the useful number):** weekend-fraction 0.70 (LOW-rv24 tercile) vs 0.12 (HIGH-rv24); weekend EV inside HIGH-rv24 = −3.88¢. Weekend ⊂ low-rv24 → the calendar effect is the I1 realized-vol regime, not a separate attention channel. Do not weight independently of I1.
+- **F3 equity-hours — cleanest fresh number:** BTC eq-hours (13:30–20:00 UTC) buyNO EV **−0.70¢ (n=209)** vs non-eq **+0.78¢ (n=1948)**, era-consistent both halves. Reads as an independent (attention-axis) confirmation of the slate calm-clock gate: US-active hours are where crypto wings are NOT rich.
+
+### Continuation doctrine touchpoint
+**The wing-richness attention channel has ONE underlying factor.** Weekend (F1), equity-hours (F3), and the existing rv24 survivor (I1) / calm-clock (slate ①④) are all proxies for the same thing: crypto wings are rich only in the quiet, low-realized-vol, TradFi-asleep regime. Three independent parameterizations (calendar / clock / realized-vol statistic) converge on it and none adds orthogonal EV. This is a consolidation result, not a new edge — it argues the slate should keep ONE clean gate (rv24, already the sharpest, per note 28) rather than stacking collinear calendar/clock filters. Cost: 1 harness pass + 1 collinearity cross-tab, 0 pulls, 0 sub-agents.
