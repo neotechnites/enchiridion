@@ -40,8 +40,13 @@
   on API keys" is STALE — keys exist; only (1)+(2) block.
 
 ## COLUMN 3 — AWAITING FABLE TESTING (with tonight's evidence workers in flight)
-1. **SEED-PRIOR** listing harvest (+18.9¢ net, n=237) — worker building the word-prior artifact
-   NOW; remaining gate: per-family seed confirmation (fast-snap capture accruing).
+1. **SEED-PRIOR** listing harvest — TOP of column 3. Gate #2 CLOSED (build-seed-prior.md):
+   hierarchical word-prior from the FULL settled corpus (14,410 markets — 30× the first lane,
+   which hadn't paginated), LOO-validated +26.4¢ net / 0.774 hit on the confident subset
+   (n=7,798); artifact ~/kalshi_data/seed_prior.json + runtime procedure written. Remaining
+   gate #1 (closes passively): confirm non-earnings families get the flat 0.54 seed — the
+   60s fast-snap catches the next new listing's seeds. Caveat held: confirmed-seed family
+   (earnings) is only +5.8¢; the fat edge rides on unverified-seed families.
 2. **DOGE MAX ivol ramp** (~21¢ net top rungs) — multi-issuance backtest running NOW.
 3. **INFLATION-FLASH** — RULING (probe done, verify-inflation-flash-access.md): the front-run
    path is STRUCTURALLY DEAD (prelim-settled markets freeze trading 1 min BEFORE the release);
