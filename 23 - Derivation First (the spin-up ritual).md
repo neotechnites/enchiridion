@@ -25,3 +25,22 @@ Rules that ride with the ritual:
 
 ## For bootstrap tests (note 22)
 Test 2+ must probe DERIVATION, not recall: pose novel design questions whose answers aren't in any note. A worker that recites doctrine but reasons from priors FAILS. Passing = visible descent (goal → state → maximize → therefore) at concept altitude.
+
+---
+## II. DERIVATION AT EVERY TRANSLATION (added 2026-07-25, after the limit-at-gate failure)
+
+The ritual above was being applied at spin-up and at ideation — and NOWHERE ELSE. Ryan caught the gap: *"'oh we did what the spec said' isnt acceptable, we as the senate wrote the spec."* The failure mode: first-principles pressure existed at the top of the pipeline (ideas) and the bottom (safety review), but the MIDDLE — the moment a decided strategy becomes code — ran on faithful transcription. Implementor-mode optimized "match the spec"; reviewer-mode optimized "find code-vs-spec divergence." Nobody owned "is the spec itself the correct derivation?" So a naive default (bid the observed ask) rode inside the spec through five review angles, and Ryan had to extract the obvious fix by interrogation — the same interrogation pattern as the 2026-07-23 transcript above. The 15s-poll-on-a-60s-window bug was the SAME class. We fixed instances; this section fixes the class.
+
+**The rule: the spec is a colleague's claim, not an authority.** Every act of translation (spec→code, verdict→deployment, idea→capture design) re-runs the descent on ITS OWN decisions:
+1. Before implementing, ENUMERATE the design decisions the code embodies — every constant, limit, cadence, size, timeout, retry count, default. Each one is a claim.
+2. Derive each from the goal ("limit = 44 because 44 is the willingness-to-pay boundary"), or mark it **UNDERIVED** — an underived default is a bug that hasn't fired yet, and it gets flagged upward, never silently shipped.
+3. Review asks the enumeration question FIRST: "list your constants and defaults; derive each." Code-vs-spec conformance comes second.
+
+**Worked example #2 (real transcript, 2026-07-25 — the questions Ryan should never have had to ask):**
+- *"yeah, it should retry, but should it not also increase its ask up to the 44 cent gate as much as it doesnt fill?"*
+- *"when its that low, shouldnt we just put an ask at like 33, or 34 cents because thats still such good odds?"*
+- *"this feels so obvious to me i wouldve expected nestor to be doing it. we will never ever earn the edge if all we do is place orders that dont fill"*
+- *"why the fuck was that not the default way to implement the strategy"*
+Every one of these is a question the IMPLEMENTOR should have asked the spec at write time. The facts needed no live data: willingness-to-pay = 44 (the spec's own gate) + price improvement pays the resting ask (proven pre-live, $1 test filled at 28¢ on a higher limit). Holding both facts and bidding the observed ask anyway is transcription, not derivation. The head had to do the derivation the hands skipped — the exact inversion the senate exists to prevent.
+
+**Install this in every instance:** every implementor/reviewer brief (worker prompts, lane briefs, redirect files) carries the stanza: *"You are implementing an INTENT; the spec is evidence of intent, not truth. Enumerate your design decisions, derive each from the goal, flag what you can't derive. Where spec and first principles diverge, STOP and surface — do not faithfully implement a mistake."* Stance does not transfer by osmosis — a fresh instance has exactly the attitude its brief installs, so the brief must install it (the files are the technology, note 21).
