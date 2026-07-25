@@ -55,3 +55,13 @@ The BENTER "diligence beats genius" edge requires BOTH: **(1) a public-observabl
 - **General ACKMAN finding (both bursts):** every LIQUID Kalshi catalyst ladder is anchored — by an external sharp market (Fed futures/SPX options/polls) OR a deep own-consensus OR a public near-deterministic settle source. The ladder does NOT misprice the announcement distribution where liquidity exists. The residual lives only where there's NO anchor AND enough cadence to accrue n — which on Kalshi today is nearly empty.
 
 *Add to this file or you didn't learn it. — The Mesh*
+
+---
+## Delta 2026-07-25 (Saturday burst, 8 lanes — full ledgers in work/verify-*)
+- **Fill mechanics are now MEASURED (verify-streak-retry):** on the 100ms tape a ≤44¢ ask that vanishes RETURNS — P(≤44 at +5s)=0.926. One IOC at the observed ask fills 70.5%; limit-at-gate + 3 retries fills 88.5% at +0.66¢, retry fills non-toxic. Generalizes: on thin fast books, "the ask is gone" usually means flicker, not absence — retry policies beat one-shot everywhere we taker.
+- **Streak clock (verify-streak-clock):** 21.25 raw signals/day, ~5-6 post-gate; overnight ≥ daytime in signal count, equal EV. Weakest number: gate-pass 0.333 at n=21.
+- **New-listing seed flaw (verify-listing48h + verify-seed-prior):** Kalshi seeds whole new series at uniform 0.54/0.46 regardless of per-outcome base rates. n=492 settled word-markets realize 0.417 → blind NO +10.3¢ net; word-prior model +18.9¢ net where prior diverges ≥15¢ (n=237). Gates: confirm the seed per family (only earnings-family confirmed, and IT realizes 0.500 = no edge there), external prior mandatory. listing_monitor now fast-snaps (60s) the first 2h.
+- **Chair regime change:** Fed presser speaker is WARSH (since June). Any speech/persona-based prior (mention counts, phrasing, presser length) built on Powell is STALE; markets repriced within one meeting. Persona-priors must re-anchor on n=1-2 Warsh data or stand down.
+- **Dead doors:** xvenue MLB cross-venue (pre-game AND in-game; positives were matcher-bug artifacts) · deribit-vs-Kalshi hourly vol gate (tenor artifact; Kalshi Brier 0.024 vs 0.439 — Kalshi IS the calibrated side; deribit useless as hourly truth source).
+- **Dutchbook:** genuine same-close opposite-leg arbs exist (18 in 59h) but median 0.65¢ — sub-slippage. Detector must drop BAND mode (6/10 were false arbs). Reopen only at ≥1.5¢ with leg-quote-lifetime proof.
+- **Polylag:** one 5.7h political tape = zero movement episodes. Auto-gate: only analyze tapes containing a ≥3¢ Poly move.

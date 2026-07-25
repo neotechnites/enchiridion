@@ -45,3 +45,38 @@ listing_events.jsonl + listing_books.jsonl (baseline was 12,179 series). Report:
 since baseline, how many produced live two-sided books in their first 48h, spread width and any
 obviously-anchorable mispricing (e.g. vs sibling markets, vs underlying) in those books. Verdict:
 is the sloppy-window real enough to design a probe? If yes, sketch the probe (no build).
+
+---
+# WAVE 2 (same rules, same ceilings — wave 1 came in at ~137k total, budget is deep)
+
+## Lane 5 — FEDMENTION-PRIOR (Tuesday-critical)
+File: work/verify-fedmention-prior.md
+KXFEDMENTION-26JUL (43 rungs) locks at the Jul 29 FOMC presser end. Build per-rung priors:
+(a) fetch the actual rung structure + current prices from the API (series KXFEDMENTION; only
+*_dollars/_fp fields live); (b) download the last 8-12 FOMC press-conference transcripts from
+federalreserve.gov and count target words PROGRAMMATICALLY (curl + python word counts on disk —
+NEVER load transcript text into your context); (c) per word: historical count distribution → fair
+probability per rung; (d) table: rung | market price | prior fair | divergence; flag ≥15¢.
+This is PREP ONLY — no trading, no recommendation to trade live; Ryan decides Tuesday.
+
+## Lane 6 — STREAK-CLOCK (feeds week-2 sizing + VPS decision)
+File: work/verify-streak-clock.md
+From kbt_books_btc/eth (100ms tape) + the Kalshi API (status-agnostic, min/max_close_ts) reconstruct
+the past week of 15m results per series: (a) actual 4-streak signal occurrences per day, by hour;
+(b) fraction whose entry-window ask was ≤44¢ (join with books); (c) expected trades/day and EV/day
+under wave-1 Lane-1's measured fill rates (70.5% / 82% / 88.5% policies); (d) overnight (00-13Z) vs
+daytime split — quantify "streak is a daytime strategy". Label every EV figure with its n.
+
+## Lane 7 — DUTCH+DERIBIT first look
+File: work/verify-dutch-deribit.md
+Two never-analyzed captures, one lane: dutchbook jsonl (any multi-outcome book summing <$1 net of
+fees? episode count, depth, duration) and deribit_gate_hourly.jsonl (Kalshi crypto ladder ivol vs
+Deribit ivol — does the gate show a persistent gap, direction, tradeable after fees?). Two verdicts.
+
+## Lane 8 — SEED-PRIOR feasibility (feeds Lane-4's listing gate)
+File: work/verify-seed-prior.md
+Wave-1 found new mention-grab series seed at a uniform 0.54/0.46 ignoring base rates. Feasibility:
+from settled mention/count markets (API, settled history) compute per-word realized YES rates vs
+the 0.54 seed; distribution of |realized − seed|; with a naive external prior (word frequency in
+past source material), what per-market edge would a seed-hitter have captured? Report n everywhere.
+Small ceiling: ~150k.
