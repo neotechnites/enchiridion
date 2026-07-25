@@ -27,7 +27,7 @@
   (verdict said minimal-not-zero; shipped OFF, one flag-flip).
 
 ## GRADUATED (implemented, live)
-- **STREAK** [Class A — 2yr backtest] — fade 4-streaks ≤44¢, BTC+ETH 15m. $106.03, first win
+- **STREAK** [Class A-minus — 66d Kalshi (6,229 mkts) + 189d Poly (49,720 mkts) + 2yr-validated price gate; NOT a full 2yr backtest — R150 correction] — fade 4-streaks ≤44¢, BTC+ETH 15m. $106.03, first win
   banked, retry binary live 2026-07-25. Week-2 sizing pending.
 
 ## COLUMN 4 additions — FABLE REVIEW 2026-07-25 (primary ledgers read)
