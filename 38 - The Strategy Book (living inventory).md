@@ -43,7 +43,11 @@
 1. **SEED-PRIOR** listing harvest (+18.9¢ net, n=237) — worker building the word-prior artifact
    NOW; remaining gate: per-family seed confirmation (fast-snap capture accruing).
 2. **DOGE MAX ivol ramp** (~21¢ net top rungs) — multi-issuance backtest running NOW.
-3. **INFLATION-FLASH** prelim→final — source-access probe running NOW.
+3. **INFLATION-FLASH** — RULING (probe done, verify-inflation-flash-access.md): the front-run
+   path is STRUCTURALLY DEAD (prelim-settled markets freeze trading 1 min BEFORE the release);
+   access itself is solved (Eurostat flash = free keyless JSON). Surviving sliver: KXHICP
+   (final-settled, ~17-day window, flash public) — narrowed gate: calibration check of the book
+   vs the ≤0.1pp revision base rate, next burst.
 4. **SPOKEN-COUNT** (MUSK family) — vehicle-gated; Tuesday's capture builds Warsh base rates.
 5. **DUTCHBOOK** — ruling: stays 3; measured median 0.65¢ is sub-slippage. Gates: detector
    opposite-direction fix (queued athena change) + ≥1.5¢ + leg-quote-lifetime capture accrual.
