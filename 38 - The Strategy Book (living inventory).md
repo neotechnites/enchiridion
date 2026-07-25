@@ -30,14 +30,14 @@
 - **STREAK** [Class A — 2yr backtest] — fade 4-streaks ≤44¢, BTC+ETH 15m. $106.03, first win
   banked, retry binary live 2026-07-25. Week-2 sizing pending.
 
-## COLUMN 4 additions — FABLE REVIEW 2026-07-25 (primary ledgers read, rulings below)
-- **H10 econ point-ladder maker** [markout ≤0 proven on n=20,585 prints] and **H9 political
-  spread-capture** [n=35,335, ≥2¢-spread + catalyst-window gates mandatory] — WORTH IMPLEMENTING
-  via the probe-first path (work/probe-house.md protocol is concrete: 2-3 days, 1-5 contracts,
-  −$20 hard stop, promote/kill criteria numeric). Two blockers, both named: (1) RYAN approves
-  probe risk; (2) a MAKER EXECUTION MODULE — nestor is IOC-taker-only today; resting two-sided
-  quotes + re-quote + flatten is a new engine capability (~1 day build). NOTE: the doc's "blocked
-  on API keys" is STALE — keys exist; only (1)+(2) block.
+## COLUMN 4 additions — FABLE REVIEW 2026-07-25 (primary ledgers read)
+- **H10 econ point-ladder maker** + **H9 political spread-capture** — IMPLEMENTED SAME DAY
+  (Ryan's blanket authorization): maker module + house probe sleeve built (nestor e1b989d),
+  demo-proven mechanics (build-house-probe.md DEMO EVIDENCE: resting = good_till_canceled +
+  future expiration_ts + taker_at_cross; expiration enforcement LAZY ~2-3min → worst-case
+  orphan ~4min at 75s TTL, accepted at size 1; resting list eventually-consistent — responses
+  are truth). ARMED (HOUSE_PROBE=1): quotes 1-lot two-sided when spread ≥2¢, −$20 in-code sticky
+  stop, probe metrics via `nestor house-report`. Promote/kill per protocol after 2-3 days.
 
 ## COLUMN 3 — AWAITING FABLE TESTING (with tonight's evidence workers in flight)
 1. **SEED-PRIOR** listing harvest — TOP of column 3. Gate #2 CLOSED (build-seed-prior.md):

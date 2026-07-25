@@ -88,3 +88,96 @@ exist while we're not watching. Every safety decision below is therefore NON-NEG
 ## Deliverable
 Branch-ready diff + Decisions section + demo-run evidence + 5-line summary (works / UNDERIVED /
 untested).
+
+---
+## DECISIONS & EVIDENCE (implementor, 2026-07-25)
+
+### What was built (branch-ready, NO git ops — Fable reviews/commits)
+- **Engine maker capability** — `crates/engine/src/kalshi.rs`:
+  - `place_resting_limit_raw(ticker, side, count, price_cents, expiration_ts, coid)` — POST
+    /portfolio/events/orders with a FUTURE `expiration_ts` and NO `immediate_or_cancel`
+    (GTD resting); `self_trade_prevention_type=cancel_both`. The taker `place_limit_buy` path is
+    UNTOUCHED.
+  - `resting_orders(ticker: Option<&str>)` — GET /portfolio/orders?status=resting (startup orphan
+    sweep + expiration audit). `cancel_order(id)` already existed — reused.
+  - `parse_resting_orders` (tolerant) + `RestingOrder` struct + `orderbook_mid` (best bid/ask/mid).
+    All pure + unit-tested (7 new tests).
+- **`crates/house`** — the maker sleeve. `signal.rs` (pure gates/quote-math/markout/−$20 ledger/
+  metrics, 14 tests), `strategy.rs` (the stateful two-sided quote loop: sweep-on-start, spread &
+  catalyst gates, fill detection + flatten, +60s markout/gap-through, −$20 & −5¢ sticky stops,
+  HOUSE_PROBE live gate, shadow logging to `data/house_probe.jsonl`), `report.rs` (`house-report`
+  4-metric summarizer, 2 tests).
+- **nestor_bin wiring** — `house`/`house-once` standalone (paper/shadow; ctrl-c sweep via
+  `tokio::select!`), `house-report`; `house`/`house-once` added to the **live-standalone ban**;
+  scheduled in `run` ONLY when `HOUSE_PROBE=1`; tokio `signal` feature enabled.
+- **Green:** whole workspace `cargo build`, `cargo test` (13 result-ok blocks, 0 failed; +23 new
+  tests), `cargo clippy --all-targets` **0 warnings**.
+
+### EMPIRICAL findings from live PUBLIC data (paper smoke, 2026-07-25 ~20:25Z)
+1. **Series tickers CONFIRMED valid:** `KXAPRPOTUS` (8 open weekly strikes) and `KXCPIYOY` (89 open
+   rungs) both resolve. The earlier UNDERIVED flag on tickers is RESOLVED.
+2. **Orderbook schema was WRONG in my first cut — FIXED.** Live shape is
+   `{"orderbook_fp":{"yes_dollars":[["0.4800","30.00"]],"no_dollars":[["0.0100","130.00"]]}}` —
+   string-DOLLAR prices under an `_fp` envelope, NOT `orderbook.{yes,no}` integer cents.
+   `orderbook_mid` now handles both; added a verbatim-schema test. **This is exactly the class of
+   bug the demo shakeout exists to catch — caught here on public data.**
+3. **KXCPIYOY has ZERO "Exactly" rungs — only "Above X%" cumulative rungs.** A hard `exactly_only`
+   filter would mean the CPI book NEVER quotes. **DIVERGENCE (protocol §Vehicle presumes an
+   "Exactly" rung; reality has none on this series).** Resolution: `prefer_exactly` — use "Exactly"
+   rungs when the ladder has them, else the nearest-centre in-band rung. JUDGMENT, flagged. (The
+   "Exactly" rungs the protocol means may live on a different series or appear only near a print —
+   unresolved; confirm with Fable.)
+4. **Full pipeline VERIFIED end-to-end in paper:** POTUS selected in-band strike
+   `KXAPRPOTUS-26JUL31-40.9`, parsed the real book (bid 29 / ask 30 / mid 30), and **correctly
+   stood down on the 1¢ spread gate** (protocol §1: never quote a 1¢ market). CPI picked
+   `KXCPIYOY-26NOV-T4.7`, got a one-sided book, stood down. EXIT=0, no orders (paper), no errors.
+5. **Current books are thin/tight** (far-dated CPI, coarse POTUS weekly ladder mid-day): no vehicle
+   met the ≥2¢ spread gate this instant. Stand-down is correct; a real 2-3 day daytime run near
+   catalysts is where quotable windows appear. Stand-downs are silent by design (matches volbook's
+   resting-state logging philosophy).
+
+### DEMO maker-mechanics run — **BLOCKED on the demo key id (Ryan)**
+The demo `KALSHI_API_KEY_ID` is **not on disk**: `secrets/Demo.txt` is the PEM only, and `.env`
+holds the PROD key (`./secrets/prod.pem`, id …8850, `NESTOR_ENV=live`). Every existing demo network
+test is `#[ignore]` and reads the demo id from env at runtime — same blocker as
+`demo_duplicate_coid_behavior`. The maker shakeout test is written and ready:
+`crates/engine/src/kalshi.rs::maker_demo_probes::maker_demo_resting_lifecycle`, proving all five
+mechanics (RESTING placement did-not-IOC / appears in resting list / cancel-by-id / **expiration
+auto-cancel** / orphan sweep). Run once the demo id is supplied:
+```
+KALSHI_API_BASE=https://demo-api.kalshi.co \
+KALSHI_API_KEY_ID=<DEMO key id> KALSHI_PRIVATE_KEY_PATH=secrets/Demo.txt \
+NESTOR_TEST_TICKER=<open demo ticker ~40-60c> \
+cargo test -p engine maker_demo_resting_lifecycle -- --ignored --nocapture
+```
+**UNTESTED until that runs** (require a real resting order): the 201 response shape for a resting
+order (fill_count 0 / remaining==count / status "resting" / order_id — i.e. that omitting
+time_in_force + future expiration_ts REST rather than IOC — the top UNDERIVED item), whether the API
+requires `time_in_force`, `self_trade_prevention_type="cancel_both"` acceptance, expiration
+auto-cancel timing, the `/portfolio/orders` resting schema (parser is tolerant but unconfirmed), and
+the −$20 / −5¢ stops firing on real fills.
+
+### Files changed
+- `crates/engine/src/kalshi.rs` (maker methods + parsers + tests + ignored demo probe)
+- `crates/house/` (new crate: Cargo.toml, lib.rs, signal.rs, strategy.rs, report.rs)
+- `crates/engine`/workspace `Cargo.toml`, `nestor_bin/{Cargo.toml,src/main.rs}` (wiring + gates)
+
+---
+## DEMO EVIDENCE (Fable, 2026-07-25, demo acct, KXBTC15M windows) — the UNDERIVED items resolved
+1. **RESTING PLACEMENT:** omit-time_in_force assumption WRONG — API requires it (400 'required').
+   Valid combo (empirical): `time_in_force="good_till_canceled"` (single-L; "good_till_cancelled"
+   and "good_till_date" fail oneof) + FUTURE `expiration_ts` + `self_trade_prevention_type=
+   "taker_at_cross"` ("cancel_both" fails oneof) → HTTP 201, fill_count 0, remaining==count,
+   order_id present (did NOT IOC). kalshi.rs patched accordingly.
+2. **EXPIRATION AUTO-CANCEL: WORKS BUT LAZY.** now+8s order survived polls to +128s past expiry,
+   gone by +143s → enforcement sweep ≈ every 2-3 min. WORST-CASE ORPHAN EXPOSURE = TTL(75s) +
+   ~3min ≈ ~4min of stale quotes, NOT ~1min as chartered. Accepted for the probe at size 1
+   (≈$2 worst-case per book); revisit TTL if size grows.
+3. **CANCEL-BY-ID: WORKS** (`reduced_by:"1.00"` in response = truth).
+4. **RESTING LIST = EVENTUALLY-CONSISTENT INDEX** (orders lag seconds to appear AND to
+   disappear; one run showed still-listed right after a proven cancel). Rule: responses are
+   truth; the list is ONLY for orphan sweeps where lag is harmless. Same indexer-lag family as
+   the settled-filter bug (R114).
+5. **ORPHAN SWEEP: WORKS** (listed 1, canceled, 0 remain).
+Fill detection not exercised (2¢ bid never crossed) — reuses the proven fills() parser; first
+real probe fill validates it.
