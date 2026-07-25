@@ -14,8 +14,12 @@
 
 ## COLUMN 4 — WORTH IMPLEMENTING (cleared Fable testing)
 - **VOLBOOK** [Class B — 9.5wk = API retention cap; harvester accruing toward 2yr] — metal
-  daily-wing seller Mon-Wed by calibration gap (+8.5-8.7¢/event both eras, out-of-sample
-  copper). BUILDING now (note-23-II charter, paper-gated). Deploys SMALL per lesser-class rule.
+  daily-wing seller Mon-Wed by calibration gap. **BUILT 2026-07-25 (nestor 0f89954), Fable-
+  reviewed, paper-shadowing** — per-bucket willingness-to-pay ceilings, triple-gated from live
+  (VOLBOOK_LIVE=1 + run-wiring + sizing all required). First live-shaped window: Mon T-3h.
+  AWAITING RYAN: sizing (flat/day/cluster $, small per lesser-class rule). Queued enhancements:
+  copper dollar half-weight (needs small risk ext; ranking already demotes it), oil flag
+  (verdict said minimal-not-zero; shipped OFF, one flag-flip).
 
 ## GRADUATED (implemented, live)
 - **STREAK** [Class A — 2yr backtest] — fade 4-streaks ≤44¢, BTC+ETH 15m. $106.03, first win
