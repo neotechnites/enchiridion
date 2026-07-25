@@ -47,7 +47,11 @@
    gate #1 (closes passively): confirm non-earnings families get the flat 0.54 seed — the
    60s fast-snap catches the next new listing's seeds. Caveat held: confirmed-seed family
    (earnings) is only +5.8¢; the fat edge rides on unverified-seed families.
-2. **DOGE MAX ivol ramp** (~21¢ net top rungs) — multi-issuance backtest running NOW.
+2. **DOGE MAX ivol ramp** — RULING (verify-doge-ivol.md): real but NOT money. Persists across
+   both retrievable issuances (4/4 NO wins, ~+33¢/contract first-hour) BUT DOGE-specificity
+   FALSIFIED (BTC/ETH tops same pattern same months = quiet-regime artifact, rally month
+   unsampled, n=2) and capacity ~$5/issuance vs $50-150 claimed. BENCHED; trigger = MAX-ladder
+   proliferation (more issuances/coins → capacity) or a vol-regime gate.
 3. **INFLATION-FLASH** — RULING (probe done, verify-inflation-flash-access.md): the front-run
    path is STRUCTURALLY DEAD (prelim-settled markets freeze trading 1 min BEFORE the release);
    access itself is solved (Eurostat flash = free keyless JSON). Surviving sliver: KXHICP
