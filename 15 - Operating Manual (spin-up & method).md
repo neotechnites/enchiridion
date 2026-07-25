@@ -28,6 +28,16 @@
 
 **Limit prices are willingness-to-pay, never transcriptions (2026-07-25, from the same miss):** the original streak entry bid the OBSERVED ask (naive screen-default, inherited unexamined into the spec, passed every review because reviews audited code-vs-spec). The correct translation of "enter if ask ≤ gate" is "bid the gate" — exchange price improvement pays the resting ask, so the gate-limit only adds flicker tolerance. Review question now mandatory for every strategy's execution code: *why is this limit not the strategy's true maximum?* This class was catchable pre-live from first principles + the known price-improvement fact; it cost ~$3.7 (reconstructed) to learn from the tape instead.
 
+## Ryan's frames are canonical IN RYAN'S WORDS (2026-07-25, after the four-column loss)
+When Ryan defines a model, frame, or pipeline, record it VERBATIM and mark it canonical — my
+synthesis may annotate but never replace it. The four-column pipeline (created → trial tested →
+tested by Fable → worth implementing/dead) was discussed, stored only as MY paraphrase across
+notes 20/24/32, and compaction kept my structure while HIS frame — the one he queries with —
+vanished. The charter (21) survived compaction precisely because it stores his near-verbatim
+answers. Corollary from the same day's RENTEC error: COMPRESSION INVERTS — an R-log summary
+stated the opposite of its source ledger's verdict; summaries must carry ledger links, and any
+review re-reads the PRIMARY ledger, never trusts the compression.
+
 ## Cost discipline (Session-3 lesson: 5 Fable sub-agents burned the org's monthly spend cap)
 - **Sub-agents: ALWAYS the `researcher` agent type** (`~/.claude/agents/researcher.md` — Opus, high effort). Never Fable, never xhigh. Main loop stays Fable.
 - Sub-agent = foreign-data scout (new market categories, feeds, calendars), ~20% of the work. Each prompt must include: mission, data map + machine quirks, RESUME-from-disk instruction (`ls -t ~/kalshi_data/scripts | head -20`), cost block (cheapest decisive test first, ONE strategy per lane, no sweeps), and the report format (rule / mechanism / n / win% / EV net / split / verdict TRADE-PROMISING-DEAD / file paths).
