@@ -1,0 +1,46 @@
+# Lane BEZOS — Burst 2 (2026-07-24)
+
+Archetype: **BEZOS** — own the boring pipe / recurring flow / data that compounds. Steering (steer-burst2): (a) per-family data-day ATTRIBUTION on B1 from cwing_obs — does each family's weak day match ITS calendar? (b) spec B4 harvester as a build ticket. Skip B7.
+
+**Spin-up:** notes 18→21→23(ritual)→20→32→34→33(Mesh complete) re-confirmed from burst 1; graveyard + steer read. Burst-1 ledger: lane-BEZOS-burst1.md (B1 CONDITIONAL flagship, B4 CAPTURE-DEMAND).
+
+---
+
+## The decisive run — B1 per-family data-day attribution (`/tmp/bezos_famattr.py`, `/tmp/bezos_famsplit.py`)
+cwing_obs, 5 series → 3 families, fresh wing-band (y3∈[0.05,0.35), age≤4h). Fade = buy NO, fees in, one row/rung. **Prediction of B1's stated mechanism: each family weakest on ITS OWN report day** — oil=Wed (EIA petroleum 10:30ET), gas=Thu (EIA nat-gas storage), metal=Thu/macro (claims).
+
+**Fade-NO EV by DOW (¢), and realized wing-touch %:**
+| family | Mon | Tue | Wed | Thu | ALL | touch pattern |
+|---|---|---|---|---|---|---|
+| OIL (WTI+Brent) | +2.24 | +0.83 | **+1.62** | −0.51 | +1.11 | flat ~10-12% every day |
+| GAS (natgas) | +8.08 | +0.41 | +10.15 | **−1.08** | +4.52 | Mon/Wed 2.4%, **Tue 11.2 / Thu 12.7** |
+| METAL (gold+silver) | +10.96 | +8.35 | +9.40 | **−1.55** | +6.89 | Mon-Wed 1.5-3.5%, **Thu 13.2** |
+
+**Era-split (H1/H2), Mon-Wed vs Thu EV (¢):**
+- METAL: Mon-Wed **+9.80 / +9.10** (rock-solid both eras) · Thu −8.19 / +6.21 (thin nd=4-5, flips)
+- GAS: Mon-Wed **+7.56 / +5.52** (both positive) · Thu +7.88 / −7.85 (thin, flips)
+- OIL: Mon-Wed +7.19 / **−5.39** (edge DIES in era 2) · Wed-alone +8.03 / −7.60 (flips)
+
+### What the attribution proved / disproved (honest)
+1. **B1's stated data-calendar mechanism is FALSIFIED.** Oil's own report day (Wed EIA petroleum) shows NO systematic weakness — Wed-alone EV flips +8.03→−7.60 across eras, and oil's realized wing-touch is flat ~10-12% every weekday. Each family is NOT weakest on its own commodity report. The "stand down on the family's scheduled-data day" gate does not survive per-family.
+2. **A STRONGER, simpler gate surfaced in its place:** the robust edge is **FAMILY + Mon-Wed**, not the data calendar. METAL and GAS wing-sell on Mon-Wed is era-robust (+9.1-9.8 metal, +5.5-7.6 gas, BOTH halves). **OIL is era-fragile (H1 +7.2, H2 −5.4) → drop oil from the wing-sell.** This corrects the live volbook's "sell richest-10 cross-family" — oil's large realized amplitude (Mesh: oil>commodity) means its wings are fairly-priced/unstable as a SELL, exactly the opposite of what amplitude-ranking assumed.
+3. **Thursday-specific effect is real in realized vol (gas 12.7%, metal 13.2% touch — the Thu 8:30ET jobless-claims print hits every commodity via the dollar/rates channel) but too thin per-family (Thu nd=3-5) to bank as EV.** It was carried by pooling in burst 1. Keep as a soft Thu de-weight, not a hard gate.
+4. **Secondary anomaly:** GAS Tuesday touch 11.2% / EV +0.41 (weak) with no obvious Tuesday driver — flagged, not chased (likely date-sampling noise, nd=8).
+
+---
+
+## Ledger
+
+| id | idea | mechanism / fish | kill-test | numbers | verdict | files |
+|---|---|---|---|---|---|---|
+| **B9** | **Metal+Gas wing-sell, Mon-Wed, DROP oil** (the deployable refinement of B1) | Precious-metal & natgas dailies have small realized intraday moves Mon-Wed but thin books quote a ~flat OTM vol premium → wings priced ~13-16% touch only 2-4%. Fish = the MM pricing a flat daily premium blind to family & weekday. Oil excluded: large realized amplitude → wings fairly priced, era-fragile as a sell. | per-family DOW EV + era-split, realized-touch, oil Wed-alone falsification | METAL Mon-Wed EV **+9.1/+9.8¢ both eras** (nd=14/15); GAS Mon-Wed **+5.5/+7.6¢** (nd=10/12); OIL Mon-Wed +7.2/**−5.4¢** (dies). Touch: metal 1.5-3.5%, gas 2.4% Mon/Wed. | **CONDITIONAL (+gate: family∈{metal,gas} AND Mon-Wed; exclude oil)** — era-robust in the two surviving families, named mechanism (thin-book flat-premium), own placebo (oil = failed cell). n thin (2mo, within-day-correlated rungs → nd is the real n). Immediately-deployable overlay on LIVE volbook: **cut oil wing weight, concentrate metal+gas Mon-Wed.** Needs 2yr confirm via B4. | bezos_famattr.py, bezos_famsplit.py |
+| **B10** | Data-calendar gate on wing-sell (B1's original stated mechanism) | "Each family's wings are overpriced except on ITS scheduled-report day (oil=Wed EIA, gas=Thu EIA)." | per-family attribution: is oil weak on Wed? is the weak day family-specific? | Oil Wed-alone EV +8.03→**−7.60** (flips by era); oil touch flat all week; weak day is Thu for ALL families (the universal claims print), not each family's own report. | **DEAD (structural — mechanism falsified).** The specific "own-report-day" gate is an artifact of pooling; replaced by B9's family+Mon-Wed gate. Kept with numbers so it stays dead. | bezos_famattr.py |
+| **B4** | **Cross-family settlement-calibration harvester** (`settle_harvest.py`) — day-1 pipe | Pure BEZOS flywheel: Kalshi retains trades ~10wk, books unrecorded → a daily (family,strike,T−Nh price,outcome) corpus across ALL liquid settled markets is proprietary by construction. Fish = none (infra); the moat is the data. | Does it exist / cost? Reconstructs POST-HOC from trades (retention covers daily runs → no pre-close daemon). | Est **400-1200 rows/day**, ~1000-2800 curls (~3-8 min/day), ~0.5-1 MB/day. Generalizes proven cwing_pull.py. | **CAPTURE-DEMAND — SPEC'D & READY TO BUILD.** Full build ticket written (fields, endpoints, tiered horizons, cadence, cost, reuse steps). Unblocks B9 2yr confirm, THORP/BENTER labels, BUFFETT/B8 certainty-carry, B12 term structure. | **work/build-harvester.md** |
+| **B11** | **Adaptive family-rotation pipe** (own the boring re-ranking) | The live volbook sells the richest-10 wings cross-family EVERY day on a fixed family-amplitude prior. But oil's edge is era-fragile (proven above) → a static prior mis-allocates capacity. BEZOS flywheel: continuously re-rank families by TRAILING realized-vs-implied and only sell the top-stable families (currently metal+gas), auto-demoting a family when its trailing edge decays. Fish = same MM; the edge is our adaptive allocation vs a static book. | Does trailing-window family EV predict next-window EV? (needs B4 rows across time) | On disk: only 2 eras → oil H1→H2 decay is one data point that trailing ranking WOULD have caught (demote oil after H1). Full test needs B4's rolling corpus. | **CONDITIONAL-research (capture-gated on B4)** — new mechanism (adaptive capacity allocation, not a new market). Cheap once B4 accrues: rolling-window family-EV autocorrelation. De-risks the live volbook against exactly the oil-decay found tonight. | — |
+| **B12** | **Wing-premium term-structure capture** (T−1/3/6h decay of the overpricing) | The overpricing decays as close approaches; selling at the fattest horizon compounds EV. Data-that-compounds: capture the SAME wing at multiple T-minus horizons to learn the decay curve, then enter at the horizon where premium peaks. Fish = MM who fattens the premium early and thins it late (or vice-versa). | Is T−6h wing overpricing systematically > T−3h (or <)? | On disk cwing has y6/age6 only for wing-band rungs (partial). Not enough clean paired horizons to bank; B4's tiered T−1/3/6h pull is designed to fill exactly this. | **CONDITIONAL-research (capture-gated on B4)** — pure entry-timing optionality on the EXISTING metal+gas edge; zero new market risk. B4's wing-band 4-horizon tier is built to answer it. | — |
+
+## Summary
+- **5 ideas. 0 TRADE, 1 CONDITIONAL-with-numbers & deployable (B9), 1 DEAD-structural (B10, honest self-kill of B1's stated mechanism), 1 SPEC'D-READY (B4), 2 CONDITIONAL-research capture-gated on B4 (B11/B12). B7 skipped per steer.**
+- **Decisive number:** the per-family attribution FALSIFIED B1's data-calendar mechanism (oil not weak on its Wed EIA day; oil edge dies era-2, +7.2→−5.4) and REPLACED it with a stronger, simpler, era-robust gate: **sell metal+gas dailies Mon-Wed, drop oil.** METAL Mon-Wed EV +9.1/+9.8¢ both eras; GAS +5.5/+7.6¢ both eras; OIL era-fragile. This is a direct, immediately-deployable correction to the LIVE unified volbook (cut oil wing weight, concentrate metal+gas early-week).
+- **Biggest compounding deliverable (B4):** the cross-family settlement harvester is now fully SPEC'D as a build ticket (work/build-harvester.md) — reconstructs ~10wk of history post-hoc from the trades endpoint (no daemon), ~3-8 min/day, and unblocks the 2yr confirm B9 needs plus THORP/BENTER labels and BUFFETT certainty-carry. Recommend building next.
+- **Mesh update proposed:** (1) commodity-daily wing-overpricing is FAMILY-structured, not data-calendar-structured — metal+gas wings are the durable sell (small realized moves, thin flat-premium books), oil wings are fairly-priced & era-fragile (its large amplitude = fair price, NOT a fat sell); the volbook's amplitude-ranking is backwards for the SELL side. (2) Thursday's elevated commodity wing-touch (gas 12.7%, metal 13.2%) traces to the 8:30ET jobless-claims print (dollar/rates channel hits all commodities), but the EV impact is too thin per-family to gate on.
