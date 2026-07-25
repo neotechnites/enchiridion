@@ -67,8 +67,16 @@
 ## OUTSIDE THE FUNNEL (Ryan's pre-senate slate — alive, own tracks)
 - **PCE/GDP index event wings** + **MSFT/META gap wings** — calendar-scheduled Jul 30 (adjacent-
   kill flag from EVENT-VOL noted; INDEX family unaffected).
-- **WEATHER** + **LOCK** — parked by Ryan's redirect, code in repo, gated out of live; revisit at
-  a weekly review (ens_forward capture accruing for weather).
+- **WEATHER** — NOT dead; parked by Ryan's own streak-first redirect. In-sample calibration (8
+  city biases) intact; named gate = FORWARD out-of-sample (ens_forward capture daily since ~Jul
+  23, matures ~mid-Aug) → returns to a weekly review with real evidence then.
+- **LOCK** — DECAY-benched (not structural): +1.72¢/contract in the old window → −1.07¢ on the
+  recent kill-scan; the market closed it. Re-entry test built in (`nestor backtest-lock`).
+
+**WEEKLY REVIEW STANDING DUTIES (added 2026-07-25 after Ryan's "are we killing real edges"
+challenge):** every weekly review must (a) run `backtest-lock` re-entry scan, (b) check weather
+forward-capture maturity, (c) sweep the DECAY bench and every column-3 trigger — a bench whose
+re-entry checks never run is a graveyard with extra steps.
 - **POLYLAG** — auto-gated: analyze only tapes containing a ≥3¢ Poly move (daemon running).
 
 ## COLUMNS 1-2 — CREATED / TRIAL TESTING
