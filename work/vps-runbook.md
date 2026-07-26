@@ -3,17 +3,20 @@
 ## The decision (derived)
 Requirements: ~1 vCPU / 1-2GB RAM / ~50GB disk / 24-7 uptime / US-EAST (latency to Kalshi is money:
 home order round-trip ~170-300ms, Virginia ~20-50ms → directly raises retry-fill probability).
-- **Primary: Oracle Cloud Always Free** — Ampere A1 (historically 4 ARM cores/24GB RAM/200GB
-  disk, free forever) = absurd headroom at $0. Two known gotchas, both solved the same way:
-  free-tier A1 capacity is often "out of stock" in popular regions, and truly-idle free
-  instances can be reclaimed → **convert the account to Pay-As-You-Go immediately** (bill stays
-  $0 inside the free allowance; PAYG accounts get capacity priority and reclamation exemption).
-  Home region choice is PERMANENT: pick **us-ashburn-1**.
-- **Fallback (if Ashburn A1 won't provision): Hetzner Ashburn ~$5/mo** — trivially affordable
-  (one streak win covers a month), instant, no free-tier games.
-- **AWS**: skip for now (new-account free tier is credits-limited, then the priciest ongoing
-  bill). It becomes the RIGHT answer later at scale: us-east-1 co-location with Kalshi for
-  minimum latency, paid for by nestor.
+- **Primary: Oracle Cloud Always Free** — VERIFIED 2026-07-25 (verify-cloud-tiers.md): still
+  free FOREVER but the allowance was CUT Jun 15 2026 to **2 OCPU / 12GB RAM / 200GB** — still
+  5-10× our need. The PAYG conversion is MANDATORY, not optional: idle reclamation triggers when
+  7-day p95 CPU/net/mem are ALL <20%, and our bot is light enough to look idle; PAYG exempts
+  while the bill stays $0. Ashburn A1 = frequent "out of host capacity" — obtainable by retrying
+  (script the launch attempt if needed). Home region is PERMANENT: **us-ashburn-1**.
+- **Fallback CHANGED (verified): Hetzner DOUBLED prices Jun 2026** — CPX11 Ashburn is now
+  ~$17.49/mo, no longer the cheap fallback. New fallback = **AWS credits**: a new account gets
+  $100 (+up to $100 earned) expiring at 6 months → t4g.micro + 50GB ≈ $10/mo burns credits ≈
+  ~6 months effectively free in us-east-1, THEN decide (by which point nestor funds it or
+  Oracle capacity has been won on retry).
+- **Kalshi hosting (verified):** api.elections.kalshi.com is CloudFront-fronted AWS; origin
+  region unpublished (third-party claims us-east-2/Ohio, UNCONFIRMED). US-East VPS is correct
+  either way (Ashburn↔Ohio ~10ms).
 
 ## Answers to Ryan's questions
 - "How quickly do I hit Oracle free limits?" — **for our workload, effectively never**: we need
