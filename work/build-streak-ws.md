@@ -31,6 +31,40 @@
    divergence tape accrues immediately. If no key (paper/public) it still attempts connect and
    backs off quietly. DERIVED from charter ("run alongside while flag OFF").
 
+## DEMO EVIDENCE (2026-07-26, ws::demo_probe against demo-api.kalshi.co, KXBTC15M-26JUL261330-30)
+- Endpoint RESOLVED: `wss://demo-api.kalshi.co/trade-api/ws/v2` -> handshake **HTTP 101
+  Switching Protocols** (Decision 1 host+path correct; prod host is api.elections mirror).
+- Auth RESOLVED: signed `{ts}GET/trade-api/ws/v2` headers ACCEPTED (Decision 2). ALL-channels-
+  need-auth holds.
+- Subscribe/ack RESOLVED: `{"id":1,"cmd":"subscribe","params":{"channels":["orderbook_delta"],
+  "market_tickers":[T]}}` -> `{"type":"subscribed","id":1,"msg":{"channel":"orderbook_delta",
+  "sid":1}}`. seq top-level, starts at 1 (snapshot) then deltas 2,3,4… advance by exactly 1.
+- Wire schema RESOLVED (corrected Decision 5 — the docs were WRONG on the key): live SNAPSHOT
+  side arrays are `no_dollars_fp`/`yes_dollars_fp` = `[["0.4400","335.00"],…]` (string-dollar
+  price + string-qty), NOT `no`/`no_dollars`. First demo run silently loaded an EMPTY snapshot
+  (book only rebuilt from deltas) — BUG CAUGHT AND FIXED here (parse_side_levels now checks
+  `_dollars_fp` -> `_dollars` -> bare cents). DELTAS use `msg.price_dollars`(str) + `delta_fp`
+  (str, signed) + `side` + `ts_ms`. Post-fix the 3-level snapshot loaded and best-ask =
+  100 - best_opposite_bid computed correctly (best no bid 0.85 -> yes_ask 15, live).
+- Book stayed synced across 15s of live deltas; age_ms tracked receive latency (7-1345ms;
+  the 1s freshness gate correctly rejects the between-delta stretches on this thin demo book).
+
+## PROD SEQ-GAP BUG + FIX (2026-07-26, root-caused against prod directly)
+SYMPTOM: on prod the maintainer reconnect-looped — within ~200ms of every connect,
+"connection ended (seq gap — resync via reconnect)". ROOT CAUSE (prod raw capture,
+ws::demo_probe::prod_seq_probe, 2 tickers on one connection): `seq` is ONE monotonic
+counter PER SID (per connection for a channel), NOT per-ticker — and it spans EVERY
+seq-bearing frame, including a `type:"ok"` control frame. Observed stream under sid=1:
+`snapshot(seq1,BTC) · ok(seq2) · snapshot(seq3,ETH) · delta(seq4) · delta(seq5) …` unbroken.
+My original per-ticker gap check saw BTC jump `seq 1 -> 4` (the `ok`+ETH-snapshot seqs fell
+between BTC's frames) and declared a false gap on every connect. FIX: track sequence per
+top-level `sid` at the CONNECTION level (`seq_in_order`), counting all seq-bearing frames;
+a per-sid gap = a genuinely dropped frame -> reconnect (true-gap behavior preserved).
+apply_event no longer does per-ticker seq detection. VERIFIED on prod: with BOTH KXBTC15M +
+KXETH15M subscribed, one connect held 15s with ZERO gap-reconnects, both books live and
+updating (BTC yes_ask 77->78->79, ETH 73->74, age 2-88ms, synced). Snapshot/delta/`ok`
+schema note: `ok` frames carry sid+seq and no book payload (parsed as Other, still counted).
+
 
 ## Why (R155/R156): the REST path costs money
 Streak polls GET /markets + orderbook ~1/s in entry windows. Reconstruction proved total quote
