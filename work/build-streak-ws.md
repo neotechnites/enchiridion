@@ -1,5 +1,37 @@
 # BUILD: Kalshi websocket market data for streak (2026-07-26)
 
+## DECISIONS (note-23 Part II: DERIVED from repo/API evidence | JUDGMENT | UNDERIVED=needs demo/prod truth)
+1. WS endpoint = api_base() with https->wss + `/trade-api/ws/v2`. DERIVED: matches the
+   REST host pattern (prod api.elections.kalshi.com, demo demo-api.kalshi.co); two indep
+   docs (eishan05, IntelIP/Neural) give exactly `wss://<same-host>/trade-api/ws/v2`. One
+   doc (docs.kalshi quick-start) shows an alt host `external-api-ws.kalshi.com` — UNDERIVED
+   which prod host is canonical; demo connect test resolves it (demo host is agreed).
+2. WS auth = sign `{ts_ms}GET/trade-api/ws/v2` RSA-PSS/SHA256, same 3 KALSHI-ACCESS headers
+   on the HTTP upgrade request. DERIVED: identical to REST sign_headers (path-only, no query),
+   all 3 docs agree. Reuses the existing SigningKey. UNDERIVED: whether market-data ws requires
+   auth at all (public REST needs none) — we always send it; demo test confirms handshake.
+3. Subscribe cmd = `{"id":N,"cmd":"subscribe","params":{"channels":["orderbook_delta"],
+   "market_tickers":[T]}}`, one ticker per cmd so each gets its own `sid` for clean
+   unsubscribe. DERIVED from docs; JUDGMENT: per-ticker (not batched) for churn hygiene.
+4. Book model: Kalshi book = two bid sides (`yes`,`no` price-level arrays). yes_ask = 100 -
+   best_no_bid; no_ask = 100 - best_yes_bid. DERIVED: identical convention to the existing
+   REST `orderbook_mid()` in kalshi.rs (verified 2026-07-25 live schema).
+5. Level/price parse tolerant of int-cents (`yes`/`no`) AND string-dollars (`yes_dollars`/
+   `no_dollars`), seq top-level, delta `price`|`price_dollars`+`delta`+`side`. JUDGMENT:
+   mirrors the codebase's *_dollars/_fp tolerance doctrine; exact wire form is UNDERIVED and
+   the demo test prints raw JSON to confirm. Prefer plain cents arrays, fall back to _dollars.
+6. seq gap -> mark book unsynced + drop levels + unsubscribe so the 1s reconcile re-subscribes
+   -> fresh snapshot resets seq. JUDGMENT (docs don't specify get_snapshot format); while
+   unsynced streak falls back to REST.
+7. Integration: STREAK_WS=1 AND ws quote synced AND age<1s -> override cand asks; else REST.
+   Divergence logged ALWAYS (flag-independent) to data/ws_divergence.jsonl, gated to the entry
+   window (first 60s) to bound volume. DERIVED from charter. A dead ws NEVER blocks an entry
+   (background task, non-blocking Mutex read, REST is the floor).
+8. ws task spawned in BOTH `run` and `streak` standalone; runs regardless of the flag so
+   divergence tape accrues immediately. If no key (paper/public) it still attempts connect and
+   backs off quietly. DERIVED from charter ("run alongside while flag OFF").
+
+
 ## Why (R155/R156): the REST path costs money
 Streak polls GET /markets + orderbook ~1/s in entry windows. Reconstruction proved total quote
 staleness of ~0.5-3+s (poll age + Kalshi's REST cache layer, which lags the matching engine
