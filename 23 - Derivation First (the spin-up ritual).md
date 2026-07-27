@@ -44,3 +44,16 @@ The ritual above was being applied at spin-up and at ideation — and NOWHERE EL
 Every one of these is a question the IMPLEMENTOR should have asked the spec at write time. The facts needed no live data: willingness-to-pay = 44 (the spec's own gate) + price improvement pays the resting ask (proven pre-live, $1 test filled at 28¢ on a higher limit). Holding both facts and bidding the observed ask anyway is transcription, not derivation. The head had to do the derivation the hands skipped — the exact inversion the senate exists to prevent.
 
 **Install this in every instance:** every implementor/reviewer brief (worker prompts, lane briefs, redirect files) carries the stanza: *"You are implementing an INTENT; the spec is evidence of intent, not truth. Enumerate your design decisions, derive each from the goal, flag what you can't derive. Where spec and first principles diverge, STOP and surface — do not faithfully implement a mistake."* Stance does not transfer by osmosis — a fresh instance has exactly the attitude its brief installs, so the brief must install it (the files are the technology, note 21).
+
+---
+## III. THE OPERATIONS DESCENT (added 2026-07-27, after three same-class incidents in 36h)
+Part II fixed spec→code translation. The SAME gap existed at code→OPERATION: the F8 halt
+(own winnings unmodeled), the LIP-probe halt (side-operation cash unmodeled), and the
+dot-coid loss (charset unprobed) were all actions touching the live account whose
+INTERACTIONS nobody enumerated. The rule: before any new operation touches the live
+account — probe, manual trade, deposit, poller, schedule change — write the five answers:
+**1. Cash** (what moves, when, which ledger sees it) · **2. Breaker** (what the divergence
+check reads at each step, both directions) · **3. Schedule** (what fires later — credits,
+settlements, expiries — each pre-covered?) · **4. Collisions** (coids, self-trade, rate
+budget, state writers, dedupe) · **5. Alerts** (who gets paged at 3am). No five answers,
+no operation. Checklist lives in work/ops-first-principles.md with the live money-flow map.
