@@ -28,10 +28,16 @@ nothing in the vault had measured: there is no counterparty in the window.**
   (**BTC +6.17s ± 0.16, ETH +2.68s ± 0.52**, 16/16 on-grid). The list can *never* reach the
   T0+4.8s dip; direct-ticker can.
 
+**Top door (V2): does the matching engine accept a resting order during `initialized`?**
+`verify-streak-execution.md` §4.2 prescribes posting the 40¢ maker leg at **T0−5 to −10s**, which is
+inside the initialized window; [[40]] records nestor actually resting **at T0**. Nobody has tested
+whether the prescribed timing is legal. 2 demo contracts at 1¢ settles it, and either answer is
+load-bearing for Monday's streak session. Spec in §V2 below. **This lane placed no orders.**
+
 **Actionable spin-off for another lane:** the seed-prior edge (verify-seed-prior: n=492 word
-markets seeded 0.54/0.46, realize 0.417) **cannot be captured at T0**. Its entry window is
-**T0+60 to T0+120 min** — that is when the first taker arrives and when the seed has already
-been re-quoted (median traded price 0.410 vs the 0.54 seed).
+markets seeded 0.54/0.46, realize 0.417, blind-NO +10.3¢ net / confident-subset +18.9¢ net)
+**cannot be captured at T0**. Its entry window is **T0+60 to T0+120 min** — that is when the first
+taker arrives, and by then the seed is already gone (median traded price 0.410 vs the 0.54 seed).
 
 ---
 
@@ -40,7 +46,7 @@ been re-quoted (median traded price 0.410 vs the 0.54 seed).
 | # | idea | mechanism / fish | cheapest decisive kill | numbers | verdict |
 |---|------|------------------|------------------------|---------|---------|
 | V1 | The pre-T0 "initialized" window is a private channel the lazy can't see | Fish: competitors polling only `status=open` | One GET: does the API expose the initialized population? | `status=unopened` → **77,263 markets, all status `initialized`, 60 distinct series**. Median **16.11h** to open, p10 3.10h, p90 32.1h, max **3,023h (126 d)**. `status=initialized` itself 400s; `unopened` is the documented alias. **0 / 77,263 priced.** Indexes fully consistent: `/orderbook` → `{"yes_dollars":[], "no_dollars":[]}`, `/trades` → `[]`, `/candlesticks` → `[]`, `/events?with_nested_markets` → present, direct `/markets/{t}` → present. | **DEAD as asymmetry** (one documented param reveals all of it). Survives only as a **scheduler** — see V7. |
-| V2 | Resting orders accepted during `initialized` → own queue position at every market's open, at $0 maker fee | Fish: everyone who can only queue after T0 | **DEMO PROBE — proposed, not run** (spec below) | Read-only priors, all against: order book returns 200 with zero levels; venue's own seed liquidity does not appear until **T0+34.6s** (new series) / **T0+1.4–10.0s** (15m crypto), i.e. the matching engine looks un-live pre-T0. And **even a 2xx is worth ~0** given V5/V6 (no flow in the window). | **CONDITIONAL(gate: demo POST returns 2xx AND order is in the book at T0 with priority)** — cheap to settle, low prior, low payoff. Run it to close the class, not to fund it. |
+| **V2** | **Resting orders accepted during `initialized` → own queue position at T0, at $0 maker fee.** *This is the lane's top door.* | Fish: everyone who can only queue after T0 — including our own current implementation | **DEMO PROBE — proposed, not run** (spec below) | **This is not hypothetical: `verify-streak-execution.md` §4.2 prescribes "T0−5 to −10s … post a resting GTD limit BUY, full size (8-12), at L=40c", and its own caveat says the 24% fill rate "ignores queue position … fills at exactly L with size ahead may not occur → 24% is a mild over-estimate." [[40]] says nestor actually rests "10x@40¢ GTD **at T0**." So the live system is executing the policy 5–10s late, and nobody has tested whether the prescribed timing is even legal.** Payoff scale from their table: rest@40 alone 2.45¢ → full policy 3.55¢/contract (prev1), 4.72¢ (4-streak); the dip bottoms at **T0+4.8s** and P(min≤40¢)=24%. Queue-front at T0 turns that over-estimate into a floor. Read-only priors against a 2xx: orderbook returns 200 with zero levels pre-T0, and venue seed liquidity doesn't appear until T0+34.6s (new series) / T0+1.4–10.0s (15m crypto). | **CONDITIONAL(gate: demo POST on an `initialized` market returns 2xx AND the order is in the book at T0 with priority)** — cheapest high-value test on the board: 2 demo contracts at 1¢. |
 | V3 | The unopened index gives a head start on brand-new series → build a prior, be first | Fish: retail arriving after the listing is visible on the site | Catch two new series live and measure created→open; compare to what `listing_monitor` already achieves via `/series` | Caught live today: **KXAKSEN1** created 15:39:16Z, open 16:00:00Z = **20.7 min lead**; **KXWIDGOV2ND** created 15:47:18Z, open 16:10:00Z = **22.7 min lead**. But `/series` leads *further*: on the 8 `NEW_SERIES` events in `listing_events.jsonl`, listing_monitor's detection was **−6.8 to −393 min relative to the first market's `created_time`** and **−0.1 to −1,182 min relative to open** (KXUSDRESERVE −1,182, KXUSGDPSHARE −1,154, KXUSDINTLPAY −1,041). Only 2 of 60 unopened series were absent from the Jul-26 12,187-series baseline. | **DEAD-as-new (redundant)**. `/series` already leads market creation. Marginal add: unopened supplies the **exact open_time countdown**, which `/series` does not. Fold into listing_monitor as a countdown field, not a new strategy. |
 | V4 | Uniform seed on a fresh mutually-exclusive ladder → Σbid > 1 → sell-all dutchbook | Fish: the venue's own seeding bot | Read the seed vector of every new ladder in `listing_books.jsonl` + one live open | **Live KXAKSEN1 (4 candidates), seed at T0+34.6s: 0.99 ask / 0.01 bid, size 896.00 on BOTH sides, identical on all 4 rungs. Σyes_ask = 3.96, Σyes_bid = 0.04.** Historical seeds (53 first-seen books): KXRPRESPRIMARY Σya 2.09 / Σyb 0.84; KXDPRESPRIMARY Σya 2.04 / Σyb 0.65; KXUSDRESERVE & KXUSDINTLPAY Σya 6.93 / Σyb 0.07 on 7 rungs each. **Σyes_bid never exceeds 0.84.** | **DEAD (structural)**. Reconfirms BUFFETT B9 in the new-listing case. |
 | V4b | *(Mesh correction, not an idea)* "Kalshi seeds new series at uniform 0.54/0.46" | — | same data | The uniform 0.54/0.46 seed is **MENTIONS-family-specific**: 13/13 KXEARNINGSMENTIONGRAB at exactly 0.54/0.46. Election ladders are **prior-weighted**: KXRPRESPRIMARY JVAN 0.42/0.39, MRUB 0.33/0.30, tail 0.05/0.02; KXDPRESPRIMARY KHAR 0.19/0.16, WMOO/REMA/JSHA/JOSS/GNEW 0.11/0.08, tail 0.02/0.00. Threshold ladders get the degenerate 0.99/0.01. Overall seed ask histogram (n=53): 0.99×17, 0.54×13, 0.05×9, 0.11×5. Seed books are **static**: KXRPRESPRIMARY tail rungs unchanged 0.05/0.02 → 0.05/0.02 over **2,736 min (45.6h)**. | **Mesh edit required** — see §Mesh delta. |
@@ -66,8 +72,21 @@ Objective: settle whether the matching engine accepts orders on a market in `sta
 5. Cancel everything; confirm `reduced_by` (synchronous truth, [[40]]).
 
 Total exposure: 2 demo contracts at 1¢. Expected result: **400 / "market not open"**.
-Decision value either way is small — V5/V6 show the window has no counterparty — so run it as a
-class-closer, in a spare minute, not as a funded lane.
+
+**Why this one matters (unlike the rest of the lane).** V5/V6 show the *new-listing* window has no
+counterparty, so pre-T0 access is worthless there. But 15m crypto is the opposite case — flow is
+instant, and `verify-streak-execution` §4.2 already prescribes resting at **T0−5 to −10s**, which is
+*inside the initialized window*. [[40]] records the live implementation as resting **at T0**. Either:
+
+- the POST **succeeds** pre-T0 → nestor should move its maker leg to T0−10s and gets queue-front on
+  the 40¢ bid when the T0+4.8s dip arrives (their 24% fill rate is explicitly flagged as a
+  queue-position over-estimate; queue-front makes it a floor), **or**
+- the POST **fails** → `verify-streak-execution`'s prescribed timing is unimplementable and the
+  ledger's step 2 should be amended to "T0+0 via direct-ticker poll" — which also settles why the
+  live system diverges from the prescription.
+
+Both outcomes are worth having, and both are 2 demo contracts away. **Run this before the Monday
+streak session.**
 
 ---
 
