@@ -18,11 +18,14 @@ nothing in the vault had measured: there is no counterparty in the window.**
 
 - The initialized population is **not a private channel** — one documented query parameter
   (`status=unopened`) returns all **77,263** of them.
-- A brand-new listing sits with a **completely empty book for 31.6s** after going active, then
-  the venue seeds **0.99/0.01 × 896 both sides**. On the 17 wide-seed markets we have capture
-  for, **16/17 ended with open interest 0** after 7.7–45.6 hours.
-- In the *only* new-listing family with real flow (MENTIONS), **volume in the first 30 minutes
-  was 0 contracts on 11/11 markets; median first trade was T0+107.9 min.**
+- A brand-new listing goes `active` at **T0+3.0s / +13.8s** (n=2 live) and sits with a
+  **completely empty book for 31.6s / 14.7s** before the venue seeds **0.99/0.01 × 896**.
+- **The earliest first trade observed on any new listing, in any family, is T0+6.33 min (380s)** —
+  12× later than the empty window closes and 20× later than the list-index lag. MENTIONS is far
+  slower still: **0 contracts in the first 30 min on 11/11 markets, median first trade T0+107.9 min.**
+  Wide-seed econ-threshold ladders never trade at all (**OI 0 on 16/17** after 7.7–45.6h) —
+  though election ladders do (KXAKSEN1: 2,019 contracts inside 13 min). Either way, **nothing
+  trades in the window the lag gives you.**
 - The one place the lag *does* bite is 15m crypto, and there the mechanism is now nailed:
   `/markets?status=open` is a **15.00-second cache grid**, per-series phase-locked
   (**BTC +6.17s ± 0.16, ETH +2.68s ± 0.52**, 16/16 on-grid). The list can *never* reach the
@@ -77,7 +80,7 @@ taker arrives, and by then the seed is already gone (median traded price 0.410 v
 | V3 | The unopened index gives a head start on brand-new series → build a prior, be first | Fish: retail arriving after the listing is visible on the site | Catch two new series live and measure created→open; compare to what `listing_monitor` already achieves via `/series` | Caught live today: **KXAKSEN1** created 15:39:16Z, open 16:00:00Z = **20.7 min lead**; **KXWIDGOV2ND** created 15:47:18Z, open 16:10:00Z = **22.7 min lead**. But `/series` leads *further*: on the 8 `NEW_SERIES` events in `listing_events.jsonl`, listing_monitor's detection was **−6.8 to −393 min relative to the first market's `created_time`** and **−0.1 to −1,182 min relative to open** (KXUSDRESERVE −1,182, KXUSGDPSHARE −1,154, KXUSDINTLPAY −1,041). Only 2 of 60 unopened series were absent from the Jul-26 12,187-series baseline. | **DEAD-as-new (redundant)**. `/series` already leads market creation. Marginal add: unopened supplies the **exact open_time countdown**, which `/series` does not. Fold into listing_monitor as a countdown field, not a new strategy. |
 | V4 | Uniform seed on a fresh mutually-exclusive ladder → Σbid > 1 → sell-all dutchbook | Fish: the venue's own seeding bot | Read the seed vector of every new ladder in `listing_books.jsonl` + one live open | **Live KXAKSEN1 (4 candidates), seed at T0+34.6s: 0.99 ask / 0.01 bid, size 896.00 on BOTH sides, identical on all 4 rungs. Σyes_ask = 3.96, Σyes_bid = 0.04.** Historical seeds (53 first-seen books): KXRPRESPRIMARY Σya 2.09 / Σyb 0.84; KXDPRESPRIMARY Σya 2.04 / Σyb 0.65; KXUSDRESERVE & KXUSDINTLPAY Σya 6.93 / Σyb 0.07 on 7 rungs each. **Σyes_bid never exceeds 0.84.** | **DEAD (structural)**. Reconfirms BUFFETT B9 in the new-listing case. |
 | V4b | *(Mesh correction, not an idea)* "Kalshi seeds new series at uniform 0.54/0.46" | — | same data | The uniform 0.54/0.46 seed is **MENTIONS-family-specific**: 13/13 KXEARNINGSMENTIONGRAB at exactly 0.54/0.46. Election ladders are **prior-weighted**: KXRPRESPRIMARY JVAN 0.42/0.39, MRUB 0.33/0.30, tail 0.05/0.02; KXDPRESPRIMARY KHAR 0.19/0.16, WMOO/REMA/JSHA/JOSS/GNEW 0.11/0.08, tail 0.02/0.00. Threshold ladders get the degenerate 0.99/0.01. Overall seed ask histogram (n=53): 0.99×17, 0.54×13, 0.05×9, 0.11×5. Seed books are **static**: KXRPRESPRIMARY tail rungs unchanged 0.05/0.02 → 0.05/0.02 over **2,736 min (45.6h)**. | **Mesh edit required** — see §Mesh delta. |
-| V5 | Be the first real quote inside the 98¢-wide fresh seed book (maker fee $0, 31.6s of empty book) | Fish: retail who market-buys a fresh listing and pays 0.99 | Do wide-seed markets accrue ANY open interest? | 17 of 53 first-seen books had spread > 50¢. **End OI = 0 on 16/17** (median capture span 461 min, max 2,736 min = 45.6h). Sole exception KXACQANNOUNCEOPENR (endOI 200) narrowed to ≤10¢ within **20 min**. 10/17 narrowed to ≤10¢ (median 441 min); 7/17 still >10¢ at end of capture. | **DEAD on flow** — a no-counterparty kill, not a pickoff kill. The graveyard's pickoff objection never even gets to apply. |
+| V5 | Be the first real quote inside the 98¢-wide fresh seed book (maker fee $0, 31.6s of empty book) | Fish: retail who market-buys a fresh listing and pays 0.99 | Do wide-seed markets accrue ANY open interest? | 17 of 53 first-seen books had spread > 50¢. **End OI = 0 on 16/17** (median capture span 461 min, max 2,736 min = 45.6h). 10/17 narrowed to ≤10¢ (median 441 min); 7/17 still >10¢ at end. **But that historical sample is all econ-threshold ladders** (KXUSDRESERVE, KXUSDINTLPAY) — and the live election ladder caught today contradicts it: **KXAKSEN1 traded 2,019 contracts within 13 min of open** (DJSUL 1,004, DDAR 1,004, MPEL 7, DSSUL 4), repricing from the 0.99/0.01 seed to a real prior (MPEL 0.79/0.78, DSSUL 0.21/0.14, longshots 0.02/0.01). **First trade T0+6.33 min, simultaneously on all 4 rungs, taker=no** — an MM crossing the seed. | **CONDITIONAL(gate: election / name-recognition ladders, NOT econ-threshold ladders)** — the family gate is real and I am obliged to name it rather than kill on it. **But it does not rescue *this lane's* premise:** the flow arrives at T0+6.33 min, 12× later than the 31.6s empty window closes, so pre-T0 or listing-lag access buys nothing. The residual belongs to **HOUSE-FEE** (quote the T0+0.5→6 min band on fresh election ladders at $0 maker fee), not to VENUE-MECHANICS. |
 | V6 | Be first at T0 on MENTIONS — the one new-listing family with both flow and a mispriced uniform seed | Fish: verify-seed-prior's n=492 word markets (seeded 0.54/0.46, realize **0.417**) | When does the first taker actually arrive, and at what price? | MENTIONS carries **7,252 of 8,065 contracts (90%)** across all 53 tracked new-listing markets; 13/13 traded vs 9/40 elsewhere (813 contracts in 66h). **But: volume in the first 30 min = 0 contracts on 11/11 markets. Median first trade T0+107.9 min (min 63.6, max 599.3).** By first trade the seed is gone: first-trade prices 0.19/0.19/0.24/0.24/0.29/0.34/0.37/0.39/0.56/0.59/0.81, taker=yes on 9/11; **median traded price 0.410 vs the 0.54 seed**; ~49.6% of lifetime volume inside the first 2h. | **DEAD for the pre-T0/speed premise.** The seed-prior edge itself is untouched — but its **entry window is T0+60–120 min**, and it is a resting-quote play, not a speed play. Hand to the seed-prior owner. |
 | **V7** | 15m-crypto list-index lag is a **deterministic 15s cache grid**, so the list can never reach the T0 entry — direct-ticker must be the sole path. **The fish turned out to be us** (streak/strategy.rs:625). | Fish: any bot whose T0 entry path is `GET /markets?status=open` — including nestor today | `lag mod 15` on the n=16 first-open observations already on disk | **lag mod 15 = 6.17s ± 0.163 (BTC, n=8, range 5.84–6.46); 2.68s ± 0.524 (ETH, n=8, range 1.74–3.36). 16/16 on-grid. Pooled phase sd 1.79s vs 4.33s expected if lag were uniform-random.** Cycles missed: BTC {0:1, 1:4, 2:3}, ETH {0:1, 1:2, 2:5}. Median list lag **21.16s BTC / 31.93s ETH**. Direct-ticker first-priced: BTC {1.43, 5.40, 6.94} med **5.40s**, ETH {7.59, 9.61, 10.01} med **9.61s** → recovered window **15.8s (BTC) / 22.3s (ETH)**. Price carried by the recovered window (n=6 paired, Jul-26): Δ = +4, −1, −4 (BTC), −5, 0, 0 (ETH) → **mean \|Δ\| = 2.33¢, mean Δ = −1.0¢**. | **TRADE-shaped (execution)** — already queued in [[40]] §2. Lane contribution: the **mechanism + phase constants**, and the hard conclusion that `status=open` is structurally incapable of the T0+4.8s dip (verify-streak-execution). Direction of the 2.33¢ unresolved at n=6. |
 | V8 | Sub-cent (deci-cent) tick levels = free queue priority for 1/10 of a cent, at $0 maker fee | Fish: anyone quoting on the whole-cent grid | Pull depth-100 books on the 15m families: are the sub-cent levels already occupied? | New venue fact: 15m crypto is **`tapered_deci_cent`** — steps 0.0010 on [0, 0.10], **0.0100 on [0.10, 0.90]**, 0.0010 on [0.90, 1.00]. All 9 15M families (BTC/ETH/SOL/XRP/DOGE/BNB/HYPE/NEAR/ZEC). Everything else we trade is `linear_cent`: KXBTCD, KXETHD, KXBTC, KXETH, KXGOLDD, KXSILVERD, KXBRENTD, KXNATGASD, KXINXU, KXNASDAQ100U, KXHIGHNY, KXCPIYOY. **Occupancy: in the tail zones, 234 sub-cent levels already resting vs 111 cent levels**, sizes 100–600 (e.g. KXBTC15M no-side 0.9010×109, 0.9030×600, 0.9050×500, 0.9070×500, 0.9090×500). | **DEAD.** MMs already own the deci-cent grid. Worse: the *tapered* structure means there is **no sub-cent tick anywhere in 10–90¢** — exactly where nestor rests (40¢) and IOCs (46¢) — so no queue-jump lever exists on the live strategy at all. |
@@ -136,14 +139,26 @@ that guard (plus making `NotEntryWindow` retryable when `ttc > WINDOW_SECS`, sin
 ## What died, and why it matters that it died this way
 
 Three separate ideas (V4, V5, V6) all failed on the **same** hidden fact, which no prior ledger
-had: **new listings have no flow for the first hour-plus.** The vault's "new listings are sloppy
-for ~48h" (Mesh §STRUCTURE) is true about *quotes* and false about *volume*. Being early is only
-worth something where somebody is trading, and on Kalshi that is essentially 15m crypto and the
-established slate — never a fresh book.
+had: **nothing trades in the first minutes of a new listing.** The vault's "new listings are sloppy
+for ~48h" (Mesh §STRUCTURE) is true about *quotes* and false about *timing of volume*. Being early
+is only worth something where somebody is trading.
 
-That collapses the whole "visible-to-the-diligent" premise for this lane down to one survivor
-(V7, 15m crypto, already queued), and it does so with numbers rather than vibes:
-**0 contracts in 30 min, 11/11 markets; OI 0 after 45.6h, 16/17 markets.**
+The decisive framing is a comparison of three windows on the same clock:
+
+| window the venue gives you | duration |
+|---|---|
+| market fetchable pre-open (`status=unopened`) | **20.7–22.7 min** |
+| `status=open` list-index lag (15s cache grid) | **21.2–31.9 s** |
+| book completely empty after going active | **14.7–31.6 s** |
+| **time until the first trade actually happens** | **6.33 min (best case, any family) — 107.9 min (MENTIONS median)** |
+
+The counterparty arrives **12× to 340× later than the last of the "early access" windows closes.**
+Every advantage this lane was chartered to hunt is real, measurable, and lands in an empty room.
+
+That collapses the "visible-to-the-diligent" premise down to one survivor — 15m crypto, where flow
+*is* instant — and there the finding is not an edge to add but a **defect to fix**: nestor is
+itself the fish, discovering markets through the cached index at median T0+21–32s while its own
+fitted policy needs T0−10s.
 
 ---
 
@@ -156,18 +171,21 @@ That collapses the whole "visible-to-the-diligent" premise for this lane down to
    BTC15M +6.17s ± 0.16, ETH15M +2.68s ± 0.52 (n=16, 16/16 on-grid). Observed list lag =
    phase + 15·k, k ∈ {0,1,2}; median 21.2s / 31.9s. **The list index can never serve a T0 entry.**
    Direct-ticker fetch is uncached: first priced at median 5.4s (BTC) / 9.6s (ETH) after T0.
-3. **New listings have no flow.** Wide-seed (>50¢) markets: OI 0 on 16/17 after 7.7–45.6h.
-   Even in the one family with volume (MENTIONS, 90% of all new-listing volume), **first-30-min
-   volume = 0 on 11/11, median first trade T0+107.9 min**. Correct the "new listings are sloppy
-   for ~48h → a listing monitor is a strategy-generator" line: sloppy quotes, no counterparty.
+3. **Nothing trades in the first minutes of a new listing.** Earliest first trade observed in any
+   family = **T0+6.33 min** (election ladder); MENTIONS **first-30-min volume = 0 on 11/11, median
+   first trade T0+107.9 min**; wide-seed econ-threshold ladders **OI 0 on 16/17** after 7.7–45.6h.
+   Flow timing is **family-gated**: election/name-recognition ladders convert (KXAKSEN1, 2,019
+   contracts in 13 min), econ-threshold ladders never do. Correct the "new listings are sloppy for
+   ~48h → a listing monitor is a strategy-generator" line: **sloppy quotes, but the counterparty
+   arrives minutes-to-hours later — never inside the listing-lag window.**
 4. **Seed structure is family-specific, not uniform.** MENTIONS: 0.54/0.46 on 13/13. Elections:
    prior-weighted (0.42/0.33/…/0.05). Thresholds & fresh which-candidate ladders: degenerate
    **0.99/0.01 with size 896 both sides**. Σyes_bid across a fresh exclusive ladder is 0.04–0.84,
    **never > 1** → no sell-all dutchbook (BUFFETT B9 again).
 5. **New series are created ~20–23 min before open** (KXAKSEN1 20.7, KXWIDGOV2ND 22.7), go
-   `active` at T0+3.0s, and the book stays **completely empty for 31.6s** before the venue seeds.
-   `/series` leads market creation by a further 7–393 min — listing_monitor's existing poll is
-   the better sensor.
+   `active` at **T0+3.0s / +13.8s**, and the book stays **completely empty for 31.6s / 14.7s**
+   before the venue seeds 0.99/0.01 × 896. `/series` leads market creation by a further 7–393 min —
+   listing_monitor's existing poll is the better sensor.
 6. **`price_level_structure` / `price_ranges` are per-family.** 15M crypto = `tapered_deci_cent`
    (0.1¢ ticks on [0,10¢] and [90¢,100¢]; **1¢ ticks on [10¢,90¢]**); dailies/hourlies/index/econ
    = `linear_cent`. The deci-cent tails are already densely quoted (234 sub-cent vs 111 cent
