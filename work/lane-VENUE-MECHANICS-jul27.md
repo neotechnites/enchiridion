@@ -51,6 +51,16 @@ nobody had computed:
 > fitted on. Only 14.9% by T0+12s (the prev1 dip). Nestor arrives after the fitted dip in ~98.5%
 > of windows.**
 
+**And the counterparty is unambiguously there while we are blind.** From the kbt tapes
+(`kbt_books_btc.jsonl` / `_eth.jsonl`, n=356 windows, Jul 24-26 — note these are a **third-party
+vendor's** capture, `api.kalshibacktest.com`, so the snapshot cadence is theirs, not the book's
+birth): the first available observation of each window lands at median **T0+2.45s (BTC) / T0+2.86s
+(ETH)** (p10 0.66/0.60s, earliest 0.18s), and at that first observation the book is **two-sided in
+356/356 windows — 100%** — with median combined top-of-book depth **4,415 contracts (BTC) / 798
+(ETH)**, p90 8,674 / 14,092. So market makers are quoting thousands of contracts within ~1-3s of T0
+while nestor has not yet learned the market exists. **Unlike every new-listing family in this lane,
+here the room is full.** That is what makes V7 a defect rather than a curiosity.
+
 The interquartile range is T0+15.0s to T0+34.1s — i.e. the maker leg, when it is posted at all, is
 posted into the *post-dip sweep-up*, which `verify-streak-execution` §2 explicitly warns is when the
 reversal ask is climbing back through 47-53¢.
@@ -178,8 +188,9 @@ The decisive framing is a comparison of three windows on the same clock:
 |---|---|
 | market fetchable pre-open (`status=unopened`) | **20.7–22.7 min** |
 | `status=open` list-index lag (15s cache grid) | **21.2–31.9 s** |
-| book completely empty after going active | **14.7–31.6 s** |
-| **time until the first trade actually happens** | **6.33 min (best case, any family) — 107.9 min (MENTIONS median)** |
+| book completely empty after going active (new listing) | **14.7–31.6 s** |
+| **time until the first trade actually happens (new listing)** | **6.33 min (best case, any family) — 107.9 min (MENTIONS median)** |
+| *contrast — 15m crypto:* book two-sided at first observation | **356/356 windows, median T0+2.45s, 4,415 contracts deep** |
 
 The counterparty arrives **12× to 340× later than the last of the "early access" windows closes.**
 Every advantage this lane was chartered to hunt is real, measurable, and lands in an empty room.
