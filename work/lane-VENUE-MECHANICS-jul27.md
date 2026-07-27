@@ -100,6 +100,20 @@ taker arrives, and by then the seed is already gone (median traded price 0.410 v
 | V7b | **Mirror test:** does the *post-close* index lag the same way as the pre-open one? (the class, applied to the other end of the window) | Fish: anyone reading the previous window's result off `status=settled` — which is exactly what a streak detector needs | Poll the closing 15m market by direct ticker AND via `status=settled` from T_close−5s to +90s | n=2 (16:15Z close). Market leaves `active` at **T+0.14s (BTC) / T+0.27s (ETH)**. **Result is readable on the direct fetch at T+11.64s (BTC, `finalized`, result "yes") / T+6.55s (ETH, `determined`, result "no")** — but it does **not** appear in the `status=settled` list until **T+40.06s / T+37.25s**. **Gap = 28.4s / 30.7s.** Consistent with the same 15s grid (40.06 and 37.25 are 2 cycles past phases 10.06 / 7.25), n too small to fix the phase. | **Already fixed in nestor — and this confirms the fix was right.** `crates/engine/src/kalshi.rs:355-360` deliberately uses a status-agnostic time-bounded `recent_closed` "because the `status=settled` filter lags the actual result." Measured: that choice buys **~29s** per window on the settle side. **The identical fix is still missing on the open side (V7).** |
 | V8 | Sub-cent (deci-cent) tick levels = free queue priority for 1/10 of a cent, at $0 maker fee | Fish: anyone quoting on the whole-cent grid | Pull depth-100 books on the 15m families: are the sub-cent levels already occupied? | New venue fact: 15m crypto is **`tapered_deci_cent`** — steps 0.0010 on [0, 0.10], **0.0100 on [0.10, 0.90]**, 0.0010 on [0.90, 1.00]. All 9 15M families (BTC/ETH/SOL/XRP/DOGE/BNB/HYPE/NEAR/ZEC). Everything else we trade is `linear_cent`: KXBTCD, KXETHD, KXBTC, KXETH, KXGOLDD, KXSILVERD, KXBRENTD, KXNATGASD, KXINXU, KXNASDAQ100U, KXHIGHNY, KXCPIYOY. **Occupancy: in the tail zones, 234 sub-cent levels already resting vs 111 cent levels**, sizes 100–600 (e.g. KXBTC15M no-side 0.9010×109, 0.9030×600, 0.9050×500, 0.9070×500, 0.9090×500). | **DEAD.** MMs already own the deci-cent grid. Worse: the *tapered* structure means there is **no sub-cent tick anywhere in 10–90¢** — exactly where nestor rests (40¢) and IOCs (46¢) — so no queue-jump lever exists on the live strategy at all. |
 
+### Verdict summary (8 ideas)
+
+| verdict | ideas |
+|---|---|
+| **TRADE-shaped** | **V7** — direct-ticker discovery for streak. Not a new strategy: a **live defect fix** on the running system, with n=536 backing. |
+| **CONDITIONAL (named gate)** | **V2** — gate: demo POST on an `initialized` market returns 2xx *and* the order holds queue priority at T0. Cost: 2 demo contracts at 1¢. **V5** — gate: election / name-recognition ladders (not econ-threshold); belongs to HOUSE-FEE, not here. **V7b** — mirror confirmed; no action (nestor already routes around the settled-list lag). |
+| **DEAD with numbers** | **V1** (77,263 markets returned by one public param — no asymmetry) · **V3** (`/series` leads by 7-393 min; unopened adds only a countdown) · **V4** (Σyes_bid 0.04-0.84, never >1) · **V6** (0 contracts in first 30 min, 11/11; median first trade T0+107.9 min) · **V8** (234 sub-cent levels already resting vs 111 cent; no sub-cent tick at all in 10-90¢) |
+
+Net: **1 TRADE-shaped, 3 CONDITIONAL, 5 DEAD**, plus one Mesh correction (V4b) and seven Mesh
+additions. The lane's charter question — *what is visible to the diligent before it's visible to
+the lazy?* — has a clean answer: **quite a lot, and almost none of it is worth anything, because the
+counterparty has not arrived yet.** The exception is 15m crypto, where the answer turned out to be
+that **we** are the lazy one.
+
 ---
 
 ## V2 — the demo probe, specified (for whoever runs it; this lane placed no orders)
