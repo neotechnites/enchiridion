@@ -88,6 +88,22 @@ instant, and `verify-streak-execution` §4.2 already prescribes resting at **T0�
 Both outcomes are worth having, and both are 2 demo contracts away. **Run this before the Monday
 streak session.**
 
+**Second blocker, found in our own code (independent of the venue answer).** Even if the exchange
+accepts pre-T0 orders, nestor cannot currently use them:
+
+- `crates/streak/src/lib.rs:8` — *"rest a full-size 40¢ bid on the reversal side **from T0**"* —
+  the implementation encodes T0, not the prescribed T0−5..−10s.
+- `crates/streak/src/signal.rs:90-92,140-144` — the entry gate is
+  `ttc = close_unix - now; if !(MIN_TTC_SECS..=WINDOW_SECS).contains(&ttc) { return Err(Skip::NotEntryWindow) }`
+  with `WINDOW_SECS = 900`, `MIN_TTC_SECS = 840`. **At T0, ttc = 900; at T0−10s, ttc = 910 > 900 →
+  `NotEntryWindow`.** And `Skip::retryable()` (signal.rs:73-75) returns true **only** for
+  `PrevNotSettled`, so `NotEntryWindow` is **terminal** — a market first seen pre-T0 is rejected and
+  never re-evaluated.
+
+So moving the maker leg pre-T0 needs the demo answer **and** a two-line change to the upper bound of
+that guard (plus making `NotEntryWindow` retryable when `ttc > WINDOW_SECS`, since that case is
+"too early", not "too late" — they are currently conflated into one terminal skip).
+
 ---
 
 ## What died, and why it matters that it died this way
