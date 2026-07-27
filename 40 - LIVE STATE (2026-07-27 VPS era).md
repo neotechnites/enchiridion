@@ -45,8 +45,13 @@
    — real top-of-book capture for 15m crypto).
 3. **Weekly Fable review ~Jul 31**: duties per 38 + decay-bench sweep + the S13 ceiling-walk
    evidence (45-46¢ fills) + entry-price-bucket win rates (Ryan's floor question).
-4. Tue FEDMENTION capture (Warsh base rates); Wed PCE/GDP + MSFT/META wings (Ryan's slate,
-   build-vs-manual undecided); LIP/maker separation post-probe (R153).
+4. CALENDAR CORRECTED (SOROS lane 2026-07-27): **Wed Jul 29 = FOMC** (statement 18:00Z,
+   Warsh presser 18:30Z) **+ MSFT/META after close**; **Thu Jul 30 12:30Z = GDP+PCE+claims**.
+   EVENT-WINGS EVIDENCE COLLAPSED (lane-SOROS-jul27): winning legs were stale-quote artifacts
+   (n=1 CPI date), Thu print wings test DEAD (5.0% base vs 1.20x premium), MSFT/META gap wings
+   have NO VENUE (no bracket spans after-hours). Replacement door: FOMC-presser +/-1.0% BTC
+   strangle Wed 18:45Z bracket (5/16 vs 6.8% base, p=0.004, ~3.8x net) — GATE: take <=20c pair
+   ask at 18:45Z, stand down >=30c. Class B, 8 trades/yr. LIP/maker separation post-probe (R153).
 
 ## OPS (VPS era — most 39 gotchas dead)
 Restart: `ssh ubuntu@129.146.115.241 'sudo systemctl restart nestor'` · logs: nestor/logs/
