@@ -28,6 +28,33 @@ nothing in the vault had measured: there is no counterparty in the window.**
   (**BTC +6.17s ± 0.16, ETH +2.68s ± 0.52**, 16/16 on-grid). The list can *never* reach the
   T0+4.8s dip; direct-ticker can.
 
+**LIVE DEFECT FOUND, with the fix (note 15: report + fix in the same message, with numbers).**
+`crates/streak/src/strategy.rs:625` discovers the current 15m window with
+`eng.kalshi.markets(series, "open")` — i.e. `GET /markets?series_ticker=…&status=open`, **the
+cached index**. Nestor's own comment at strategy.rs:652-657 already measured the symptom:
+
+> *"Measured over n=518 windows on 3 days of `data/obs/`, the FIRST observation of a new market
+> lands at a **MEDIAN T0+25s** — and the 40¢ rest is fitted on a dip that bottoms at a median
+> T0+4.8s. **13.3% of windows first observe after T0+40** (forced `taker_late`, no maker leg at
+> all) and **4.2% after T0+60 (window missed outright)**."*
+
+**This lane supplies the mechanism, and it matches their number.** The lag is not jitter and cannot
+be fixed by polling faster (nestor already polls ~1s): the index is rebuilt on a **15.00s clock**,
+per-series phase-locked, and market inclusion costs 1–2 cycles → median **T0+21.2s (BTC) / T0+31.9s
+(ETH)**, pooled ≈ 26.5s vs their measured 25s. The websocket does not rescue it — strategy.rs:479
+only registers WS interest *after* REST discovery, so WS is downstream of the cached list.
+
+**Fix:** replace list-discovery in streak with a constructed-ticker direct GET. `Kalshi::market()`
+already exists (`crates/engine/src/kalshi.rs:388`, public, uncached). The 15m ticker is fully
+deterministic from the close time in ET — `{SERIES}-{%y%b%d upper}{%H%M}-{%M}` — probe-proven 6/6 in
+`probe_direct_ticker.py`. Direct GET returns the market at **T0−10s** (`status:"initialized"`) and
+first priced at median **T0+5.4s (BTC) / T0+9.6s (ETH)**, recovering **15.8s / 22.3s** and landing
+*at* the T0+4.8s dip instead of ~21–32s after it. This is the "queued code" in [[40]] §2 — the
+numbers here say it is not cosmetic, it is the difference between having a maker leg and not.
+Kalshi.rs:355-360 already learned exactly this lesson for the **post-close** side (`recent_closed` is
+deliberately status-agnostic because "the `status=settled` filter lags the actual result"); the same
+fix was never applied to the **pre-open** side.
+
 **Top door (V2): does the matching engine accept a resting order during `initialized`?**
 `verify-streak-execution.md` §4.2 prescribes posting the 40¢ maker leg at **T0−5 to −10s**, which is
 inside the initialized window; [[40]] records nestor actually resting **at T0**. Nobody has tested
@@ -52,7 +79,7 @@ taker arrives, and by then the seed is already gone (median traded price 0.410 v
 | V4b | *(Mesh correction, not an idea)* "Kalshi seeds new series at uniform 0.54/0.46" | — | same data | The uniform 0.54/0.46 seed is **MENTIONS-family-specific**: 13/13 KXEARNINGSMENTIONGRAB at exactly 0.54/0.46. Election ladders are **prior-weighted**: KXRPRESPRIMARY JVAN 0.42/0.39, MRUB 0.33/0.30, tail 0.05/0.02; KXDPRESPRIMARY KHAR 0.19/0.16, WMOO/REMA/JSHA/JOSS/GNEW 0.11/0.08, tail 0.02/0.00. Threshold ladders get the degenerate 0.99/0.01. Overall seed ask histogram (n=53): 0.99×17, 0.54×13, 0.05×9, 0.11×5. Seed books are **static**: KXRPRESPRIMARY tail rungs unchanged 0.05/0.02 → 0.05/0.02 over **2,736 min (45.6h)**. | **Mesh edit required** — see §Mesh delta. |
 | V5 | Be the first real quote inside the 98¢-wide fresh seed book (maker fee $0, 31.6s of empty book) | Fish: retail who market-buys a fresh listing and pays 0.99 | Do wide-seed markets accrue ANY open interest? | 17 of 53 first-seen books had spread > 50¢. **End OI = 0 on 16/17** (median capture span 461 min, max 2,736 min = 45.6h). Sole exception KXACQANNOUNCEOPENR (endOI 200) narrowed to ≤10¢ within **20 min**. 10/17 narrowed to ≤10¢ (median 441 min); 7/17 still >10¢ at end of capture. | **DEAD on flow** — a no-counterparty kill, not a pickoff kill. The graveyard's pickoff objection never even gets to apply. |
 | V6 | Be first at T0 on MENTIONS — the one new-listing family with both flow and a mispriced uniform seed | Fish: verify-seed-prior's n=492 word markets (seeded 0.54/0.46, realize **0.417**) | When does the first taker actually arrive, and at what price? | MENTIONS carries **7,252 of 8,065 contracts (90%)** across all 53 tracked new-listing markets; 13/13 traded vs 9/40 elsewhere (813 contracts in 66h). **But: volume in the first 30 min = 0 contracts on 11/11 markets. Median first trade T0+107.9 min (min 63.6, max 599.3).** By first trade the seed is gone: first-trade prices 0.19/0.19/0.24/0.24/0.29/0.34/0.37/0.39/0.56/0.59/0.81, taker=yes on 9/11; **median traded price 0.410 vs the 0.54 seed**; ~49.6% of lifetime volume inside the first 2h. | **DEAD for the pre-T0/speed premise.** The seed-prior edge itself is untouched — but its **entry window is T0+60–120 min**, and it is a resting-quote play, not a speed play. Hand to the seed-prior owner. |
-| V7 | 15m-crypto list-index lag is a **deterministic 15s cache grid**, so the list can never reach the T0 entry — direct-ticker must be the sole path | Fish: any bot whose T0 entry path is `GET /markets?status=open` | `lag mod 15` on the n=16 first-open observations already on disk | **lag mod 15 = 6.17s ± 0.163 (BTC, n=8, range 5.84–6.46); 2.68s ± 0.524 (ETH, n=8, range 1.74–3.36). 16/16 on-grid. Pooled phase sd 1.79s vs 4.33s expected if lag were uniform-random.** Cycles missed: BTC {0:1, 1:4, 2:3}, ETH {0:1, 1:2, 2:5}. Median list lag **21.16s BTC / 31.93s ETH**. Direct-ticker first-priced: BTC {1.43, 5.40, 6.94} med **5.40s**, ETH {7.59, 9.61, 10.01} med **9.61s** → recovered window **15.8s (BTC) / 22.3s (ETH)**. Price carried by the recovered window (n=6 paired, Jul-26): Δ = +4, −1, −4 (BTC), −5, 0, 0 (ETH) → **mean \|Δ\| = 2.33¢, mean Δ = −1.0¢**. | **TRADE-shaped (execution)** — already queued in [[40]] §2. Lane contribution: the **mechanism + phase constants**, and the hard conclusion that `status=open` is structurally incapable of the T0+4.8s dip (verify-streak-execution). Direction of the 2.33¢ unresolved at n=6. |
+| **V7** | 15m-crypto list-index lag is a **deterministic 15s cache grid**, so the list can never reach the T0 entry — direct-ticker must be the sole path. **The fish turned out to be us** (streak/strategy.rs:625). | Fish: any bot whose T0 entry path is `GET /markets?status=open` — including nestor today | `lag mod 15` on the n=16 first-open observations already on disk | **lag mod 15 = 6.17s ± 0.163 (BTC, n=8, range 5.84–6.46); 2.68s ± 0.524 (ETH, n=8, range 1.74–3.36). 16/16 on-grid. Pooled phase sd 1.79s vs 4.33s expected if lag were uniform-random.** Cycles missed: BTC {0:1, 1:4, 2:3}, ETH {0:1, 1:2, 2:5}. Median list lag **21.16s BTC / 31.93s ETH**. Direct-ticker first-priced: BTC {1.43, 5.40, 6.94} med **5.40s**, ETH {7.59, 9.61, 10.01} med **9.61s** → recovered window **15.8s (BTC) / 22.3s (ETH)**. Price carried by the recovered window (n=6 paired, Jul-26): Δ = +4, −1, −4 (BTC), −5, 0, 0 (ETH) → **mean \|Δ\| = 2.33¢, mean Δ = −1.0¢**. | **TRADE-shaped (execution)** — already queued in [[40]] §2. Lane contribution: the **mechanism + phase constants**, and the hard conclusion that `status=open` is structurally incapable of the T0+4.8s dip (verify-streak-execution). Direction of the 2.33¢ unresolved at n=6. |
 | V8 | Sub-cent (deci-cent) tick levels = free queue priority for 1/10 of a cent, at $0 maker fee | Fish: anyone quoting on the whole-cent grid | Pull depth-100 books on the 15m families: are the sub-cent levels already occupied? | New venue fact: 15m crypto is **`tapered_deci_cent`** — steps 0.0010 on [0, 0.10], **0.0100 on [0.10, 0.90]**, 0.0010 on [0.90, 1.00]. All 9 15M families (BTC/ETH/SOL/XRP/DOGE/BNB/HYPE/NEAR/ZEC). Everything else we trade is `linear_cent`: KXBTCD, KXETHD, KXBTC, KXETH, KXGOLDD, KXSILVERD, KXBRENTD, KXNATGASD, KXINXU, KXNASDAQ100U, KXHIGHNY, KXCPIYOY. **Occupancy: in the tail zones, 234 sub-cent levels already resting vs 111 cent levels**, sizes 100–600 (e.g. KXBTC15M no-side 0.9010×109, 0.9030×600, 0.9050×500, 0.9070×500, 0.9090×500). | **DEAD.** MMs already own the deci-cent grid. Worse: the *tapered* structure means there is **no sub-cent tick anywhere in 10–90¢** — exactly where nestor rests (40¢) and IOCs (46¢) — so no queue-jump lever exists on the live strategy at all. |
 
 ---
