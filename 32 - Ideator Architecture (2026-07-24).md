@@ -77,3 +77,23 @@ Ryan: "if my context helped you ideate, you need to be that input for these clau
 4. **Named the gate before celebrating:** the edge pays ONLY where the triad holds (discrete public lock + market stays open after + obscure settle source) — and immediately proposed the catalog pass that verifies it across all 679, plus killed its own adjacent ideas with numbers (earnings-MENTION closes-on-occurrence = 362 markets structurally dead) in the same burst.
 5. **In plain English at the end:** a running official tally crosses a line → the outcome is mathematically decided → the market keeps trading on vibes → whoever reads the official record first buys decided winners from people who don't know it's over.
 The lesson is the SHAPE: census → distrust fields → collide with proven mechanism → gate before glory → cheap kills alongside. **Status: PROVISIONAL (Ryan 2026-07-24): NOT fully outcome-independent — "if it turns out thats bullshit that completely didnt work and musk did a poor job checking, then its not an exemplar." The creativity level and idea-shape are the right bar regardless; exemplar status is confirmed or revoked by the COUNT-catalog verification. Wait and see.**
+
+## §10 ROSTER REPRODUCTION — ASEXUAL EUGENICS (Ryan-ordered 2026-07-27, constraints ratified)
+Ryan's frame, verbatim-canonical: *"the way in which we should repopulate ideator profiles is
+through asexual eugenics... if musk is the guy who makes all the good ideas, make 10 profiles
+similar but different to him, and wait and see how their ideas fair."* Activates once money
+attribution exists (consistent with §3: graded only by nestor-proven money, no culls until
+deployment scale). Three ratified design constraints:
+1. **Niche-protected selection**: breed the best per LENS-FAMILY (census-hunter, model-builder,
+   mechanics-prober, depth-miner...), never one global champion — orthogonal lenses are where
+   burst value demonstrably came from. Hold ~1/3 of every burst as WILDCARD immigrant slots,
+   forever (exploit/explore).
+2. **Mutate the GENOME, not the name**: persona is the smallest factor (R108 post-mortem —
+   Mesh density + steering + owned kill-tools did the work). Offspring vary the load-bearing
+   genes: fed facts, door-class, method exemplar. The brief IS the search.
+3. **Fitness guarded against luck**: money is the headline grade but arrives lumpy (one hit
+   dominates a quarter; n=1 selection = the small-sample trap). Weight in verification-
+   survivor-rate + pipeline value for breeding decisions; selection preserves variance —
+   one great idea pays for a hundred duds.
+Weekly review owns the cycle: grade roster → retire persistently-barren → spawn mutated
+offspring of the fertile → keep wildcards.
