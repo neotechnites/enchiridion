@@ -41,6 +41,20 @@ cached index**. Nestor's own comment at strategy.rs:652-657 already measured the
 > T0+4.8s. **13.3% of windows first observe after T0+40** (forced `taker_late`, no maker leg at
 > all) and **4.2% after T0+60 (window missed outright)**."*
 
+**Independently reconstructed from `nestor/data/obs/` (n=536 windows, Jul 24-26), and it reproduces
+their instrumentation:** median first observation **T0+25.07s (BTC, n=268) / T0+26.03s (ETH, n=268)**,
+pooled 25.63s; **14.2% first observed after T0+40** (their comment: 13.3%) and **3.7% after T0+60**
+(theirs: 4.2%). Pipeline validated against their own numbers. The number that matters, and which
+nobody had computed:
+
+> **Only 1.5% of windows (8 of 536) are first observed by T0+4.8s — the dip bottom the 40¢ rest is
+> fitted on. Only 14.9% by T0+12s (the prev1 dip). Nestor arrives after the fitted dip in ~98.5%
+> of windows.**
+
+The interquartile range is T0+15.0s to T0+34.1s — i.e. the maker leg, when it is posted at all, is
+posted into the *post-dip sweep-up*, which `verify-streak-execution` §2 explicitly warns is when the
+reversal ask is climbing back through 47-53¢.
+
 **This lane supplies the mechanism, and it matches their number.** The lag is not jitter and cannot
 be fixed by polling faster (nestor already polls ~1s): the index is rebuilt on a **15.00s clock**,
 per-series phase-locked, and market inclusion costs 1–2 cycles → median **T0+21.2s (BTC) / T0+31.9s
@@ -173,6 +187,12 @@ fitted policy needs T0−10s.
    phase + 15·k, k ∈ {0,1,2}; median 21.2s / 31.9s. **The list index can never serve a T0 entry.**
    Direct-ticker fetch is uncached: market object readable at **T0−29.6s** (`status:"initialized"`,
    probe-confirmed), first priced at median 5.4s (BTC) / 9.6s (ETH) after T0.
+2a. **Confirmed on nestor's own eyes** (`data/obs/`, n=536 windows, Jul 24-26): median first
+   observation **T0+25.07s (BTC) / T0+26.03s (ETH)**, IQR 15.0-34.1s, 14.2% after T0+40, 3.7% after
+   T0+60 — reproduces the in-code instrumentation (13.3% / 4.2%). **Only 1.5% of windows are seen by
+   T0+4.8s (the fitted dip bottom); 14.9% by T0+12s.** The 15s phase does *not* resolve in this data
+   (circular concentration R=0.14/0.31) because nestor's ~1s pass cadence smears it — the phase
+   needs the 500ms direct probe. The *magnitude* is confirmed at n=536.
 2b. **The post-close index lags the same way** (n=2): result readable on the direct fetch at
    T+11.6s (BTC) / T+6.6s (ETH) but absent from `status=settled` until T+40.1s / T+37.3s —
    a **~29s gap**, consistent with the same 15s grid. Both ends of the 15m window are gated by the
