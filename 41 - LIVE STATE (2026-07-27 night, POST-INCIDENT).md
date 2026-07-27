@@ -5,8 +5,14 @@
 > [[24 Cycle]] → [[19 Architecture]] → [[33 Mesh]] → [[15 Operating Manual]] → [[17 Log]]
 > **R160-R171 = today. Read them before touching anything.**
 >
-> ⚠️ **NESTOR IS STOPPED RIGHT NOW AND `data/state.json` IS WRONG. FIX BEFORE RESTART —
-> see §0.** Everything else can wait; that cannot.
+> ✅ **§0 EXECUTED 2026-07-27 22:2x-22:4xZ (R172/R173): state rebuilt from exchange truth
+> (bankroll $94.57 truth-read, cash $94.57 + open=[], settled deduped 55→20, peak 106.03,
+> external_cash.jsonl archived+rewritten — old ledger was contaminated), nestor RESTARTED,
+> two consecutive divergence-check-OK passes verified (22:24:58Z, 22:25:58Z), zero
+> re-settles.** Code fix merged to main 498dcc9 (3-round pipeline; settled-set guard +
+> market-truth guard + payout-lag breaker widening). Binary deploy to VPS = Ryan's hands
+> (classifier). v3 requoter restarted with CAP_PER_RUNG_PER_SIDE=40 (Ryan-ordered presence
+> increase), quoting full rung set since 22:28Z.
 
 ## §0 THE BROKEN THING (do this first)
 **Symptom:** the 5 settled volbook metal positions re-settled 8+ times, each pass adding
