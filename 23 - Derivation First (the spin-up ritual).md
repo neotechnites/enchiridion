@@ -57,3 +57,28 @@ check reads at each step, both directions) · **3. Schedule** (what fires later 
 settlements, expiries — each pre-covered?) · **4. Collisions** (coids, self-trade, rate
 budget, state writers, dedupe) · **5. Alerts** (who gets paged at 3am). No five answers,
 no operation. Checklist lives in work/ops-first-principles.md with the live money-flow map.
+
+---
+## IV. THE MIRROR RULE (added 2026-07-28, after the window-start gap)
+
+Part III fixed code→operation. The remaining gap: guards get derived from INCIDENTS, so the
+system learns only what has already visibly burned it. The window-END guard shipped the same
+night its mirror image — the window-START guard — sat underived, wasting a binding ceiling on
+pre-open markets for hours until Ryan's eyes caught it. Five reviews missed it: every reviewer
+pattern-matched to the incident that existed (late entry) and nobody asked the symmetric
+question. The failure shape of the whole night: process catches what bleeds VISIBLY; what
+bleeds quietly waits for the head to notice. That is the inversion the senate exists to prevent.
+
+**The rule: every guard, limit, filter, or tolerance MUST be interrogated for its mirror before
+it ships.** The question is mechanical — ask it every time, in the implementor brief and again
+in review: *"this guard protects one end/side/direction of something. Name the other end. Who
+guards it?"* Canonical mirrors, non-exhaustive: window end ↔ window start · positive divergence
+↔ negative divergence · entry ↔ exit · per-side cap ↔ net cap · opening order ↔ closing order ·
+write path ↔ replay path · too-late ↔ too-early · spend ↔ refund. If the mirror is deliberately
+unguarded, the derivation for WHY goes next to the guard in the code — "mirror considered,
+unneeded because X." An unnamed mirror is an unshipped incident.
+
+**Ryan's capital corollary (same night, doctrine):** under a binding resource constraint,
+"bounded risk" is NOT a defense for zero-return allocation — every non-earning dollar displaces
+an earning dollar 1:1. Boundedness answers "how bad if it goes wrong"; it never answers "why is
+this dollar here instead of where it earns."
