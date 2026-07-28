@@ -14,6 +14,12 @@ Every guard you write: name its MIRROR (the other end/side/direction) in a comme
 inherits the Senate's paid-for guards: diff against the risk canon (nestor risk.rs/reconcile.rs
 + prior systems) and adopt or refute each, guard by guard.
 
+"Complete" requires an ALIVENESS TEST: one end-to-end run (fake exchange is fine) proving the
+system's affirmative purpose occurs — an order places, a signal fires, a row writes.  Modules
+tested pure + a loop that runs is NOT that proof; the seam between sections is the classic
+home of the missing action, and parallel work multiplies seams.  No aliveness test, no
+"build complete".
+
 Mechanics: isolated worktree, never the shared checkout. Explicit-path staging, never `add -A`.
 Tests: money rules as pure functions; external effects (pages, live writes) behind test-stubbed
 seams that structurally cannot fire in tests. Suite green before reporting. Assert-guard every
