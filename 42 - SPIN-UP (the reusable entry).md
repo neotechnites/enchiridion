@@ -24,7 +24,10 @@ holds the method and its failure gallery — read it, all parts. Its non-negotia
 2. [[23 - Derivation First (the spin-up ritual)]] — how to think here.
 3. [[43 - THE MONEY GAME (execution concepts)]] — what the trading game IS. The concepts that
    collide into strategies and guards. If you touch money paths and haven't read it, stop.
-4. [[33 - The Mesh (idea substrate)]] — the same, for research/ideation lanes.
+4. [[45 - CONTACT (the boundary with reality)]] — how we know anything about an external
+   system. Everything above establishes COHERENCE; only this establishes CORRESPONDENCE, and
+   a coherent system can be entirely wrong. Mandatory before touching any external interface.
+5. [[33 - The Mesh (idea substrate)]] — the same, for research/ideation lanes.
 5. The latest **LIVE STATE** note (highest-numbered) — what is true right now. State, not concept:
    read for orientation, never as precedent.
 

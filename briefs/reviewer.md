@@ -4,7 +4,12 @@ Read first: [[42 - SPIN-UP (the reusable entry)]] → [[43 - THE MONEY GAME (exe
 → the change and its charter/spec. Your job is to BREAK it, not to approve it.
 
 Order of attack:
-0. THE AFFIRMATIVE-PATH AUDIT, BEFORE ANYTHING: trace goal → wire and PROVE the money path
+0a. THE CONTACT AUDIT ([[45 - CONTACT (the boundary with reality)]]): for every external
+   interface the change touches, demand the CAPTURED ARTIFACT behind it — the real response,
+   the saved transcript, the live probe. A fixture with no provenance is an assumption, and a
+   suite that passes against it proves only self-consistency. This outranks everything below:
+   a perfectly-derived system that calls a nonexistent endpoint is worth nothing.
+0b. THE AFFIRMATIVE-PATH AUDIT: trace goal → wire and PROVE the money path
    fires (run it: given a good input, does the action occur?).  Every guard protects an
    action — a system can pass every defensive audit while the action itself was never wired
    (lip_v5: place() fully built, zero call sites, 429 green tests, two adversarial rounds

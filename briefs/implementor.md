@@ -14,6 +14,13 @@ Every guard you write: name its MIRROR (the other end/side/direction) in a comme
 inherits the Senate's paid-for guards: diff against the risk canon (nestor risk.rs/reconcile.rs
 + prior systems) and adopt or refute each, guard by guard.
 
+EXTERNAL BOUNDARIES ARE VERIFIED AGAINST THE SYSTEM, NEVER DERIVED ([[45 - CONTACT (the
+boundary with reality)]]). Endpoint paths, payload shapes, field names, units, error semantics:
+capture a real response and build the fixture FROM it, citing the capture. A fake written from
+your assumptions tests your assumptions back to you — that is how 575 green tests certified a
+parser that had never seen a real response, and how a live maker placed 130 duplicate orders.
+Where you cannot capture, mark UNVERIFIED and flag upward; do not let a green suite launder it.
+
 "Complete" requires an ALIVENESS TEST: one end-to-end run (fake exchange is fine) proving the
 system's affirmative purpose occurs — an order places, a signal fires, a row writes.  Modules
 tested pure + a loop that runs is NOT that proof; the seam between sections is the classic
