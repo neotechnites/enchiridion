@@ -48,6 +48,9 @@ net(q)     = T̂ · gross(q)  −  carry_cost  −  drift_cost                  
 | treasury daily | 6.25 | 0.50 | 50 | 0.08 | 8 | 0.125 | 0.0040 | 0.0112 | **+0.110** | KEEP, 17× floor |
 | gas cheap side | 6.25 | 0.02 | 50 | 0.001 | 8 | 3.125 | 0.00005 | 0.001 | **+3.12** | KEEP |
 The PayPal position is refused by three orders of magnitude by a term v4 did not have. Nothing else changed.
+**`d` is capped at `p`** (v1 §2.2) — that cap is what makes the gas row reproduce: at `p=$0.02`,
+`d = min($0.07, $0.02) = $0.02` so `d/p = 1.0` and drift = 0.001; at `p=0.50`, `d/p = 0.14`; at `p=0.30`,
+`d/p = 0.233`. Recompute all three rows by hand before trusting any implementation of (★).
 
 0.5 **Multiplier identity (charter §3's phrasing).** `H = max(0, 1 − carry_cost/(T̂·gross))` and
 `net = T̂·gross·H − drift_cost`. **DIVERGENCE D1 (surfaced):** the charter writes horizon and toxicity as
@@ -64,41 +67,76 @@ population; verification (credits) arrives per program, and per-series is the co
 settlements accumulate to verify anything. Toxicity is measured per **(market, side)** (charter §2) and
 aggregated to the venue by dollar-hour weight. Ratchet caps live at the venue; kill decisions at (m,s).
 
-1.2 **Liquidity horizon, measurable.** `L_eff(m,s) = min( T_settle(m), L_shed(m,s) )` hours.
-`T_settle = (close_ts − now)/3600 + SETTLE_LAG_H` where `SETTLE_LAG_H = 0.7` (R171 measured 41 min).
-`L_shed` = median hours from position-open to flat via maker shed on that (m,s), over the trailing 20
-completed sheds; **unmeasured ⇒ `L_shed = ∞`** (so `L_eff = T_settle`) — the conservative default, and the
-only one consistent with "no cap may assume settlement bails it out."
-**Hard horizon exclusion:** a venue is excluded outright if `T_settle > program_end + 24h` unless its ratchet
-rung ≥ 2 (§1.4). Derivation: past program end, inventory carries with ZERO offsetting accrual — the exact
-PYPL geometry; the 24h grace covers same-day-after settlement. `+24h` is UNDERIVED (§9.4).
+1.2 **Liquidity horizon, measurable — all quantities in HOURS.** `SETTLE_LAG_H = 0.7` (R171: 41 min).
+```
+T_settle(m) = max( SETTLE_LAG_H , (close_ts − now)/3600 + SETTLE_LAG_H )
+L_shed(m,s) = median hours open→flat via maker shed, trailing 20 completed sheds; unmeasured ⇒ ∞
+L_eff(m,s)  = max( SETTLE_LAG_H , min( T_settle , L_shed ) )
+PAST DUE (now > close_ts + SETTLE_LAG_H and no settlement observed):
+    L_eff ← max( L_eff , 2 × hours_past_due )          # escalates monotonically, never shrinks
+```
+**The floor and the escalation are BLOCKER-grade, not polish.** Without the floor, `close_ts − now` turns
+negative after close, `carry_cost` turns negative, and the model ADMITS a venue *on the strength of being
+stuck* — the PayPal failure with the sign flipped. Nothing is ever liquid faster than the settlement lag, so
+`SETTLE_LAG_H` is the floor. Past due, the remaining wait carries no information; the no-information bound
+is that expected remaining wait grows at least linearly in elapsed overdue time, so `2 × hours_past_due`
+escalates carry monotonically and a stuck market is progressively excluded, never progressively favored.
+`L_shed` unmeasured ⇒ ∞ (so `L_eff = T_settle`) is the only default consistent with "no cap may assume
+settlement bails it out."
+**Hard horizon exclusion (both sides in hours — the type error matters):** let
+`H_prog = (program_end_ts − now)/3600`. Exclude the venue if `T_settle > H_prog + 24` unless ratchet rung ≥ 2
+(§1.4). Derivation: past program end, inventory carries with ZERO offsetting accrual — the exact PYPL
+geometry; the 24 h grace covers same-day-after settlement. The `+24` is UNDERIVED (§9.4).
 
 1.3 **Score used by ALLOCATE.** Replace v1 §2.2's hurdle line with (★). Water-filling, step, budget reserve,
 caps and the per-program forfeit gate are **inherited unchanged from v1 §2.4-2.7 / §3** (they survived
-adversarial fire and re-derive identically under (★)). `r*` is the previous cycle's achieved marginal rate
-(fixed-point; monotone in allocation, converges). **Cold start seeds `r*` = trailing-7-day achieved rate, and
-only on a truly empty history `λ_min/16`** — seeding low makes carry look cheap, which is the PayPal
-direction; the unverified cap (§1.4) is what bounds the damage in that one case.
+adversarial fire and re-derive identically under (★)).
+**The `r*` fixed point, specified (it is circular: `r*` prices carry, carry decides the allocation, the
+allocation sets `r*`).** Precedent: v4's budget-reserve fixpoint.
+```
+r*_0 = max( trailing-7d achieved marginal rate , λ_min/16 )        # never seed below the floor
+repeat k = 1..4:  A_k := ALLOCATE(r*_{k-1});  r_new := marginal rate of A_k at its stopping point
+                  r*_k := 0.5·r*_{k-1} + 0.5·r_new                 # damped, prevents 2-cycles
+                  stop when |r*_k − r*_{k-1}| / r*_k < 0.05
+non-convergence after 4 iterations: use max(r*_0..r*_4), log `rstar_no_converge`, alert if 3 cycles in a row
+```
+Derivation of the tie-break: a HIGHER `r*` prices carry higher, admits fewer venues, and allocates less —
+the conservative direction, and the one that fails toward the PayPal lesson rather than away from it. 4
+iterations because damped iteration on a monotone scalar map halves the residual per step, so 4 covers a 16×
+seed error; 5% because ALLOCATE's own step resolution is 2% and chasing below its own noise is theatre.
+**Cold start:** on truly empty history `r*_0 = λ_min/16` — seeding low makes carry look cheap, which is the
+PayPal direction; the §1.4 unverified cap is what bounds the damage in that one case.
 
 1.4 **Verified-accrual ratchet.** Per venue, state `{rung, cap_usd, last_verify_ts, verify_history}`.
+`floor_q(v)` = the smallest allocation whose projected payout over the program period clears
+`ENTRY_FLOOR = $2.00`. **A probe smaller than `floor_q` measures nothing** — it cannot pay, so its
+non-payment is not evidence about the venue. That fact forces the probe rule below; a naive
+`min(floor_q, 0.02×ceiling)` is self-contradicting (it funds probes that are structurally unable to verify)
+and must not be written.
 ```
-rung 0 (unverified): cap_usd = min( ENTRY_FLOOR-clearing allocation ,
-                                    0.02 × global_ceiling , INV_CAP_USD/p per slot )
-rung k:              cap_usd = min( 2^k × rung0_cap , per-market cap §8.2 , global ceiling )
-VERIFY(+1 rung): a popover_estimate or paid credit for a program in this venue whose ratio to the model's
-                 projection over the SAME window lies in [0.5, 2.0]
-DISAGREE(−2 rungs): same reading outside [0.5, 2.0]
+rung 0: cap_usd = min( floor_q(v) , INV_CAP_USD/p per slot , per-market cap §8.2 )
+        ADMIT the venue at rung 0 iff  Σ unverified exposure + cap_usd ≤ 0.20 × global_ceiling
+                                  AND  count(unverified venues) < N_UNVERIFIED_MAX = 8
+        if floor_q(v) > 0.02 × global_ceiling: the venue is OVERSIZED-PROBE — still admissible, but it
+              consumes an oversized-probe slot (≤2 concurrent) and is logged `probe_oversized`
+        if it cannot be admitted now: QUEUE it (ranked by net(0)); never shrink the probe below floor_q
+rung k: cap_usd = min( 2^k × rung0_cap , per-market cap §8.2 , global ceiling )
+VERIFY   (+1): popover_estimate or paid credit for a program in this venue whose ratio to the model's
+               projection over the SAME window lies in [0.5, 2.0]
+DISAGREE (−2): same reading outside [0.5, 2.0] — **only if the projection was ≥ ENTRY_FLOOR**
+OUT OF REACH:  a reading on a program whose projection was < ENTRY_FLOOR ⇒ neither VERIFY nor DISAGREE;
+               log `venue_out_of_reach`, hold the rung, and stop funding that venue this period
 STAND DOWN (venue, not bot): DISAGREE on 2 consecutive settlement days  [charter §5]
 ```
-Derivations: **probe size** = the smallest allocation that still clears `ENTRY_FLOOR = $2.00` projected over
-the program period (below it the venue cannot pay at all, so a smaller probe measures nothing), capped at
-**2% of the global ceiling** — at $300 that is $6, so no unverified venue can repeat the $16 PayPal exposure,
-and with the §3 rate budget bounding concurrent venues, **total unverified exposure ≤ 20% of the ceiling**
-(hard-enforced, not emergent). **Up-1/down-2** because a false up-step costs capital at a venue that does not
-pay while a false down-step costs only rate at a venue re-verifiable tomorrow; the asymmetry also makes the
-ladder's drift negative under a 50%-accurate verifier, so a coin-flip sensor cannot walk the cap up (test
-T-R3). **[0.5, 2.0]** is the system's own declared model tolerance (v1 §3.1, §12.3a) — self-consistent by
-construction, UNDERIVED as a measured distribution (§9.4).
+Derivations: the **20% total / 8 concurrent / ≤2 oversized** bounds replace the per-venue 2% as the binding
+constraint, because the per-venue number cannot be allowed to override the floor-clearing size without
+destroying the verifier. At a $300 ceiling that is ≤$60 unverified at once — under four PayPal incidents'
+worth, and each one measurable. **Up-1/down-2:** a false up-step costs capital at a venue that does not pay;
+a false down-step costs only rate at a venue re-verifiable tomorrow. Expected drift per reading with verifier
+accuracy `a` is `a·(+1) + (1−a)·(−2) = 3a − 2`, so **`a = 2/3` is the ladder's characteristic number: a
+verifier worse than 2/3 accurate can never climb, and a coin-flip verifier (a=0.5) drifts to rung 0** (tests
+T-R3, T-R7). **[0.5, 2.0]** is the system's own declared model tolerance (v1 §3.1, §12.3a) — self-consistent
+by construction, UNDERIVED as a measured distribution (§9.4).
 **MIRROR (ratchet up ↔ ratchet down ↔ revive):** a killed (m,s) or stood-down venue re-probes ONLY at a NEW
 program period AND only if the 95% upper bound on its own `T̂` posterior clears the hurdle (§2.5). Memory is
 retained across periods; nothing revives on a timer.
@@ -181,10 +219,18 @@ before degrading another bot's calls" expressed as a policy rather than a hope. 
 UNDERIVED (§9.4); the FORM is derived.
 
 3.3 **Lanes and priority** (strict priority queue drawing from one bucket — a partition would waste the
-reserve when idle): `cancel/exit > place > verify(fills,positions,balance) > book_poll > classify_sweep`.
-**The bucket refuses to fall below 1 token for any lane except cancel/exit** — a rate budget must never be
-the reason an order cannot be cancelled. MIRROR (over-reserving): the headroom is a priority floor, not a
-partition, so an idle cancel lane costs nothing.
+reserve when idle): `exit_cancel > requote_cancel > place > verify(fills,positions,balance) > book_poll >
+classify_sweep`. **The bucket refuses to fall below 1 token for any lane except `exit_cancel`** — a rate
+budget must never be the reason an order cannot be cancelled.
+**Cancel-lane bound (SF-1).** An unbounded preempting lane is a starvation weapon: a requote loop stuck in a
+cancel/replace oscillation would consume the whole bucket at top priority and silently stop every other
+function, which looks exactly like a dead bot. Bound: **cancels ≤ 25% of admitted requests over a rolling
+60 s**. Over that share, `requote_cancel` degrades first (its slot falls back to leaving the resting order in
+place until the next tick — a stale quote, which is a rate loss, not a risk); **`exit_cancel` is never
+degraded and is never counted against the bound** (flatten, day-stop, T3 close sweep, poison cancel-all).
+25% = one cancel per requote round-trip (place+cancel+verify+poll ≈ 4 requests) — above that the loop is
+oscillating by definition. Log `cancel_share_exceeded` with the offending (m,s); 3 in 10 min ⇒ poison it.
+MIRROR (over-reserving): the headroom is a priority floor, not a partition, so an idle exit lane costs zero.
 
 3.4 **Degrade order, derived by marginal objective cost per request saved** (cheapest first):
 1. classify sweep 5 Hz → 1 Hz (pinned-ness changes on a 15-min timescale; v4 `CLASSIFY_REFRESH_S=900`)
@@ -240,10 +286,58 @@ level in another venue. Log `shade_decision` per slot per cycle with both sides 
 | rate ceiling | rate floor | degrade step 3 sheds markets rather than holding all of them badly |
 | `assume_filled` freeze on quoting | freeze on RECYCLING | v1 §9.4b kept verbatim — a quote-only freeze is a naked-short generator |
 | day stop (loss) | day stop (win) | none needed — mirror considered: a large positive divergence is the settlement/credit path and is covered by §5.2's pending widening; document it beside the constant |
+| AIMD decrease (yield) | AIMD increase (reclaim) | **NEW:** floor `B_min = 0.5 req/s` (below it we cannot hold even one market) and alert `rate_starved` if `B < 0.5×cap` for 10 min — silent permanent yielding is indistinguishable from a dead bot |
+| unverified-exposure ceiling | exploration FLOOR | **NEW:** if unverified exposure < 5% of ceiling while the §1.4 queue is non-empty, admit the next queued venue. A cap on learning is a cap on earning (Ryan's capital corollary: boundedness never answers "why is this dollar here instead of where it earns") |
+| sampler bias UP (sampling just after a requote) | bias DOWN (sampling inside a coverage gap) | fixed monotonic 1 Hz phase, never triggered by our own actions, asserted jitter < 100 ms — one guard kills both directions |
+| kill for too MANY fills (we are the fish) | kill for ZERO fills ever (decorative book) | **v1 §10.3-P6 carried forward verbatim:** zero taker fills over 5 consecutive program-days ⇒ drop; plus the pre-entry filter on 5 days of public tape |
+| v5 stops PUBLISHING the cash feed | nestor stops CONSUMING it | **NEW:** v5 reads nestor's `LIP_CASH_FEED_ENABLED` at startup; `mode:"shared"` with the reader disabled is a **STARTUP REFUSAL** — an unconsumed feed is a silent regression to the hand ledger |
+| adopt too MUCH at cutover | adopt too LITTLE (orphaned live positions) | **NEW:** every exchange position not adopted is enumerated as `orphan_position`, alerted, and its market is refused for quoting (v4's inventory-slot guarantee, inverted) |
+| day stop (losing money) | idle capital (losing nothing, earning nothing) | **NEW:** alert `idle_capital` when committed > 50% of ceiling while book-wide `net < λ_min/16` for 1 h |
+| ratchet raises venue caps | Σ venue caps vs the global ceiling | ALLOCATE's budget binds: Σ caps MAY exceed the ceiling, Σ *allocated* never does (test T-R4b) |
 Also inherited verbatim because they survived fire: poison rules (v1 §8.5), never-trust-the-indexes (§8.6),
 coid stability with no run-id (§9.5), closing-room netting + closing exemptions, ledger-replay restart with
 schema-mismatch abort, `NTFY_DISABLE` honored by construction, detect-and-page defaults, W2 trust gate for
 any new sensor, staged human gates for spending paths.
+
+4.5 **S = 0, qualification and revival — stated explicitly (N1), because (★) degenerates there.** At `S = 0`
+`gross(q) = ρ·S/(2p(q+S)²) = 0`: with no rivals our marginal rate is exactly zero (we already own 100% of the
+side), so **ALLOCATE correctly assigns an empty book ZERO** and would never enter one. That is right about
+size and wrong about entry, because qualification is a DISCRETE PRECONDITION, not a rate: if either side
+fails `target_size_fp`, the snapshot is EXCLUDED and *nobody* is paid, us included. Therefore qualification
+is handled as a constraint outside the water-filling loop, exactly as v1 §6.1-6.2 derived:
+```
+for each candidate market, per side, before ALLOCATE:
+  if not qualifies(side) and a legal price exists (not PINNED):
+      post  max( target_size_fp − cum_size , min q clearing ENTRY_FLOOR )  at the cheapest legal price
+      subject to: P7 revival caps (≤3 concurrent revival markets; never >90% of a qualifying side for >5
+      consecutive days), LAND_GRAB_MAX_COLLATERAL_FRAC = 0.25 of budget, and the §1.4 rung-0 cap
+  then run ALLOCATE on the resulting book, in which S > 0 and (★) is well-defined
+```
+**Do NOT size up into an empty book** (v1 D2): at `S≈0`, `share = q/(q+S) ≈ 1` for any `q`, so extra size buys
+no share — only fill risk and carry. The minimum qualifying size is the maximum of the objective.
+
+4.6 **Anti-gaming carried forward, and P5 re-priced under (★) (SF-3).** v1 §10.3 **P1** (honorable quotes:
+real collateral, no cancel-on-approach, 30 s minimum resting life, make-before-break so we never withdraw
+liquidity to dodge a taker), **P3** (two-sided at the PORTFOLIO level: ≥40% of resting collateral and ≥⅓ of
+touched markets quoted both sides, excluding pinned/shedding), **P4** (fill-honoring ratio ≥0.95, investigate
+<0.90), **P6** (revealed usefulness, pruner + pre-entry filter — see §4.4's mirror row), **P7** (revival
+caps), **P8** (one account, ever), **P9** (the one-sentence test) carry forward **verbatim**. They are
+restrictions and measurements; they cost <5% of modeled reward and they are the compliant posture under
+either answer to the open anti-gaming question.
+**P5 (a cheap-side share cap) stays DELETED, and v5 must own that this is now a LARGER exposure than v4's.**
+(★) tilts further cheap: in §0.4's own numbers the gas cheap side beats the treasury side **28.4×** on `net`
+versus **25.0×** on `gross` alone, because the drift term is `φ·d/p` with `d` capped at `p` — the `1/p` law
+arriving a fourth time, through the cost side. Priced as v1 §10.1 priced it: the program dies 2026-09-01
+(verbatim in the filing) ≈ **34 days**; remaining program EV **$3.4k–$8k with $8k the TOP of the range**, plan
+against $3.4–5k; each +10 percentage points of revocation probability costs **$340–$800**. Reinstating a 60%
+cheap-side cap costs roughly half of total reward = **$50–150/day = $1.7–5.1k**, i.e. **21–150 percentage
+points** of revocation-risk reduction — more than exists to buy. A cap on legal, collateral-backed, hittable
+quotes cannot plausibly purchase that. **Both numbers print in the run log every cycle so the tradeoff is
+never made implicitly**, and `cheap_side_score_pct > 95% for 3 consecutive days` pages a human — an alert,
+never a block. One genuine offset worth naming: (★)'s horizon term concentrates us into short-dated dailies,
+which raises per-market share concentration and therefore makes **P7's caps bind MORE often** than in v4 —
+the visible-making constraint tightens automatically as the cheap-side tilt increases. This paragraph is the
+first thing to overrule if Ryan's risk appetite differs (v1 D5, unchanged in direction, larger in magnitude).
 
 ## 5. THE COMPUTED CASH FEED (charter "derives fresh" #1 — zero hand entries)
 
@@ -260,13 +354,28 @@ untouched for non-LIP flows (deposits, FOMC strangle).
  "mode":"shared",                              // "shared" | "subaccount"
  "delta_dollars":-247.13,                      // ADD to nestor's expected_cash
  "pending_payout_dollars":31.40,               // widens the POSITIVE side only
- "components":{"resting_collateral":183.42,"inventory_basis":66.10,"realized_pnl":2.39,
-               "fees_paid":0.00,"rewards_accrued_unpaid":6.94,"inventory_settle_max":24.46},
+ "components":{"resting_collateral":183.42,"inventory_basis":48.60,"settled_awaiting_payout":17.50,
+               "realized_pnl":2.39,"fees_paid":0.00,"rewards_accrued_unpaid":6.94,
+               "inventory_settle_max":18.20,"settled_payout_expected":6.26},
  "ceiling_usd":300.0,"max_inflight_usd":12.00,"heartbeat_s":30}
 ```
-`delta_dollars = −(resting_collateral + inventory_basis) + realized_pnl − fees_paid`.
-`pending_payout_dollars = rewards_accrued_unpaid + inventory_settle_max` (`= Σ n × $1.00`, the largest credit
-that could land unannounced).
+`delta_dollars = −(resting_collateral + inventory_basis + settled_awaiting_payout) + realized_pnl − fees_paid`
+`pending_payout_dollars = rewards_accrued_unpaid + inventory_settle_max + settled_payout_expected`
+(`inventory_settle_max = Σ n × $1.00` over UNSETTLED inventory — the largest credit that could land
+unannounced; `settled_payout_expected` = the known payout of already-resolved-but-unpaid positions).
+
+5.2a **`settled_awaiting_payout` — release on CASH CONFIRMATION, never on result (BLOCKER-1).** When a
+market resolves, its basis moves from `inventory_basis` into `settled_awaiting_payout` and **stays inside
+`delta_dollars` as consumed cash.** It is released only when the credit is confirmed *in cash*: v5's next
+balance read (verify lane) shows an increase ≥ the expected credit, or a `/portfolio/settlements` row
+carrying the paid amount. Derivation: R171 measured a **41-minute** settlement-index lag. Releasing on result
+raises v5's published expected-cash before the real dollars land, and nestor's breaker reads exactly that as
+MISSING MONEY — **v5 would halt nestor through the very interface built to stop v5 halting nestor.** The
+sign is the same as the four hand-patched halts; only the author would have changed.
+Timeout: still unreleased after 6 h ⇒ page `settlement_cash_unconfirmed`; **never auto-release on a timer**.
+**MIRROR (released too late):** a lingering entry only makes v5 look poorer than it is — the safe direction,
+which is why the timeout pages instead of releasing, and the 6 h bound (≈9× the 41-min observed lag) keeps a
+genuinely stuck settlement visible rather than silently shrinking the book.
 
 5.3 **Cadence, derived — write BEFORE the wire call.** The feed is written (and fsync'd) with the pending
 order's collateral already included **before** any cash-consuming POST, and corrected after the response,
@@ -295,9 +404,19 @@ command. Startup refuses if a v4 heartbeat is fresh (< 120 s) in `~/nestor/data/
 rung is self-trade plus double collateral.
 
 6.2 Ledger vocabulary = v1 §9.1 (`place_req/place_resp/cancel_req/cancel_resp/fill_obs/snapshot`, normalized
-fill vocabulary, schema-mismatch abort) PLUS `presence` (§2.2), `cash_feed` (each published seq),
-`rate_yield`, `ratchet`, `venue_kill`, `shade_decision`. Restart procedure, 404 disambiguation at 36 s, the
-crash-gap fills window and `assume_filled` are inherited verbatim from v1 §9.4-9.4b.
+fill vocabulary, schema-mismatch abort) PLUS `cash_feed` (each published seq), `rate_yield`, `ratchet`,
+`venue_kill`, `venue_out_of_reach`, `shade_decision`, `orphan_position`. Restart procedure, 404
+disambiguation at 36 s, the crash-gap fills window and `assume_filled` are inherited verbatim from v1
+§9.4-9.4b.
+**`presence` rows live in their OWN file (N2):** `v5_presence.jsonl`, rotated daily, never in the order
+ledger. Two derivations force the split: (a) 14 MB/day of metering would be replayed on every restart by a
+path that needs none of it, lengthening the one procedure that must be fast and correct; (b) the order
+ledger is the money record and must stay append-only forever, whereas metering must be compactable.
+**Compaction:** a daily step folds rows older than **7 days** into per-(m,s)-per-day aggregates in
+`v5_presence_daily.jsonl` and deletes the folded segment file. 7 days is derived, not chosen: it is exactly
+the trailing window `T̂`'s shrinkage and §8.7's collapse-median require; nothing reads finer-grained history
+than that. Compaction never rewrites a file in place (write the aggregate, fsync, then unlink the segment) —
+a metering record that can be silently rewritten is a metering record that cannot be trusted.
 
 6.3 **Cutover — three options, one recommendation.**
 - **A. Cold.** v4 SIGTERM (cancel-all, proven) → wait for its inventory to settle → v5 starts flat. Zero
@@ -306,36 +425,58 @@ crash-gap fills window and `assume_filled` are inherited verbatim from v1 §9.4-
   divergences from the buggy hours (2026-07-28 morning report), and an import bug manufactures phantom
   inventory — the class that produces real naked shorts.
 - **C. RECOMMENDED — hot handoff with a W2-gated adoption boundary.** v4 SIGTERM cancel-all (orders gone,
-  the proven path). v5 does NOT read v4's ledger. Instead it reads a one-time
-  `~/nestor/data/lip/v5_adopt.json` listing `{ticker, side, net, basis}`, and at startup **cross-checks it
-  against `GET /portfolio/positions`**: the exchange is authoritative on `net`, v4's ledger on `basis`. Any
-  market where `net` disagrees is EXCLUDED from adoption and marked `assume_filled` (frozen for quoting AND
-  recycling) until a human reconciles. Adopted positions may be shed but do not seed any new quote until the
-  first clean recon pass. Downtime ≈ minutes. Cost over B: one reviewed file; over A: nothing.
-- **Rollback:** v5 SIGTERM (cancel-all + zeroed cash feed) → `systemctl start lip-maker-v4`. v4's state is
-  untouched by construction (6.1).
+  the proven path). v5 does NOT replay v4's ledger into its own state. Instead:
+  1. **v5 GENERATES the adoption file itself** — `lip_v5 --gen-adopt` reads v4's ledger **read-only** and
+     writes `~/nestor/data/lip/v5_adopt.json` = `{ticker, side, net, basis}` per market. This is an owned,
+     testable, re-runnable step, **not a hand entry** (the charter's "zero hand entries" applies to the
+     cutover too — a hand-typed position table is the highest-stakes hand entry in the whole program).
+  2. **W2 trust gate at startup:** cross-check against `GET /portfolio/positions`. The exchange is
+     authoritative on `net`; v4's ledger is authoritative on `basis`. Any market where `net` disagrees is
+     EXCLUDED from adoption and marked `assume_filled` (frozen for quoting AND recycling).
+  3. **Basis sanity, because a bad basis silently mis-sizes every later cap:** accept `basis` only if
+     `0.01 ≤ basis ≤ 0.99` AND `basis ≤ 2 × current mark`. Violation ⇒ exclude + freeze that market, log
+     `adopt_basis_rejected`. (A ledger-era basis of $0.00 or $1.50 would otherwise make `inv_dollar_s`,
+     `INV_CAP_USD` and the cash feed all wrong in the same direction at once.)
+  4. Adopted positions may be shed but seed no new quote until the first clean recon pass; every exchange
+     position NOT adopted is logged `orphan_position`, alerted, and its market refused for quoting.
+  Downtime ≈ minutes. Cost over B: one generated + reviewed file; over A: nothing.
+- **Rollback, with its honest boundary (SF-2).** `v5 SIGTERM` (cancel-all → zeroed cash feed) →
+  `systemctl start lip-maker-v4`. **This is clean ONLY before the first fill on an adopted position** — after
+  that, v4's ledger no longer describes reality and restarting v4 on it re-imports a stale world. Therefore
+  v5's SIGTERM path ALWAYS writes `~/nestor/data/lip/v5_handback.json` — a v4-readable position statement
+  `{ticker, side, net, basis, source:"v5", ts}` covering every position v5 holds — and past the boundary the
+  rollback procedure is "start v4 with `--import-handback`", not "start v4". v5 logs
+  `rollback_clean=true|false` on every cycle so the operator never has to guess which regime they are in.
 
 ## 7. HUMAN GATES (R186 — each is a separate call, one decision, with its own rollback)
 
 | gate | decision | owner | command / read-out | rollback |
 |---|---|---|---|---|
-| G1 arm inert | deploy binary, `--check` only, no capital | Fable | `--check` prints OK for unit assertion, ledger replay, data dir, cash-feed write, WS gate | delete unit |
+| **G0 nestor reader** | patch `reconcile.rs` to add `lip_cash_feed.json` to `(ext_cash, ext_pending)` — **ships behind `LIP_CASH_FEED_ENABLED`, default FALSE (IGNORE), and takes its OWN review gate before the flag is ever flipped** | **Ryan** (flag); separate review owns the patch | with the flag false, `divergence` is byte-identical to today across ≥1 reconcile pass; with it true, `expected_cash` moves by exactly the feed's `delta_dollars` | flag false (a one-line revert; the reader is inert code until then) |
+| G1 arm inert | deploy binary, `--check` only, no capital | Fable | `--check` prints OK for unit assertion, ledger replay, data dir, cash-feed write, WS gate, **and that G0's flag state matches v5's `mode`** (§4.4 mirror — `shared` + reader-disabled is a startup refusal) | delete unit |
 | G2 shadow | quote nothing for ≥1 full program period; meter PSDH, score venues, publish a zeroed cash feed | Fable | `venue_rank` lines vs v4's realized accrual; PSDH populated for ≥10 (m,s) | stop |
-| G3 probe capital | rung-0 caps live (2%/venue, 20% total) | **Ryan** | first `allocate` line: `spent ≤ 0.20×ceiling`, no venue > 0.02×ceiling | SIGTERM |
+| G3 probe capital | rung-0 caps live: floor-clearing probes, ≤20% of ceiling unverified in total, ≤8 concurrent, ≤2 oversized | **Ryan** | first `allocate` line: `Σ unverified ≤ 0.20×ceiling`, `count(unverified) ≤ 8`, `count(probe_oversized) ≤ 2`, and **no venue funded below its `floor_q`** | SIGTERM |
 | G4 ratchet enable | allow caps to climb on verified accrual | **Ryan** | `ratchet` rows show only `+1` on in-band verifications | flag false |
 | G5 ceiling rung | each rung funded by the PREVIOUS window's observed print, never the model (R168) | **Ryan** | one constant, one commit | previous rung |
 | G6 taker-exit | enable the spending exit path | **Ryan** | v1 §5.2 inequality logged before first exit | flag false |
 | G7 subaccount | cash feed → `mode:"subaccount"`; key-capability probe first (GTC + `expiration_ts` + coid cancels, one $1 order) | **Ryan** | probe passes before any capital moves | mode shared |
-| G8 v4 decommission | stop and disable v4 | **Ryan** | after 3 clean v5 settlement days | restart v4 |
+| G8 v4 decommission | stop and disable v4, **and zero the v4-era rows in `external_cash.jsonl`** (N3) | **Ryan** | after 3 clean v5 settlement days AND v4 verified FLAT (zero positions, zero resting — the rows offset cash v4 had CONSUMED, so zeroing them while it still holds inventory creates a false positive divergence): append one offsetting entry equal to `−Σ(v4-era delta_dollars)` with a note naming the rows it cancels, then verify `divergence ≈ $0.00` on the next reconcile pass | restart v4; the offsetting entry is itself reversed by another append |
 No gate bundles a capital change with a code change. No shared-tree builds — worktree only; native aarch64
 built on the VPS (`file` the artifact against `uname -m`).
 
 ## 8. TEST PLAN — money rules as pure functions, no network in any test
 
-8.1 **`net_rate(ρ,S,p,q,φ,d,L_eff,r*,T̂)`** — T-N1..N3 reproduce §0.4's three rows to 1e-3: PYPL −11.80 (and
-`H` clips to 0), treasury +0.110, gas-cheap +3.12. T-N4: `L_eff` doubling halves the horizon multiplier's
-headroom exactly (`carry` linear in `L`). T-N5: at `q=0` the function is finite (no division by zero — v1's
-B4 defect must not return).
+8.1 **`net_rate(ρ,S,p,q,φ,d,L_eff,r*,T̂)`** — T-N1..N3 reproduce §0.4's three rows to 1e-3 **with `d` capped
+at `p`**: PYPL −11.80 (and `H` clips to 0), treasury +0.110, gas-cheap +3.12. T-N4: `L_eff` doubling halves
+the horizon multiplier's headroom exactly (`carry` linear in `L`). T-N5: at `q=0` the function is finite (no
+division by zero — v1's B4 defect must not return). **T-N6 (B2):** `now = close_ts + 3 h` with no settlement
+⇒ `L_eff = 6 h` (2× past-due), carry STRICTLY GREATER than at `close_ts`, and `L_eff ≥ SETTLE_LAG_H` at every
+input including `now ≫ close_ts`; assert `carry_cost > 0` always — **a negative carry must be unreachable.**
+**T-N7 (SF-8):** the `r*` fixpoint converges in ≤4 damped iterations on a 16× seed error; a constructed
+oscillating book hits the iteration cap and the allocation uses `max(r*_0..r*_4)`, logging `rstar_no_converge`
+— assert the non-converged run allocates ≤ the converged run (conservative direction).
+**T-N8 (N1):** `S = 0` ⇒ ALLOCATE returns qty 0 for that slot, AND the qualification path supplies
+`target_size_fp − cum_size` at the cheapest legal price, bounded by P7 and the 0.25 land-grab fraction.
 8.2 **`psdh(rows)`** — T-P1: 60 min at $100 resting at best, no inventory ⇒ 3600 s/h, `T̂=1`. T-P2 replay
 parity: shuffled/split `presence` rows sum identically. T-P3: $100 resting 1 min then $100 inventory 59 min
 ⇒ PSDH = 60·60/(100·60/3600·... ) computed exactly in the test, `T̂ ≈ 0.0167`; assert KILL fires under §2.5's
@@ -343,27 +484,57 @@ zero-model rule variant. T-P4 scale invariance: 10× all sizes ⇒ identical PSD
 weights 0.5 exactly.
 8.3 **`ratchet(state, reading, model)`** — T-R1 in-band ⇒ +1 and cap doubles; T-R2 out-of-band ⇒ −2, floor at
 rung 0; T-R3 **coin-flip verifier over 1,000 alternating readings ⇒ terminal rung 0** (the asymmetry proof);
-T-R4 caps never exceed `min(per-market cap, ceiling)`; T-R5 two consecutive out-of-band settlement days ⇒
-venue STAND_DOWN and every other venue keeps quoting.
-8.4 **`cash_feed(state)`** — T-C1 exact dollars for a hand-built state. T-C2 **property: over a random wire
-sequence (place/fill/cancel/settle), published `delta_dollars` implies expected-cash ≤ true cash at EVERY
-step** (§5.3's write-before-place invariant). T-C3 single-object atomic write; a partially written file never
-parses as valid (temp+rename). T-C4 `mode:"subaccount"` ⇒ zeros with components intact. T-C5 zeroed final
-feed on SIGTERM after cancel-all.
+T-R4 caps never exceed `min(per-market cap, ceiling)`; **T-R4b** Σ venue caps MAY exceed the global ceiling
+while Σ *allocated* never does; T-R5 two consecutive out-of-band settlement days ⇒ venue STAND_DOWN and every
+other venue keeps quoting. **T-R6 (B3):** a venue whose `floor_q` exceeds 2% of the ceiling is admitted at
+`floor_q` (never shrunk below it) while unverified totals allow, and consumes an oversized-probe slot; a
+reading on a program whose projection was **below** ENTRY_FLOOR yields **neither VERIFY nor DISAGREE** — the
+rung is unchanged and `venue_out_of_reach` is logged. Assert a venue can never be stood down by a probe that
+could not have paid. **T-R7 (SF-7):** verifier accuracy 2/3 ⇒ zero expected drift (`3a−2 = 0`); 0.60 ⇒ drifts
+down; 0.70 ⇒ drifts up. This number is the ladder's sensor-quality requirement and must appear in the test.
+8.4 **`cash_feed(state)`** — T-C1 exact dollars for a hand-built state. **T-C2 property, the load-bearing one:
+over a random wire sequence (place/fill/cancel/RESOLVE/cash-credit), published expected-cash ≤ true cash at
+EVERY step.** The sequence MUST include a resolve with the cash credit arriving **41 minutes later** (R171);
+the naive "release on result" implementation fails this test at minute 0, which is exactly BLOCKER-1. T-C3
+single-object atomic write; a partially written file never parses as valid (temp+rename). T-C4
+`mode:"subaccount"` ⇒ zeros with components intact. T-C5 zeroed final feed on SIGTERM after cancel-all.
+**T-C6:** `settled_awaiting_payout` releases on a balance read showing the credit, does NOT release on the
+resolve event, and at +6 h unconfirmed pages `settlement_cash_unconfirmed` **without releasing**.
 8.5 **`rate_bucket`** — T-B1 steady 4 req/s sustained; T-B2 429 ⇒ 2 req/s for 60 s then geometric recovery to
-4.0; T-B3 a cancel is admitted at zero tokens while a book poll is refused; T-B4 the degrade ladder fires in
-§3.4's order under a shrinking bucket and step 3 drops the LOWEST-`net` market first.
+4.0, with `B` floored at 0.5 and `rate_starved` alerting after 10 min below half cap; T-B3 an `exit_cancel`
+is admitted at zero tokens while a book poll is refused; T-B4 the degrade ladder fires in §3.4's order under
+a shrinking bucket and step 3 drops the LOWEST-`net` market first. **T-B5 (SF-1):** a requote loop driving
+cancels past 25% of admitted requests over 60 s ⇒ `requote_cancel` degrades and the resting order is left in
+place, while `exit_cancel` is never degraded and never counted against the bound; 3 breaches in 10 min ⇒ that
+market is poisoned.
 8.6 **`shade_decision`** — T-S1 with `φ₁=φ₀` ⇒ never shade (halving score for nothing); T-S2 `φ₁=0` and a
 large `L_eff` ⇒ shade; T-S3 k≥2 is never returned.
 8.7 **Calibration loop / stand-down predicates** — T-D1 per-venue: `|log2(reading/model)| > 1` on 2
 consecutive settlement days ⇒ that venue only (assert the others still allocate). T-D2 book-wide: aggregate
-ratio out of band 2 days ⇒ HALT (v1 §12.3a). T-D3 no reconcilable rows 2 days ⇒ HALT (v1 §12.3b). T-D4 **new
-— presence collapse:** book-wide PSDH below 25% of its trailing-7-day median for 2 consecutive hours ⇒ HALT.
-Derivation: that is the signature of being the fish everywhere at once (an exchange-wide taker surge), it is
-detectable in minutes instead of days, and 4× is the same magnitude (2 ratchet rungs) that stands a single
-venue down; 2 h at ≥$300 committed is ≥600 $·h, decisive by §2.4. T-D5 each stand-down is reversible only by
-an explicit operator record, never by a timer.
-8.8 **Inherited suites kept as-is** (they encode invariants that survived adversarial fire): v1 §14.1-14.6 —
+ratio out of band 2 days ⇒ HALT (v1 §12.3a). T-D3 no reconcilable rows 2 days ⇒ HALT (v1 §12.3b). T-D5 each
+stand-down is reversible only by an explicit operator record, never by a timer.
+**T-D4 — presence collapse, with the three corrections BLOCKER-4 requires.** Book-wide
+`PSDH_book = Σ prox_dollar_s / (Σ committed_dollar_s / 3600)` over the trailing 2 h, HALT if
+`< 0.25 × median(trailing 7 days of hourly PSDH_book)`, subject to:
+```
+(a) DENOMINATOR EXCLUDES every second in which NO program was live (or none was fundable). Otherwise a
+    quiet overnight — the normal state — collapses the metric by arithmetic and halts a healthy book.
+(b) STARVATION IS NOT TOXICITY. If `rate_yield` was active for >20% of the 2 h window, or the WS was
+    disconnected >20% of it, the predicate routes to `rate_starved` / `ws_degraded` and does NOT halt:
+    presence lost to our own throttling says nothing about who is eating us.
+(c) MINIMUM HISTORY: the trigger is INACTIVE until ≥7 days × ≥6 fundable hours/day of history exist. A
+    median over 3 samples is not a median; a fabricated one halts the book on its second day.
+```
+Derivation of 25%: a 4× book-wide degradation is the same magnitude (2 ratchet rungs) that stands a single
+venue down. 2 h at ≥$300 committed is ≥600 $·h — decisive by §2.4. Test all four branches: healthy, genuine
+collapse (HALT), overnight-quiet (no halt, by (a)), and 429-starved (no halt, by (b)); plus day-2 cold start
+(no halt, by (c)).
+8.8 **Cutover (`--gen-adopt`, adoption gate)** — T-A1 basis outside `[0.01,0.99]` or `> 2×` mark ⇒ market
+excluded + frozen + `adopt_basis_rejected`. T-A2 an exchange position absent from the adopt file ⇒
+`orphan_position` alert and that market refused for quoting. T-A3 `net` disagreement ⇒ `assume_filled`
+(quoting AND recycling frozen). T-A4 `rollback_clean` flips to false on the first fill against an adopted
+position, and SIGTERM writes `v5_handback.json` covering every held position in both regimes.
+8.9 **Inherited suites kept as-is** (they encode invariants that survived adversarial fire): v1 §14.1-14.6 —
 ALLOCATE T1-T7, forfeit/rescue T8-T13b, recycle T14-T18, at-best/coverage T19-T22, `score_side` T23-T28b,
 ledger replay T29-T35. Re-baseline T28's size ladder only against a real reconciled payout.
 
@@ -374,12 +545,17 @@ evidence is 429s at an unknown aggregate load. AIMD makes a wrong number self-co
 form is derived and the number is not.
 9.2 AIMD recovery (×1.25 per 60 s) — the multiplicative-decrease half is derived; the recovery rate is
 convention.
-9.3 Unverified caps 2% per venue / 20% total — scaled from the $16 PayPal loss as a magnitude, not from a
-distribution of unverified-venue outcomes. Recalibrate after 10 verified venues.
-9.4 Also underived: the `+24h` horizon grace (§1.2); cold-start `T₀ = 0.5` (§2.3 — affects probe order only);
-the `[0.5, 2.0]` verification band (self-consistent with the system's own tolerance, unmeasured); `d = $0.07`
-and the 60 s drift horizon (inherited v1 §15.4); feed staleness 120 s (4× heartbeat); the 45-min kill
-hysteresis (§2.5); dose-response panel of 3 slots.
+9.3 Unverified bounds — 20% of ceiling total, 8 concurrent venues, ≤2 oversized probes (§1.4) — scaled from
+the $16 PayPal loss as a magnitude, not from a distribution of unverified-venue outcomes. Recalibrate after
+10 verified venues. The 2% figure is now a *classification* threshold (oversized or not), not a cap.
+9.4 Also underived: the `+24h` horizon grace (§1.2); the past-due carry escalation factor **2×** (§1.2 — the
+no-information *direction* is derived, the coefficient is not); cold-start `T₀ = 0.5` (§2.3 — affects probe
+order only); the `[0.5, 2.0]` verification band (self-consistent with the system's own tolerance,
+unmeasured); `d = $0.07` and the 60 s drift horizon (inherited v1 §15.4); feed staleness 120 s (4×
+heartbeat) and the 6 h settlement-cash timeout (≈9× the 41-min observed lag); the 45-min kill hysteresis
+(§2.5); dose-response panel of 3 slots; the cancel-lane 25% share and the 20%-of-window starvation cut in
+§8.7(b); presence compaction at 7 days is derived from `T̂`'s own window, the daily rotation granularity is
+not.
 9.5 Inherited and still open from v1: `λ_min = 0.10`, `ENTRY_FLOOR = $2.00` (recalibrate to
 `$1.00/q05(actual/projected)` after 5 reconciled periods), P3's 40%/⅓ two-sidedness, P5's deletion and its
 residual anti-gaming exposure, `MIN_RESTING_LIFE_S = 30`, day stop at 35%.
@@ -404,11 +580,14 @@ code path depends on the answer.
 ## 11. NOTE 23 §III — THE FIVE, DRAFTED (verify before first launch, do not copy)
 
 **Cash:** v5 consumes collateral and creates inventory in the shared account until G7; every movement is
-published to `lip_cash_feed.json` BEFORE it happens (§5.3); nestor's breaker adds it to expected cash; zero
-hand entries in steady state; `external_cash.jsonl` remains for deposits/manual trades only.
-**Breaker:** reads `(external_cash.jsonl sum) + (lip_cash_feed.json)`; negative side stays tight because v5
-over-reports consumption; positive side widened by `rewards_accrued_unpaid + inventory_settle_max`;
-staleness > 120 s pages without halting (§5.4).
+published to `lip_cash_feed.json` BEFORE it happens (§5.3); resolved-but-unpaid positions stay counted as
+consumed cash until the credit is confirmed IN CASH (§5.2a); nestor's breaker adds it to expected cash; zero
+hand entries in steady state; `external_cash.jsonl` remains for deposits/manual trades only, and its v4-era
+rows are zeroed at G8.
+**Breaker:** reads `(external_cash.jsonl sum) + (lip_cash_feed.json, behind G0's flag, default IGNORE)`;
+negative side stays tight because v5 over-reports consumption; positive side widened by
+`rewards_accrued_unpaid + inventory_settle_max + settled_payout_expected`; staleness > 120 s pages without
+halting (§5.4); `mode:"shared"` with G0's flag false is a v5 STARTUP REFUSAL, not a warning.
 **Schedule:** program `paid_out` flips ~2h post-close (poll 30 min) → `credit_pending` → ratchet input;
 settlements land per market close + ~41 min; `expiration_ts` = close − 4 min backstops every order; the
 credits ritual reminder fires daily; two days without credits halts deployment (v1 §12.3b).
@@ -417,6 +596,7 @@ heartbeat; separate ledger/recon/seq paths; one writer per file; rate lanes §3.
 every order; v5 never quotes a ticker nestor holds an open order on (read from nestor's own state file at
 cycle start — if unavailable, that is a startup refusal, not a warning).
 **Alerts:** ntfy `senate-nestor-2732e947` — halt, poison, day stop, `assume_filled` freeze, venue stand-down,
-presence collapse, `lip_cash_feed_stale`, coverage < 90% for 10 min, credits ritual due, `rate_yield`
-sustained > 10 min. `NTFY_DISABLE` honored by construction. **The human is on the topic before G3** (V-gate
+presence collapse, `lip_cash_feed_stale`, `settlement_cash_unconfirmed` (6 h), `orphan_position`,
+`adopt_basis_rejected`, `rate_starved` (10 min), `cancel_share_exceeded`, `idle_capital` (1 h),
+`rstar_no_converge` (3 cycles), coverage < 90% for 10 min, credits ritual due. `NTFY_DISABLE` honored by construction. **The human is on the topic before G3** (V-gate
 G5 in ops-first-principles: the alarm chain needs a human at the end of it).
