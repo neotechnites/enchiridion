@@ -6,7 +6,8 @@ The handbook of **the Senate** — the shared knowledge between
 doctrines, backtest conclusions, operating method, and the live project state.
 This is what any fresh Claude reads to spin up cold.
 
-- **Entry point: `39 - LIVE STATE (2026-07-26).md`** (or its dated successor) — goal, slate, machines, doctrines, queue.
+- **Entry point: `42 - SPIN-UP (the reusable entry).md`** — the goal, the method, the concept map. Everything else is evidence behind pointers.
+- Current operational snapshot: the highest-numbered **LIVE STATE** note (state, not concept).
 - `00 - START HERE.md` — the historical master index; banners route precedence.
 - `implementation/` — build orders and specs that bridge research → nestor. True implementation detail lives in the code repos; what's here is the shared contract.
 - Verdicts are DATED and change weekly by design (kill-scan). The newest dated note wins every conflict.
