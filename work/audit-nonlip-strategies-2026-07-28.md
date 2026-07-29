@@ -937,3 +937,174 @@ positive in this appendix (+$16.60, +$28.30 non-strict) dissolved on ex-top-3 ex
 predicts, and the only durable finding was the negative one that *strengthened* under outlier
 removal. That asymmetry — losses that survive outlier removal are real, gains that don't are
 not — is worth naming explicitly in §07 if it is not already there.
+
+---
+
+# APPENDIX D — Price limit alone, NET OF REWARDS (2026-07-28 night)
+
+Ryan is right that every prior figure was position-only. This closes it.
+
+**Stripped design:** rules 2 (join best), 3 (one rung/side), 5 (free-ride, OI≥1000 proxy),
+8 (never take), plus a **price limit on our leg**. No joint-sum guard, no +2¢ resting sell, no
+forced two-sided band. **Sizing is now capital-normalised — $10 per resting rung, so contracts =
+$10/price.** That is the change that makes contract count (what scores) comparable across
+floors: a 1¢ rung rests 1,000 contracts for the same $10 that buys 20 at 50¢.
+
+Universe: 48 rule-4-eligible markets, **6 active quoting days**.
+
+## D1. Two reward models, because they disagree
+
+- **(L) LINEAR** — reward ∝ resting contract-minutes. The coordinator's stated model.
+- **(S) SATURATING** — reward = **$0.440 per rung-program per day**, from the only verified
+  receipt on the account ($7.482 / 17 rungs / 1 day). Concept §7 says pools saturate per
+  market, so owning 1,000 contracts of a 1¢ rung cannot earn 50× a 20-contract 50¢ rung.
+  **(S) is the model with evidence behind it; (L) is the model that flatters no-floor.**
+
+## D2. THE TABLE
+
+| limit | pos P&L | pos $/day | ct-min retained | rung-prog-days | concurrent (med) | cap $ med/max | rw L@7.48 | rw L@37 | rw S@ver | rw S@37× |
+|---|---|---|---|---|---|---|---|---|---|---|
+| none | −$163.38 | **−$27.23** | 100.0% | 53 | 2 | $40 / $190 | $7.48 | $37.00 | $3.89 | $19.22 |
+| 10/90 | −$79.64 | −$13.27 | 7.6% | 32 | 2 | $40 / $100 | $0.57 | $2.83 | $2.35 | $11.60 |
+| 15/85 | −$63.01 | −$10.50 | 5.7% | 27 | 2 | $40 / $90 | $0.43 | $2.11 | $1.98 | $9.79 |
+| **20/80** | **−$26.27** | **−$4.38** | 4.9% | 26 | 2 | $30 / $60 | $0.36 | $1.80 | $1.91 | $9.43 |
+| 25/75 | −$78.76 | −$13.13 | 4.2% | 24 | 1 | $20 / $60 | $0.31 | $1.54 | $1.76 | $8.70 |
+| 30/70 | −$60.15 | −$10.03 | 2.9% | 24 | 1 | $20 / $60 | $0.22 | $1.08 | $1.76 | $8.70 |
+
+**NET per day (position + rewards):**
+
+| limit | pos/day | NET L@$7.48 | NET L@$37 | NET S@ver | NET S@37× |
+|---|---|---|---|---|---|
+| none | −27.23 | −19.75 | **+9.77** | −23.34 | −8.01 |
+| 10/90 | −13.27 | −12.70 | −10.45 | −10.93 | −1.67 |
+| 15/85 | −10.50 | −10.08 | −8.39 | −8.52 | −0.71 |
+| **20/80** | **−4.38** | **−4.02** | **−2.58** | **−2.47** | **+5.05** |
+| 25/75 | −13.13 | −12.81 | −11.58 | −11.37 | −4.42 |
+| 30/70 | −10.03 | −9.81 | −8.94 | −8.27 | −1.32 |
+
+**EX-TOP-3 NET per day** (the number that decides it):
+
+| limit | ex3 pos/day | NET L@$7.48 | NET L@$37 | NET S@ver | NET S@37× |
+|---|---|---|---|---|---|
+| none | −25.99 | −18.51 | **+11.01** | −22.11 | −6.77 |
+| 10/90 | −19.22 | −18.65 | −16.39 | −16.87 | −7.61 |
+| 15/85 | −13.06 | −12.64 | −10.95 | −11.08 | −3.27 |
+| **20/80** | **−8.44** | −8.08 | −6.64 | −6.53 | **+0.99** |
+| 25/75 | −10.68 | −10.37 | −9.14 | −8.92 | −1.98 |
+| 30/70 | −8.47 | −8.25 | −7.39 | −6.71 | **+0.23** |
+
+## D3. The three answers
+
+### 1. Which variant maximises NET at $7.48/day, and which at $37/day?
+
+**Under the saturating (verified) model: 20/80 at BOTH rates.** −$2.47/day at the verified rate,
++$5.05/day at Ryan's rate. **The floor choice does not depend on the reward number.**
+
+**Under the linear model the answer flips**: at $7.48 it is 20/80 (−$4.02), at $37 it is
+**no floor at all** (+$9.77). But that flip is an artifact — it comes entirely from crediting a
+1¢ rung resting 1,000 contracts with 50× the score of a 50¢ rung resting 20, which §7 says
+pools do not pay. **The dependency is on the reward MODEL, not the reward RATE**, and the model
+that flatters no-floor is the one with no receipt behind it and is exactly the behaviour that
+produced the −100%/15-of-15 cheap residual in Appendix A.
+
+### 2. Breakeven daily reward rate for the best variant
+
+**20/80: $4.38/day, all markets. $8.44/day, ex-top-3.**
+
+Translated into the unit tomorrow's credits arrive in, at the verified $0.440/rung-program/day:
+
+> **The book must be resting in ~10 qualifying rung-programs per day at 20/80 to break even.**
+> (v4 was in 17, so this is feasible — but on *our* 48-market universe the 20/80 filter yields
+> only **4.3 rung-programs/day**, which earns $1.91/day and does NOT clear it.)
+
+**This is the number to compare tomorrow's 6am credits against: $4.40/day.** If credits come in
+at or above that with the book run at 20/80, net ≥ 0. If they come in at $1.91 — what our own
+universe supports — it does not.
+
+### 3. Does any variant produce a net positive that survives ex-top-3?
+
+**At the verified $7.482/day reward rate: NO. Not one variant, under either model.** Best is
+20/80 at −$6.53/day.
+
+Two cells cross zero and both require Ryan's unverified $37 estimate under the saturating
+model: 20/80 at **+$0.99/day** and 30/70 at **+$0.23/day**. Both are inside the noise (below).
+
+**Stated as asked: the floor stops the bleeding but does not by itself make this a business.**
+It takes the position book from −$27.23/day to −$4.38/day — a real, large, and monotone-in-the-
+right-direction improvement — and leaves it still short of the rewards it can actually earn.
+
+## D4. What the tape can and cannot distinguish
+
+**Cannot.** Per-market sd is $6.78; over 48 markets that is $47.01 across the tape = **$19.19
+of daily noise** against point estimates of −$4 to −$27/day. The 20/80 result is t = −0.56.
+The differences among 10/90, 15/85, 25/75, 30/70 (−$10 to −$13/day) are well inside 1 sd, and
+25/75 being *worse* than both its neighbours is the same non-monotone overfit signature note 07
+flagged in Appendices B and C.
+
+**Can.** "No floor" (−$27.23/day) versus "any floor" (−$4 to −$13/day) is a ~1–2 sd separation
+that also holds ex-top-3 and is monotone in the right direction at every level. **The evidence
+supports imposing a floor; it does not support which floor.**
+
+**Also legitimate, pre-specified by series family** (not cherry-picked markets):
+
+| family | n | sum | mean | t |
+|---|---|---|---|---|
+| 15-min crypto | 17 | **−$27.43** | −1.613 | −0.82 |
+| index hourly | 3 | −$2.14 | −0.714 | −1.00 |
+| treasury | 18 | −$1.11 | −0.061 | −1.00 |
+| gas | 10 | **+$4.40** | +0.440 | +0.13 |
+
+The whole 20/80 loss is the 15-minute crypto markets, where a 20–80¢ fill held to a 15-minute
+expiry is a coin flip by construction. Nothing is significant, but the sign structure is
+coherent and it is the second independent reason to run the test on **gas only** (B5 already
+said so for a different reason).
+
+**A note against myself:** in Appendix C I called the joint-sum guard near-decoration. In this
+capital-normalised stripped design the >$1.00 pair problem returns exactly — **101 of 215 pairs
+(47%) cost more than $1.00 at 20/80 with no guard, the same 47% as Appendix B.** But adding the
+guard does **not** help: guard 98¢ eliminates all 101 and takes P&L from −$4.38 to −$5.28/day,
+because it also cuts netting from 2,253 to 479 contracts. The guard trades one loss for
+another. **Verdict unchanged — decoration — but for a different reason than I gave, and the
+underlying 47% pathology is real and unfixed by it.**
+
+## D5. What measurement would decide it, and how long
+
+The reward side needs **no estimation** — credits are a receipt with zero variance. The whole
+uncertainty is the position rate, whose daily sd is **$19.19**.
+
+| precision on position P&L/day | sessions needed (95%) |
+|---|---|
+| ±$10 | **14** |
+| ±$5 | **57** |
+| ±$2 | 354 |
+
+Breakeven is $4.38/day, so ±$5 precision is the minimum that answers "is net above zero" —
+**~57 sessions.** That is far more than "run it tomorrow and see."
+
+**Therefore the deployable form is a stop, not a study.** Run 20/80, gas only, $10/rung, with
+credits and position P&L in two separate ledgers, and a hard rule: **if cumulative net is below
+−$50 after 10 sessions, stop.** That bounds the loss at roughly one bad day's worth of the
+current book while collecting n at the only rate the venue allows. It will not prove the
+strategy in 10 days — nothing will — but it will kill it cheaply if it is wrong, and the
+credits number arrives exact on day one.
+
+## D6. Which CONCEPT file changes
+
+**[[43 - THE MONEY GAME]] §7**, one addition, and it is the pivot of this whole appendix:
+
+**A reward model is a claim about saturation, and the two candidate models recommend opposite
+strategies.** Under "score ∝ contracts" the optimal book rests everything on 1¢ rungs; under
+"pools saturate per rung-program" the optimal book spreads across rungs at whatever price. §7
+already states saturation as a concept — what it does not say is the consequence: **before
+sizing any presence strategy, you must know which regime you are in, because the two differ by
+a factor of 20 in recommended rung price and one of them systematically buys the −100% tail.**
+The discriminator is cheap and we have it: **credits per rung-program per day**, measured from
+receipts across rungs of different prices. If that number is flat in price, pools saturate and
+the floor costs nothing; if it scales with contract count, the floor costs 95% of the reward.
+**We have exactly one receipt and cannot tell.** That single measurement — one week of credits
+tagged by rung price — is worth more than any further backtesting of this tape.
+
+Also **§2**: capital-normalised sizing must be the default frame. Every earlier figure in this
+ledger used fixed contract counts, which silently holds capital constant per *contract* rather
+than per *rung* and thereby hides the entire cheap-rung pathology. **Compare policies at equal
+capital, never at equal contracts.**
