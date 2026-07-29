@@ -274,3 +274,225 @@ Two additions, both paid for in dollars:
 
 **No change to [[07 - Overfitting & Validation Discipline]]** — it already prescribes the
 one-obs-per-market and sharp-null discipline used here; it was followed, and it worked.
+
+---
+
+# APPENDIX A — Is the loss longshot decay? (2026-07-28, coordinator's question)
+
+Same validated pipeline (24/24 positions, $0.000 error). All figures from fills + settlements.
+
+## A0. First, the denominator in the question is wrong
+
+−$85.558 is **not** a loss on $177.97 of cost basis; those are two different books.
+
+- **−$74.524** realized on **66 settled markets**, against **$928.70 of capital actually
+  deployed into them** (Σ count × acquisition price). That is **−8.02%**, not −48%.
+- **−$11.034** of netting-realized P&L booked inside 21 markets that are still open.
+- $177.97 is the residual cost basis of those still-open markets (marked $124.13 by the
+  exchange ⇒ −$53.84 unrealized, not yet realized and not in the −$85.56).
+
+The identity closes exactly: settled fill-level Σ count·(V_side − price) = −$67.590 gross,
+−$6.934 fees, = **−$74.524**, matching the per-ticker ledger to the cent.
+
+The coordinator's structural instinct is still right, and for a better reason than magnitude:
+a 60-second markout cannot see this loss **because these positions were never marked out —
+they were held to expiry.** The measurement window and the loss window do not overlap.
+
+## A1. Settled fills by acquisition price
+
+| bucket | fills | contracts | cost | settle value | P&L | % of cost that expired worthless | return |
+|---|---|---|---|---|---|---|---|
+| 0–5¢ | 16 | 624.6 | $13.27 | $0.00 | **−$13.99** | 100% | −105.4% |
+| 5–15¢ | 21 | 731.8 | $63.02 | $52.00 | −$11.45 | 95% | −18.2% |
+| 15–40¢ | 56 | 634.8 | $164.45 | $272.41 | +$104.81 | 52% | +63.7% |
+| 40–60¢ | 40 | 392.3 | $188.67 | $132.47 | −$57.52 | 68% | −30.5% |
+| 60–85¢ | 41 | 324.6 | $227.90 | $113.40 | **−$115.10** | 65% | −50.5% |
+| 85–99¢ | 33 | 290.8 | $271.39 | $290.83 | +$18.73 | 0% | +6.9% |
+| **total** | 207 | 2999.0 | $928.70 | $861.11 | **−$74.52** | | −8.0% |
+
+**Read this table with care — it is confounded.** A closing leg lands in a bucket too. The
++$52.00 of settle-value in 5–15¢ is one trade: 52 contracts of NO at 6¢ bought to close the
+gas 4.100 book. Bucketing by price mixes opening inventory with exits. The next section is the
+honest cut.
+
+## A2. THE DECISIVE SPLIT — one-sided or two-sided?
+
+**54 of 66 settled markets were one-sided** (<10% of the market's cost on the minority axis).
+We were not running a two-sided book in 82% of the markets we traded.
+
+Exact decomposition of the −$74.524, per market, netting at average cost:
+
+| component | amount | capital | return |
+|---|---|---|---|
+| **spread capture on netted inventory** | **+$39.629** | $536.08 paired cost, 576 paired contracts | +7.4% (6.88¢/pair) |
+| **directional P&L on un-netted residual** | **−$107.219** | $392.62 | **−27.3%** |
+| fees | −$6.934 | — | — |
+| **total** | **−$74.524** | $928.70 | −8.0% |
+
+When inventory nets, we make money. When it does not, we lose 27% of it. That is the whole
+story of the tape.
+
+## A3. Attribution — and the significance test that decides it
+
+Splitting the directional residual by the price at which it was acquired:
+
+| component | n markets | sum | mean/mkt | sd | se | **t** |
+|---|---|---|---|---|---|---|
+| spread capture | 18 | +$39.63 | +2.202 | 7.14 | 1.68 | +1.31 |
+| — same, ex top-2 markets | 16 | **+$0.79** | +0.049 | 1.44 | 0.36 | **+0.14** |
+| directional, residual ≥15¢ | 46 | −$44.75 | −0.973 | 13.45 | 1.98 | **−0.49** |
+| **directional, residual <15¢** | **15** | **−$62.47** | **−4.165** | 4.48 | 1.16 | **−3.60** |
+| fees | — | −$6.93 | — | — | — | exact |
+
+**The cheap-residual term is the only component of the loss that survives a significance test.**
+
+- **15 of 15 markets with cheap un-netted residual lost 100.0% of it.** Not 95%, not 98% —
+  1,123.4 contracts, $62.47 of cost, $0.00 of settlement value. Zero survivors.
+- That $62.47 is **6.7% of the $928.70 deployed** and **84% of the −$74.52 settled loss**.
+- Those 1,123.4 contracts are **37% of all 2,999 contracts we ever held**, bought with 6.7% of
+  the money — average price **5.6¢** against a whole-tape average of 31¢. That is the
+  signature the hypothesis predicted: contract count purchased at the cheapest available rung.
+- The mid-price story does **not** survive: residual ≥15¢ is −$44.75 at **t=−0.49**, with
+  27 of 46 markets positive, and it is dominated by one market — KXUST10AD-26JUL28-T4.61,
+  −$59.22 directional (the documented B1 correlated-treasury run-over). Ex that market the
+  entire directional term is −$48.00 at t=−0.66. **Insufficient evidence of any mid-price
+  edge or anti-edge.**
+- Spread capture does **not** survive either: +$39.63 collapses to **+$0.79 (t=+0.14)** once
+  KXDXYDUD-T101.4640 (+$28.59) and KXAAAGASD-4.100 (+$10.25) are removed. We have **not**
+  demonstrated we can capture spread. Two markets are the entire claim.
+- Fees are negligible: −$6.93, 9% of the loss.
+
+The individual cheap positions, every one a total loss:
+
+| market | residual | price | cost | P&L |
+|---|---|---|---|---|
+| KXAAAGASD-26JUL28-4.115 | 161.2 YES | 6.9¢ | $11.15 | −$11.15 |
+| KXUST10AD-26JUL28-T4.59 | 76.0 NO | 13.0¢ | $9.88 | −$9.88 |
+| KXNDQHUD-26JUL281100 | 111.0 NO | 9.0¢ | $9.99 | −$9.99 |
+| KXINXHUD-26JUL281100 | 83.0 NO | 12.0¢ | $9.96 | −$9.96 |
+| KXBTCD-26JUN2412 | 312.0 NO | 3.0¢ | $9.36 | −$9.36 |
+| KXUST7AD-26JUL28-T4.56 | 44.0 YES | 10.0¢ | $4.40 | −$4.40 |
+| KXUST5AD-26JUL28-T4.46 | 28.0 YES | 11.0¢ | $3.08 | −$3.08 |
+| KXUST10AD-26JUL28-T4.69 | 110.0 YES | 1.0¢ | $1.10 | −$1.10 |
+| KXUST5AD-26JUL28-T4.48 | 100.0 YES | 1.0¢ | $1.00 | −$1.00 |
+| KXAAAGASD-26JUL28-4.120 | 30.0 YES | 3.3¢ | $1.00 | −$1.00 |
+| + 5 gas rungs at 1.0–8.4¢ | 68.2 | | $1.56 | −$1.56 |
+| **total** | **1123.4** | **5.6¢ avg** | **$62.47** | **−$62.47** |
+
+## A4. Does the deny list already fix it?
+
+| venue class | markets | cost | spread | directional | net | return |
+|---|---|---|---|---|---|---|
+| treasury (**denied on paper, breached in practice**) | 18 | $258.83 | +$1.19 | −$107.01 | **−$106.16** | −41.0% |
+| index hourly (denied) | 2 | $19.95 | 0 | −$19.95 | −$19.95 | −100% |
+| mention (denied) | 5 | $54.31 | +$1.63 | −$11.94 | −$10.31 | −19.0% |
+| streak (nestor) | 17 | $108.59 | +$0.82 | −$7.86 | −$9.56 | −8.8% |
+| entertainment/sport (denied, June) | 2 | $131.06 | −$2.90 | 0 | −$3.99 | −3.0% |
+| volbook (nestor) | 10 | $28.98 | 0 | +$4.02 | +$3.78 | +13.0% |
+| index daily / DXY (denied) | 2 | $73.77 | +$28.59 | −$9.36 | +$17.86 | +24.2% |
+| **gas (still quoted)** | 10 | $253.21 | +$10.31 | +$44.89 | **+$53.81** | +21.3% |
+
+Aggregates: **denied venues −$16.39 on $279.09 (−5.9%); still-quoted venues −$52.35 on
+$512.04 (−10.2%).** The loss does *not* concentrate in what we have denied.
+
+The cheap-residual $62.47 by venue:
+- **index up/downs (now denied): $29.31 — 47%.** Fixed by the deny list.
+- **treasury: $19.46 — 31%.** Denied per note 44, and note 44 records the deny list was
+  breached ("UST orders posted despite deny list"). Not fixed until enforcement is.
+- **gas: $13.71 — 22%, in a venue we still actively quote**, and it holds the single largest
+  cheap position on the tape (KXAAAGASD-4.115, 161.2 contracts at 6.9¢, −$11.15).
+
+**Answer: no. The deny list closes 47% of it.** 53% sits in venues that are live or where the
+deny list did not hold — and gas, our single most profitable venue (+$53.81), is also where
+the largest live longshot sits. The right guard is not a venue ban; it is a rung ban.
+
+## A5. What would a book have to do differently — and what would it have done to this tape?
+
+**Enforced two-sided quoting is NOT the fix, and the data says why.** The cheap rungs are
+structurally un-nettable: at a 3¢ rung, "two-sided" means quoting 3¢ bid against a 97¢ ask
+that never fills. 15 of 15 markets with cheap residual had that residual *never* offset — not
+by our exits, not by anyone. A quote that can only ever fill on one side is not a market-making
+quote; it is a purchase. Enforcing two-sidedness on a rung where only one side trades produces
+no pairs, only latency.
+
+**The fix indicated is a rung floor: do not quote, and never hold to expiry, below X¢.**
+
+Replayed on this exact tape (drop every fill on a rung priced below X — i.e. never quote it):
+
+| floor | spread | directional | fees | **NET** | deployed |
+|---|---|---|---|---|---|
+| 0¢ (actual) | +$39.63 | −$107.22 | −$6.93 | **−$74.52** | $928.70 |
+| 5¢ | +$38.90 | −$93.22 | −$6.21 | −$60.53 | $915.43 |
+| 10¢ | +$30.24 | −$105.79 | −$5.78 | −$81.32 | $884.65 |
+| 15¢ | +$30.81 | −$74.11 | −$5.78 | −$49.08 | $852.41 |
+| 20¢ | +$0.06 | −$60.61 | −$5.20 | −$65.75 | $816.84 |
+
+**This is non-monotonic, and I will not claim a number from it.** 10¢ is *worse* than doing
+nothing. The reason is that three markets (UST10-T4.61 −$55.29, gas 4.100 +$66.25, DXY
++$27.86) dominate the whole tape and their fills straddle the thresholds — the counterfactual
+is measuring which giant survives the cut, not the guard.
+
+Removing those three and re-running on the remaining **63 markets** gives a clean monotone
+answer:
+
+| floor | NET | deployed | markets |
+|---|---|---|---|
+| 0¢ | −$113.34 | $656.05 | 63 |
+| 5¢ | −$99.35 | $642.78 | 57 |
+| 10¢ | −$71.26 | $615.13 | 55 |
+| **15¢** | **−$39.01** | $582.88 | 51 |
+| **20¢** | **−$20.01** | $563.99 | 51 |
+
+**On the body of the distribution a rung floor recovers $93 of $113 in loss while giving up
+14% of deployed capital.** That is the robust result: monotone, 51–63 markets, no dependence
+on any single trade.
+
+**UNVERIFIED and stated as such:** what enforced two-sided quoting would have earned on the
+$392.62 of directional cost cannot be computed — it requires fill prices on an axis that never
+traded. The naive ceiling (apply the measured +7.39% paired return) is +$29.02, a +$136 swing.
+That number is a ceiling, not a forecast, and it rests on a spread-capture rate that is itself
++$0.79 (t=+0.14) once two markets are removed. **Do not size on it.**
+
+## A6. Plain answers
+
+1. **Is the −48% explained by longshot decay?** The −48% is an artifact of dividing realized
+   loss by open cost basis; the real figure is −8.0% on $928.70 deployed. **But yes — longshot
+   decay explains 84% of the realized loss**, and it is the only component that survives a
+   significance test (n=15, t=−3.60, 15/15 markets at exactly −100%). 6.7% of the capital,
+   37% of the contracts, 84% of the loss.
+2. **Are we running a market-making book?** No. 54 of 66 markets one-sided. And our
+   demonstrated ability to capture spread is +$0.79 ± $1.44 per market once two lucky markets
+   are removed — statistically nothing.
+3. **Does it need enforced two-sided quoting?** No — that is the wrong instrument. A cheap
+   rung has no second side to enforce. It needs a **minimum rung price**, applied to the
+   quoting universe (never open there), not as a mid-tape floor.
+4. **Has the deny list fixed it?** 47% of it. 31% sits in treasury where the deny list was
+   breached, 22% in gas which we still quote.
+5. **n caveats.** Cheap-residual: n=15 markets, conclusive. Spread capture: n=18, and 2
+   markets are 98% of it — **insufficient**. Directional ≥15¢: n=46, t=−0.49 — **insufficient**,
+   and one market is 55% of it. Every counterfactual in A5 is dominated by 3 markets on the
+   full tape and is only meaningful on the 63-market subset.
+
+## A7. Which CONCEPT file changes (revised)
+
+**[[43 - THE MONEY GAME]] §1 and §7** — this supersedes the softer version in §8 above.
+
+§1 currently says *"the cheap side of any book is cheap to hold and cheap to be wrong about."*
+**That sentence is now the most expensive line in the file.** It is true per contract and
+catastrophically false per dollar: cheap is where you buy the most contracts per dollar, and
+each one that dies takes 100% of what is in it. On this tape the cheap side was wrong 15 times
+out of 15. Replace it with the measured form: *a rung's price is the fraction of your capital
+it destroys when it loses; cheap rungs buy contract count, and contract count is the reward
+metric, so the rung that maximises subsidy is the rung that maximises capital destruction —
+these are the same rung by construction.*
+
+§7 currently says *"breadth beats depth once share saturates"* and *"reward earning = capital
+× time × proximity."* It does not say the mirror it needs: **the cheapest way to buy proximity
+is the rung nobody wants, and a fill there is not a cost of goods — it is a write-off.** §2's
+"fills are the cost of goods" framing holds only where the position can be exited or offset;
+below ~15¢ neither is available, so the fill converts capital directly to zero at expiry.
+
+Add to §5 (toxicity): **presence-seconds-per-dollar-hour is not sufficient.** A 1¢ rung scores
+beautifully on it — huge size, near best, long survival — and returns −100%. The missing
+statistic is **fraction of acquired inventory that ever nets.** On this tape: paired inventory
++7.4%, un-netted −27.3%, un-netted-and-cheap −100.0%.
