@@ -729,3 +729,211 @@ name.
 (rung floor, exit fraction) behaved exactly as §07 predicts an overfit knob behaves:
 non-monotone across settings, dominated by 2–3 observations, significant nowhere. §07 caught
 all of them. It is working.
+
+---
+
+# APPENDIX C — BACKTEST of the five-designer converged design (2026-07-28 night)
+
+## HEADLINE, STATED FIRST
+
+**The design as specified LOSES MONEY on our own tape: −$23.70 over 48 eligible markets,
+t = −2.24, and it gets WORSE with the top 3 markets removed (−$28.70, t = −2.92).**
+
+**The single rule causing the loss is RULE 7** — the +2¢ resting exit. Deleting rule 7 and
+letting inventory net instead flips the tape from **−$23.70 to +$16.60**. Rule 7 was intended
+to be "simultaneously the exit and the netting leg"; on this tape it is neither, because it
+fires *before* the opposite side can fill and thereby destroys the netting it was meant to
+provide. Netted contracts: **0 with rule 7, 230 without it.**
+
+And even the fixed variant is not a green light: **+$16.60 is three markets. Ex-top-3 it is
+−$9.20 (t = −0.55).**
+
+## C0. Method and its honest limits
+
+- Universe: the 66 settled markets we actually traded, with 27,181 real 1-minute bid/ask bars.
+  Rule 4 (window ≤ 24h) leaves **48**. Rule 4 excludes DXY (38h), all metals dailies
+  (25.8–36h — **volbook's markets fail rule 4**), all mentions, PGA, ALBUM.
+- **FILL MODEL (a model, not truth — the main soft joint in this backtest).** Quotes are formed
+  from bar *t*'s closing touch and tested against bar *t+1*'s trade high/low. A resting bid
+  fills only when the tape trades **strictly through** it, which is the conservative queue
+  assumption for a joiner. Sensitivity reported throughout: non-strict (fill on touch) moves
+  the full design from −$23.70 to −$5.60 and the fixed variant from +$16.60 to +$28.30.
+  **The design is never profitable under the conservative model and never significant under the
+  generous one.**
+- Rule 5 ("free-ride the 1000-contract qualification") is proxied by **open interest ≥ 1000** at
+  the bar — candlesticks carry no resting depth. **UNVERIFIED mapping** to the real rule.
+- Rules 2 (join best), 3 (one rung/side), 8 (never take) are *baked into the simulator's
+  construction* and cannot be ablated from this tape — they are assumptions, not results.
+- Size fixed at 10 contracts/leg so per-contract economics are readable; rule 9's sizing is a
+  scale parameter that does not change them.
+
+## C1. (A) THE LAST 24 HOURS, ORDER BY ORDER
+
+31 rule-4-eligible markets settled on 2026-07-28. **6 of 31 ever filled.**
+
+**Full design (with rule 7):** day total **−$12.60**
+
+| market | settles | orders | P&L |
+|---|---|---|---|
+| KXAAAGASD-4.100 | NO | buy NO 10@26¢ → sell 28¢; buy NO 10@27¢ → sell 29¢ | +$0.40 |
+| KXAAAGASD-4.105 | NO | 4 round trips, all exited at +2¢ | +$0.80 |
+| KXAAAGASD-4.110 | NO | **8 round trips at +2¢ (+$1.60), then buy YES 10@39¢ 21:59 → settles 0** | **−$2.30** |
+| KXBTC15M-26JUL281915 | NO | 1 exit +2¢, then buy YES 10@28¢ → settles 0 | −$2.60 |
+| KXNDQHUD-26JUL281100 | YES | buy NO 10@48¢ 08:41 → settles 0, never exited | −$4.80 |
+| KXUST10AD-T4.61 | NO | buy YES 10@41¢ 09:32 → settles 0, never exited | −$4.10 |
+
+The 4.110 line is the design's whole pathology in one market: **eight consecutive +2¢ wins
+(+$1.60) erased by one un-exited fill (−$3.90).**
+
+**Same day without rule 7 (hold / let it net):** day total **−$0.20**
+
+KXAAAGASD-4.105 shows the netting path working exactly as rules 1/3/6 intend — three pairs at
+combined costs of 97¢, 95¢ and 87¢ (captures +3¢, +5¢, +13¢), then a residual NO@42¢ settling
+at 100 for +$5.80. That is the mechanism the design was built for, and rule 7 prevents it.
+
+## C2. (B) FULL 48-MARKET REPLAY
+
+| | full design | without rule 7 |
+|---|---|---|
+| **net P&L** | **−$23.70** | **+$16.60** |
+| per-market mean / sd / t | −0.494 / 1.53 / **−2.24** | +0.346 / 3.22 / **+0.74** |
+| **ex-top-3** | **−$28.70 (t = −2.92)** | **−$9.20 (t = −0.55)** |
+| fills | 95 | 63 |
+| exits at +2¢ | 83 (87.4%) | 0 |
+| **contracts netted** | **0** | **230** |
+| contracts held to settlement | 120 | 170 |
+| **mean pair cost** | n/a (no pairs) | **80.3¢** |
+| **pairs costing > $1.00** | 0 | **0 of 23** |
+| markets that ever filled | 21 of 48 | — |
+| capital at risk (concurrent) | **~$3.50–$10** | ~$3.50–$10 |
+
+**The crux arithmetic.** 83 of 95 fills exited at +2¢ = +$16.60. The 12 that did not settled
+for **−$40.30**, a mean loss of **33.6¢ per un-exited contract**. Breakeven therefore needs an
+exit rate of **94.4%**; the tape delivered **87.4%**. **A 2¢ target is too small for the tail it
+leaves behind** — this is rule 7's defect stated as a number, and it is not a tuning problem
+(+1¢ → −$23.20, +3¢ → −$21.70, +5¢ → −$13.30; all negative).
+
+**Two structural findings that no ablation can fix:**
+
+1. **Rule 1's 20–50¢ band makes two-sided quoting nearly unreachable.** our_yes_leg +
+   our_no_leg = 100 − spread ≈ 98–99¢. For both to sit at ≤50¢ the mid must be within ~1¢ of
+   50. Measured: **both legs quotable in 2.16% of bar-minutes**; exactly one leg 36.5%; neither
+   61.3%. The design is therefore **not a two-sided market-making book** — it is a one-sided
+   "buy the side that is cheaper than 50¢" book, which is a directional strategy with a
+   rebate.
+2. **Rule 9's "20–30 markets simultaneously" is not available.** Simultaneously-quotable
+   markets in our 48-market universe: **median 1, p90 2, max 3.** Capital deployable at 10
+   contracts/leg is therefore **~$3.50–$10 concurrent, not $300** — and not $1–2k by three
+   orders of magnitude. The reward assumption cannot be reached because the capital cannot be
+   made to rest.
+
+**Reward side under the band.** The design rests at ~35¢/contract; the losing book rested at
+5.6¢ on its cheap residual. If reward score ∝ contract count (rule 2's own premise, score =
+size × 0.5^ticks), the same capital buys **6.25× fewer contracts** ⇒ **$37/day → $5.92/day**.
+If reward ∝ capital, $37/day is unchanged. Truth is between and is **UNVERIFIED**.
+
+**A flag on the input.** $37/day is a popover estimate. The only verified reward receipt on
+this account is **$7.482/day**. $37 / $7.482 = **4.9×** — squarely inside the **4–8× optimism
+band the audit already documented for modelled accruals** (`work/audit-2026-07-28.md` §2a).
+I would not plan on $37.
+
+## C3. (C) WHICH RULES CARRY, WHICH ARE DECORATION
+
+Ablated one at a time from the full design (48 markets):
+
+| rule removed / changed | P&L | Δ vs full design | verdict |
+|---|---|---|---|
+| **R7 +2¢ exit → hold** | **+$16.60** | **+$40.30** | **the rule is the loss — delete it** |
+| R5 free-ride (OI filter off) | −$75.10 | **−$51.40** | **carries the most genuine improvement** |
+| R1 band → 20–80 | −$39.00 | −$15.30 | carries |
+| R1 band → 15–85 | −$36.00 | −$12.30 | carries |
+| R1 band → 5–95 (none) | −$32.50 | −$8.80 | carries |
+| R4 dailies (all 66 mkts) | −$29.50 | −$5.80 | carries, mildly |
+| **R6 joint sum guard off** | −$28.50 | −$4.80 | **near-decoration** |
+| R2, R3, R8, R9 | — | — | **untestable from this tape** |
+
+**Rule 6 is the surprise, and it matters for what you deploy.** With netting live (rule 7 off),
+guard 98¢ gives +$16.60 and guard 200¢ (i.e. no guard) gives +$13.30 — a $3.30 difference —
+and **zero pairs cost more than $1.00 under either setting.** The 47%-of-pairs-above-$1.00
+disaster in Appendix B was **not** caused by the absence of a joint-sum guard; it was caused by
+**ladders repricing independently** (many rungs per market, each chasing best). **Rules 2 and 3
+already kill it.** Rule 6 is a cheap belt-and-braces, not the fix it was billed as. If rule 6
+alone were expected to carry the improvement — it does not.
+
+So the honest ordering of what carries: **R5 ≫ R1 > R4 > R6**, with **R7 actively harmful**,
+and R2/R3/R8/R9 unfalsifiable here.
+
+## C4. (D) THE HONEST POWER STATEMENT
+
+**What this backtest can legitimately claim:**
+- The design **as specified loses** on our tape, conservatively modelled, at t = −2.24, and the
+  loss **strengthens** ex-top-3 (t = −2.92). A losing result that survives outlier removal is
+  the one direction where n=48 is adequate. **This is a real result.**
+- Rule 7's mechanism is refuted arithmetically, not statistically: 87.4% realised exit rate
+  against a 94.4% breakeven, and negative at every tick setting from +1¢ to +5¢.
+- Rule 1's band and rule 9's concurrency assumption are **structurally** incompatible with the
+  order books we actually face (2.16% two-sided availability; median 1 concurrent market).
+  These are measurements of the venue, not of the strategy, and n is ample.
+
+**What it cannot claim:**
+- **That the fixed variant (drop rule 7) makes money.** +$16.60 at t = +0.74 is not
+  significant, and **ex-top-3 it is −$9.20 (t = −0.55)** — the entire positive is
+  KXBTC15M-26JUL232345 (+$9.10), KXBTC15M-26JUN241545 (+$8.80), KXAAAGASD-4.105 (+$7.90).
+  Per note 07 that is a null result, not a strategy.
+- Anything about rules 2, 3, 8, 9 — they are simulator assumptions here.
+- Anything about the reward number. One estimated input ($37/day), one verified receipt
+  ($7.482/day), 4.9× apart, and a band restriction whose reward cost ranges from 0% to 84%
+  depending on an unresolved scoring model. **The reward side of this backtest is UNVERIFIED
+  end to end.**
+- Out-of-sample anything: this is a 48-market in-sample replay on the same tape that generated
+  the design's premises. It is a **placebo test that the design failed**, which is informative;
+  it is not a validation that anything passes.
+
+**Net-of-everything, best case, stated so it cannot be misread:** fixed variant +$16.60 over a
+~6-day tape = **+$2.77/day** of position P&L (not significant, three markets), plus rewards of
+**$5.92–$37/day** (unverified, and the verified analogue is $7.48). Against a book whose
+measured daily sd is $22.15 (Appendix B). **Nothing here clears the bar for deploying $1–2k.**
+
+## C5. RECOMMENDATION
+
+**Do not deploy this design tonight.** Two changes are required before it is even testable:
+
+1. **Delete rule 7.** It is the loss, measured at +$40.30 of damage on 48 markets. If an exit is
+   wanted, it must clear the 94.4% hurdle its own tail sets — a 2¢ target does not.
+2. **Fix rule 1 or abandon two-sidedness honestly.** A 20–50¢ band on both legs is
+   self-contradictory at real spreads (2.16% availability). Either widen to 20–80¢ on *our*
+   leg — which is what actually permits both sides — or state plainly that this is a one-sided
+   directional book with a rebate and size it as such.
+
+Then run it as the **$300 / 10-session gated experiment from B5**, with reward and position
+P&L in two separate ledgers. That remains the cheapest decisive test, and it is now cheaper
+because C4 has already eliminated one candidate design for $0.
+
+Keep rule 5 (free-ride) in every variant — it is the strongest single positive on the tape
+(+$51.40) and it is the one rule whose logic does not depend on any contested model.
+
+## C6. Which CONCEPT file changes
+
+**[[43 - THE MONEY GAME]] §2 and §3.**
+
+**§2** ("capital has states… the exit's price of impatience is spread + taker fee; its price of
+patience is carry") needs the term this backtest paid for: **an exit target is a bet on the
+distribution of the path, and it must be priced against the tail it leaves behind.** A +2¢
+resting exit converts a symmetric position into a 2¢-up / 33.6¢-down payoff and therefore
+requires an 94.4% hit rate to break even. **A small profit target on an un-hedged position is
+not risk reduction — it is selling a deep option for two cents.** Any exit rule must state its
+breakeven hit rate before it is deployed; the arithmetic is one line and it would have killed
+rule 7 on paper.
+
+**§3** (correlation / the settle source is the position) gains the geometric identity that
+killed rule 1: **on a binary, your two legs are not independent instruments — their prices sum
+to 100 minus the spread.** A band applied symmetrically to "our leg" on both sides is therefore
+a constraint on the *mid*, not on the legs, and a 20–50¢ two-sided band silently means "quote
+only when the mid is 50¢." Any two-sided quoting rule must be stated as a constraint on the mid
+and the spread, never as a constraint on each leg independently.
+
+**No change to [[07 - Overfitting & Validation Discipline]]** — again it did the work. Every
+positive in this appendix (+$16.60, +$28.30 non-strict) dissolved on ex-top-3 exactly as §07
+predicts, and the only durable finding was the negative one that *strengthened* under outlier
+removal. That asymmetry — losses that survive outlier removal are real, gains that don't are
+not — is worth naming explicitly in §07 if it is not already there.
