@@ -496,3 +496,236 @@ Add to §5 (toxicity): **presence-seconds-per-dollar-hour is not sufficient.** A
 beautifully on it — huge size, near best, long survival — and returns −100%. The missing
 statistic is **fraction of acquired inventory that ever nets.** On this tape: paired inventory
 +7.4%, un-netted −27.3%, un-netted-and-cheap −100.0%.
+
+---
+
+# APPENDIX B — Is the LIP subsidy worth chasing, and what else? (2026-07-28 night)
+
+Constraint: *whichever meets the goal or makes more money.* Same validated pipeline. New data:
+1-minute candlesticks (yes_bid/yes_ask) for all 66 settled markets we traded — 27,181 bars —
+so every exit below is priced at a **real touch**, plus Kalshi's 7%·p·(1−p) taker fee. The
+hold-to-expiry replay reproduces −$74.524 exactly, so the exit sims share one denominator.
+
+## B0. The prize, measured
+
+**$7.482/day.** That is the entire verified reward receipt: one payout, 17 gas rung programs,
+KXAAAGASD-26JUL28, credited 05:46:16Z, confirmed against the account. It implies
+**$0.440 per rung-program per day**. Independent cross-check: note 44's measured 0.36%/hr on
+deployed × 7h × ~$300 = $7.56/day. **The two agree.** (Everything else — the $65.53 modelled
+accrual — is UNVERIFIED and historically 4–8× optimistic.)
+
+**The position book, measured, same period:**
+
+| settlement day | realized |
+|---|---|
+| 06-19 / 06-21 / 06-24 | −$1.43 / −$2.56 / −$21.46 |
+| 07-24 / 07-25 / 07-26 / 07-27 / 07-28 | +$0.71 / +$6.04 / −$12.94 / +$14.17 / **−$57.04** |
+
+n=8 days, **mean −$9.32/day, sd $22.15, t=−1.19**. Nestor+LIP era only (≥07-23): n=5,
+−$9.81/day, sd $28.18.
+
+**This is the whole finding in two numbers.** The subsidy is $7.48/day. The book it rides on
+has $22.15/day of noise and a −$9.32/day point estimate. **The prize is one third of the
+noise.** To distinguish a $7.48/day reward from zero at t=2 against sd $22.15 requires
+**35 trading days**. We have 8, and the book is losing faster than the subsidy pays.
+
+## B1. The price floor, costed net-of-everything
+
+Reward model: $0.440/rung/day × rungs surviving the floor. **UNVERIFIED extrapolation** — it
+is one receipt, one venue, one day, and it assumes reward scales with rung count rather than
+with capital. Stated so you can discount it.
+
+| floor | position P&L (settled tape) | deployed | contracts | rungs kept | reward/day (modelled) |
+|---|---|---|---|---|---|
+| 0¢ (actual) | −$74.52 | $928.70 | 2999 | 66 | $7.48 |
+| 10¢ | **−$81.32** | $884.65 | 1919 | 50 | $5.67 |
+| 15¢ | **−$49.08** | $852.41 | 1643 | 46 | $5.21 |
+| 20¢ | −$65.75 | $816.84 | 1435 | 39 | $4.42 |
+| 25¢ | −$58.20 | $799.54 | 1352 | 38 | $4.31 |
+| 30¢ | −$77.82 | $774.18 | 1256 | 35 | $3.97 |
+
+**This is not a policy, it is a knob.** The P&L swings $32 across settings with no monotone
+structure — 10¢ is *worse* than no floor at all, 15¢ is the best, 20¢ worse again, 30¢ worse
+than 15¢ by $29. Best case (15¢) recovers $25.44 over a 6-day tape = **+$4.24/day** while
+giving up **$2.27/day** of modelled reward. **Net +$1.97/day, inside a book with sd $22.15/day.**
+
+It is only monotone once the three dominant markets are removed (Appendix A5: −$113.34 → −$20.01
+across 63 markets), which is real evidence that the *body* of the distribution improves — but a
+policy that must have its three biggest trades removed before it behaves is not yet a policy.
+
+**VERDICT: CONDITIONAL.** The gate to hunt is a rung floor, and it must clear the overfit bar
+before it is trusted — the full-tape instability is exactly what an overfit knob looks like.
+
+## B2. What actually nets — and whether spread capture is real at all
+
+Appendix A's "+$39.63 spread capture" was an artifact of average-cost per-market splitting.
+Re-run as **chronological FIFO pair matching** — did this contract actually round-trip? — the
+number changes and the conclusion inverts.
+
+**114 pair-events, 885.7 paired contracts, total capture +$14.08.**
+
+| by combined pair cost (yes price + no price paid) | pairs | mkts | contracts | capture | ¢/ct |
+|---|---|---|---|---|---|
+| < $0.90 | 9 | 3 | 84.0 | **+$31.30** | +37.25 |
+| $0.90–0.99 | 46 | 15 | 267.6 | +$9.82 | +3.67 |
+| ≈ $1.00 | 7 | 6 | 116.4 | $0.00 | 0.00 |
+| **> $1.00 (we paid up)** | **52** | **19** | **417.7** | **−$27.03** | **−6.47** |
+
+| by hold-to-netting | pairs | capture | ¢/ct |
+|---|---|---|---|
+| <1 min | 3 | +$0.96 | +2.16 |
+| 1–10 min | 24 | +$0.86 | +0.45 |
+| **10–60 min** | **51** | **+$22.39** | **+6.76** |
+| 1–6 h | 26 | −$8.46 | −3.37 |
+| >6 h | 10 | −$1.67 | −2.45 |
+
+Three facts kill the market-making claim:
+
+1. **Only 28.1% of contracts we acquired ever netted.** 1,771.5 of 6,300.7. The other 4,529.2
+   were held to expiry or are still open. A book that offsets 28% of its inventory is not
+   making markets; it is accumulating.
+2. **47% of the paired contracts were netted at a structural loss** — 417.7 contracts bought
+   at a combined yes+no cost *above $1.00*, capture −6.47¢/contract, −$27.03. We crossed the
+   spread against ourselves in 52 of 114 round trips.
+3. **Per market: n=30, sum +$14.08, mean +$0.469, sd $5.56, t=+0.46. Ex the top 3 markets:
+   n=27, sum −$18.32, mean −$0.679, sd $1.573, t=−2.24 — significantly NEGATIVE.**
+
+**VERDICT: STRUCTURAL kill of "we capture spread by resting on both sides."** Artifact named:
+the strategy's return requires netting, and 72% of inventory never nets while half of what does
+net is bought for more than a dollar. The +7.4% figure was one market (KXDXYDUD, +$28.31 of
++$14.08 total — i.e. everything else combined is negative). Recorded so it stays dead. The only
+positive regime — combined cost <$0.90, 10–60 minute holds — is **9 pair-events in 3 markets**
+and is the DXY market already killed in §5c. There is no regime where inventory reliably nets.
+
+## B3. The exit we never use
+
+Flatten all residual at X% of the market window elapsed, at the real touch, taker fee charged:
+
+| flatten at | NET | vs hold | exits | mean/mkt | t | ex-top-3 NET | ex-3 vs hold | ex-3 t |
+|---|---|---|---|---|---|---|---|---|
+| 25% | −$84.30 | −$9.77 | 13 | −0.148 | −0.56 | −$123.11 | −$11.42 | −0.56 |
+| 50% | −$74.35 | +$0.18 | 26 | +0.003 | +0.01 | −$102.40 | +$9.30 | +0.38 |
+| 60% | −$65.91 | +$8.61 | 32 | +0.131 | +0.40 | −$99.44 | +$12.26 | +0.62 |
+| 70% | −$58.42 | +$16.10 | 36 | +0.244 | +0.67 | −$86.50 | +$25.19 | +1.14 |
+| **80%** | **+$4.78** | **+$79.30** | 43 | +1.202 | **+1.81** | −$62.01 | **+$49.69** | **+1.43** |
+| 90% | −$51.58 | +$22.94 | 47 | +0.348 | +0.50 | −$87.75 | +$23.94 | +0.65 |
+| 95% | −$85.28 | −$10.76 | 52 | −0.163 | −0.13 | −$93.49 | +$18.21 | +0.73 |
+
+**Does the book go flat? At one hand-picked setting, yes — and that setting is a spike.**
+The 80% row is the only one that turns the tape positive, and **41% of its gain is one market**
+(KXAAAGASD-4.100, +$53.54) with the top three markets supplying 84%. Its neighbours at 70% and
+90% give a quarter of it. **No setting reaches significance** (best t=+1.81 full-tape, +1.43
+ex-top-3), and 25% and 95% are worse than doing nothing.
+
+What *is* mildly encouraging and honest to say: the sign is stable — every setting from 50% to
+95% is positive both full-tape and ex-top-3. That is weak, consistent evidence pointing the
+same direction as the rung floor: **stop carrying un-nettable inventory into expiry.** It is
+not yet a number to size on.
+
+**VERDICT: CONDITIONAL.** n=66 markets, best t=1.43. Insufficient. The gate is real (exit
+before expiry) but the knob is unproven and must clear the overfit bar.
+
+## B4. The honest alternative
+
+### The mirror — are the longshot buyers the ones being harvested?
+
+We *were* the longshot buyer: 15/15 markets, −100%, $62.47 gone (Appendix A). The other side of
+that seat is acquiring at ≥85¢. Every such acquisition on the tape:
+
+**n=20 markets, 20/20 won, 290.8 contracts, cost $271.39, value $290.83, P&L +$19.44 (+7.2%).
+Zero contracts expired worthless. Per-market mean +$0.972, sd $1.138, t=+3.82.**
+
+**That t is the wrong test and I will not report it as evidence.** The per-market P&L is bounded
+above by the small premium and unbounded below; the left tail is simply unsampled. The right
+test is binomial: **P(all 20 markets win | market's price is fair) = 0.199 — a 1-in-5 event.**
+Not significant. And this trade is not new: 7 of the 20 markets are volbook, so "take the other
+side" *is* volbook, already verdicted CONDITIONAL at n=2 session-days with a 7–8:1 payoff ratio.
+
+**VERDICT: CONDITIONAL, same gate as volbook.** It is the most sign-consistent thing on the
+whole tape (35/35 favourable observations across the ≥85¢ bucket and volbook) and it is still
+a 1-in-5 coincidence under the null. Do not scale it on 20 markets.
+
+### Expected daily P&L at $1k and $2k
+
+| option | E[P&L]/day @$1k | @$2k | capital at risk | daily sd | n behind it |
+|---|---|---|---|---|---|
+| LIP as run today | rewards +$25 − book −$31 = **−$6** | +$50 − $62 = **−$12** | full $1–2k | **$74 / $148** | 8 days, t=−1.19 |
+| LIP + 15¢ rung floor | +$17 − $24 = **−$7** | +$35 − $48 = **−$13** | ~$0.9–1.8k | ~$70 / $140 | knob unstable, $32 range |
+| LIP + 80% flatten | **UNVERIFIED** | UNVERIFIED | full | — | t=+1.43, one market = 41% |
+| Mirror / volbook-style | **+$13** (13% on $100 at risk) | +$26 | $100–200 only | ±$100 tail | 20 mkts, P(null)=0.199 |
+| Volume-incentive program | **UNVERIFIED — no data pulled** | — | — | — | n=0 |
+| **Do nothing** | **$0** | **$0** | **$0** | **$0** | exact |
+
+Scaling notes, because the naive multiplication is wrong twice:
+- **Rewards scale with breadth, not depth** (concept §7 — pools saturate per market). At the
+  verified $0.440/rung/day, **$200/day requires ~455 rung programs quoted simultaneously**;
+  $50/day requires 114; $25/day requires 57. We ran 17. Pouring $2k into the same 17 rungs
+  earns close to the same $7.48.
+- **The book's variance scales with capital, the subsidy does not.** At $2k the position book
+  swings ±$148/day against a $50/day subsidy. That is a coin flip wearing a rebate.
+
+### Is $200/day on $1–2k supportable?
+
+**No. Nothing measured on this tape supports 10–20%/day, and most of it does not support 0%.**
+The largest verified positive on the entire account is the $7.482 reward receipt. The largest
+strategy P&L is volbook at +$3.78 over two days with P(null)=0.20. The position book's point
+estimate is −$9.32/day. A target of $200/day is **27× the entire measured subsidy** and would
+require an edge that no measurement here has detected at any significance.
+
+**What IS supportable, stated plainly:** the reward *mechanism* is real, verified by receipt,
+and worth **≈2.5%/day on deployed capital** — which is an enormous rate *if and only if* the
+position book can be held near zero. Three independent tests (rung floor, disciplined exit,
+netting regime) all point at the same fix and **none of them reaches significance.** So the
+honest answer to the coordinator's framing is:
+
+**The LIP subsidy is not currently worth chasing at our scale — not because the subsidy is
+small relative to capital, but because it is small relative to the noise of the book required
+to earn it ($7.48 vs sd $22.15/day). We cannot even measure it for 35 days.**
+
+## B5. The cheapest decisive test, and what to do tomorrow
+
+Do not deploy $1–2k into any of the above. The binding constraint is n, and n is cheap here.
+
+**The test (≈$300 at risk, 10 sessions, ~2 weeks):** quote **gas only**, **rungs ≥15¢ only**,
+**flatten all residual at 80% of window at the touch**, and record the reward receipt and the
+position P&L as **two separate ledgers**. That is the one experiment that measures the only
+number that matters — *reward minus book* — with all three candidate gates applied at once. It
+costs at most ~$100 in expectation if the hypothesis is wrong, and it either produces a
+signable number in 10 days or it kills LIP for good.
+
+Alongside it, keep the two cheap n-builders already running unchanged: volbook at $14.50/day
+(session-capped) and streak at $4/market. Neither has earned capital; both are buying n at ~$0.
+
+If the test comes back negative, the honest allocation for $1–2k is **cash** — $0/day beats
+−$12/day, and the option to deploy later costs nothing.
+
+## B6. Which CONCEPT file changes
+
+**[[43 - THE MONEY GAME]] §7**, and it is the sharpest correction this file has taken.
+
+§7 says *"Rewards are payment for BEING the book"* and *"reward earning = capital × time ×
+proximity."* Both true, and both incomplete in the way that cost the money. Add:
+
+**The subsidy must be measured against the VARIANCE of the book that earns it, not against the
+capital.** Our verified rate is 2.5%/day on deployed — a spectacular number — attached to a
+book with 3× that in daily noise. A subsidy smaller than the noise of its own carrier is
+undetectable and unbankable no matter how large the rate looks. The operative statistic is
+**reward per unit of position-book standard deviation**, and ours is 7.48 / 22.15 = **0.34**.
+Below 1.0, the rebate cannot be distinguished from the book's noise within any horizon a
+small account can survive.
+
+And the scaling law, measured: **reward scales with BREADTH (rung programs), the book's
+variance scales with DEPTH (capital).** §7 already says breadth beats depth once share
+saturates; what it does not say is the consequence — **adding capital to a saturated rung buys
+100% of the variance and 0% of the subsidy.** That is precisely what "$1–2k into LIP" would do.
+
+Also fold into §2: *"fills are the cost of goods"* holds only where inventory can net. Measured
+here: **28.1% of acquired contracts ever netted**, and 47% of those that did were bought for
+more than $1.00 combined. Where the netting rate is that low, fills are not cost of goods —
+they are the product being purchased, and the strategy is long inventory wearing a maker's
+name.
+
+**No change to [[07 - Overfitting & Validation Discipline]]** — every knob in this appendix
+(rung floor, exit fraction) behaved exactly as §07 predicts an overfit knob behaves:
+non-monotone across settings, dominated by 2–3 observations, significant nowhere. §07 caught
+all of them. It is working.
