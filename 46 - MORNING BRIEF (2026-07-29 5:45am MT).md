@@ -3,7 +3,38 @@
 > Written 2026-07-28 ~11pm MT for Ryan waking at 5:45. Read this first, then [[42 - SPIN-UP]].
 > Nothing is trading that can lose money. Nestor is live and healthy. v5 is stopped and disarmed.
 
-## ⚠ READ THIS FIRST — IT SUPERSEDES THE DECISION TABLE BELOW
+## ⚠⚠ REVISED 2026-07-29 — THE INCOME LINE WAS 10× TOO SMALL
+
+**Kalshi credited $71.34 for 2026-07-28, in 24 line items across 6 events — not the $7.482 this
+brief was built on.** Reconstructed rung by rung in
+[[work/audit-nonlip-strategies-2026-07-28.md#APPENDIX I]]. Three things change:
+
+- **62% of the credit (bounds 11%–76%) came from ≤5¢ rungs.** At ≤5¢ the day's measured position
+  loss was **−64.8%** of deployed capital — and the measured subsidy was **+71% of deployed
+  capital**, against the 5.6%/day Appendix F3 assumed. **F3 understated cheap-rung reward by
+  ~12×.** Net at ≤5¢: **+$3.88** (worst-case assignment −$32.46, best-case +$13.73).
+- **So rule 1 below is downgraded from KILL to CONDITIONAL.** The kill that survives is *never
+  quote ≤5¢ in a venue with informed taker flow.* Credit accrues on **resting** contracts; loss
+  accrues only on **filled** dollars. Fill rate is the whole lever, not price.
+- **The two net-positive buckets are the two ends (≤5¢ +$3.88, >80¢ +$11.95). The middle killed
+  us**: 6–20¢ −$64.95 and 51–80¢ −$67.51. Whole day: $448 deployed, −$195 position, +$71 credit,
+  **net −$124**.
+
+**Score is SATURATING, not proportional to size** — proven without the amount→rung mapping: our
+biggest gas rung held 59.8% of our contract-seconds; the biggest of 12 gas line items is 22.4%.
+Credit goes roughly as **√(size × time)**, on top of a hard **$1.00 per-market floor**.
+**32 of 56 rungs (57%) fell under the floor and forfeited — 167 dollar-hours earning zero.**
+**Breadth beats depth: many markets at the minimum viable size, none of them deep.**
+
+**Venue dispersion (250×) dwarfs price dispersion (5×).** One mention game paid **$6.96 per
+resting dollar-hour with ZERO fills and ZERO capital at risk**, versus $0.086 for gas and $0.026
+for TRUEV. **The v5 mention ban is not justified** — the $16 loss behind it is
+KXEARNINGSMENTIONPYPL at 20¢, an *earnings* mention; the *sports* mention rungs that earned $6.76
+never filled. Deny `KXEARNINGSMENTION*`, permit `KX*MENTION` sports at ≤5¢.
+
+*n = 1 day. Gas is marked, not settled. Do not re-lever on this.*
+
+## ⚠ READ THIS NEXT — IT SUPERSEDES THE DECISION TABLE BELOW
 
 **Cheap Kalshi contracts are overpriced ~8×. Measured on n = 8,240 settled markets, one
 observation each, real two-sided quotes, 11 pre-specified families.**
@@ -25,9 +56,13 @@ of the trade.**
 
 **THREE THINGS FOLLOW, AND THEY DECIDE EVERYTHING:**
 
-1. **Never quote ≤5¢ again.** Not a risk preference — a measured −65% to −100% expected value.
-   And on Kalshi a resting cheap bid is a **BUY**: we were not selling lottery tickets, we were
-   holding them.
+1. ~~**Never quote ≤5¢ again.**~~ **DOWNGRADED TO CONDITIONAL 2026-07-29 — see the revision block
+   at the top.** The −65% to −100% expected value is confirmed (the day's own ≤5¢ fills came in at
+   −64.8%), but the reward against it was measured 12× too low: ≤5¢ paid **+71% of deployed
+   capital in one day**, and the bucket netted positive. The rule that survives is **never quote
+   ≤5¢ in a venue with informed taker flow** (gas, treasury dailies) — because on Kalshi a resting
+   cheap bid is a **BUY**, and we hold the lottery ticket the moment it fills. Where nothing takes,
+   it never fills and the subsidy is free.
 2. **The sweet spot is 11–20¢.** Competition is U-shaped — median competing score **6,618 at 1¢,
    403 at 11–20¢, 2,877 at 96–99¢** — so the middle is where everyone *isn't*. It is also the
    **cheapest place to clear the $1 floor ($3.68 median**, versus $6.36 at 1–5¢ and $244 at
@@ -45,11 +80,15 @@ concentrates rather than diversifies.
 
 **Venue note:** mention markets are *fair* at the cheap end (1.55% realised vs 1.69% posted).
 Gas, metals and index hourlies — the venues we actually farmed — are the overpriced ones.
+**2026-07-29: confirmed on the receipt — one MLB mention game paid $6.76 with zero fills, 80× gas
+per dollar-hour. The v5 mention ban is over-broad and should be narrowed to
+`KXEARNINGSMENTION*`.**
 
 **Two numbers reported with alarms and NOT to be acted on:** a portfolio projection of 22%/day at
-$1,000, and a sizing model implying $851/window of reward on $300. Both contradict the verified
-$7.482 receipt by 10–20×, in the same direction and magnitude as the accrual model already found
-4–8× hot. Treat as hypotheses with a receipt-shaped test attached.
+$1,000, and a sizing model implying $851/window of reward on $300. ~~Both contradict the verified
+$7.482 receipt by 10–20×~~ — **UPDATED 2026-07-29: the receipt is $71.34, so the gap is ~1.5–12×,
+not 10–20×, and it closed in the direction of the models being right.** They remain hypotheses,
+but the receipt-shaped test they were waiting for has now half-passed.
 
 ### ⚠⚠ DO NOT ACT ON THE +13–18% "EDGE" WITHOUT READING THIS
 

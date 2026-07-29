@@ -1802,3 +1802,276 @@ reward at the cheap end does not come close to paying for the bias there (28% vs
 cycle).** Any presence strategy must choose which of the two businesses it is in. Running both
 at once — cheap rungs for score, expensive rungs for capital — is precisely the barbell we ran,
 and it collected the worst half of each.
+
+---
+
+# APPENDIX I — THE $71.34 CREDIT: RUNG ATTRIBUTION, PRICE DISTRIBUTION, NET OF POSITION P&L
+
+*Written 2026-07-29. Supersedes the $7.482/day income line used everywhere above and in
+[[46 - MORNING BRIEF]]. Every dollar here is reconstructed from a primary record: the credit
+statement (`/tmp/credits_jul28.json`), the Kalshi incentive-program records (`~/progs.json`),
+our own order ledgers (`~/nestor/data/lip/v4_ledger.jsonl`, `v5_ledger.jsonl`), and the
+exchange's own fills / settlements / positions endpoints. What could not be reconstructed is
+labelled UNVERIFIED and bounded rather than estimated.*
+
+## I1. The receipt, and what a "line item" is
+
+$71.34 credited for date 2026-07-28, in **24 line items across 6 events**. Sums check exactly:
+gas $38.80 (12) · KXUST7AD $12.38 (5) · KXUST10AD $8.29 (3) · KXMLBMENTION $6.76 (1) ·
+KXUST5AD $2.91 (2) · KXTRUEV $2.20 (1). Minimum line item **$1.00**, next $1.01, $1.06, $1.11 —
+the **$1.00-per-market floor is visible in the receipt itself**. Maximum $8.69.
+
+**The credit day is the ET day, and it is keyed to the program's END, not to the calendar.**
+From the exchange's own program records:
+
+| event | reward window (UTC) | ends (ET) |
+|---|---|---|
+| KXAAAGASD-26JUL29 | 07-28 12:00 → 07-29 03:59 | Jul 28 23:59 |
+| KXMLBMENTION-26JUL27CLECIN | 07-28 14:40 → 07-29 03:59 | Jul 28 23:59 |
+| KXTRUEV-26JUL28 | 07-28 01:02 → 07-29 03:59 | Jul 28 23:59 |
+| KXUST5AD / 7AD / 10AD-26JUL28 | 07-27 20:02 → 07-28 19:30 | Jul 28 15:30 |
+
+This resolves the two puzzles in the receipt. **KXAAAGASD-26JUL28 is absent** despite v4 quoting
+it: its window ended 07-28 03:59Z = 23:59 ET Jul **27**, so it was credited on the previous
+statement. **KXUST2AD and KXUST30AD are absent** despite sharing the UST window and being quoted
+in 10 and 7 rungs: they earned **below the $1.00 floor in every rung and forfeited the lot**.
+
+Every program in all six events carries identical parameters: `period_reward` 1,000,000 fp,
+`target_size_fp` 1,000, `discount_factor_bps` 5,000 (score halves per tick away from best).
+**UNVERIFIED: the dollar value of `period_reward`.** Nestor's own code assumes ×1e-4 = $100 per
+market-period; ×1e-5 = $10 is equally consistent with the fp convention, and the observed
+maximum line item of $8.69 sits suggestively just under $10. Nothing below depends on which is
+right, but the pool-share arithmetic in Appendix D/E does.
+
+## I2. THE COUNT TEST — 57% of our presence earned nothing
+
+Resting reconstructed order-by-order inside each event's own reward window (v4 from its 1,403
+order snapshots at 30 s median cadence; v5 from place/cancel/expire/fill lifecycle). Ledger
+coverage is complete except 17:07–20:10Z on Jul 28, between v4's exit and v5's start, when
+nothing was resting.
+
+| event | line items | rungs we rested | **forfeited** |
+|---|---|---|---|
+| KXAAAGASD-26JUL29 | 12 | 15 | 3 |
+| KXUST7AD-26JUL28 | 5 | 10 | 5 |
+| KXUST10AD-26JUL28 | 3 | 8 | 5 |
+| KXMLBMENTION-26JUL27CLECIN | 1 | 5 | 4 |
+| KXUST5AD-26JUL28 | 2 | 10 | 8 |
+| KXTRUEV-26JUL28 | 1 | 8 | 7 |
+| **total** | **24** | **56** | **32 (57%)** |
+
+**32 of 56 rungs earned under $1.00 and were forfeited entirely** — 2,457,483 resting
+contract-seconds and **167.4 dollar-hours of capital that returned exactly zero**. That is 40%
+of all the capital-time we spent inside these six events. Add KXUST2AD (10 rungs) and KXUST30AD
+(7 rungs), which forfeited in full, and the count is **49 of 73 rungs, 67%, earning nothing.**
+
+The forfeited rungs are not the expensive ones: 13 were dominated by ≤5¢ resting, 7 by 6–20¢,
+7 by 21–50¢, 2 by 51–80¢, 3 by >80¢. **The floor culls indiscriminately — it culls thin
+presence, not cheap presence.**
+
+## I3. SCORE IS NOT PROPORTIONAL TO CONTRACT COUNT — and this is provable without the mapping
+
+The amount-to-rung mapping is not in the record. But proportionality can be falsified without it.
+
+In gas, the largest single rung (4.100) holds **59.8% of all our contract-seconds in that event**
+inside its reward window. If score were proportional to contracts × time, then under *any*
+assignment of the 12 amounts to rungs, some line item would have to carry roughly that share —
+about $23 of the $38.80. **The largest gas line item is $8.69, which is 22.4%.** Proportionality
+is falsified, assumption-free.
+
+Comparing the *shapes* of the sorted distributions (sorted credit shares vs sorted model shares
+within each event, mean absolute deviation in percentage points):
+
+| event | linear in contract-sec | **sqrt(contract-sec)** | presence-time only |
+|---|---|---|---|
+| KXAAAGASD-26JUL29 | 6.3 pp | **1.9 pp** | 4.2 pp |
+| KXUST7AD-26JUL28 | 4.8 pp | **2.0 pp** | 8.6 pp |
+| KXUST10AD-26JUL28 | 3.4 pp | **2.5 pp** | 12.3 pp |
+| KXUST5AD-26JUL28 | 11.4 pp | 11.6 pp | **0.8 pp** |
+
+**The credit distribution is far flatter than our size distribution — roughly square-root in
+resting size.** The rank ORDER is consistent with resting contract-seconds (bigger rungs got
+bigger credits), so rank correlation holds; the MAGNITUDES are not. This is the Appendix D/H
+discriminator answered: **the regime is SATURATING, not contested-linear.** Doubling depth in a
+rung buys about 41% more credit; the tenth contract in a new rung is worth more than the
+thousandth contract in an old one. Mechanically this is what a fixed per-market pool plus a
+$1.00 floor produces, and it is the single most decision-relevant fact in this appendix.
+
+## I4. THE PRICE DISTRIBUTION — where the $71.34 came from
+
+Price throughout is the **acquisition price**: a resting bid at *p* acquires at *p*; a resting
+ask at *p* is a NO bid and acquires at *1−p*. (Verified against the bot's own collateral
+arithmetic: seven opening orders reconcile to $36.00 exactly only under this convention.)
+
+Within a rung, credit is split across buckets in proportion to that rung's contract-seconds in
+each bucket. Three columns:
+- **central** — the credited rungs are the top-N by contract-seconds, amounts rank-matched (the
+  natural reading given the floor and the monotone rank order in I3);
+- **worst case / best case** — the true minimum and maximum any legal assignment of the 24
+  amounts to our rested rungs can put in that bucket. These are hard bounds, not a CI.
+
+| price bucket | **central $** | central % | worst case | best case |
+|---|---|---|---|---|
+| **≤5¢** | **$44.51** | **62.4%** | $8.17 | $54.36 |
+| 6–20¢ | $17.18 | 24.1% | $0.81 | $41.58 |
+| 21–50¢ | $1.87 | 2.6% | $0.12 | $22.95 |
+| 51–80¢ | $3.28 | 4.6% | $0.03 | $20.65 |
+| >80¢ | $4.50 | 6.3% | $0.31 | $20.15 |
+| **total** | **$71.34** | | | |
+
+**Between 11% (hard floor) and 76% (hard ceiling) of the credit came from ≤5¢ rungs; the central
+reading is 62%.** The bounds are wide because the mapping is genuinely unknown; the *floor* of
+$8.17 is the honest minimum and it is already larger than the entire $7.482 we previously
+believed a day was worth.
+
+## I5. THE RATE THAT DECIDES WHERE TO STAND
+
+| bucket | credit | resting contract-sec | resting $-hours | **$ / M contract-sec** | **$ per $-hour** |
+|---|---|---|---|---|---|
+| ≤5¢ | $44.51 | 29,641,849 | 183.5 | **1.50** | **0.2425** |
+| 6–20¢ | $17.18 | 3,282,224 | 93.5 | **5.23** | 0.1837 |
+| 21–50¢ | $1.87 | 346,770 | 31.5 | **5.38** | 0.0593 |
+| 51–80¢ | $3.28 | 448,791 | 81.6 | **7.32** | 0.0402 |
+| >80¢ | $4.50 | 1,060,821 | 272.3 | 4.25 | 0.0165 |
+
+**The two columns point in opposite directions and that is the whole finding.** Per unit of
+*size*, the cheap end is the **worst** place to stand — 1.50 vs 5–7 $/M contract-seconds, because
+the discount factor and the crowd punish 1¢ rungs. Per unit of *balance sheet*, the cheap end is
+the **best** place to stand by 15×, because at 1–3¢ a dollar buys 30–100 contracts and **the
+reward is scored in contracts while the risk is denominated in dollars.**
+
+Per event the spread is larger still:
+
+| event | credit | contract-sec | $-hours | $/M ct-sec | **$ per $-hour** |
+|---|---|---|---|---|---|
+| **KXMLBMENTION-26JUL27CLECIN** | $6.76 | 103,320 | **1.0** | **65.43** | **6.96** |
+| KXUST7AD-26JUL28 | $12.38 | 2,468,784 | 79.7 | 5.01 | 0.155 |
+| KXAAAGASD-26JUL29 | $38.80 | 22,503,947 | 449.7 | 1.72 | 0.086 |
+| KXUST10AD-26JUL28 | $8.29 | 1,857,805 | 156.1 | 4.46 | 0.053 |
+| KXUST5AD-26JUL28 | $2.91 | 1,759,489 | 58.7 | 1.65 | 0.050 |
+| KXTRUEV-26JUL28 | $2.20 | 8,544,594 | 84.6 | **0.26** | 0.026 |
+
+**One mention game paid 80× the rate of gas per dollar-hour and 270× the rate of TRUEV per
+contract-second.** TRUEV is the anti-pattern in its purest form: 8.5 million contract-seconds —
+more than the four treasury events combined — piled into eight rungs, of which seven fell under
+the floor, total return $2.20.
+
+## I6. NET OF POSITION P&L — the number that actually decides
+
+Same window, same events, same bucket definition (acquisition price of the fill). Settled events
+use the exchange's settlement records leg by leg (a paired YES+NO holding pays $1 across the
+pair, which leg-wise accounting reproduces exactly). Gas 26JUL29 had closed but **not settled**
+at time of writing, so it is **marked to each rung's final trade price** — that is a mark, not a
+receipt, and it is the one soft number here. Its cost basis reconciles exactly to Kalshi's own
+`event_exposure_dollars` of $138.011233.
+
+| bucket | capital deployed | position P&L | % | central credit | **NET** |
+|---|---|---|---|---|---|
+| ≤5¢ | $62.70 | −$40.63 | −64.8% | +$44.51 | **+$3.88** |
+| 6–20¢ | $95.54 | −$82.13 | −86.0% | +$17.18 | **−$64.95** |
+| 21–50¢ | $51.66 | −$9.10 | −17.6% | +$1.87 | **−$7.23** |
+| 51–80¢ | $164.95 | −$70.79 | −42.9% | +$3.28 | **−$67.51** |
+| >80¢ | $73.52 | +$7.45 | +10.1% | +$4.50 | **+$11.95** |
+| **total** | **$448.37** | **−$195.20** | **−43.5%** | **+$71.34** | **−$123.86** |
+
+**Only two buckets are net positive, and they are the two ends.** The middle of the book — 6–20¢
+and 51–80¢ — destroyed $132 between them on $260 of capital and collected $20 of credit for it.
+
+Three readings of the ≤5¢ line, and they must be stated together:
+
+1. **The ≤5¢ position loss is confirmed at −64.8%**, squarely inside Appendix H's −65% to −100%
+   band. Nothing here rehabilitates cheap contracts as a *trade*.
+2. **But the subsidy at ≤5¢ is 71% of deployed capital per day** ($44.51 on $62.70), not the
+   5.62%/day Appendix F3 measured. **F3 understated the cheap-rung reward by roughly 12×** — the
+   same 10× direction and magnitude as the $7.482 → $71.34 revision. Appendix H4's headline
+   claim — *"the subsidy is short by a factor of three"* — is therefore **wrong by a factor of
+   about twelve, and in the other direction.** At the measured rate the subsidy roughly covers
+   the bias at ≤5¢.
+3. **The margin is razor-thin, one-day, and assignment-dependent.** Under the worst-case
+   assignment the ≤5¢ bucket nets **−$32.46**; under the best case, **+$13.73**. n = 1 day.
+   **CONDITIONAL, not a green light.**
+
+**The real lever is not price — it is fill.** Credit accrues on *resting* contract-seconds
+(29.6M at ≤5¢); loss accrues only on *filled* dollars ($62.70). The two are linked solely by our
+fill rate. The mention event is the existence proof: **5 rungs rested, zero fills, zero capital
+at risk, $6.76 credited.** Gas: 15 rungs, 76 fills, $38.80 credited against a −$38.89 mark — a
+subsidy that netted to **−$0.09**, i.e. we ran $138 of balance sheet all day to break exactly
+even.
+
+## I7. THE MENTION BAN IS NOT JUSTIFIED — it bans the wrong subfamily at the wrong price
+
+v5 denies the whole mention family. Reconstructing the evidence:
+
+- The loss that drove it is **KXEARNINGSMENTIONPYPL-26JUL28-PERP: 81 YES at 19.9¢ average,
+  $16.09 cost, settled NO, −$16.09.** That is an **earnings** mention taken at **20¢**.
+- Total mention P&L in this window: **−$31.31 on $54.31 (−57.6%), 100% of it in
+  KXEARNINGSMENTION\*** (PYPL −$29.87 over four rungs, BA −$1.44).
+- **KXMLBMENTION contributed zero loss.** The CLECIN rungs that earned $6.76 took **zero fills**
+  and held **zero position**; the only other sports-mention fill in the window (CHCSTL-EXTR, 30
+  contracts) is unsettled and immaterial.
+- Appendix H measured mentions as the **one fairly-priced cheap venue**: n=645 at mean 1.69¢,
+  realised 1.55%, CI [0.84%, 2.83%] containing the price — against gas, metals and index
+  hourlies, all significantly overpriced.
+- Appendix A4's mention row is **−$10.31 on 5 markets**, n=5. The **−$16.39** figure quoted as
+  the ban's basis is A4's *aggregate over all denied venues*, not the mention row.
+
+**Verdict: the ban is over-broad on two independent axes** — it condemns the sports-mention
+subfamily on evidence generated entirely by the earnings-mention subfamily, and it condemns ≤5¢
+rungs on evidence generated at 20¢. On the day's own numbers, the banned family was the single
+**highest-yielding venue we touched, at 80× gas per dollar-hour, with no capital at risk.**
+
+Replace it with: **deny `KXEARNINGSMENTION*` entirely** (four settled markets, −$29.87, every
+fill between 14¢ and 36¢ — this is a venue where informed earnings flow runs over a resting
+maker). **Permit `KX*MENTION` sports rungs at ≤5¢**, sized to clear the $1.00 floor and no more.
+The pre-specified kill trigger: if sports-mention fills exceed 5% of rested contracts over the
+next 10 game-events, the venue is behaving like earnings mentions and the ban is reinstated.
+
+## I8. WHERE THE CAPITAL SHOULD STAND — plain verdict
+
+1. **Breadth, not depth.** Score is ~square-root in resting size (I3) and there is a hard $1.00
+   floor per market. Concentrating 13.5M contract-seconds in one gas rung bought at most $8.69;
+   the same presence spread across nine more rungs at the floor would have bought ~$9 for a
+   fraction of the balance sheet. **Stand in as many programs as the floor allows, and in none of
+   them deeply.**
+2. **Stop paying the floor tax.** 32 of 56 rungs — 167 dollar-hours — returned zero. Every rung
+   we cannot carry over $1.00 should be abandoned, not half-funded. This alone is a ~40%
+   reduction in capital-at-risk with no loss of credit.
+3. **The venue is the decision; the price is downstream.** The dispersion across venues (65.4 vs
+   0.26 $/M contract-sec, a 250× range) is an order of magnitude larger than the dispersion
+   across price buckets (1.5 to 7.3, a 5× range). **Choosing gas over mentions cost more than
+   any price-rung choice within gas could have recovered.**
+4. **Cheap rungs are correct for the reward business and wrong for the trading business, and the
+   thing that separates them is fill rate.** Stand cheap where there is no aggressive taker flow
+   — one-off sports and event markets before they go live. Do not stand cheap in gas and treasury
+   dailies, where the flow is informed and the −64.8% shows up on schedule.
+5. **The 41–80¢ "measured edge" is not where the reward is.** 51–80¢ was the largest capital
+   sink of the day (−$70.79 on $164.95) and collected $3.28 for it. Whatever that edge is worth,
+   it must be traded as a separate book with its own sizing — it cannot be farmed.
+6. **Do not re-lever on this.** One day, n = 1, mapping bounded not known, gas marked not
+   settled. The finding that survives a bad draw is structural — saturation, the floor, and
+   venue dispersion — not the ≤5¢ net of +$3.88.
+
+## I9. Which CONCEPT file changes
+
+**[[46 - MORNING BRIEF]] headline** — the verified daily credit is **$71.34, not $7.482**, and
+rule 1 ("never quote ≤5¢ again") is now **CONDITIONAL, not a kill**: at ≤5¢ the measured
+position loss of −64.8% is very nearly offset by a measured subsidy of 71% of deployed capital
+per day, provided the rung does not fill. The kill that survives intact is **never quote ≤5¢ in a
+venue with informed taker flow.**
+
+**[[43 - THE MONEY GAME]] §7** — the collision named in H6 is resolved, and not in favour of
+either end: **the reward is scored in contracts and the risk is denominated in dollars, so the
+optimal presence strategy is the maximum number of markets at the minimum viable size, at
+whatever price makes a dollar buy the most contracts, in venues where nothing takes.** Depth,
+not price, is the mistake we were making.
+
+**Appendix H4 point 1 is superseded.** *"The subsidy is short by a factor of three"* was computed
+against a reward rate 12× too low. On the measured rate the subsidy approximately covers the
+cheap-end bias. H4's *mechanism* stands; its *arithmetic* does not.
+
+### UNVERIFIED in this appendix
+- The amount→rung mapping. Bounded in I4, never point-identified.
+- The dollar value of `period_reward` = 1,000,000 fp ($10 or $100 per market-period).
+- Gas 26JUL29 P&L is a **mark to final trade price**, not a settlement.
+- Bucket split within a rung assumes credit follows that rung's contract-seconds by bucket.
+- One reward day. Everything numeric here has n = 1.
