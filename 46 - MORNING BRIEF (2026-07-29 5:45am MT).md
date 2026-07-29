@@ -3,6 +3,56 @@
 > Written 2026-07-28 ~11pm MT for Ryan waking at 5:45. Read this first, then [[42 - SPIN-UP]].
 > Nothing is trading that can lose money. Nestor is live and healthy. v5 is stopped and disarmed.
 
+## ⚠ READ THIS FIRST — IT SUPERSEDES THE DECISION TABLE BELOW
+
+**Cheap Kalshi contracts are overpriced ~8×. Measured on n = 8,240 settled markets, one
+observation each, real two-sided quotes, 11 pre-specified families.**
+
+| price | n | posted | **REALISED** | EV per $1 |
+|---|---|---|---|---|
+| **1¢** | 3,205 | 0.60% | **0.03%** | **−94.8%** |
+| **2¢** | 765 | 1.57% | **0.00%** (zero of 765) | **−100%** |
+| **3–5¢** | 333 | 3.39% | 1.20% | **−64.6%** |
+| 6–20¢ | 591 | — | — | −13 to −19% (not significant) |
+| **41–60¢** | 345 | 50.4% | **57.1%** | **+13.3%** |
+| **61–80¢** | 707 | 71.7% | **84.9%** | **+18.4%** |
+| 81–99¢ | 1,852 | — | — | +2.1 to +5.6% |
+
+**Our 15-of-15 wipeout was not bad luck — it was the expected outcome.** True rate at those
+prices is 0.12%, so expected losers in 15 markets is 14.98 and P(all 15 lose) ≈ **98%**. The
+earlier "46% chance" figure was wrong. **That capital was not lost to variance; it was the price
+of the trade.**
+
+**THREE THINGS FOLLOW, AND THEY DECIDE EVERYTHING:**
+
+1. **Never quote ≤5¢ again.** Not a risk preference — a measured −65% to −100% expected value.
+   And on Kalshi a resting cheap bid is a **BUY**: we were not selling lottery tickets, we were
+   holding them.
+2. **The sweet spot is 11–20¢.** Competition is U-shaped — median competing score **6,618 at 1¢,
+   403 at 11–20¢, 2,877 at 96–99¢** — so the middle is where everyone *isn't*. It is also the
+   **cheapest place to clear the $1 floor ($3.68 median**, versus $6.36 at 1–5¢ and $244 at
+   96–99¢). Ryan's question answered directly: **yes, 317 rungs at 7–12% cost ≤$20 to clear $1,
+   across 177 independent clusters.**
+3. **41–80¢ is a measured BUYING EDGE of +13 to +18%** — that is not a subsidy, it is an actual
+   trading edge, and it may be worth more than the entire reward program. It also upgrades the
+   "take the other side" mirror trade from CONDITIONAL to measured.
+
+**Also:** 81–99¢ is the *worst* reward real estate on the board (0.16–0.95%/day) and held
+**95.3% of our capital**. The free-ride rule is actively harmful — it is a covert instruction to
+quote the cheap crowded side. And of 2,983 live programs there are **358 independent settle
+sources**, but **all 75 dailies are treasury rungs — one source**, so a dailies-only rule
+concentrates rather than diversifies.
+
+**Venue note:** mention markets are *fair* at the cheap end (1.55% realised vs 1.69% posted).
+Gas, metals and index hourlies — the venues we actually farmed — are the overpriced ones.
+
+**Two numbers reported with alarms and NOT to be acted on:** a portfolio projection of 22%/day at
+$1,000, and a sizing model implying $851/window of reward on $300. Both contradict the verified
+$7.482 receipt by 10–20×, in the same direction and magnitude as the accrual model already found
+4–8× hot. Treat as hypotheses with a receipt-shaped test attached.
+
+---
+
 ## THE ONE THING TO DO AT 6:00am
 Open the Kalshi **Credits** page. For every line item record **ticker · dollars · PAID or ESTIMATED**.
 Sum ONLY the PAID column. Also check **Settings → Documents/Statements** and any portfolio
