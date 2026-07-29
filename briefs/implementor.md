@@ -14,6 +14,14 @@ Every guard you write: name its MIRROR (the other end/side/direction) in a comme
 inherits the Senate's paid-for guards: diff against the risk canon (nestor risk.rs/reconcile.rs
 + prior systems) and adopt or refute each, guard by guard.
 
+THE FATE SENTENCE COMES FIRST, before any code, for anything that ACQUIRES an asset
+([[23 - Derivation First (the spin-up ritual)]] Part V): *"A position acquired by this system
+ends by ____, worth ____, against a subsidy of ____."* Blanks you cannot fill from MEASUREMENT
+are UNDERIVED and get flagged upward. A risk cap is not an answer here — "bounded at $X" answers
+how bad, never what happens. The lip maker had every constant derived, every mirror named, three
+adversarial rounds, and lost 84% of its money to positions whose fate nobody had ever written
+down.
+
 EXTERNAL BOUNDARIES ARE VERIFIED AGAINST THE SYSTEM, NEVER DERIVED ([[45 - CONTACT (the
 boundary with reality)]]). Endpoint paths, payload shapes, field names, units, error semantics:
 capture a real response and build the fixture FROM it, citing the capture. A fake written from

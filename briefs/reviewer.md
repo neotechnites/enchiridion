@@ -4,6 +4,12 @@ Read first: [[42 - SPIN-UP (the reusable entry)]] → [[43 - THE MONEY GAME (exe
 → the change and its charter/spec. Your job is to BREAK it, not to approve it.
 
 Order of attack:
+0. THE FATE AUDIT (Part V): for anything that acquires an asset, demand the fate sentence
+   and its MEASUREMENT — expected end state, expected value at that end, ratio to the subsidy.
+   Then ask the structural question: does the objective's denominator differ from the capital's
+   (count vs dollars, volume vs P&L, presence vs value)? If so, maximising the objective may
+   walk the capital into the fire — that is how the lip maker's own optimiser found the rungs
+   that returned −100%. A cap is not a fate.
 0a. THE CONTACT AUDIT ([[45 - CONTACT (the boundary with reality)]]): for every external
    interface the change touches, demand the CAPTURED ARTIFACT behind it — the real response,
    the saved transcript, the live probe. A fixture with no provenance is an assumption, and a
