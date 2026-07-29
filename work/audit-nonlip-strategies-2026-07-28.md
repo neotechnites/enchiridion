@@ -1330,3 +1330,169 @@ book turns over about twice a month, not daily.
 Measurement 1 (the competition map — pool dollars per unit of competing score, per price
 bucket) is in flight over all 2,983 live books and is rate-limited by the venue; it is appended
 separately below rather than estimated here. **No modelled substitute is offered.**
+
+## F3. MEASUREMENT 1 — THE COMPETITION MAP (2,983 live books, 5,695 usable sides)
+
+Method: for every live program, pull the book; per side compute
+`competing_score = Σ size × 0.5^(ticks from that side's best)` (the 0.5 is `discount_factor_bps`
+read from the program object, not assumed), and `pool_per_side_per_hour = period_reward×1e-4 /
+window_hours / 2`. Then the **exact** share — no linearisation:
+`earn/hr = [our/(our+rival)] × pool_side_hr`, with `our = $D / price` contracts resting at best.
+
+### Competition is a U — Ryan's hypothesis, confirmed
+
+| band | n sides | **median competing score** |
+|---|---|---|
+| 1¢ | 245 | **6,618** |
+| 2–5¢ | 515 | 4,070 |
+| 6–10¢ | 347 | 1,075 |
+| **11–20¢** | 536 | **403** ← emptiest |
+| 21–40¢ | 841 | 332 |
+| 41–60¢ | 645 | **270** ← emptiest |
+| 61–80¢ | 850 | 323 |
+| 81–95¢ | 974 | 535 |
+| 96–99¢ | 742 | **2,877** |
+
+The extremes are crowded ~16× more heavily than the middle. "Score per dollar = 1/price"
+is real but the denominator eats most of it.
+
+### Yield per dollar deployed, exact share, by deployment size
+
+median %/day on capital resting at best:
+
+| band | $10/rung all | $50 all | $200 all | **$10 QUALIFIED** | **$50 QUALIFIED** |
+|---|---|---|---|---|---|
+| 1¢ | 6.28% | 3.86% | 1.47% | **5.62%** (n=233) | **3.59%** |
+| 2–5¢ | 3.92% | 2.57% | 1.56% | 3.10% (n=465) | 2.53% |
+| 6–10¢ | 5.22% | 3.13% | 1.66% | 2.29% (n=186) | 2.09% |
+| **11–20¢** | **7.67%** | **5.13%** | **2.62%** | 2.68% (n=144) | 2.36% |
+| 21–40¢ | 5.28% | 3.61% | 1.51% | 1.64% (n=131) | 1.53% |
+| 41–60¢ | 3.75% | 2.54% | 1.46% | 0.92% (n=56) | 0.88% |
+| 61–80¢ | 2.47% | 1.91% | 1.15% | 0.77% (n=112) | 0.75% |
+| 81–95¢ | 0.95% | 0.84% | 0.59% | 0.39% (n=357) | 0.38% |
+| 96–99¢ | 0.16% | 0.16% | 0.15% | 0.08% (n=555) | 0.08% |
+
+### The two findings that matter
+
+**(1) Ignoring the qualification rule, 11–20¢ is the best band (7.67%/day at $10) and the
+extremes are NOT the best place to stand — but they are not the worst either. The worst by far
+is 81–99¢: 0.95% and 0.16%/day, six to fifty times worse than the middle.**
+
+**Our own book had 95.3% of its capital in the >80¢ band on the ladder that paid us**
+(Appendix E2). By this map that is the single worst-yielding region of the board. The barbell
+we ran was not "cheap side toxic, expensive side fine" — **the expensive side was the worst
+reward real estate available, and it held nearly all the money.**
+
+**(2) Rule 5 (free-ride existing depth) and "quote the middle" are in direct conflict, and rule
+5 wins.** Restricted to sides whose book already clears `target_size` without us, **1¢ becomes
+the best band (5.62%/day) and 11–20¢ collapses from 7.67% to 2.68%.** The reason is selection:
+only 144 of 536 mid-priced sides qualify at all, and those that do are the crowded ones (median
+score 403 → 1,858). A mid-priced book only reaches 1,000 target size when a crowd is already
+standing there.
+
+The cost of *not* free-riding — supplying the qualifying depth yourself:
+
+| band | sides short of target | median shortfall | **median $ to fill it** |
+|---|---|---|---|
+| 1¢ | 12 | 802 | **$8** |
+| 2–5¢ | 50 | 335 | $14 |
+| 6–10¢ | 161 | 607 | $50 |
+| 11–20¢ | 392 | 763 | **$110** |
+| 21–40¢ | 710 | 722 | **$210** |
+| 41–60¢ | 589 | 765 | $386 |
+| 81–95¢ | 617 | 685 | $602 |
+
+At a $95 bankroll we can self-qualify **one** 21–40¢ rung, or **twelve** 1¢ rungs. That is the
+whole argument for the cheap side, and it is a capital-efficiency argument, not a score
+argument.
+
+### Plain answers
+
+**Best-yielding band per dollar, given what the board offers tonight:** with rule 5 enforced,
+**1¢ (5.6%/day at $10/rung, 3.6% at $50)**, followed by 2–5¢ and 11–20¢ at ~2.3–3.1%.
+Without rule 5, **11–20¢ (7.7%/day)**. Either way **81–99¢ is the worst place on the board** and
+is where our capital actually sat.
+
+**How many independent rungs can we hold at once:** qualified sides total **2,239 across 297
+independent settle-source clusters**. Filtered by yield at $50/rung:
+
+| yield ≥ | sides | **independent clusters** | median window | dominant bands |
+|---|---|---|---|---|
+| 5%/day | 368 | **130** | 104h | 2–5¢ (168), 1¢ (99) |
+| 2%/day | 673 | **202** | 110h | 2–5¢ (244), 1¢ (145) |
+| 1%/day | 972 | 233 | 123h | 2–5¢ (301), 1¢ (186) |
+
+**So: ~130 independent clusters at ≥5%/day, ~200 at ≥2%/day — Ryan's 100–300 independent draws
+exists.** But the median window is **104–125 hours**, and only **1.1%** of the qualified 6–40¢
+opportunity is a daily. The breadth is real and it is all long-horizon.
+
+## F4. THE NUMBER I DO NOT BELIEVE, AND WHY I AM REPORTING IT ANYWAY
+
+Constructing the best N independent clusters at $50/rung, one rung per cluster:
+
+| N clusters | capital | **modelled** reward | %/day |
+|---|---|---|---|
+| 20 | $1,000 | $222/day | 22.2% |
+| 50 | $2,500 | $395/day | 15.8% |
+| 100 | $5,000 | $597/day | 12.0% |
+| 165 | $8,250 | $762/day | 9.2% |
+
+**Do not act on this table.** It says $1,000 earns Ryan's $200/day target, and that should
+trigger every alarm in note 07 and the money-claims doctrine. The reasons it is almost
+certainly wrong:
+
+1. **It contradicts the only receipt we have by ~10×.** We measured **$7.482/day on ~$300
+   deployed = 2.5%/day**. This model says the top rungs pay 40–55%/day and a $300 book should
+   have paid ~$60/day. Same class of model, same direction of error, as the v4 accrual model
+   the audit already found 4–8× optimistic.
+2. **It is a snapshot.** Books were read once, tonight. Competing score is not static — it is
+   the thing that responds when a farmer arrives.
+3. **It assumes we rest at best for the whole window and are never filled.** Every fill converts
+   earning capital into a position (concept §2) and the top-yielding rungs are 1–2¢ rungs, which
+   Appendix A measured at **−100%, 15 of 15**.
+4. **It ignores every position-book cost measured in Appendices A–E**, which is where all the
+   realised money went.
+5. The top-15 list is dominated by **UST30AD/UST7AD/UST5AD/UST10AD** — one settle source — and
+   **KXTRUEV**, which is exactly the correlated-treasury structure that cost −$106.16.
+
+**The correct use of this table is as a hypothesis with a receipt-shaped test attached**, not as
+a plan. The discrepancy between 2.5%/day measured and 9–22%/day modelled is now the single
+largest unexplained gap in this entire audit, and it is resolvable for free by the E4
+observation: read tomorrow's Credits page and compare the PAID column against what this model
+predicts for the rungs we actually held.
+
+## F5. What this changes about the design
+
+- **Rule 4 (dailies only) must be dropped or the book is one settle source.** Measured: 75
+  dailies, all treasury.
+- **Rule 1 (20–50¢ band) is refuted twice over** — by geometry (Appendix C, 2.16% availability)
+  and now by yield: with rule 5 on, the middle pays *less* than 1¢, and the 81–99¢ region where
+  our capital actually sat is the worst on the board.
+- **Rule 5 (free-ride) is confirmed as the strongest rule** and it *selects the cheap side* —
+  it is not compatible with a mid-price floor. The two cannot both be held.
+- The honest synthesis: **the reward-optimal book and the position-safe book are different
+  books.** Appendix A says cheap rungs lose 100% when filled; F3 says cheap rungs are the only
+  ones we can afford to qualify in. That tension is the actual design problem, and neither a
+  price floor nor a two-sided band resolves it. What would: **quoting cheap rungs in markets we
+  are content to be filled in** — i.e. selecting on the settle risk, not the price.
+
+## F6. Which CONCEPT file changes
+
+**[[43 - THE MONEY GAME]] §7**, third and sharpest revision of this note tonight:
+
+**Reward is a SHARE, so the operative quantity is pool dollars per unit of COMPETING score, and
+competition is U-shaped in price.** §7 says reward = capital × time × proximity and saturates
+per pool. What it omits is the other farmers: measured tonight, the median competing score is
+**6,618 at 1¢ and 2,877 at 96–99¢ but only 270–403 in the middle** — the crowd stands at the
+extremes because everyone runs the same score-per-dollar arithmetic. Add: **before choosing a
+rung, measure the denominator; a strategy that is obviously optimal to you is obviously optimal
+to every other farmer, and its yield is competed away in exactly proportion to how obvious it
+is.**
+
+And the interaction that no one derived: **a qualification threshold inverts the price
+preference.** `target_size` makes the crowded cheap rungs *free to enter* and the empty
+mid-price rungs *expensive to enter* ($8 vs $210 median). **A free-ride rule is therefore a
+covert instruction to quote the cheap side** — and if the cheap side is where fills go to zero,
+the reward programme and the position book are pulling in opposite directions by construction.
+That is not a tuning problem; it is the shape of the business, and it must be stated in §7 so
+no future design "discovers" a mid-price band that the qualification rule silently forbids.
