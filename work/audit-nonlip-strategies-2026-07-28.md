@@ -1658,3 +1658,147 @@ ticker count rises.
 tonight before being derived right: **Q = rival/(P−1) is price-free; cost = Q·p; N = B/(Q·p);
 E[hits] = B/Q; P(zero) ≈ exp(−B/Q).** The price band is a bias decision, not a variance
 decision. Write it down so no one re-derives `p_min = k/bankroll` again.
+
+---
+
+# APPENDIX H — ARE CHEAP KALSHI CONTRACTS FAIRLY PRICED? (n = 8,240 settled markets)
+
+## H0. HEADLINE: NO. THEY ARE OVERPRICED BY ROUGHLY 8×, AND OUR 15-OF-15 WIPEOUT WAS THE EXPECTED OUTCOME, NOT BAD LUCK.
+
+Method: 8,240 settled markets across 11 pre-specified series families. For each, **one
+observation** — the last hourly bar with a real two-sided book ending at or before
+**close − 60 minutes** — joined to the actual settlement. No model, no auth-only fields, no
+reuse. (Bug found and fixed en route: deep-OTM rungs have a bid of exactly $0.00, and a
+`0 < bid` filter silently deletes precisely the contracts under test.)
+
+## H1. CALIBRATION AT THE MID — is the market's own fair value right?
+
+| bucket | n | mean price | **realised** | diff | 95% CI on realised | EV per $1 |
+|---|---|---|---|---|---|---|
+| **1¢** | 3205 | 0.0060 | **0.0003** | −0.0057 | [0.0001, 0.0018] | **−94.8%** ← overpriced |
+| **2¢** | 765 | 0.0157 | **0.0000** | −0.0157 | [0.0000, 0.0050] | **−100.0%** ← overpriced |
+| **3–5¢** | 333 | 0.0339 | **0.0120** | −0.0219 | [0.0047, 0.0305] | **−64.6%** ← overpriced |
+| 6–10¢ | 246 | 0.0749 | 0.0610 | −0.0139 | [0.0373, 0.0982] | −18.6% (n.s.) |
+| 11–20¢ | 345 | 0.1500 | 0.1304 | −0.0196 | [0.0989, 0.1701] | −13.1% (n.s.) |
+| 21–40¢ | 442 | 0.2953 | 0.3167 | +0.0214 | [0.2751, 0.3615] | +7.3% (n.s.) |
+| **41–60¢** | 345 | 0.5039 | 0.5710 | +0.0672 | [0.5183, 0.6222] | **+13.3%** ← underpriced |
+| **61–80¢** | 707 | 0.7168 | 0.8487 | +0.1319 | [0.8204, 0.8732] | **+18.4%** ← underpriced |
+| **81–95¢** | 724 | 0.8983 | 0.9489 | +0.0506 | [0.9304, 0.9627] | **+5.6%** ← underpriced |
+| **96–99¢** | 1128 | 0.9763 | 0.9965 | +0.0202 | [0.9909, 0.9986] | **+2.1%** ← underpriced |
+
+**This is the favourite–longshot bias, textbook shape, and enormous at the cheap end.** The 95%
+CI at 1¢ is [0.01%, 0.18%] against a posted 0.60% — the interval does not come within 3× of the
+price. At 2¢, **zero of 765 markets settled YES.** This is not an outlier result; it is the
+central tendency of 4,300 cheap markets.
+
+### The bias term that feeds G1
+
+| band | n | mean price | realised | **b = p_true/p_posted** | b range (95%) |
+|---|---|---|---|---|---|
+| mid ≤ 5¢ | 4,303 | 0.0099 | 0.0012 | **0.117** | 0.050 – 0.274 |
+| mid ≤ 10¢ | 4,549 | 0.0134 | 0.0044 | **0.327** | 0.212 – 0.505 |
+| mid ≤ 20¢ | 4,894 | 0.0231 | 0.0133 | **0.576** | 0.453 – 0.733 |
+
+Appendix G1 showed E[return] = B·b per turnover. **At ≤5¢ you keep 11.7% of every dollar that
+gets filled.** Diversification cannot touch this term — it is a mean, not a variance.
+
+### Our 15-of-15 was not luck
+
+Appendix A recorded 15 of 15 cheap residuals losing 100%, at 5.6¢ average, and I wrote that
+15 straight losses at a 5% true rate happens ~46% of the time. **The true rate is not 5%. At
+≤5¢ it is 0.12%.** Expected losers in 15 markets: **14.98**. P(all 15 lose) ≈ **98%**.
+**The wipeout was the modal outcome.** The −$62.47 was not variance; it was the price of the
+trade.
+
+## H2. THE BUYER'S AND MAKER'S VIEWS
+
+**At the ASK (what a taker pays):** 1¢ −100.0%, 2¢ −93.4%, 3–5¢ −89.9%, 6–10¢ −38.5%,
+11–20¢ −25.5%, 41–60¢ −13.8%; only 81–95¢ (+2.0%) and 96–99¢ (+0.5%) are non-negative.
+**There is no price at which taking cheap contracts is positive.**
+
+**At the BID (nominally our case):** every bucket above 1¢ looks strongly positive (+50% to
++155%). **Do not believe this table.** It is half-spread arithmetic — at cheap prices the
+spread is enormous relative to price (bid 0¢ / ask 1¢) — and it conditions on a two-sided book
+existing, not on us being filled. Our own realised maker fills were measured at
+**−14.4% hold-to-settlement across 142 fills** (Appendix B). The bid column is an upper bound
+that assumes away adverse selection; the −14.4% is what actually happened. **Note that even
+this optimistic table shows 1¢ at −55%.**
+
+## H3. VENUE SELECTION — the bias is not uniform
+
+Cheap end (mid < 10¢), by pre-specified family:
+
+| family | n | mean price | realised | 95% CI | verdict |
+|---|---|---|---|---|---|
+| index hourly | 1569 | 0.0153 | 0.0045 | [0.0022, 0.0092] | **OVERPRICED** |
+| metals daily | 912 | 0.0137 | 0.0000 | [0.0000, 0.0042] | **OVERPRICED** |
+| gas daily | 227 | 0.0183 | 0.0000 | [0.0000, 0.0166] | **OVERPRICED** |
+| weather | 1018 | 0.0063 | 0.0029 | [0.0010, 0.0086] | n.s. |
+| treasury | 100 | 0.0157 | 0.0000 | [0.0000, 0.0370] | n.s. (thin) |
+| **mentions** | **645** | **0.0169** | **0.0155** | **[0.0084, 0.0283]** | **FAIR** |
+
+**Mentions are the one cheap venue that is fairly priced** — realised 1.55% against a posted
+1.69%, CI comfortably containing the price. Gas, metals and index hourlies — the venues we
+actually farmed — are the overpriced ones.
+
+Expensive end (mid > 90¢): metals daily +2.5% (n=704, underpriced), weather +4.1% (n=152,
+underpriced), mentions +5.2% (n=154, underpriced), gas +1.9% (n.s.), index hourly −0.5% (n.s.).
+
+## H4. WHAT THIS DECIDES
+
+1. **The longshot barbell is a structural loser and no amount of bankroll fixes it.** At ≤5¢
+   the expected loss on filled capital is **88.3% per settlement**. The reward yield measured
+   in F3 for qualified 1¢ rungs is **5.62%/day**; over the median 5-day window that is ~28% of
+   capital. **The subsidy is short by a factor of three, and that is before the position book's
+   other costs.** Cheap rungs are only viable if you are never filled — and you cannot control
+   that.
+2. **Appendix E's crossover analysis is superseded on the cheap side.** It asked whether credits
+   above ~$23/day justify the barbell. They do not, at any credit level, *for the ≤5¢ leg*,
+   because the loss scales with fills and the reward saturates per pool.
+3. **The >80¢ side is genuinely underpriced (+2.1% to +5.6%, n=1,852).** The mirror trade of
+   Appendix B4 — 20/20 markets, P(null)=0.199, which I called CONDITIONAL for want of n — now
+   has n. **Verdict upgraded: the favourite side carries a real, measured, positive edge.**
+   It is also the *worst* reward real estate (F3: 0.16–0.95%/day). Those are two different
+   businesses and should be sized separately.
+4. **Venue selection beats price selection.** Mentions at the cheap end are fair; the venues we
+   farmed are not.
+
+## H5. Note 07 discipline
+
+n = 8,240, one observation per market, no reuse, pre-specified families and buckets, a fixed
+T−60m horizon chosen before any result was seen. The cheap-end effect is not outlier-driven:
+it is 4,303 markets with a realised rate of 0.12% against a posted 0.99%, and the largest
+single bucket (1¢, n=3,205) carries the same sign and magnitude as every neighbour. The
+mid-band buckets (6–20¢) are **not significant** and are reported as such. The maker-at-bid
+table is explicitly flagged as selection-contaminated rather than used.
+
+**What this still cannot say:** it measures the price→outcome map, not our fill rate. The
+translation from "cheap contracts are overpriced" to "our book loses $X" requires the fill
+probability on resting cheap bids, which is measurable from our own tape and is the natural
+next kill-test.
+
+## H6. Which CONCEPT file changes
+
+**[[43 - THE MONEY GAME]] §1** — the sentence I flagged in Appendix A now has its number:
+
+> *"the cheap side of any book is cheap to hold and cheap to be wrong about"*
+
+**Replace it.** Measured across 8,240 settled markets: contracts priced at 1–5¢ settle in the
+money **0.12%** of the time against a posted **0.99%** — they are overpriced by roughly **8×**,
+and a filled dollar returns **11.7¢**. The cheap side is not cheap to be wrong about; it is the
+most expensive place on the board to be wrong, because it is where being wrong is nearly
+certain. State the mechanism too, because it is why this will not decay: **the favourite–
+longshot bias is paid for by people buying lottery tickets, and a market-maker resting a bid on
+the cheap side is selling them the ticket only in appearance — on Kalshi a resting cheap bid is
+a BUY, so you are the one holding the ticket.**
+
+Add the mirror, since it is the same measurement: **the 60–99¢ region is underpriced by
+2–18%**, so on a binary the systematically profitable side is the favourite — which is the same
+trade as selling the longshot, and is what volbook has been doing.
+
+**§7** gains the collision this appendix creates with F3: **the reward-optimal rung (1¢, 5.6%/day)
+and the price-optimal rung (>60¢, +2–18% edge) are at opposite ends of the book, and the
+reward at the cheap end does not come close to paying for the bias there (28% vs 88% per
+cycle).** Any presence strategy must choose which of the two businesses it is in. Running both
+at once — cheap rungs for score, expensive rungs for capital — is precisely the barbell we ran,
+and it collected the worst half of each.
