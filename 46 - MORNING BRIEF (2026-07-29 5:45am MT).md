@@ -178,7 +178,19 @@ a lucky $200, because it is the only result that scales.
   cost/rung scales with price, so expected hits = bankroll ÷ contracts-per-rung, independent of
   band. Survivability is governed by **independent settle sources**, not price.
 
-## IN FLIGHT (results due before 5:45)
+## DATA ON DISK (VPS — do not re-pull, these cost hours)
+| file | size | what |
+|---|---|---|
+| `~/calib2.json` | 1.5 MB | 8,240 calibration observations (the overpricing table) |
+| `~/compmap.json` | 886 KB | 2,983 live-book competition map |
+| `~/progs.json` | 46 MB | all 121,151 incentive programs (breadth) |
+
+**Still outstanding, and it is the natural next kill-test:** the FILL PROBABILITY on resting cheap
+bids. That converts "cheap contracts are overpriced 8×" into a dollar figure for *our* book — the
+overpricing only costs us to the extent we actually get filled there. Measurable from our own tape
+(`v4_ledger.jsonl` order lifetimes joined to fills). Not started, nothing in flight.
+
+## COMPLETED OVERNIGHT (was: in flight)
 1. **Calibration** — are cheap Kalshi contracts fairly priced? Thousands of settled markets,
    realised win rate vs price by bucket. Decides whether longshots are EV-0 (rewards are pure
    profit, need bankroll) or overpriced (nothing works).
