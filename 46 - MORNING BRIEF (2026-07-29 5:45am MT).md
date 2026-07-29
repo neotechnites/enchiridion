@@ -51,6 +51,37 @@ $1,000, and a sizing model implying $851/window of reward on $300. Both contradi
 $7.482 receipt by 10–20×, in the same direction and magnitude as the accrual model already found
 4–8× hot. Treat as hypotheses with a receipt-shaped test attached.
 
+### ⚠⚠ DO NOT ACT ON THE +13–18% "EDGE" WITHOUT READING THIS
+
+An independent microstructure derivation flags a direct conflict: **[[07 - Overfitting &
+Validation Discipline]] already tested systematically buying 80–95¢ favourites, and it COLLAPSED
+out-of-period.** The calibration above is in-sample across 8,240 markets priced at close−60min.
+The favourite side being underpriced is the *mechanism* that explains our measured −100% on the
+cheap side; it is **not** a licence to trade its complement. Any move onto the favourite side
+needs a fresh out-of-period test first, or we will have re-discovered a claim the corpus already
+killed and mistaken it for new evidence.
+
+### THE OTHER THING THAT DERIVATION ESTABLISHED
+
+**We never tested market making. We tested longshot farming.** With 0.3% of presence in the
+20–80¢ band, our −$74.52 cannot falsify making on this venue — it falsifies *where we stood*.
+Resting a bid at 5.6¢ puts us on the **same side as retail** (who overpay for lottery tickets),
+competing for the same overpriced ticket, not opposite the flow as a maker is supposed to be.
+The correct name for what we ran: **a subsidised retail-side longshot buyer with a one-tick entry
+discount.**
+
+Two more corrections worth keeping:
+- **Variance per DOLLAR is (1−p)/p — 16.9 at 5.6¢, 1.0 at 50¢, 0.053 at 95¢.** Textbook
+  inventory models use per-CONTRACT variance p(1−p), which says cheap is *safe*. Wrong
+  denominator, same trap as everything else this week.
+- **Binary variance does not decay with time to close** — it is realised in one instant. So
+  time-to-close must NEVER relax an inventory limit, which is the opposite of the usual rule.
+- **Cheap flow is adverse selection too:** a rung is at 5¢ near close *precisely because* the
+  underlying already moved away from it. Every cheap fill is someone selling you a known zero.
+
+**Break-even for a mid-band book: subsidy must exceed 1.39% per turn of capital.** That is the
+whole business in one number, and it is the one we have never isolated.
+
 ---
 
 ## THE ONE THING TO DO AT 6:00am
