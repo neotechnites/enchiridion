@@ -1263,3 +1263,70 @@ measurement — the receipt joined to the position that earned it is.**
 band width, and Appendix D's reward proxy). The proxy failure is worth one line in §07 though:
 **a normalising denominator can be a hidden model.** Appendix D's "contract-count retained" read
 as an accounting fact and was in fact the hypothesis under test, wearing a percentage sign.
+
+---
+
+# APPENDIX F — The live board: competition and breadth (2026-07-29 ~05:36Z / 2026-07-28 11:36pm MT)
+
+Ryan's objection to the barbell reasoning is correct and it invalidates the score-per-dollar
+argument as stated. Reward is a SHARE: `our_score / (our_score + rival_score) × pool`. "1/price
+contracts per dollar" is a numerator claim with the denominator omitted, and the denominator is
+where every other farmer is standing. Both measurements below are from the live board, no model.
+
+**Primary-data confirmation of the scoring rule:** every program object carries
+`discount_factor_bps: 5000` — i.e. **0.5 per tick from best**, exactly the decay the designers
+assumed — and `target_size_fp: 1000`, the qualification threshold. Neither was guessed.
+
+## F1. MEASUREMENT 2 — BREADTH (complete)
+
+Pulled all **121,151** incentive programs; **2,983 are live right now** (start ≤ now < end,
+window still open).
+
+| quantity | value |
+|---|---|
+| live programs = distinct markets | **2,983** |
+| distinct series | 209 |
+| distinct events | 362 |
+| **distinct settle-source clusters** (UST tenors collapsed to one, all rungs of one event collapsed to one) | **358** |
+| **dailies (window ≤ 24h)** | **75 (2.5%)** |
+| median program window | **176.9 hours (7.4 days)** — p10 61h, p90 334h |
+| pool sizes | $100 ×1290, $25 ×899, $80 ×224, $115 ×84, $90 ×81, $200 ×47 |
+
+### The finding that kills rule 4
+
+**Every single daily LIP program live right now is a treasury rung.**
+
+> KXUST2AD ×15, KXUST5AD ×15, KXUST7AD ×15, KXUST10AD ×15, KXUST30AD ×15 = **75 programs,
+> ONE settle source.**
+
+"Dailies only" does not give a diversified daily book — it gives **the treasury curve, and
+nothing else**. That is the exact correlated-bet structure that produced the −$106.16 treasury
+loss (Appendix A4) and the B1 incident. Rule 4 as written concentrates rather than diversifies.
+
+### The horizon/breadth tradeoff, measured
+
+| max window | programs | **independent settle sources** |
+|---|---|---|
+| ≤ 24h | 75 | **1** |
+| ≤ 48h | 152 | 8 |
+| ≤ 72h | 349 | 20 |
+| ≤ 120h | 910 | 106 |
+| ≤ 168h (7d) | 1,388 | 177 |
+| ≤ 336h (14d) | 2,693 | 333 |
+| all | 2,983 | **358** |
+
+**Answer to "does a book of 100–300 simultaneous rungs across independent settle sources
+exist?" — YES, but only at a 5–14 day horizon.** 300 independent sources requires accepting
+~14-day windows. 100 requires ~5 days. At the daily horizon the answer is **one**.
+
+Per concept §6 (horizon is a cost), that is the whole trade: **the variance argument and the
+carry argument point in opposite directions, and the board prices the exchange rate at roughly
+"one extra independent source per 40 extra hours of capital rental."** Ryan's ~300-draw plan is
+available; it costs a 14-day capital lockup per draw, which at our $95–$400 scale means the
+book turns over about twice a month, not daily.
+
+## F2. Interim note
+
+Measurement 1 (the competition map — pool dollars per unit of competing score, per price
+bucket) is in flight over all 2,983 live books and is rate-limited by the venue; it is appended
+separately below rather than estimated here. **No modelled substitute is offered.**
