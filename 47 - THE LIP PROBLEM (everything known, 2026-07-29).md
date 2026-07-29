@@ -28,6 +28,62 @@ central tension and the fix must price both sides, not amputate one.
 
 ---
 
+## 1b. THE RUNG ATTRIBUTION — what the $71.34 actually bought (Appendix I)
+
+**Net of position P&L, by acquisition price, across the six credited events:**
+
+| bucket | capital | position P&L | credits | **net** |
+|---|---|---|---|---|
+| **≤5¢** | $62.70 | −$40.63 (−64.8%) | **+$44.51** | **+$3.88** |
+| 6–20¢ | $95.54 | −$82.13 | +$17.18 | **−$64.95** |
+| 21–50¢ | $51.66 | −$9.10 | +$1.87 | −$7.23 |
+| 51–80¢ | $164.95 | −$70.79 | +$3.28 | **−$67.51** |
+| **>80¢** | $73.52 | **+$7.45** | +$4.50 | **+$11.95** |
+| total | $448.37 | −$195.20 | +$71.34 | **−$123.86** |
+
+**ONLY THE TWO ENDS ARE NET POSITIVE. The middle of the book destroyed $132**, and 51–80¢ was
+the day's single largest capital sink ($165 deployed, $3.28 collected). **Every price-floor
+design this program has produced would have moved capital INTO the losing zone.** ≤5¢ is the
+worst bucket per contract-second (1.50 $/M) but the **best per dollar-hour by 15×** (0.243 vs
+0.0165) — reward is scored in contracts, risk is priced in dollars.
+
+### ⚠ WHAT IS MEASURED vs WHAT IS INFERRED — read before acting on the table above
+
+**Assumption-free (defend these):**
+- **57% FORFEITURE.** 24 line items against **56 rungs rested** ⇒ **32 rungs earned under $1.00
+  and got nothing**, burning 2.46M contract-seconds and **167.4 dollar-hours for zero**.
+  (Including UST2AD/30AD: 49 of 73 rungs, 67%.) This is arithmetic.
+- **SCORE SATURATES, ~√(size × time).** Our biggest gas rung held **59.8%** of that event's
+  contract-seconds; the biggest of 12 gas credits was **22.4%**. No assignment can reconcile
+  those, so score is NOT linear in size. Shape fit: MAD 1.9pp for √ vs 6.3pp for linear.
+  **Doubling size does not double income. Breadth beats depth — settled.**
+- **The $1.00 floor is visible in the receipt** (smallest line item is exactly $1.00).
+- **The credit day is the ET day keyed to each program's END**, not the calendar. Explains why
+  KXAAAGASD-26JUL28 is absent (closed 23:59 ET Jul 27) and why UST2AD/30AD are absent (every
+  rung under $1.00).
+
+**INFERRED, with wide bounds (do NOT size on these):**
+- The amount→rung mapping is a **√(size×time) shape fit**, not a measurement. Credits are labelled
+  **by EVENT only**.
+- ≤5¢ share of credits: central **62%**, bounds **11%–76%**. In the worst-case assignment the
+  ≤5¢ bucket flips from **+$3.88 to −$32.46**. Verdict is **CONDITIONAL, not a green light.**
+
+## 1c. THE TWO LEVERS THAT DWARF PRICE
+
+1. **VENUE DISPERSION IS 250×; PRICE DISPERSION IS 5×.** Choosing gas over mentions cost more
+   than any rung choice *inside* gas could recover. **Venue selection is the first-order decision
+   and we have never optimised it.**
+2. **STOP PAYING THE FLOOR TAX.** 32 rungs funded below the $1.00 threshold earned exactly
+   nothing while carrying full inventory risk. Sizing to clear the floor, or not funding the rung
+   at all, is worth more than any price band.
+
+**And the mention ban is wrong on two axes.** The $16 loss was
+`KXEARNINGSMENTIONPYPL-26JUL28-PERP, 81 YES at 19.9¢` — an **earnings** mention at **20¢**, not a
+sports mention and not cheap. All $31.31 of mention losses are `KXEARNINGSMENTION*`. The CLECIN
+**sports** rungs that earned $6.76 took **ZERO fills, held ZERO position**, at **$6.96 per
+dollar-hour — 80× gas.** Deny `KXEARNINGSMENTION*`; permit `KX*MENTION` sports at ≤5¢ with a
+fill-rate >5% kill trigger.
+
 ## 2. THE MONEY — 2026-07-28, the only full day with both halves measured
 
 | | amount |
