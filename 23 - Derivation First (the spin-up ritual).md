@@ -82,3 +82,51 @@ unneeded because X." An unnamed mirror is an unshipped incident.
 "bounded risk" is NOT a defense for zero-return allocation — every non-earning dollar displaces
 an earning dollar 1:1. Boundedness answers "how bad if it goes wrong"; it never answers "why is
 this dollar here instead of where it earns."
+
+---
+## V. DERIVE THE LOSING PATH (added 2026-07-28, after the longshot slaughter)
+
+Parts I–IV all sharpened HOW to derive. This part fixes WHAT WE NEVER DERIVED AT ALL.
+
+The lip maker was specified, built, reviewed by three adversarial rounds, and run live. Every
+constant carried a derivation. Every guard named its mirror. And it lost **$74.52 on $928.70
+deployed**, of which **84% came from fifteen markets that returned exactly −100.0%** — 1,123
+contracts bought at an average of 5.6¢, zero survivors. Not one line of the spec, the charter,
+the reviews or my own descents ever asked: *what happens to the capital after it is filled?*
+
+The whole apparatus derived the EARNING path — where presence pays, how score is scored, what a
+fill costs as a drag on the hourly rate. The LOSING path was never derived, only bounded. Caps
+answered "how much can we lose per rung"; nothing answered "what is the expected fate of an
+acquired position, and does the subsidy exceed it?" Ryan, who should never have had to:
+*"I. FUCKING. HATE. THIS. what do you not get about do everything from first principles."*
+
+**The rule: for any system that acquires an asset, the derivation is not complete until the
+asset's FATE is derived — not its risk bound, its FATE.** Three questions, mandatory, before
+any acquiring system ships:
+
+1. **What happens to this position if we do nothing?** Not the worst case — the EXPECTED case.
+   Settle at zero? Net against an opposing fill? Be exited at a price we can name? "It is capped
+   at $X" is an answer to a different question and must not be accepted as an answer to this one.
+2. **What is the ratio of the reward to that fate?** The lip maker earned $1.50 of subsidy on a
+   position that lost $15, and $8.21 on a $38 stake. A subsidy that is a fraction of the expected
+   loss is not a strategy, it is a rebate on a losing bet. COMPUTE THE RATIO; do not assume the
+   subsidy is the point just because it is the thing being optimised.
+3. **Does the optimisation target and the destruction target coincide?** This is the trap that
+   caught us and it generalises: **rewards score CONTRACT COUNT, count is cheapest where
+   contracts are worthless, so the rung that maximises the subsidy is by construction the rung
+   that maximises capital destruction.** Whenever an objective is denominated in units the
+   capital is not (contracts vs dollars, volume vs P&L, presence vs value), ask whether
+   maximising the objective walks the capital into the fire. Two denominators, one optimiser, is
+   a structural hazard — name it explicitly or it will find you.
+
+**The meta-lesson, which is why this is Part V and not a bullet in Part II.** Parts I–IV were
+each written after a failure of derivation QUALITY — reasoning from priors, transcribing a spec,
+missing a mirror. This was a failure of derivation SCOPE: the ritual was run beautifully, over
+and over, on one half of the machine. A descent that never visits the losing path is not a
+partial derivation, it is a complete derivation OF THE WRONG SYSTEM — and it feels rigorous the
+entire time, which is what makes it dangerous.
+
+**The mechanical check, for the briefs:** every spin-up on an acquiring system writes the fate
+sentence before anything else — *"A position acquired by this system ends by ____, worth ____,
+against a subsidy of ____."* Blanks that cannot be filled from measurement are UNDERIVED and get
+flagged upward. No fate sentence, no build.
