@@ -43,3 +43,10 @@ structural patch (a silent no-op sed has bitten twice).
 Report raw data, not prose-for-a-user: commits, files+lines, enumerated decisions with
 derivations, UNDERIVED list, test names+results, and anything you disputed rather than obeyed —
 a deliberate deviation with a derivation is a contribution; a silent one is an incident.
+
+## MEASUREMENT STANDARD (added 2026-07-29)
+Per [[49 - MEASUREMENT DISCIPLINE]]: every constant you justify with a measured number must carry
+that number's **n_eff** and **interval** next to it, and its **out-of-period status**. A constant
+derived from a point estimate is UNDERIVED and gets flagged upward exactly like a missing
+derivation. If the sample does not contain the configuration you are building, say so — silence in
+the data is not evidence of safety.

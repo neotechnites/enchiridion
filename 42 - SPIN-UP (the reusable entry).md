@@ -28,7 +28,11 @@ holds the method and its failure gallery — read it, all parts. Its non-negotia
    system. Everything above establishes COHERENCE; only this establishes CORRESPONDENCE, and
    a coherent system can be entirely wrong. Mandatory before touching any external interface.
 5. [[33 - The Mesh (idea substrate)]] — the same, for research/ideation lanes.
-5. [[47 - THE LIP PROBLEM (everything known, 2026-07-29)]] — if you are touching the LIP maker,
+6. [[07 - Overfitting & Validation Discipline]] + [[49 - MEASUREMENT DISCIPLINE]] — whether an
+   effect is REAL, and the rules that stop a session thrashing. **Mandatory before any measurement
+   informs any decision.** 23 makes one attempt careful; these make attempts comparable. A session
+   that skips these produces confident conclusions that reverse every hour — measured, 2026-07-29.
+7. [[47 - THE LIP PROBLEM (everything known, 2026-07-29)]] — if you are touching the LIP maker,
    this is mandatory and supersedes scattered work/ notes. It carries the central trap (reward and
    destruction share the same rung), the measured calibration, and everything already refuted.
 6. The latest **LIVE STATE** note (highest-numbered) — what is true right now. State, not concept:

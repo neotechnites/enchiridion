@@ -36,3 +36,15 @@ Verdict discipline: per-finding severity + a CONCRETE failure scenario (inputs �
 No style nits. State what you verified as correct — a review that only lists faults hides its
 coverage. End with the deploy question answered plainly: what happens when this ships, in order,
 and what can bite.
+
+## MEASUREMENT STANDARD (added 2026-07-29 — ask this FIRST, before code-vs-spec)
+Per [[49 - MEASUREMENT DISCIPLINE]]:
+1. **"List every number in this work. For each: n_eff, interval, in-sample or out-of-period?"**
+   n_eff is INDEPENDENT units — one ladder is one unit, one market's fills are one unit, one day
+   is one unit. Row counts are not n.
+2. **"Does the sample contain the configuration being proposed?"** An estimate from 400-contract
+   orders in thin books licenses nothing about 2-contract orders in deep books.
+3. **"What result was pre-registered as the falsifier?"** No falsifier ⇒ it was a search for
+   confirmation, not a measurement.
+4. **"Did this conclusion overturn a prior one on a point estimate?"** If the intervals overlap
+   and neither is out-of-period, it does not overturn — it widens the range.

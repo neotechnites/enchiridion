@@ -130,3 +130,20 @@ entire time, which is what makes it dangerous.
 sentence before anything else — *"A position acquired by this system ends by ____, worth ____,
 against a subsidy of ____."* Blanks that cannot be filled from measurement are UNDERIVED and get
 flagged upward. No fate sentence, no build.
+
+---
+## VI. A DERIVATION IS ONLY AS GOOD AS ITS INPUTS' ERROR BARS (added 2026-07-29)
+
+Parts I–V all sharpened the REASONING. This part fixes the INPUTS. On 2026-07-29 a fully
+spun-up session ran the ritual correctly eight times in a row and produced eight conclusions that
+each overturned the last — breadth fixes it, no fills break it, no 3–5¢ is the answer, no we need
+$6,000 — because **not one input carried an interval.** Every step was a valid derivation from a
+point estimate, and a point estimate is a hypothesis wearing a number's clothes.
+
+**The rule: every measurement entering a derivation carries its `n_eff` and its interval, and a
+point estimate may never overturn a standing conclusion.** "Every claim carries its because" now
+also reads "every measurement carries its n and its interval." The full rules, the anti-oscillation
+rule, pre-registration, and the verify-by-breadth requirement are [[49 - MEASUREMENT DISCIPLINE]].
+
+**The tell:** if your conclusion changed this hour and the evidence that changed it had no interval,
+you did not learn anything — you resampled noise and called it a finding.
