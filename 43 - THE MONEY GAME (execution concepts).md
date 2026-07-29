@@ -8,8 +8,14 @@
 ## 1. What a contract is
 A binary claim that settles at $1 or $0 from a NAMED SOURCE at a KNOWN TIME. YES + NO = $1
 always — buying NO is selling YES; every fill is an acquisition; positions close by netting.
-Collateral equals the price of what you bought: the cheap side of any book is cheap to hold and
-cheap to be wrong about. Settlement is the only truth; marks between are opinions that converge
+Collateral equals the price of what you bought — and **"cheap to be wrong about" is TRUE PER
+CONTRACT AND CATASTROPHICALLY FALSE PER DOLLAR.** This sentence, in an earlier draft of this
+file, was the most expensive line the Senate has written: a 3c contract loses 100% of the
+dollars in it just as surely as a 60c one, and dollars are what we have. Measured 2026-07-28:
+fifteen markets held as cheap un-netted residual returned **exactly −100.0%** — 1,123 contracts,
+$62.47 in, $0.00 out, zero survivors — 84% of all settled losses from 6.7% of the capital.
+Below roughly 15c neither an exit nor an offsetting fill exists at any price, so the position
+has one fate. Cheapness buys COUNT, not safety. Settlement is the only truth; marks between are opinions that converge
 to it as time runs out — panic-liquidation realizes the opinion of the thinnest book instead.
 
 ## 2. Capital has states, and only one of them earns
@@ -43,13 +49,24 @@ absent market-maker is the fish, and presence itself is the product.
 ## 5. Toxicity is observable without a model
 Who fills you, and how fast? A quote that rests is earning; a quote that fills instantly met
 information. Presence-seconds-per-dollar-hour — how much of your capital's time survives in the
-earning state — separates venues empirically, from your own fills, within hours. Its mirror:
+earning state — separates venues empirically, from your own fills, within hours. **PSDH IS NOT
+SUFFICIENT AND IS ACTIVELY MISLEADING ALONE:** a 1c rung scores beautifully on it (nobody ever
+fills you) and returns −100%. The second statistic is **the fraction of acquired inventory that
+ever NETS against an opposing fill** — measured 2026-07-28: paired inventory +7.4%, un-netted
+−27.3%, un-netted-and-cheap −100.0%. A venue where inventory never nets is not a quiet book you
+are renting; it is a one-way door. And its converse, paid for in the CPI book: **a market with
+no flow at all is not a quiet book, it is a PURE ADVERSE-SELECTION book** — every fill there is
+someone who knows something, because nobody else is trading (−7c per fill, 4 of 4 negative). Its mirror:
 zero fills forever means either the perfect rewards venue or a market nobody wants — the
 difference is whether anyone ever trades there at all.
 
 ## 6. Time structure
 Everything here is windowed: markets open/close, reward windows start AND end, programs are
-mortal (and their pools re-price without notice). Empty-book moments (opens, new listings) are
+mortal (and their pools re-price without notice). **Read every horizon from the market's own
+`open_time`/`close_time`, NEVER from a series nickname:** KXDXYDUD was operated for days as an
+"hourly" and is a ~38-hour daily, which silently mis-priced its carry. A reward window and its
+market's settlement are also separate clocks — the gas daily runs 06:00–21:59 MT with EIGHT DEAD
+HOURS before the next opens, so "the moment this closes" is not when the next begins. Empty-book moments (opens, new listings) are
 when presence is cheapest to establish; crowded moments are when it is diluted. Horizon is a
 cost: a position in a market that settles tonight rents capital for hours; one that settles in
 months (or on an event that may not occur) rents it indefinitely — the same fill at the same
@@ -62,6 +79,13 @@ second, both sides independently); floors forfeit crumbs. Therefore: reward earn
 capital × time × proximity, in the resting state — and it saturates per pool (owning 100% of a
 rung's book cannot earn more than the rung pays). Breadth beats depth once share saturates.
 Fills reduce reward earning twice: the capital leaves the book, and the exit consumes room.
+**AND THE DEEPEST TRAP IN THE WHOLE GAME: the rung that maximises the subsidy and the rung that
+maximises capital destruction are THE SAME RUNG, by construction.** Scoring is denominated in
+CONTRACT COUNT; count is cheapest exactly where contracts are worthless; so every honest
+optimisation of reward capture walks the capital toward the fire. Breadth beats depth (above) is
+true only ABOVE the price floor where inventory can still net or be exited — below it, "the
+cheapest proximity" is the rung nobody wants, and a fill there is not the cost of goods (§2), it
+is a write-off. Two denominators, one optimiser: name it or it finds you (note 23 Part V).
 The subsidy is a business with a landlord: terms change, programs die, and behavior that reads
 as farming rather than market-making invites eviction.
 
