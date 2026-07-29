@@ -1108,3 +1108,158 @@ Also **§2**: capital-normalised sizing must be the default frame. Every earlier
 ledger used fixed contract counts, which silently holds capital constant per *contract* rather
 than per *rung* and thereby hides the entire cheap-rung pathology. **Compare policies at equal
 capital, never at equal contracts.**
+
+---
+
+# APPENDIX E — What price were the rungs that earned the credits? (2026-07-28 night)
+
+Ryan is right that Appendix D was circular: it scaled rewards by retained contract-count, which
+assumes the contract-proportional regime that was the thing under test. This appendix replaces
+the model with measurement where measurement exists, and says plainly where it does not.
+
+## E1. (D FIRST) THE PER-RUNG CREDIT ATTRIBUTION CANNOT BE MADE. Here is exactly what is missing.
+
+Searched, in the coordinator's order of authority:
+
+| source | result |
+|---|---|
+| Kalshi API, 13 candidate paths (`/portfolio/transactions`, `/credits`, `/rewards`, `/ledger`, `/payouts`, `/incentive_program_rewards`, …) | **all HTTP 404.** There is no per-account rewards endpoint. |
+| `/incentive_programs` | returns **pool definitions only** — `period_reward`, `target_size_fp`, and a `paid_out` boolean that is a property of the *program*, not of our payout. |
+| `~/nestor/data/lip/recon.jsonl` (446 rows, the credits ritual) | has a **`paid_usd` field — NULL on all 446 rows.** Also `popover_est_usd` **NULL on all 446**, and `collateral_avg_usd`, `collateral_peak_usd`, `coverage_pct`, `fills_ct` **all zero**. The ritual wrote the schema and never populated it. It covers **8 programs**, and its `model_usd` sums to **$1.352** against a verified receipt of **$7.482** — it does not even cover the right rung set (external_cash records 17 rungs; recon has 6 gas + 2 TRUEV). |
+| `v4_ledger.jsonl` `accrual` (4,989) / `credit_pending` (446) rows | carry `program_id`, `ticker`, `accrued_usd`/`model_usd` — but these are **v4's own model output**, the model the audit already established runs **4–8× optimistic**. Using it to test a reward regime would be a second circularity. |
+| `/portfolio/settlements` | no reward rows; the $7.482 arrived as an undifferentiated balance jump at 05:46:16Z. |
+
+**Cheapest capture fix, going forward (this is the ask):**
+1. **Populate `paid_usd` and `popover_est_usd` in recon.jsonl** — the fields already exist and are
+   already wired into the ritual's schema. The popover value is the exchange's own per-program
+   estimate and note 44 records exchange estimates as proven honest.
+2. **Tag every `accrual` and `credit_pending` row with `resting_price_c` and `resting_size` at
+   the moment of accrual.** The maker knows both; it just does not write them. One field pair.
+3. Have the operator paste the Credits page line items into the ledger on each payout — four
+   numbers, once a day, and it closes the loop the API will not.
+
+Without (1) and (2) **no future payout will be attributable either.** This is the single
+highest-value instrumentation change on the list.
+
+## E2. (A/B) WHAT IS MEASURABLE: our actual resting price, from 5,546 reconstructed order lifetimes
+
+`place_req` carries `price_c` and `size`; `place_resp` gives the order id; `cancel_resp`/`expired`
+close it. Joining those reconstructs every resting order's price, size and duration — **primary
+records, no model.**
+
+**The gas 26JUL28 ladder — the exact rungs behind the verified $7.482 receipt:**
+
+| band | orders | rungs | contract-seconds | % | capital-seconds | % |
+|---|---|---|---|---|---|---|
+| **<20¢** | 18 | 3 | 1.268e6 | **76.2%** | 1.726e4 | 4.3% |
+| **20–80¢** | 4 | **1** | 4.899e3 | **0.3%** | 1.307e3 | **0.3%** |
+| **>80¢** | 57 | 2 | 3.918e5 | 23.5% | 3.784e5 | 95.3% |
+
+Per rung, with the prices we actually rested at:
+
+| rung | orders | our resting prices | contract-seconds | share |
+|---|---|---|---|---|
+| KXAAAGASD-4.120 | 4 | **1¢** ×4 | 1.186e6 | **71.3%** |
+| KXAAAGASD-4.095 | 3 | **98¢** ×3 | 2.825e5 | 17.0% |
+| KXAAAGASD-4.100 | 54 | 92¢×44, 94¢×4, 93¢×3, 90¢, 95¢ | 1.093e5 | 6.6% |
+| KXAAAGASD-4.115 | 5 | **6¢**×4, 5¢ | 7.447e4 | 4.5% |
+| KXAAAGASD-4.110 | 13 | 18¢×4, 23¢×2, 16¢×2, 27¢, 28¢ | 1.156e4 | 0.7% |
+
+**Whole v4 book, all 5,546 orders:** <20¢ = 49.6% of contract-seconds / 5.5% of capital;
+**20–80¢ = 9.6% / 8.9%**; >80¢ = 40.7% / 85.6%.
+
+**Ryan's recollection is confirmed in a stronger form than he stated.** It is not merely that
+longshot rungs earned the credits — **the 20–80¢ band is where we essentially never rested at
+all**: one rung, four orders, 0.3% of presence on the paying ladder.
+
+**The structural reason, and it generalises:** a strike ladder is a **barbell**. Strikes sit
+either deep out-of-the-money (1–6¢) or deep in-the-money (92–98¢); almost none sit near 50¢ at
+any moment. **A 20–80¢ price band does not filter a ladder — it deletes it.** Appendix D's
+modelled 4.9% retention was accidentally close in magnitude to the measured 9.6%, but for the
+wrong reason and on the wrong book.
+
+## E3. (C) APPENDIX D's NET TABLE, RE-RUN WITH MEASURED RETENTION
+
+Measured 20/80 retention (three candidate score functions, all from the table above):
+
+| score function | 20/80 retention |
+|---|---|
+| ∝ contract-seconds | **0.3%** (gas ladder) / 9.6% (whole book) |
+| ∝ capital-seconds | **0.3%** (gas) / 8.9% (whole book) |
+| ∝ rung-programs (saturating) | **20%** (1 of 5 gas rungs) |
+
+**Under every one of the three, the floor deletes 80–99.7% of the reward.** Appendix D's
+"retain 4.9% and still win" survives only because the reward it was giving up was tiny:
+
+| reward rate | NET/day, no floor | NET/day, 20/80 (ret 0.3%–20%) | winner |
+|---|---|---|---|
+| **$7.482 (VERIFIED)** | −27.23 + 7.48 = **−19.75** | −4.38 + 0.02…1.50 = **−4.36 … −2.88** | **20/80** |
+| $15/day | −27.23 + 15.00 = −12.23 | −4.38 + 0.05…3.00 = −4.33 … −1.38 | 20/80 |
+| **$37 (Ryan's popover)** | −27.23 + 37.00 = **+9.77** | −4.38 + 0.11…7.40 = **−4.27 … +3.02** | **NO FLOOR** |
+
+**The conclusion inverts, exactly as predicted — but at a rate we can name.**
+
+The floor buys a **+$22.85/day** position improvement and costs **R × (1 − retention)** of
+reward. It is right iff:
+
+> **R < $22.85 / (1 − retention) ⇒ crossover at $22.9/day (0.3% retention) to $28.6/day (20%).**
+
+### **THE DECIDING NUMBER: ~$23–29/day of credits.**
+
+- **Below ~$23/day → impose the 20/80 floor.**
+- **Above ~$29/day → do not; the barbell is the business and the position bleed is the cost of goods.**
+- Between → the tape cannot tell you.
+
+**On the one day we have a receipt for, credits were $7.482 — a third of the crossover — so the
+floor wins on measured evidence.** Ryan's $37 recollection would flip it, and I must flag that
+**$8 + $7 = $15 already exceeds the entire $7.482 verified receipt**, so those two line items
+cannot be from that payout. They are either a different (later) day, or — more likely given
+`popover_est_usd` exists as a field — **Credits-page *estimates* rather than paid amounts**, and
+the audit has already documented estimates running 4–8× hot.
+
+## E4. What this changes about tomorrow
+
+**Do not deploy either variant on the strength of this appendix.** One measurement decides it and
+it arrives free at 6am:
+
+> **Read the Credits page and record, per line item: the market ticker, the dollars, and whether
+> it is "paid" or "estimated". Then sum the PAID column.**
+> **Paid total < $23/day → run 20/80. > $29/day → run unfiltered and fix the position book
+> another way. In between → neither, and say so.**
+
+That is a five-minute observation that resolves a question no amount of further replay can, and
+it costs nothing because the credits post whether or not we trade on them.
+
+**A caution on the upper branch.** If credits really are ~$37/day, the strategy it endorses is
+resting at 1¢ and 98¢ on ladder rungs — which is precisely the book that produced **−100% on
+15 of 15 cheap residuals** (Appendix A) and a **−$27.23/day** position bleed. That branch is not
+"the floor was wrong"; it is "the subsidy is large enough to pay for a known-toxic book," and it
+would need its own guard — most plausibly the >80¢ leg only, which is the mirror trade already
+verdicted CONDITIONAL in Appendix B4 (20/20 markets, P(null)=0.199), and which carried **95.3%
+of the capital and 23.5% of the presence** on the paying ladder.
+
+## E5. Which CONCEPT file changes
+
+**[[43 - THE MONEY GAME]] §7**, replacing the §7 note I proposed in Appendix D — that one asked
+for the right measurement; this one names what the measurement is *about*:
+
+**A reward program's price geometry is a property of the MARKET STRUCTURE, not of your policy.**
+On a strike ladder the rungs are a barbell — deep-OTM and deep-ITM, nothing near the middle — so
+a presence strategy on ladders is *necessarily* quoting at 1¢ and 98¢, and any mid-band price
+filter is not a risk control but a decision to leave the venue. Measured on the ladder that
+earned our only verified receipt: **76.2% of contract-seconds below 20¢, 0.3% between 20¢ and
+80¢, 23.5% above 80¢.** State the band you can actually rest in *before* designing a filter for
+it; five designers converged on 20–50¢ and the venue offers 0.3% of its presence there.
+
+And the operational rule that this appendix exists because we lacked:
+**every accrual row must carry the resting price and size that earned it.** A reward ledger that
+records only dollars cannot answer the only question that matters about rewards — *what did we
+have to do to get them* — and a program whose per-rung attribution is never captured can never
+be optimised, only guessed at. Note 45 (CONTACT) already demands that external truth be
+captured at the boundary; this is that rule applied to credits: **the receipt is not the
+measurement — the receipt joined to the position that earned it is.**
+
+**No change to [[07]].** It has now caught four successive knobs (rung floor, exit fraction,
+band width, and Appendix D's reward proxy). The proxy failure is worth one line in §07 though:
+**a normalising denominator can be a hidden model.** Appendix D's "contract-count retained" read
+as an accounting fact and was in fact the hypothesis under test, wearing a percentage sign.
