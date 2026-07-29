@@ -22,6 +22,46 @@ The one verified receipt is **$7.482/day**. Operator estimate is $34–37/day. E
 venue have run **4–8× hot**, and the $8+$7 recollection alone exceeds the entire verified
 receipt — so those were almost certainly ESTIMATES, not payments. That gap is the whole question.
 
+## TWO CORRECTIONS THAT ARRIVED AFTER THE TABLE ABOVE (both matter more than it does)
+
+**1. The floor must be `min(p, 1−p) ≥ 15¢`, NOT `p ≥ 15¢`.** A 92¢ YES bid *is* an 8¢ NO. The
+23% of our presence sitting above 80¢ is the SAME one-way door wearing the other side's clothes —
+un-nettable, un-exitable, and it has produced almost no adverse resolutions in 6 days purely by
+luck. A floor written on `p` alone leaves it wide open, and every price band anyone proposed
+tonight (including mine) was written on `p` alone.
+
+**2. The saturation question is the actual fork, and it costs ~$10 to settle.** Everything depends
+on whether reward share SATURATES (if few rivals rest there, our share ≈ 1 regardless of size) or
+is CONTESTED (share ∝ our contracts, so the optimum is always the cheapest rung — the shredder):
+
+| regime | reward under a 15¢ floor | position cost | net/day |
+|---|---|---|---|
+| as run (no floor) | $7.48 | −$12.42 | **−$4.94** |
+| **saturating** | $7.48 (just move strikes) | −$2.01 | **+$5.47** |
+| **contested** | $1.80 | −$2.01 | **−$0.21** |
+
+Exactly one branch is positive, and we have never measured which one we are in.
+
+**THE $10 TEST — run this before deploying another dollar.** One reward period, same markets,
+15¢ floor on `min(p,1−p)`, at **one fifth the size**. Compare the receipt to the $7.482 baseline:
+- payout falls **<20%** ⇒ share SATURATES. The floor is free, capital is nearly irrelevant, the
+  $928 we deployed was waste, and the business is **minimum-size breadth**.
+- payout falls **~5×** ⇒ share is CONTESTED. Then reward-per-dollar is maximised at the cheapest
+  rung by construction, the only way to earn is the way that returns −100%, and **the program is
+  dead for us.**
+
+Cost: ≤$8 of forgone reward and ~$2 of P&L. It discriminates the two branches directly, which the
+credits total alone cannot do.
+
+**Also new: filter on LADDER SHAPE, not pool size.** Only quote series whose strike distribution
+actually populates the middle. On a barbell ladder there is no rung where making a market is a
+business — cheap end has one fate, rich end is capital-heavy with a fat tail, middle doesn't exist.
+Free to check, and if no series has a populated middle the program is dead regardless of anything else.
+
+**Reframe worth holding:** this capital's job is not $200/day. It is to prove a positive,
+labour-free per-dollar rate worth adding zeroes to. A verified +1%/day on $1,500 is worth more than
+a lucky $200, because it is the only result that scales.
+
 ## STATE
 - **nestor** — live, unhalted, bankroll $92.74, divergence Δ$0.46 on the $2.00 band. It halted at
   ~10:20pm because v5's cash feed went stale after v5 stopped; repaired with a −$12.44 external-cash
