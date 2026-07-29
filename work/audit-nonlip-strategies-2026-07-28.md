@@ -1496,3 +1496,165 @@ covert instruction to quote the cheap side** — and if the cheap side is where 
 the reward programme and the position book are pulling in opposite directions by construction.
 That is not a tuning problem; it is the shape of the business, and it must be stated in §7 so
 no future design "discovers" a mid-price band that the qualification rule silently forbids.
+
+---
+
+# APPENDIX G — The sizing algebra, and what actually governs survivability (2026-07-29)
+
+## G1. THE ALGEBRA: VERIFIED, AND THE COORDINATOR'S CORRECTION IS RIGHT
+
+**Claim under test:** cost per rung scales with price, so N = B/(count × price), expected hits
+= N × price = B/count, **and the price cancels.**
+
+**Step 1 — is the contract count Q needed to clear $1 independent of price?** Yes, exactly.
+Reward is a share: `[Q/(Q+rival)] × pool_to_our_side_over_window = 1` ⟹
+**Q = rival / (P − 1)**, where P is the pool dollars reaching our side over the window.
+**Price does not appear.** Q is set by the crowd and the pool, nothing else.
+
+**Step 2 — the cancellation.** cost/rung = Q·p ⟹ N = B/(Q·p) ⟹ **E[hits] = N·p = B/Q.**
+**Confirmed: price cancels exactly.**
+
+**Step 3 — P(zero winners), exactly rather than approximately:**
+`ln P(zero) = N·ln(1−p) = −(B/Q)·(1 + p/2 + p²/3 + …)`
+
+so **P(zero) = exp(−B/Q) to first order**, with a small second-order term that **favours higher
+p**. Numerically at B=$1,000, Q=200:
+
+| price | N rungs | E[hits] | P(zero) exact | exp(−B/Q) | return sd |
+|---|---|---|---|---|---|
+| 1¢ | 500 | 5.00 | 0.0066 | 0.0067 | $445 |
+| 5¢ | 100 | 5.00 | 0.0059 | 0.0067 | $436 |
+| 10¢ | 50 | 5.00 | 0.0052 | 0.0067 | $424 |
+| 20¢ | 25 | 5.00 | 0.0038 | 0.0067 | $400 |
+| 50¢ | 10 | 5.00 | 0.0010 | 0.0067 | $316 |
+
+E[hits] is **identical at every price**. P(zero) moves only in the third decimal. Return
+sd = √(Q·B·(1−p)) — higher p cuts it by √(1−p), a 29% reduction at p=0.5 and **5% at p=0.1**.
+
+**So the headline the coordinator asked for is confirmed: the probability band is essentially
+irrelevant to survivability. Only B/Q — bankroll per contract-count-per-rung — and
+INDEPENDENCE matter.**
+
+**The one caveat that dominates everything.** All of it assumes fair pricing. With bias
+b = p_true/p_posted, **E[return] = B·b**: you keep fraction b of your capital per full
+turnover. A 15% overpricing of longshots costs 15% of bankroll per cycle and no amount of
+diversification recovers it. **The price band is irrelevant to variance and decisive through
+bias.** That is why the calibration measurement, not this algebra, decides the band.
+
+## G2. COST TO CLEAR $1 — MEASURED ON THE LIVE BOARD (2,983 programs)
+
+Q computed per rung as `rival_score / (pool_to_our_side_over_REMAINING_window − 1)`:
+
+| band | n | clusters | **median Q** | **median cost $** | p25 | p75 |
+|---|---|---|---|---|---|---|
+| 1¢ | 245 | 109 | 412 | $4.12 | $1.82 | $15.04 |
+| 2–5¢ | 515 | 194 | 286 | $9.07 | $2.75 | $41.25 |
+| 6–10¢ | 346 | 180 | 83 | $6.86 | $1.92 | $17.72 |
+| **11–20¢** | 536 | 251 | **25** | **$3.68** | $0.61 | $15.57 |
+| 21–40¢ | 841 | 272 | 20 | $6.30 | $1.29 | $29.40 |
+| 41–60¢ | 645 | 208 | 19 | $9.48 | $2.32 | $43.45 |
+| 61–80¢ | 850 | 280 | 17 | $12.80 | $3.20 | $68.88 |
+| 81–95¢ | 973 | 280 | 43 | $38.32 | $11.02 | $103.44 |
+| 96–99¢ | 742 | 178 | 253 | **$244.46** | $73.27 | $1137 |
+
+**Q is U-shaped (it tracks the crowd), and cost = Q·p is minimised at 11–20¢ ($3.68), not at
+1¢ ($4.12).** Q falls 16× from 1¢ to 11–20¢ while price rises 15× — they nearly cancel, exactly
+as the algebra says, and the residual slightly favours the middle.
+
+### G2b. RYAN'S DIRECT QUESTION — answered
+
+> *Do rungs exist at 7–12% probability where $1 of reward is reachable at a sane cost?*
+
+**Yes, and that band is cheaper to clear $1 in than the 1–5% band.**
+
+| band | rungs | clusters | median cost to clear $1 | **rungs costing ≤ $20** | across clusters |
+|---|---|---|---|---|---|
+| 1–5¢ | 760 | 217 | $6.36 | 511 | 174 |
+| **7–12¢** | 380 | 200 | **$5.01** | **317** | **177** |
+| 13–20¢ | 411 | 222 | $3.75 | 326 | 187 |
+| 21–40¢ | 841 | 272 | $6.30 | 578 | 207 |
+
+317 rungs at 7–12% cost ≤$20 each to clear $1, spread over 177 independent settle sources.
+**There is no capital penalty for standing at 7–12% instead of 1–5%. There is a small
+discount.**
+
+## G3. THE BACKTEST OF THE SIZING RULE — AND WHY ONLY ONE COLUMN OF IT IS BELIEVABLE
+
+Rungs taken in descending reward-per-dollar until B is exhausted:
+
+| B | variant | rungs | capital | **independent clusters** | E[hits] posted | **E[hits] on independent sources** | P(zero) |
+|---|---|---|---|---|---|---|---|
+| $300 | no band (corrected) | 851 | $299.64 | **135** | 324 | **82.2** | 0.000 |
+| $300 | hard 20/80 | 571 | $299.81 | 120 | 266 | 85.4 | 0.000 |
+| $300 | p ≥ 10% | 780 | $299.83 | 133 | 344 | 88.1 | 0.000 |
+| $300 | cheapest p ≤ 5% | 209 | $299.74 | **92** | 4.97 | 4.80 | **0.006** |
+| $300 | one rung per cluster | 233 | $299.67 | **233** | 57.2 | 57.2 | 0.000 |
+| $1,000 | no band | 1249 | $999 | **180** | 444 | 112.2 | 0.000 |
+| $1,000 | p ≥ 10% | 1100 | $998 | 178 | 485 | 124.7 | 0.000 |
+| $1,000 | cheapest p ≤ 5% | 381 | $994 | 139 | 9.06 | 8.58 | 0.000 |
+| $1,000 | one per cluster | 320 | $993 | **320** | 75.3 | 75.3 | 0.000 |
+| $2,000 | no band | 1586 | $2000 | **219** | 544 | 137.4 | 0.000 |
+| $2,000 | one per cluster | 351 | $1924 | **351** | 83.2 | 83.2 | 0.000 |
+
+**The reward column is omitted deliberately.** By construction each rung clears $1, so the model
+says $300 buys 851 rungs = $851/window of reward. **That is not credible and I will not print
+it as a result** — it is the same class of projection as F4's 22%/day and it contradicts the
+verified $7.482/day receipt by more than an order of magnitude. The relative structure below is
+what this table can support; the levels are not.
+
+### The finding that matters — INDEPENDENCE, not price
+
+**Rungs are not draws.** At B=$1,000 with no band the rule takes **1,249 rungs across 180
+independent settle sources — 6.9 rungs per source.** Holding 1,249 tickers feels like 1,249
+draws; it is 180. Every ladder rung on one underlying settles off one number (concept §3).
+
+| variant at $300 | rungs | **independent sources** | rungs per source |
+|---|---|---|---|
+| no band | 851 | 135 | 6.3 |
+| 20/80 band | 571 | 120 | 4.8 |
+| p ≥ 10% | 780 | 133 | 5.9 |
+| cheapest ≤5% | 209 | 92 | 2.3 |
+| **one per cluster** | **233** | **233** | **1.0** |
+
+**P(zero winners) is ~0 for every variant except "cheapest only" at $300 (0.006).** So the
+variance question resolves exactly as the algebra predicted: **the band does not govern
+survivability. The only variant with meaningful ruin risk is the one that also has the fewest
+independent sources — and it is the low count, not the low price, that causes it.**
+
+**The efficient frontier is "one rung per cluster."** It buys 233 independent sources at $300
+and 320–351 at $1,000–$2,000, versus 135–219 for the yield-greedy rule that piles into ladders.
+Ryan's ~300 independent draws is reachable at **$1,000**, not $8,250 — but only by explicitly
+capping rungs per settle source, which no version of the design so far does.
+
+## G4. WHAT REMAINS UNMEASURED, AND IT IS THE ONE THAT DECIDES THE BAND
+
+**The realised win rate by price bucket is still not measured.** The calibration pull is
+running now; an earlier attempt returned zero usable observations because of a real bug worth
+recording: **deep-OTM rungs have a bid of exactly $0.00**, and the two-sided filter
+`0 < bid < ask < 1` silently rejected precisely the cheap contracts under test. Fixed by
+accepting `0 ≤ bid ≤ ask < 1` and joining on `market_ticker` rather than response order.
+
+Until that lands, **every statement in this appendix is conditional on fair pricing**, and G1
+shows exactly how much that matters: a bias of b costs (1−b) of bankroll per turnover,
+independent of diversification, and it is the only term in the whole model that
+diversification cannot touch.
+
+## G5. Which CONCEPT file changes
+
+**[[43 - THE MONEY GAME]] §3**, which is the note that has been quietly right all evening:
+
+> *"Every rung of a ladder settles on ONE number. Fifteen rungs of 'yield ≥ X' are one bet
+> wearing fifteen tickers."*
+
+Add the operational form this appendix measured: **a presence book's risk unit is the settle
+source, and the yield-greedy ordering concentrates on ladders because ladders are where the
+cheap rungs are.** Measured: the greedy rule takes 6.9 rungs per independent source; capping at
+one per source costs ~25% of modelled yield and buys 1.7× the independence. **Any allocator that
+ranks by yield-per-dollar without a per-source cap will silently rebuild the correlated book
+that §3 exists to prevent** — and it will look more diversified as it does so, because the
+ticker count rises.
+
+**§6** gains the sizing identity, because it is short, exact, and was derived wrong twice
+tonight before being derived right: **Q = rival/(P−1) is price-free; cost = Q·p; N = B/(Q·p);
+E[hits] = B/Q; P(zero) ≈ exp(−B/Q).** The price band is a bias decision, not a variance
+decision. Write it down so no one re-derives `p_min = k/bankroll` again.
