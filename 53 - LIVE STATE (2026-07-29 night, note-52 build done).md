@@ -94,3 +94,28 @@
   nestor stays halted until v5's feed is verified true; resume ritual after that.
 - Breaker inventory for the night: B14 caught a real fire within 4 hours of first arming.
   The cap stack held: every cluster ≤ $10 worst-case throughout.
+
+
+## MORNING LOG (2026-07-30, ~06:20-07:30 MT)
+- **The night's take: the φ dataset is REAL.**  121 orders, 23 fills / 571 contracts across
+  9 series, every one with true size/price/fee; 2,166 presence rows; 6.7MB of board-wide
+  lipband capture.  **Maker fees exist per-series**: $0.87 charged total (TRUMPSAY $0.57,
+  APRPOTUS $0.21, A100WS $0.07, EURUSD $0.03; treasuries/MLB $0.00).  Fee-aware venue
+  pricing is now mandatory — the fee rides on every `fill_obs` row since the dialect fix.
+- **Second burst-halt, 00:54 MT, KXAPRPOTUS — and it sat halted 5.5h.**  Same class as
+  TRUMPSAY: the replenish re-posted instantly into the flow that ate it.  My watch missed
+  it twice over (session watchdog killed by the environment; the VPS cron didn't check the
+  halt flag).  Ryan caught it at ~06:20.
+- **The structural fix, deployed: `POST_FILL_COOLDOWN_S = 90`** — entry re-posts wait 90s
+  after a fill (> B14's 60s window, so the burst breaker is unreachable through the
+  replenish; sheds/fully-closing exempt).  Mutation-tested: a flow that eats every lot on
+  contact can no longer trip the breaker.  Family bans stop being the tool for this class.
+- **The VPS watchdog now pages on the halt FLAG** (the gap), plus dead-service and
+  stale-feed.  Cron, session-independent, ntfy.
+- **Close cache persisted** (`v5_close_cache.json`): settlement dates are fixed at listing
+  but were memory-only, so each of tonight's three restarts re-learned thousands of closes
+  at ≤4 req/s — the hour-long ramps.  Restarts now resume warm.  (The websocket remains
+  unwired; it streams books only — orders are REST regardless — worth wiring for 6→32
+  live-book breadth, not the placement bottleneck.)
+- Commits: `651e866` (fills dialect), deny TRUMPSAY, cooldown (690 tests), close cache.
+- v5 LIVE and rebuilding; nestor still halted pending a true-feed verification + resume.
