@@ -205,3 +205,13 @@ doubles the real z-day. Fatal line (recovery eats the program) ≈ 45–50%.
 **d = fatal ÷ error-allowance ≈ 45%/2 ≈ 22%.** The 20% was right for the newly-derived
 reason: insurance against our inputs being 2× wrong. As tape shrinks p's error bars,
 d drifts up — earned, measured looseness.
+
+**d SETTLED = 20% (Ryan, final).** Derivation trail, so it isn't lost: (1) pure
+compounding barely binds at this machine's earning rates; (2) the binding constraint is
+MODEL ERROR — p rests on thin tape + calibration, allow it to be 2× wrong; (3) fatal
+recovery line ≈ 45–50% ÷ 2 ⇒ ~22%; (4) RYAN'S CORRECTION: earnings do NOT scale linearly
+with capital (√-saturation per rung, knees, finite fast markets ⇒ concave in C), so the
+linear-recovery arithmetic in (1) overstates recovery cost of a drawdown and the whole
+derivation is conservative; (5) rounded to **20%** — "not restricting us all that much."
+Revisit only when p's error bars shrink with tape (loosen) or the funded mix cheapens
+(tighten via the floor–cap coupling).
