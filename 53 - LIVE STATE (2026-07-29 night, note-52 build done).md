@@ -342,3 +342,12 @@ old build can't rebuild the book either — cancelled rungs sat in position-owne
 old-D5 refuses. Agent is fixing: recall only under genuine scarcity (cluster dollars can't fund
 both). Redeploy of corrected round 2 restores both the book and the unlocks. Lesson: the
 1.153/1.155 rule is a CONFLICT RESOLUTION, not a standing purge.
+
+## 2026-07-30 ~14:15 MT — corrected round 2 LIVE (a95b11b, 763 green, pushed)
+Recall is now a contest resolution (scarcity-conditioned); the wave's shape is a pinned test.
+Second latent bug fixed (recalls now free their dollars to the cluster tally). Post-restart:
+zero recalls, cluster_owned gone, no cancels, unhalted. BUT rebuild is slow: spent $0.84,
+placed 0 — the binding gates on FRESH entry are free_ride_refused (305) and p6_would_refuse
+(172). The flushed book had grandfathered these gates. FREE_RIDE_ONLY is now the single gate
+blocking BOTH the rebuild and the sole-qualifier venues → the empty-book fork discussion with
+Ryan is the critical path to redeploying capital.
