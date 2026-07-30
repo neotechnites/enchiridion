@@ -351,3 +351,13 @@ placed 0 — the binding gates on FRESH entry are free_ride_refused (305) and p6
 (172). The flushed book had grandfathered these gates. FREE_RIDE_ONLY is now the single gate
 blocking BOTH the rebuild and the sole-qualifier venues → the empty-book fork discussion with
 Ryan is the critical path to redeploying capital.
+
+## 2026-07-30 ~14:45 MT — book REBUILT ($42.47 resting, 14 orders, above pre-wave $33)
+Normal discovery rebuilt the book under the corrected build. Reinstate post-mortem (with new
+refusal tally, commit pushed): it runs ONCE at init racing a half-paginated program feed and a
+discovery-drained rate bucket — {"no_live_program":16, "rate_budget_exhausted":1}, 21 rungs
+never evaluated. Reinstate has NEVER successfully replayed in production (both morning "wins"
+were recovery adopting still-live orders). Agent building: re-entrant reinstate (pending list,
+adjudicate under current program map until deadline) + snapshot shrink-guard (a collapsing book
+can't clobber last-known-good inside a derived freshness window). Close-cache flush bug also
+real (every=25 counter resets each restart) — flagged for same round.
