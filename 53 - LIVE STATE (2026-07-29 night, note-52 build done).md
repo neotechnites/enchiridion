@@ -262,3 +262,21 @@ Next: Ryan reviews collisions → one deploy (rsync + KILL restart, reinstate ~9
 KILL-restart clean. Book survived intact: 7 resting rungs stayed live on the exchange through the KILL, recovery sweep (fix 7's real-dialect parser) adopted them — reinstate correctly had 0 to re-place. `dedupe_seeded fills:4` (fix 2 live). No halt, cycling, nestor untouched.
 
 **Finding: pass-2 funded ZERO while ~$170 of budget sits idle** (budget = 300 − ~$117 inventory basis − reserve; pass-1 spends only ~$5/cycle). Perfect candidates exist (below_cliff_dropped rungs needing ~$5). The feature only logs successes — blocked reasons are invisible. Leading hypothesis: D11 plan_var — 16 clusters carry inventory (several OVER the $10 cap: AAAGASD $27.5, AAAGASW $23), each charged at full container, variance budget likely exhausted → every new cluster refused. Proposed: one-line blocked-reason tally log, redeploy, read the tape. Awaiting Ryan.
+
+## 2026-07-30 ~11:20 MT — basis poison fixed, idle capital MEASURED
+
+**Root cause of the inflated clusters:** gen_adopt_truth.py's fallback fabricated basis=0.5 when
+fills didn't cover a position and the book read failed. 55 NO @ fake $0.50 = $27.50 on a ~$6
+position. Ryan was right: nothing over $10.
+
+**Fix deployed:** new generator (kalshi_data/scripts/gen_adopt_truth.py) uses the exchange's own
+`market_exposure_dollars` / |position_fp| — pure truth, hard-errors on unpriceable rows, no
+fallback. Ledger archived (archive-20260730-basispoison), re-adopted 20/20 clean. True inventory
+basis **$60.02**. Zero place_refused since restart. pass2_refused logging live (commit pushed).
+
+**The idle $234, measured (alloc_reasons per cycle):** venue_cap 192 · cluster_owned 270 ·
+cluster_cap 81 · slot_cap 12 · below_hurdle 6 → spend ~$2/cycle. Pass-2: all 76 candidates
+cluster_owned (D5 second-rungs — working as designed). The real limiter is VENUE ADMISSION:
+non-admitted venues cap 0, ramp bounded by probe queue (OVERSIZED_PROBE_MAX=2). That guard
+predates the estimates truth feed, which now verifies a venue's payout in minutes. Lever to
+discuss with Ryan.
