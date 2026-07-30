@@ -1,0 +1,108 @@
+# 55 - V6: THE CAPITAL MACHINE — spec'd with Ryan, 2026-07-30 night
+
+> Written to be BUILT TODAY and TURNED ON TOMORROW (2026-07-31). Everything here was
+> derived in conversation with Ryan on 2026-07-30; premises and reasoning included so the
+> builder needs no other context. Companion: [[54 - THE ALLOCATOR LAW]] (v5's law — v6 is
+> the same machine with three dials changed), [[52]], [[47]], [[48]].
+
+## 0. THE FRAME (Ryan's, agreed)
+**v5 is written to be safe, earn a little, and gather data.** Its $10/rung seat is a
+deliberate straitjacket — it will be too small for its own best finds (sole-maker venues
+need $20–60 just to qualify a side; v5 walks past them by design).
+**v6 is where capital increases earnings.** Same law, three dials changed. Target: $200/day
+on $1–2k. LIP ends Sept 1.
+
+## 1. THE THREE DIALS (two alone land ~$110/day; three land $200)
+**Dial 1 — order sizing becomes MARGINAL.** v5: every funded market gets one knee-sized
+seat. v6: cliff-aware entry (v5's exact cost-to-target formula) + marginal deepening above
+it — keep adding dollars wherever the NEXT dollar earns most (deepen vs open-next), until
+all funded markets' marginal returns equalize and capital is gone. Most clusters stop at
+their knee (~$15–25) because "the other $40 earns more elsewhere" (Ryan). This is the old
+water-fill SHAPE readmitted with correct inputs and a cliff — v5's law is its special case.
+**Dial 2 — per-cluster cap from the ruin formula** (see [[54]] procedure): A = C/N,
+N ≥ z²·p(1−p)/(d−p)², N capital-INDEPENDENT (~25–36 at measured p≈8–10%, d=0.2, z=2).
+At $2k: A ≈ $55–80. The cap is a ruin guard, NOT a target — it binds only for freak
+markets (sole-maker, giant pool, flat marginal curve). The knee is where money stops.
+**Dial 3 — the price floor lowers as good rungs exhaust.** Deepening hits share concavity
+(2–3× credit for 6.6× dollars); the rest of $200 is BREADTH, and breadth at $2k exhausts
+the supply above today's floor. Rule: lower the floor until the marginal admitted rung's
+(expected credit − measured calibration bleed) equals the deepening margin. Both sides
+from the price-bucket calibration (8,240 settled markets), not opinion. Evidence the
+frontier is near: sub-5¢ cohort was net +$3.88 even on v4's undisciplined book.
+Breadth needs NO new machinery — the law already funds cheapest-first until capital
+exhausts; more capital automatically = more rungs; the floor just supplies them.
+
+## 2. ORDER SIZING RULING (Ryan delegated; derived from the machine; supersedes his ex-1)
+**Order = W, the full resting size the share-math demands.** Never shrink to stretch
+across turnovers — a shrunk order under-earns EVERY hour and misses the target with
+certainty. **Turnovers enter only the affordability screen: W × max(1, φ·h) ≤ A, else
+skip with the number logged** ("can't afford it"). Requote budget = allocation minus
+consumed; refill at full W until spent. **Oversize past W toward full A only on
+MEASURED-low φ** (the "market is awesome" case is conditioned on knowing φ, not ignorance).
+Consequence accepted: need-$5-at-2.5-turnovers now FAILS a $10 seat ($12.50>$10) — correct:
+a market you can't sustain at full size through expected fills can't reliably hit target.
+
+## 3. WHY SLICING BEATS DUMPING (size×time analysis)
+Under taker-event-eats-your-quote, total dollar-hours = allocation/φ — INVARIANT to
+slicing. Slicing wins on two tiebreaks: share is concave in size (small-sustained earns
+more credit per dollar-hour in contested books) and requoting converts one death-draw into
+many (variance matters because of the forfeit cliff). Dump-full-size wins only at S≈0
+(share flat at 100%) — which the law already does via measured-low-φ oversize.
+
+## 4. RUIN MATH SETTLED (the p conversation)
+p (per-cluster daily wipe) = P(full allocation fills in a day) × P(settles against |
+filled). The second term is READ OFF THE BOARD (the price), degraded by the measured
+calibration gap (1–2¢ posted ≈ 8× overpriced, −95–100% EV/$ filled; ≥~15¢ posted≈realized).
+**The price floor's whole job is capping the calibration gap** — above it, filled inventory
+is EV≈0 VARIANCE, not bleed ("worst case ~$50 drawdown on EV-0"), so p collapses to the
+tail of fair draws and N≈30 is survivable. The floor trades rung availability for safety —
+a trade that reprices at $2k (Dial 3). Under Ryan's conservative always-filled worst case,
+φ drops out of ruin entirely; φ only paces capital→inventory conversion.
+
+## 5. WHAT PICKS RUNGS (the whole model, reduced)
+Of the five inputs: pool, time left, accrued are KNOWN (feeds). Presence is operational.
+**All residual skill = modeling competition S(t) and φ.** Sharpenings:
+- Snapshot S is known (one book read); the real problem is S over the NEXT 24h — we commit
+  against today's book and rivals arrive after us. S-drift is the bigger lever (dust rungs
+  died of share dilution, not fills).
+- Newcomers are mis-ranked by BOTH: no φ tape AND deceptively-empty opening books (ranked
+  at their most flattering moment). Info corrects in hours; the committed capital does NOT
+  move — locked until settle or Ryan sells (no displacement in v5, deliberate; moving
+  UNFILLED collateral off a ruined rung is a legitimate v6+ question, unresolved).
+- Rungs that miss their dollar burn the DAY (~$1.50 opportunity each), not principal —
+  unfilled collateral returns; sub-$1 accrual forfeits. Expect ~⅓ misses early, shrinking
+  with tape.
+- Longshots: higher φ per unit activity (adjacent to the graveyard; capitulation flows
+  into cheap bids) AND near-total loss-given-fill, but tiny collateral each — price
+  predicts φ within a venue, ACTIVITY predicts it across venues → φ fallback wants both
+  dimensions. Fill adverse-selection tripwire (built): capital-weighted avg order price vs
+  avg position entry price vs bucket-φ-predicted gap, on recon cadence.
+
+## 6. THE DATA (all flowing as of tonight)
+- **Competition recorder LIVE** (~/kalshi_data/scripts/competition_recorder.py, @reboot
+  cron): WS orderbook_delta for EVERY in-window rewarded market (3,605 at start), every
+  change ms-stamped, full snapshot per book each 15-min reconnect → exact S(t) at any
+  second; time-of-day competition analysis trivial. ~10–30MB/day gz,
+  ~/kalshi_data/competition/deltas-YYYYMMDD.jsonl.gz.
+- **φ tape**: ledger fill_obs (fills) + presence jsonl (exposure denominator), accumulating
+  whenever v5 runs.
+- **φ for markets we never touched**: recorder books × public trades tape (a print against
+  a resting level IS someone's fill) → measured fill hazard by market and price level
+  across the whole universe. Kills the newcomer-φ problem.
+- Calibration set: ~/calib2.json (8,240 settled markets) — the floor/bleed measurements.
+
+## 7. STATE OF THE BUILD (as of writing)
+v5-law allocator: two independent builds (Opus `allocator-law`, Fable `allocator-law-f`)
+adjudicated by Fable manager; Fable branch WON (short-window target max($1, 1.50·h/24);
+turnover-inclusive affordability; decisive-zero φ) with grafts from Opus (TARGET_MOVED
+requote trigger, empty-side legal fix, measured-φ-gated oversize) + the §2 sizing ruling.
+Manager re-runs full mutation battery before APPROVED. Safety law already LIVE: never
+sells, halt = cancel own orders then idle, startup ignores inherited orders, nothing
+cap-exempt. v6 = the approved v5-law build + the three dials — the implementation delta
+is deliberately small.
+
+## 8. TOMORROW (2026-07-31, Ryan's call on each)
+1. Deploy the approved v5-law allocator (prove $10/day low-swing shape).
+2. Deposit → run [[54]]'s capital-scaling procedure → set A and the floor from capital.
+3. Flip Dial 1 (marginal deepening) — the only new CODE v6 needs beyond v5-law.
+4. First S(t)/φ models from the recorder's first night of data.
