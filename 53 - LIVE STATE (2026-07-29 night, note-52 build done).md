@@ -211,3 +211,34 @@ D4 gate bounds every ride at ≤7 days.  Exits are: day stop, halt closing pass,
   the poll hadn't landed yet; the cooldown closes the class.  Ryan may hand-sell any
   position now; the true-up absorbs it.
 Tests 704.  v5 LIVE, unhalted, book rebuilding buy-side only.
+
+## HANDOFF (2026-07-30 ~10:20am MT, pre-compact) — read this first after compaction
+**LIVE:** v5 running on VPS (commit ~`lip-v5-build` head, 710 tests), unhalted, books TRUE
+(resynced from exchange after the closing-flag replay bug starved budget to $0 at a phantom
+$315/$300). nestor trading. Truth feed (SF-4c) anchoring accrual/60s. True-up recon/120s
+(down-adopts silently, up freezes). Snapshot+reinstate live: any restart redeploys the book
+in ~90s. Positions RIDE (triage + auto-shed both OFF). ~15 rungs resting; more with evening
+dailies or the $600 ceiling (Ryan may deposit; one constant `MAX_TOTAL_COLLATERAL_USD`).
+
+**A researcher SUBAGENT IS RUNNING in `nestor-wt-lipv5` (DO NOT touch that repo until it
+reports via task notification).** Its queue, in order:
+1. Six review fixes (adversarial review, full text in this session pre-compact; summary:
+   ①None×float crash in admit_venues→halt ②crash-gap fills re-booked on restart (seed dedupe
+   from ledger) ③rate-refused reconcile burns its 120s cadence ④replay double-counts 4
+   histories (Σ fill_obs for v5 tapes, v4 inference behind flag) ⑤unreadable halt/peak file
+   fails OPEN (must fail closed) ⑥recovery sweep parses dead `price` field → $0 collateral).
+2. Then TWO Ryan-approved allocator features (constants-free): **pass-2 idle-capital sweep**
+   (leftover budget buys $5–10 lots at 0 refills; floor-reachability is the only admission
+   test) + **calculable displacement at capacity** (displace worst RESTING rung iff
+   E_new > E_worst_remaining + accrued_at_risk, strict; positions never displaced; log both
+   sides). Agent flags spec-vs-machinery collisions for Ryan review.
+
+**WHEN THE AGENT REPORTS:** verify suite locally (`cd tools && python3 -m unittest discover
+-s lip_v5/tests -t . -q`), review its flagged judgment calls WITH RYAN, then ONE deploy:
+rsync tools/lip_v5/ → VPS `kalshi_data/v5/lip_v5/`, `systemctl kill -s KILL lip-v5` +
+`start` (reinstate restores the book ~90s). Push commits. DEFERRED by Ryan: review finding
+#5-of-report (settlement release missing — fix before tonight's settlements if possible),
+#10 (nestor-position freeze/page spam), dormant guards batch. Review's full report is in
+the pre-compact transcript; key unfixed items also matter for the $600 raise.
+**Standing Ryan rules today:** review findings = discuss first, don't auto-fix; never
+hand-place; positions ride; measure don't ban; his UI screenshots outrank our books.
