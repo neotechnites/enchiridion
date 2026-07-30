@@ -314,3 +314,13 @@ one-rung count inside a cluster. Ryan decision pending.
 Agent (same one that built pass-2) building: A sole-qualifier admission, C empty-book quoting,
 B D5′ dollars-not-count. I deploy on its report after suite verify. Ryan approved all three +
 deploy.
+
+## 2026-07-30 ~12:20 MT — THE 17-HOUR EXPERIMENT (Ryan asked: working / will work / can work)
+$9.13 accrued, 69 of 106 touched rungs earned. Treasuries = 45% of all earnings ($4.07 from
+UST10AD+UST30AD). Only ONE program cleared the $1 forfeit floor so far (TRUEV $1.04, banked).
+Yesterday's UST batch (~$3.3) ended sub-$1/rung — forfeit-exposed. 48/69 programs are <10¢ dust.
+Presence (2.8h tape): median 50%, p25 3% — UST10AD ran 3% presence today because OUR OWN caps
+(basis poison + cluster full) suppressed the quote. Per-rung economics in good venues ≈ Ryan's
+$2/rung/day. Verdict: mechanism works; spread too thin below the cliff; every bottleneck is
+identified and in the current build round. (Build note: agent's Fix A already landed —
+sole-qualifier venues ADMITTED.)
