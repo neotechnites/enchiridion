@@ -126,3 +126,51 @@ fired (MCMORROW $9.94). Churn gate pacing (plan_exit_deferred). Positions charge
 seats (no doubling down). WATCH ITEM for morning: plan-vs-rail cluster-key mismatch on
 KXMLABELSHARE + KXTRUMPSAY (plan funds, rail refuses on inherited positions, ~52 bounded
 retries) — to builder.
+
+## RECONCILED WITH RYAN (2026-07-30 late) — supersedes §1's "three dials" framing
+1. **v6 is a LOGIC change**: new allocator core — rank → enter at cliff cost → marginally
+   deepen (next dollar to highest marginal rate) → stay/move EMERGENT. Not dials. Proof:
+   v5 complete at $300; v6 has nothing to buy below ~$600.
+2. **FORK, don't edit** (Ryan): v5 freezes as the working $300 earner + fallback binary;
+   v6 builds on the fork. Frozen branch = zero maintenance = the fork is free.
+3. **No DONE rule in v6.** Banked credit is sunk; enforced skip pulls capital from proven
+   rates to unproven ones. The cliff makes PRE-floor dollars special (they unlock stranded
+   accrual); above the floor, markets compete on plain rate. Rotation (same-cluster next
+   market) and staying are both emergent from the marginal queue.
+4. **Anti-churn without timers**: (a) a switch pays its TRUE cost — stranded sub-cliff
+   accrual at risk + transit presence loss — small differences can't pay the toll, big real
+   ones pay instantly; (b) rank on SMOOTHED S (window derived from the recorder's measured
+   flicker rate, first night). 30s min-resting-life + B14 remain the structural floor.
+5. **Proof gate = ONE settle-day** (not 3): ~$7+ earned, per-fill realized-EV tape ≈ fair
+   (each fill: price paid vs outcome; calibration table as prior), no unexplained halts.
+   p needs no ensemble — its components are the board price + calibration gap.
+6. **Measured dispersion (first day, 79 programs)**: fastest rung $0.276/h (→$1.50 in 5.4h
+   at ~$7 seat; ~2.6h at $30; ~1.8h at $66, √-scaled, ceiling = side's half-pool rate);
+   median $0.0065/h (232h — can NEVER clear a window); spread 42×. The game is holding
+   seats in the top decile; top-2 rungs were most of all earnings.
+7. **Breadth guarantee**: the queue never idles capital (entry in a moderate market always
+   beats idle); deepening self-stops at the knee; the real breadth limiter is the
+   affordability screen → solved by the floor dial + bigger seats. Rail stays $66;
+   TRIPWIRE: <40 distinct funded markets at $2k on day one → halve to $33.
+
+## THE CLUSTER CAP, DERIVED (crystal-clear record, Ryan-requested)
+**Why clusters**: markets resolving from one fact settle together (measured: treasury
+tenors 9/9 same-direction over 13 settle-days). Diversification across them is fake; risk
+bounds per SETTLE SOURCE. Cluster = one settle source.
+**Why a cap**: fills that settle against us are the loss mechanism; a cluster's markets
+fill and die together, so the catastrophe unit is the cluster. Cap = max dollars one
+settle source may take in its worst day.
+**Derivation**: (1) policy d=0.2 (day stop: lose ≤20%/day); (2) cluster worst case = its
+allocation A, 100% LGD, always-filled assumed (φ out of ruin by construction);
+(3) p = P(wipe/cluster/day) = board price of our held side, degraded by the measured
+calibration gap (n=8,240: 1–2¢ ≈ 8× overpriced; ≥~15¢ posted≈realized). THE FLOOR'S RUIN
+ROLE: above it fills are fair draws → p = tail of fair coins, not burn;
+(4) clusters independent BY CONSTRUCTION → same-day wipes ~ Binomial(N,p); z-sigma day
+wipes ≈ pN + z√(Np(1−p)); (5) A×wipes ≤ d·C with A=C/N → **N ≥ z²·p(1−p)/(d−p)²**.
+N is CAPITAL-INDEPENDENT (C cancels); A=C/N scales linearly; p→d ⇒ N→∞ ("don't play").
+**Numbers**: p≈8–10% prior → N≥25–36 → run 30 → A=$10@$300, ≈$66@$2k.
+**Couplings (decided 2026-07-30)**: floor↓ ⇒ funded-mix p↑ ⇒ N↑ ⇒ A↓ — compute the cap
+from the ACTUAL funded mix's p. Knee (≈$25–30, per-MARKET, emergent from share concavity)
+≠ cap (per-CLUSTER, law); a $66 rail naturally holds ~2 knee markets (adjacency). N is a
+diversification FLOOR, not a target. $66 kept over $33: $33 refuses the second knee in
+exactly the double-fast clusters where the best dollars live; $66 adds no unpriced risk.
