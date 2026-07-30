@@ -71,3 +71,26 @@
    instruments.
 3. lipband capture → φ by band + nibbled-vs-swept (note 52 §5's switch rule) + re-derive the
    cheap-end EV bias from raw settlements (note 52 §7.2).
+
+
+## NIGHT LOG (2026-07-30, ~01:07-01:30 MT)
+- **~00:10** nestor's divergence breaker halted it — v5's fills were booking as ZERO
+  contracts: the wire moved to `count_fp` fractional dollar-strings and the parser read the
+  dead `count` field.  Fixed against a CAPTURED payload (commit `651e866`, tests 683→688);
+  the fake now speaks only the wire's dialect.  Bonus evidence: `fee_cost` on our real maker
+  fills is **$0.000000, both sides** — the UI's per-ticket fee column is a projection.
+- **~00:45** discovery was crawling: my own lipband capture was eating the per-IP public
+  rate limit and v5's AIMD had collapsed to 1 req/s.  Throttled the capture (1 req/s,
+  250 tickers, 20-min cycles).  v5 then converged fast: **33 venues, 546 slots,
+  $80.99/day projected reward** by 01:07.
+- **~01:07** B14 place-burst breaker HALTED v5, correctly: `KXTRUMPSAYMONTH-26AUG01-PELO`
+  ate three replenish lots in three seconds, one fill at 7c against our 8c bid — the ask
+  collapsed through our price; maker bids were crossing into informed news flow.  ~$15 of
+  inventory, bounded by the cluster rail.  **The mention MECHANISM wearing a non-MENTION
+  ticker** (note 43 §4): `KXTRUMPSAY` family denied by substring (commit pushed).  Halt
+  flattened the book; closing sheds rest.  Denied-family sheds cannot re-post (series_denied
+  has no closing exemption) — the resting shed either fills or the ~$15 rides to Aug 1.
+- **~01:30** resume scheduled for 03:05 MT (post-maintenance), with the deny fix deployed.
+  nestor stays halted until v5's feed is verified true; resume ritual after that.
+- Breaker inventory for the night: B14 caught a real fire within 4 hours of first arming.
+  The cap stack held: every cluster ≤ $10 worst-case throughout.
