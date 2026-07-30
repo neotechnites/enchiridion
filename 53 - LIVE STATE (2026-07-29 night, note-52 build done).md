@@ -4,9 +4,18 @@
 > this.  Supersedes [[50]]'s state half.  The strategy is note 52; this is where the build
 > stands against it.
 
-## STATE
-- **v5 STOPPED, NOT DEPLOYED.**  Branch `lip-v5-build` at `0f576a1`, pushed.  **683 tests
-  green.**  Arming requires Ryan's hand-written `v5_go.json` (G3) — deliberately not mine.
+## STATE — DEPLOYED AND LIVE, 2026-07-29 ~23:40 MT (Ryan's explicit go)
+- **v5 LIVE on the VPS** (`lip-v5.service` active, commit `0f576a1`).  Ryan, verbatim: "go
+  ahead and deploy it, you have my permission to run it" — recorded in `v5_go.json` (G3).
+- Deploy record: old code tar-backed-up in `~/kalshi_data/v5/`; old v5 state archived to
+  `~/nestor/data/lip/archive-20260730-prelaunch/` (coid seq KEPT in place — collision guard);
+  suite run ON THE VPS (python 3.12): 683 with 2 environmental fails (tests that assert
+  nestor's state file is unreadable; on the VPS the real one exists and reads — the
+  deployment working, leaking into a bare-machine fixture).
+- **First real order within ~3 min of arming: `KXUST10AD-26JUL30-T4.73`, ask, 4 @ 13c
+  ($3.48 collateral)** — settles inside 24h, lot + reserve shape.  Accrual ticking, cash
+  feed publishing (nestor's breaker fed), 2 venues admitted and classify still converging.
+- Branch `lip-v5-build` pushed.  **683 tests green** locally.
 - **nestor** live on the VPS, untouched.
 - **lipband capture LIVE on the VPS** (`lipband-capture.service`, since ~22:15 MT):
   books + trade tape on ~400 LIP markets every 10 min → `~/kalshi_data/lipband/`.
