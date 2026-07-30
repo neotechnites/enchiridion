@@ -174,3 +174,34 @@ from the ACTUAL funded mix's p. Knee (≈$25–30, per-MARKET, emergent from sha
 ≠ cap (per-CLUSTER, law); a $66 rail naturally holds ~2 knee markets (adjacency). N is a
 diversification FLOOR, not a target. $66 kept over $33: $33 refuses the second knee in
 exactly the double-fast clusters where the best dollars live; $66 adds no unpriced risk.
+
+## THE RISK FRAME, RYAN'S DOOR (2026-07-30 late — CANONICAL framing; the N-formula is its math)
+**Hold to settlement stands for v6; selling maybe v7** ("every time we try to do it we
+decide not to").
+**Ryan's statement (near-verbatim):** we had a day earning $70 in rewards while losing
+~$140 in positions — bought markets that move together, consolidated on two, both lost.
+Large drawdowns are forbidden NOT because losing is bad but because RECOVERY is slow:
+positive EV over 10 days is worthless if half the stack dies on day one. Four levers:
+(1) play smaller — lowers profit, useless; (2) longer horizon — same as more capital,
+which we don't have; (3) UNCORRELATED breadth with sample size big enough for neutral EV —
+THE lever; (4) selling — out of scope, no intelligent way yet. Position PRICE sets the
+required sample: ~1¢ positions need ~thousands uncorrelated (and are burn, not variance —
+the calibration gap); ~99¢ positions, one deep bet a day passes. Shallow (120 small) vs
+deep (10 big); we KNOW which markets we want; the sweet spot between average cost and
+cluster cap is what earns most. [= the floor–cap coupling: every (avg price, cap) pair
+implies required N via the binomial; maximize expected credit s.t. z-day ≤ d — computable
+from the ranking table, a lookup not a debate.]
+
+**NO MONEY-LOST STOPPER (Ryan, agreed).** Variance losses never halt the earner — the
+sizing priced them, and halting adds a $0 day on top of the loss. The stopper becomes a
+BUG ALARM: halt only on losses INCONSISTENT with the priced model (faster than the
+always-filled worst case; loss-per-fill outside calibration). Model-consistent losses:
+keep earning. Model-impossible losses: the machine is broken.
+
+**d DERIVED (was Ryan's 20% guess).** Recovery cost of drawdown x = x/(e(1−x)) days at
+daily earning rate e ≈ 5–10%/day — pure compounding tolerates d>40%. The binding
+constraint is MODEL ERROR: p rests on ~4 days of tape + calibration; a 2× p-error ≈
+doubles the real z-day. Fatal line (recovery eats the program) ≈ 45–50%.
+**d = fatal ÷ error-allowance ≈ 45%/2 ≈ 22%.** The 20% was right for the newly-derived
+reason: insurance against our inputs being 2× wrong. As tape shrinks p's error bars,
+d drifts up — earned, measured looseness.
