@@ -280,3 +280,23 @@ cluster_owned (D5 second-rungs — working as designed). The real limiter is VEN
 non-admitted venues cap 0, ramp bounded by probe queue (OVERSIZED_PROBE_MAX=2). That guard
 predates the estimates truth feed, which now verifies a venue's payout in minutes. Lever to
 discuss with Ryan.
+
+## 2026-07-30 ~11:40 MT — sole-qualifier bug + venue universe measured
+
+**The bug, plainly:** our highest-earning venue class (sole-qualifier: S≤0, zero rivals) reads
+UNPROBEABLE because floor_q needs a rival score to clear → cap $0 → we refuse to quote where we'd
+take pool/2 alone. The 7 unprobeable venues (UST2/7/10/30AD, H100WS, H200WS, RTX5090WS) have
+**288 open markets with ZERO quotes and ZERO trades from anyone** — we'd be the only maker.
+**Fix (calculable):** when S≤0 the binding floor is the forfeit cliff — probe = smallest lot
+earning ≥$1 from pool/2 over the remaining window. No rival needed. Not yet implemented.
+
+**Prices there:** no market prices exist (empty books — we set them). Empirical anchor: our
+UST10AD basis averaged 9.5¢/contract.
+
+**Treasury correlation (history check, 13 settled days):** tenor daily directions agree 9/9 to
+10/11 across all six pairs — near-perfect. One-RATES-cluster ($10 reserve for all four) is
+EMPIRICALLY RIGHT; $50 spread across tenors = 5 clusters of risk on one bet. Quote all four
+venues for presence, keep the single cluster reserve.
+
+**Venue universe right now:** 234 venues with in-window unpaid pools, 3,705 markets, ~$299k/window
+total. We are funded in 8. Scanner surfaces 15.
