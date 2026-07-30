@@ -367,3 +367,14 @@ Not note-48's $490-at-$300 model. $200/day, $1,000-2,000 ceiling. Every day the 
 working = $200 wasted — far more than test losses. LIP ends Sept 1 (32 days): total prize ≈
 $6,400. Purity refactor (book as pure function; venue memory = estimates feed only) is IN BUILD
 now, stage commits landing on lip-v5-build; each stage deploys on green.
+
+## 2026-07-30 ~16:15 MT — settlement release LIVE, phantom-order halt root-caused
+B14 halted at 15:24 MT ("place_burst: our books are not seeing our own orders") — the exact
+phantom-order disease the refactor's acceptance test found independently (orders never re-synced
+from wire; positions had reconcile, orders had NOTHING). Resumed on the fixed build (sync_orders
+on recon cadence). Settlement-release branch (2nd agent) merged + deployed: exchange-signal-only
+settlement, basis→awaiting-payout frees budget at resolve, realized P&L to equity, replay-safe;
+it also killed the silent true-down that published cash ABOVE truth on losing settlements.
+772 green live. Refactor stages 2-4 (qualification arithmetic, full-universe ranking,
+requote-as-diff) dispatched. Targets corrected: v5 bar $30-60/day; prove $10/day low-swing
+first; $200/day at $2k end-state.
