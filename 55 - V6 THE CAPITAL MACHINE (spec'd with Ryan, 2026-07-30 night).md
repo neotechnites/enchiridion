@@ -116,3 +116,13 @@ unreachable by plan oscillation, safety cancels exempt; the live 18:33 halt geom
 pinned test). All 8 manager mutations killed. Merged to lip-v5-build (−1,604 net lines),
 715 green verified independently, pushed. NOT deployed — awaiting Ryan's go. Deploy = rsync
 + operator halt-clear + start.
+
+## LIVE (2026-07-30 ~22:15 MT, Ryan's go)
+9bf23c5 deployed, halt cleared with root cause, started. First law book on the wire in
+~3 min: 11 seat-sized orders ($2.60–$10 each), plan 317 candidates → 11 funded / 204
+unaffordable (logged with numbers) / 102 cluster_taken, $96 of $217 budget deployed.
+Short-window clamp verified live (7.3h window → target $1.00). Measured-low-φ oversize
+fired (MCMORROW $9.94). Churn gate pacing (plan_exit_deferred). Positions charged against
+seats (no doubling down). WATCH ITEM for morning: plan-vs-rail cluster-key mismatch on
+KXMLABELSHARE + KXTRUMPSAY (plan funds, rail refuses on inherited positions, ~52 bounded
+retries) — to builder.
