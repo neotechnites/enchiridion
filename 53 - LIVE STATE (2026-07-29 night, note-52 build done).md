@@ -256,3 +256,9 @@ Notable deviations the agent flagged (full detail in session transcript):
 - One test invariant changed: "cap below cliff funds nothing" now only true under scarce budget — that IS the feature.
 
 Next: Ryan reviews collisions → one deploy (rsync + KILL restart, reinstate ~90s) → push.
+
+## 2026-07-30 ~10:45 MT — DEPLOYED (8 commits live), pushed
+
+KILL-restart clean. Book survived intact: 7 resting rungs stayed live on the exchange through the KILL, recovery sweep (fix 7's real-dialect parser) adopted them — reinstate correctly had 0 to re-place. `dedupe_seeded fills:4` (fix 2 live). No halt, cycling, nestor untouched.
+
+**Finding: pass-2 funded ZERO while ~$170 of budget sits idle** (budget = 300 − ~$117 inventory basis − reserve; pass-1 spends only ~$5/cycle). Perfect candidates exist (below_cliff_dropped rungs needing ~$5). The feature only logs successes — blocked reasons are invisible. Leading hypothesis: D11 plan_var — 16 clusters carry inventory (several OVER the $10 cap: AAAGASD $27.5, AAAGASW $23), each charged at full container, variance budget likely exhausted → every new cluster refused. Proposed: one-line blocked-reason tally log, redeploy, read the tape. Awaiting Ryan.
