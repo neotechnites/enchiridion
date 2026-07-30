@@ -242,3 +242,17 @@ rsync tools/lip_v5/ → VPS `kalshi_data/v5/lip_v5/`, `systemctl kill -s KILL li
 the pre-compact transcript; key unfixed items also matter for the $600 raise.
 **Standing Ryan rules today:** review findings = discuss first, don't auto-fix; never
 hand-place; positions ride; measure don't ban; his UI screenshots outrank our books.
+
+---
+
+## 2026-07-30 ~10:20 MT — fix agent returned
+
+All six fixes + both allocator features landed on `lip-v5-build` (8 commits, `8707e55`..`f87ebad`). **745 tests green locally, verified independently.** Every fix mutation-checked (revert → suite fails on the exact symptom). Not yet deployed — collisions under discussion with Ryan first.
+
+Notable deviations the agent flagged (full detail in session transcript):
+- Fix 3 needed a second change: deferred-divergence (`position_divergence_deferred`) so a fill can't freeze its own market during the recon window; can't hide a true divergence.
+- Pass-2 funds ONE lot at cliff size (not water-fill); ★ hurdle still binds in pass 2.
+- Displacement only fires against incumbents that won't reach the $1 floor — healthy rungs never displaced (anti-churn, free).
+- One test invariant changed: "cap below cliff funds nothing" now only true under scarce budget — that IS the feature.
+
+Next: Ryan reviews collisions → one deploy (rsync + KILL restart, reinstate ~90s) → push.
