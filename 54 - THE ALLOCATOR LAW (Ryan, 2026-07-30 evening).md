@@ -28,3 +28,24 @@ Safety rails and measurement discipline unchanged.
   books, cap-exempt, GTC-survived restarts.
 - v5 RUNNING on that build. Allocator-law build in flight (wt-alloc, Opus worker +
   Fable manager).
+
+## THE CAPITAL-SCALING PROCEDURE (Ryan, 2026-07-30 — execute when capital goes to $1–2k)
+
+Goal: derive the new per-cluster allocation A (today $10) and the new price floor, from capital.
+
+1. **A = C/N, and N is capital-independent.** N ≥ z²·p(1−p)/(d−p)² where d = day-stop
+   fraction (0.2), z = confidence (2), p = per-cluster daily wipe probability. Under the
+   always-filled worst case (φ dropped deliberately — at $10/24h assume it fills) and no
+   informational edge (else we'd be takers), p reduces to the tail of FAIR draws — because
+   the price floor caps the calibration gap, making filled inventory EV≈0 variance, not bleed.
+   Re-measure p from cluster-days tape (loss ≥80% of cluster allocation / cluster-days)
+   before scaling. With p≈8–10%: N≈25–36 → at $2k, A≈$55–80.
+2. **The floor is a second dial, not a constant.** The 6¢ band edge + ~15¢ selection average
+   exist to cap the calibration gap (posted-vs-realized, 8× overpriced at 1–2¢ → fills bleed;
+   ≥~15¢ posted≈realized → fills are fair variance). This trades rung availability for safety.
+3. **At higher capital, lower the floor as good rungs exhaust.** Thickening rungs hits share
+   concavity (√ saturation); admitting cheaper rungs hits bounded bleed but linear credit.
+   Rule: lower the floor until marginal admitted rung's (expected credit − measured bleed) =
+   marginal value of thickening the existing book. Both sides come from the price-bucket
+   calibration measurement, not opinion. Evidence the frontier is near: sub-5¢ cohort was
+   net +$3.88 even on v4's undisciplined book — dominated at $300, marginal at $2k.
