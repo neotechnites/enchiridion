@@ -378,3 +378,13 @@ it also killed the silent true-down that published cash ABOVE truth on losing se
 772 green live. Refactor stages 2-4 (qualification arithmetic, full-universe ranking,
 requote-as-diff) dispatched. Targets corrected: v5 bar $30-60/day; prove $10/day low-swing
 first; $200/day at $2k end-state.
+
+## 2026-07-30 ~16:50 MT — INCIDENT ROOT-CAUSED + NEW LAW: no spin-up/down machinery
+The $93/$52 fat orders: books-blind bug → B14 halt at 12:04 MT → the HALTED CLOSING PASS (SF-3,
+a second shed path NOT covered by INVENTORY_AUTO_SHED=False) placed cap-EXEMPT closing orders
+sized from the wrong books; GTC orders survived every restart via recovery adoption. Ryan
+stopped v5 (own orders cancelled, 0 resting confirmed; positions untouched). NEW LAW (Ryan):
+"either running and placing orders, or not running." Never sells. Halt = cancel OWN orders only
+(account is shared) then idle. Startup = steady state; inherited orders IGNORED (no adoption,
+no re-judging); order book starts empty. Worker (Opus-medium) building in wt-ripout; Fable 5
+manager reviews and sends back until correct. v5 DOWN until this lands + Ryan's go.
