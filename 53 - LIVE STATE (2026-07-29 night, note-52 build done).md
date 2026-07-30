@@ -300,3 +300,12 @@ venues for presence, keep the single cluster reserve.
 
 **Venue universe right now:** 234 venues with in-window unpaid pools, 3,705 markets, ~$299k/window
 total. We are funded in 8. Scanner surfaces 15.
+
+**Ladder placement truth (Ryan Q):** score/$ ∝ 1/price ⇒ the allocator consolidates to the
+WINGS of a ladder (cheap improbable contracts: YES above spot, NO below), never the middle —
+direction-symmetric tails, not one side. Live book confirms: avg collateral side 15.8¢, mode
+single digits. **Tension surfaced:** D5 = one rung per cluster, and all four UST tenors are one
+RATES cluster ⇒ only ONE treasury rung ever funded, leaving 3 empty-book pools unclaimed. The
+$10 cluster reserve already bounds correlated dollars; D5 additionally bounds rung COUNT.
+For φ≈0 empty-book venues the calculable answer is: bound dollars (keep $10), relax the
+one-rung count inside a cluster. Ryan decision pending.
