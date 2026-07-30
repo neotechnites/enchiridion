@@ -164,3 +164,20 @@ credit until depth returns — and funding the gap ourselves is the banned land-
 owner logic watches; depth's return puts the lot there the same minute.
 DOCTRINE (Ryan): **banked accrual is senior capital** — the allocator weights the existing
 pot above committed basis, everywhere, both entry and rescue.
+
+
+## SF-4c LANDED (2026-07-30 ~10:45 MT) — THE ACCRUAL TRUTH FEED
+**Ryan found the endpoint in the web app's traffic; the trading key signs /v1.**
+`GET /v1/incentives/users/{user_id}/estimates` → `{program_id, reward_centicents}` for every
+program with accrual — the UI popover's own source, centicents = 1e-4 dollars.  This is the
+capture note 47 §8.1 called impossible (the trade API 404s it; 23 paths probed).
+- Polled every 60s, FIRST in the loop (measured: from inside cycle() the verify lane never
+  saw a free token — discovery drains the bucket to its reserve every iteration).
+- Each poll re-anchors `self.accrued`; the model interpolates between polls; changes ≥ 0.5¢
+  persist as `accrual` rows (src=exchange_estimates) so restarts replay TRUTH.
+- First live poll: 59 programs re-anchored; book-wide real accrual ~$7.5 by mid-morning.
+- The model was measured 2–4× off in BOTH directions (1.153: model $0.186 vs true $0.015;
+  1.155: model $0.063 vs true $0.255).  Every accrual-driven decision — owner seats,
+  displacement, rescue, cliff sizing, ratchet verification — now runs on the exchange's own
+  numbers.  KALSHI_USER_ID in the service env + nestor/.env.
+Tests 704.  Commits through `lip-v5-build` head.
