@@ -49,3 +49,13 @@ Goal: derive the new per-cluster allocation A (today $10) and the new price floo
    marginal value of thickening the existing book. Both sides come from the price-bucket
    calibration measurement, not opinion. Evidence the frontier is near: sub-5¢ cohort was
    net +$3.88 even on v4's undisciplined book — dominated at $300, marginal at $2k.
+
+## COMPETITION RECORDER — live 2026-07-30 ~14:00 MT (v6's S(t) dataset)
+kalshi_data/scripts/competition_recorder.py on VPS (pid varies, @reboot cron). WS
+orderbook_delta for EVERY in-window rewarded market (3,605 at start), every change,
+ms-stamped, full snapshot per book every 15 min (reconnect refresh) → exact S(t)
+reconstruction at any second; time-of-day competition analysis trivial. Output:
+~/kalshi_data/competition/deltas-YYYYMMDD.jsonl.gz (~10-30MB/day est). Both allocator
+builds done (Opus: allocator-law, 700 green; Fable: allocator-law-f, 697 green) — differ on
+short-window target (strict 1.50 vs pro-rate-clamped-at-$1) and oversize scope; Fable
+manager adjudicating head-to-head, grafts via send-backs, one survivor.
