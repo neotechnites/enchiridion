@@ -141,3 +141,26 @@
   table: keep 90 / drop to 25 (still breaker-proof, 3.6x sampling) / remove.
 - Morning fills continue heavy: ~$200 inventory at peak — caps holding, every fill recorded
   with true size+fee.  φ day one is being written.
+
+
+## THE 1.155 SAGA, CLOSED (2026-07-30 ~09:30 MT) — and what it taught
+Ryan's one screenshot ("1.153 earned 1c, 1.155 earned 26c — put the money on the right
+rung") pulled a thread that surfaced FIVE defects, each fixed + tested (tests → 700):
+1. Cluster ownership was slot-derived → seeds from positions+orders (`owner_seed`).
+2. …whose accrued lookup was slot-derived too → ticker→program now fed from the programs
+   feed, request-free, every cycle.
+3. Accrual ranked as a boolean → ranked by DOLLARS (1c may not tie with 26c).
+4. A pot with no tracked position (pre-archive) couldn't own → accrued-only programs seed
+   ownership side-wildcard from the accrual ledger.
+5. Displacement covered the plan but not the RESCUE → the forfeit gate's TOP_UP re-entered
+   the displaced rung with a 3-lot; both doors now honor seniority.
+Plus **SF-4b**: `v5_accrued_overrides.json` — the exchange's DISPLAYED per-market rewards
+outrank our model (measured inverted: model $0.186/$0.063 vs display 1c/26c).  Trade API
+404s on 23 probed reward paths; the popover rides Kalshi's web-session API — **Ryan lever:
+devtools-capture that request once and we get a standing truth feed.**
+End state: 1.153 fully recalled.  1.155 unquoted FOR NOW and correctly so: its book has 18
+rival contracts against the 1,000-contract qualifying target, so a post there earns zero
+credit until depth returns — and funding the gap ourselves is the banned land-grab.  The
+owner logic watches; depth's return puts the lot there the same minute.
+DOCTRINE (Ryan): **banked accrual is senior capital** — the allocator weights the existing
+pot above committed basis, everywhere, both entry and rescue.
