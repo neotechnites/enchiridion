@@ -106,3 +106,13 @@ is deliberately small.
 2. Deposit → run [[54]]'s capital-scaling procedure → set A and the floor from capital.
 3. Flip Dial 1 (marginal deepening) — the only new CODE v6 needs beyond v5-law.
 4. First S(t)/φ models from the recorder's first night of data.
+
+## §7 UPDATE — APPROVED FINAL (2026-07-30 ~21:50 MT)
+Manager stamped **9bf23c5** on allocator-law-f: Fable build won (short-window target
+max($1, 1.50·h/24); decisive-zero φ) + grafts G1/G2/G3 + Ryan's sizing ruling (order = W,
+turnover affordability, example-1 knowingly inverted) + the B14 gate (plan-driven cancels
+respect 30s min resting life → same-rung placements ≥30s apart → 3-in-60 breaker
+unreachable by plan oscillation, safety cancels exempt; the live 18:33 halt geometry now a
+pinned test). All 8 manager mutations killed. Merged to lip-v5-build (−1,604 net lines),
+715 green verified independently, pushed. NOT deployed — awaiting Ryan's go. Deploy = rsync
++ operator halt-clear + start.
