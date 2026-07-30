@@ -181,3 +181,33 @@ capture note 47 §8.1 called impossible (the trade API 404s it; 23 paths probed)
   displacement, rescue, cliff sizing, ratchet verification — now runs on the exchange's own
   numbers.  KALSHI_USER_ID in the service env + nestor/.env.
 Tests 704.  Commits through `lip-v5-build` head.
+
+
+## THE SHED STORM (2026-07-30 ~08:15-09:05 MT) — POSITIONS RIDE, FULLY
+After the truth-resync adoption, TWO auto-exit paths began liquidating the adopted book at
+the opposing best: cutover triage (26 Skubal offered at 3c vs 16c basis), and — found only
+after triage was disabled and the sells CONTINUED — `update_shed_targets`' independent
+"(★)-fails-now" shed, which crossed to a 95c ask to close an 18c-basis NO (guaranteed
+−$2.80/lot).  Ryan caught both from the Orders tab; service stopped; both paths now OFF
+(`CUTOVER_TRIAGE_ENABLED=False`, `INVENTORY_AUTO_SHED=False`).  **Doctrine, settled: the
+entry equation may not price exits — exit costs the SPREAD (tape: −$40.30, −$123) and the
+D4 gate bounds every ride at ≤7 days.  Exits are: day stop, halt closing pass, settlement.**
+- The day stop FIRED on the storm (−$22.26: sheds' realized losses + marks) — right call,
+  wrong floor: the breach check was the one call site not passing the ceiling, so it used
+  the $20 toy floor instead of $60.  Fixed; resumed with operator note.
+- The cooldown test's old pass was an ARTIFACT of the shed (its "replenish" was the shed);
+  rewritten: a lot eaten in seconds measures huge φ and (★) refuses the rung — the φ
+  discipline asserted as itself.
+- Triage's flag was frozen as an import-time default arg — a dormant guard with an
+  untunable call site; resolved at call time now.
+- The TRUE-UP shipped (Ryan: "probe every minute, true up"): recon every 120s adopts
+  DOWNWARD divergences silently (hand cancels/sells, settlements — hand intervention no
+  longer halts the book); upward divergences freeze + page.  Only explicitly-listed rows
+  are judged (truing on absence would zero real books on a partial response).
+- **KXTRUMPSAY deny LIFTED** (Ryan: measure, don't ban) — the cooldown/φ/fees/cluster rail
+  cover the mechanism.  EARNINGSMENTION + KXRAIN keep real-dollar-tape denies; Ryan's word
+  lifts them.
+- PELO ($19 position vs $10 cap): burst-night scar — placements passed rails against fills
+  the poll hadn't landed yet; the cooldown closes the class.  Ryan may hand-sell any
+  position now; the true-up absorbs it.
+Tests 704.  v5 LIVE, unhalted, book rebuilding buy-side only.
