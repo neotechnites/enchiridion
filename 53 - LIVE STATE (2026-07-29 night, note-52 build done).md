@@ -73,24 +73,24 @@
    cheap-end EV bias from raw settlements (note 52 §7.2).
 
 
-## NIGHT LOG (2026-07-30, ~01:07-01:30 MT)
-- **~00:10** nestor's divergence breaker halted it — v5's fills were booking as ZERO
+## NIGHT LOG (2026-07-29 ~23:00 - 23:55 MT; earlier draft misread the VPS journal's UTC clock as MT)
+- **~22:10** nestor's divergence breaker halted it — v5's fills were booking as ZERO
   contracts: the wire moved to `count_fp` fractional dollar-strings and the parser read the
   dead `count` field.  Fixed against a CAPTURED payload (commit `651e866`, tests 683→688);
   the fake now speaks only the wire's dialect.  Bonus evidence: `fee_cost` on our real maker
   fills is **$0.000000, both sides** — the UI's per-ticket fee column is a projection.
-- **~00:45** discovery was crawling: my own lipband capture was eating the per-IP public
+- **~23:00** discovery was crawling: my own lipband capture was eating the per-IP public
   rate limit and v5's AIMD had collapsed to 1 req/s.  Throttled the capture (1 req/s,
   250 tickers, 20-min cycles).  v5 then converged fast: **33 venues, 546 slots,
-  $80.99/day projected reward** by 01:07.
-- **~01:07** B14 place-burst breaker HALTED v5, correctly: `KXTRUMPSAYMONTH-26AUG01-PELO`
+  $80.99/day projected reward** by 23:47.
+- **~23:47** B14 place-burst breaker HALTED v5, correctly: `KXTRUMPSAYMONTH-26AUG01-PELO`
   ate three replenish lots in three seconds, one fill at 7c against our 8c bid — the ask
   collapsed through our price; maker bids were crossing into informed news flow.  ~$15 of
   inventory, bounded by the cluster rail.  **The mention MECHANISM wearing a non-MENTION
   ticker** (note 43 §4): `KXTRUMPSAY` family denied by substring (commit pushed).  Halt
   flattened the book; closing sheds rest.  Denied-family sheds cannot re-post (series_denied
   has no closing exemption) — the resting shed either fills or the ~$15 rides to Aug 1.
-- **~01:30** resume scheduled for 03:05 MT (post-maintenance), with the deny fix deployed.
+- **~23:53** RESUMED with the deny fix live (the schedule-for-03:05 script fired early — same UTC/MT confusion — which turned out right: v5 trades until the 1-3 AM MT maintenance, coasts through it, resumes after).  Held KXTRUMPSAY positions (~$17) have no slot under the deny and their sheds cannot re-post (series_denied has no closing exemption): they ride to Aug 1 settlement, bounded.
   nestor stays halted until v5's feed is verified true; resume ritual after that.
 - Breaker inventory for the night: B14 caught a real fire within 4 hours of first arming.
   The cap stack held: every cluster ≤ $10 worst-case throughout.
