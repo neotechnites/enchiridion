@@ -361,3 +361,9 @@ were recovery adopting still-live orders). Agent building: re-entrant reinstate 
 adjudicate under current program map until deadline) + snapshot shrink-guard (a collapsing book
 can't clobber last-known-good inside a derived freshness window). Close-cache flush bug also
 real (every=25 counter resets each restart) — flagged for same round.
+
+## CORRECTION (Ryan, 2026-07-30 ~15:30 MT): THE TARGET IS $200/DAY ON $1-2K CAPITAL
+Not note-48's $490-at-$300 model. $200/day, $1,000-2,000 ceiling. Every day the machine isn't
+working = $200 wasted — far more than test losses. LIP ends Sept 1 (32 days): total prize ≈
+$6,400. Purity refactor (book as pure function; venue memory = estimates feed only) is IN BUILD
+now, stage commits landing on lip-v5-build; each stage deploys on green.
