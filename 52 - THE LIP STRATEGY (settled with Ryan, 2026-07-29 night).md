@@ -227,3 +227,21 @@ Everything above is inside v5 (D1). Ceiling $300 (D2).
 - **[[23]] Part V** — the fate sentence is now writeable and should be written from the settlement
   filter: *a position acquired by this system ends by settling within 7 days, worth $1 or $0 at a
   price we chose, against a subsidy of ≥$1.00 per market-period.*
+
+---
+
+## AMENDMENT D5′ (Ryan, 2026-07-30 midday): the cluster bounds DOLLARS, not rung count
+
+D5's one-rung-per-cluster rule is superseded. History check (13 settled days): the four UST
+tenors' daily settle directions agree 9/9 across all pairs — near-perfect correlation — so the
+$10 cluster reserve correctly prices the correlated worst case. But N rungs at $10/N total have
+the SAME worst case as one rung at $10, while claiming N pools instead of one (each tenor is a
+separate venue with its own pool ÷ 2). Bounding count bought zero safety and cost real pools.
+New law: any number of rungs per cluster, bounded by the cluster's dollar reserve (worst-case
+cap, plan-var D11, and all other rails unchanged). General, not treasury-only — same arithmetic
+in every cluster.
+
+Same session: sole-qualifier venues (S≤0, zero rivals — the best state) were reading UNPROBEABLE
+→ cap $0 because floor_q needs a rival score. Fix: S≤0 floor = cliff_clearing_q (smallest lot
+earning $1 from pool/2). Empty books get quoted at the cheap band edge — we ARE price discovery
+there (288 markets, 7 venues, zero quotes from anyone).

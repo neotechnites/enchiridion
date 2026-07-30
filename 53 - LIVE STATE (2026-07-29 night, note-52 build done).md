@@ -309,3 +309,8 @@ RATES cluster ⇒ only ONE treasury rung ever funded, leaving 3 empty-book pools
 $10 cluster reserve already bounds correlated dollars; D5 additionally bounds rung COUNT.
 For φ≈0 empty-book venues the calculable answer is: bound dollars (keep $10), relax the
 one-rung count inside a cluster. Ryan decision pending.
+
+## 2026-07-30 ~12:00 MT — build round 2 dispatched
+Agent (same one that built pass-2) building: A sole-qualifier admission, C empty-book quoting,
+B D5′ dollars-not-count. I deploy on its report after suite verify. Ryan approved all three +
+deploy.
