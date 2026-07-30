@@ -324,3 +324,11 @@ Presence (2.8h tape): median 50%, p25 3% — UST10AD ran 3% presence today becau
 $2/rung/day. Verdict: mechanism works; spread too thin below the cliff; every bottleneck is
 identified and in the current build round. (Build note: agent's Fix A already landed —
 sole-qualifier venues ADMITTED.)
+
+**Correction per Ryan (only post-restart, only live estimates):** since the 10:57 MT fixed
+restart (0.58h): growth $0.036, run-rate ~$1.48/day, and only 2 of 49 live programs grew
+(PANAMAWEEKLY +1.9¢, RTX5090WS +1.6¢) — everything else flat. Caveat: ledger only records
+estimate moves ≥0.5¢, so slow rungs are censored (true ceiling ~$11/day). $4.92 of current
+estimates sit in ENDED windows (excluded). Live-window estimate mass ($0.58 UMG, $0.54 EPST,
+$0.39 MCMORROW…) is ALL sub-$1 → forfeits unless quoted over the cliff before window end.
+The fixes in build are precisely the rung-count unlock this measures the need for.
