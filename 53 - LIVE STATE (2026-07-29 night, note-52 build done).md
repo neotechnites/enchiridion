@@ -332,3 +332,13 @@ estimate moves ≥0.5¢, so slow rungs are censored (true ceiling ~$11/day). $4.
 estimates sit in ENDED windows (excluded). Live-window estimate mass ($0.58 UMG, $0.54 EPST,
 $0.39 MCMORROW…) is ALL sub-$1 → forfeits unless quoted over the cliff before window end.
 The fixes in build are precisely the rung-count unlock this measures the need for.
+
+## 2026-07-30 ~13:50 MT — INCIDENT: round-2 recall cancel wave + rollback
+Round-2 deploy (sole-qualifier, D5′, band fix) cancelled the entire resting book: the D5′
+displacement recall fired on accrual rank alone (owner_accrued > sibling accrued) with no
+scarcity condition — 94/105 candidates recalled, requoter q=0 cancelled ~10 rungs. No fills,
+no losses. Rolled VPS back to eb2fc4c (stable, unhalted, accrued $9.70 and climbing). BUT the
+old build can't rebuild the book either — cancelled rungs sat in position-owned clusters that
+old-D5 refuses. Agent is fixing: recall only under genuine scarcity (cluster dollars can't fund
+both). Redeploy of corrected round 2 restores both the book and the unlocks. Lesson: the
+1.153/1.155 rule is a CONFLICT RESOLUTION, not a standing purge.
