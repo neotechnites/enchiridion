@@ -119,3 +119,25 @@
   live-book breadth, not the placement bottleneck.)
 - Commits: `651e866` (fills dialect), deny TRUMPSAY, cooldown (690 tests), close cache.
 - v5 LIVE and rebuilding; nestor still halted pending a true-feed verification + resume.
+
+
+## MID-MORNING LOG (2026-07-30, ~07:30-08:30 MT)
+- **nestor RESUMED** (~07:45): stop → `./nestor resume` → start; halted=false, bankroll
+  $89.39.  Its overnight halt was v5's zero-count feed under-declaring — cause fixed.
+- **Startup burst + dailies-first + close cache, deployed**: 7 Hz for the first 10 min,
+  close-learns ordered by soonest program end, closes persisted.  Measured: restart now
+  reaches 7 venues / 55 slots / $17 resting in 60 SECONDS (was 30+ minutes).
+- **THE 1.155 INCIDENT + FIX** (Ryan caught it): held 3 lots of EURUSD 1.155 with $0.26
+  accrued; v5 funded sibling 1.153 from zero — cluster ownership was slot-derived and the
+  held rung had no slot that cycle.  `owner_seed` now derives ownership from
+  positions+orders (restart-proof), ACCRUED rungs first; owner keys carry the SIDE so D9's
+  one-side-per-cluster survives.  Tests 693.
+- **Rate limits**: the 10 req/s is Kalshi's DEFAULT tier and our own config marks it
+  UNDERIVED.  Higher tiers exist on application — **Ryan action: apply to Kalshi for an
+  elevated API tier** (LIP participants are the target audience).  Cheapest 3-10x speedup.
+- **The cooldown question is RYAN'S OPEN CALL**: 90s live today.  His argument: φ on hot
+  rungs is exactly what we must measure; the cooldown censors it.  Counter: each φ sample
+  there costs dollars to informed flow; lipband measures sweep rates free.  Options on the
+  table: keep 90 / drop to 25 (still breaker-proof, 3.6x sampling) / remove.
+- Morning fills continue heavy: ~$200 inventory at peak — caps holding, every fill recorded
+  with true size+fee.  φ day one is being written.
