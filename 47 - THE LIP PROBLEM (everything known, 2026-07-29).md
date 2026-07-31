@@ -1,8 +1,11 @@
 # 47 - THE LIP PROBLEM — everything known, 2026-07-29 ~6:30am MT
 
-> Written for a FRESH CLAUDE tasked with fixing lip_v5. Read [[42 - SPIN-UP]] →
-> [[23 - Derivation First]] (esp. **Part V**) → [[43 - THE MONEY GAME]] → [[45 - CONTACT]] → this.
+> The measured foundation of the LIP lane. Read order: [[56]] → [[55]] → [[54]] → this;
+> concepts [[43 - THE MONEY GAME]] and [[45 - CONTACT]] first if unread. (Old refs to notes
+> 23/07 point to git history; their load-bearing rules are inlined in [[49]] and `briefs/`.)
 > Everything below is measured unless marked UNVERIFIED. Do not re-derive it; argue with it.
+> **§§1–6, 8, 10 (measurements) STAND. §7 and §9 are HISTORICAL** — that v5 was rebuilt into
+> the law machine ([[54]]/[[55]]); read them as the defect record, not the present.
 
 ---
 
@@ -140,10 +143,16 @@ Consequences:
   them, on the same side as the retail flow that overpays for them.
 - **Mentions are FAIRLY priced at the cheap end** (1.55% realised vs 1.69% posted). Gas, metals
   and index hourlies — the venues we farmed — are the overpriced ones.
-- ⚠ **The 41–80¢ "edge" is NOT actionable.** [[07 - Overfitting & Validation Discipline]] records
-  that systematically buying 80–95¢ favourites was already tested and **collapsed out-of-period**.
+- ⚠ **The 41–80¢ "edge" is NOT actionable.** Note 07 (git history) records that systematically
+  buying 80–95¢ favourites was already tested and **collapsed out-of-period**.
   It is the mechanism explaining the cheap side's losses, not a trade. Needs a fresh out-of-period
   test before a dollar moves.
+- ⚠ **CORRECTION (2026-07-30, the g-table — same calib2, side-split + PAVA):** the gap does
+  NOT close by ~15¢. 10–28¢ shows **~35% bleed per $ filled (7σ)** and the gap persists to
+  ~50¢; toxicity is **SIDE-split** (cheap NO ≈ 0.5–0.58 loss per $ filled, cheap YES far
+  less — the funded-book natural average is ~19.7¢). The "6–20¢ n.s." row above was
+  underpowered, not clean. The machine prices this via `bleed.py`'s g(side, price-band);
+  never size from this table alone.
 
 ---
 
@@ -193,7 +202,7 @@ governed by independence, not by price. `p_min = k/bankroll` is WRONG; do not re
 
 ---
 
-## 7. WHAT v5 IS AND WHAT IS WRONG WITH IT
+## 7. WHAT v5 WAS AND WHAT WAS WRONG WITH IT (HISTORICAL — every item below was fixed or superseded by the law builds, [[54]]/[[55]])
 
 **Repo:** `/Users/ryanwhitehead/Documents/senate/nestor-wt-lipv5`, branch `lip-v5-build`,
 package `tools/lip_v5/`. **601 tests green.** Deployed to VPS at `~/kalshi_data/v5/`, unit
@@ -214,7 +223,7 @@ worst-case caps; the burst breaker (caught a real loop at 3 orders instead of 13
    `scan.build_slots` **but was never deployed** — verify state before touching.
 2. **Sizing is INVERTED.** `n_cap = floor(slot_cap/price)` buys MORE contracts as price falls —
    it deliberately buys the most of the least likely thing. This is the trap expressed in code.
-3. **No fate derivation.** [[23]] Part V requires a FATE SENTENCE before an acquiring system
+3. **No fate derivation.** The fate doctrine (briefs/implementor.md; note 23 in git history) requires a FATE SENTENCE before an acquiring system
    ships. v5's is committed as **UNDERIVED** and still blank. It acquires today anyway.
 4. **Directional inventory accumulates unmanaged.** 71.9% of contracts are held to expiry;
    treasury gave us 8–9 rungs on one yield curve all pointing the same way and the curve moved
@@ -245,7 +254,7 @@ worst-case caps; the burst breaker (caught a real loop at 3 orders instead of 13
 
 ---
 
-## 9. STATE RIGHT NOW (2026-07-29 ~6:30am MT)
+## 9. STATE AS OF 2026-07-29 ~6:30am MT (HISTORICAL — current state lives in [[53]])
 
 - **v5 LIVE**, armed, quoting today's gas window (opened 6:00am, closes 9:59pm MT). **No floor
   deployed.** It is currently free to buy 1¢ rungs.
@@ -261,6 +270,6 @@ worst-case caps; the burst breaker (caught a real loop at 3 orders instead of 13
 
 Every elegant idea this program has produced lost money on its own tape. The two that survived
 measurement are boring: **don't buy what you can't sell**, and **don't let fifty tickets be one
-draw**. Before shipping anything, write the fate sentence ([[23]] Part V) and check the
+draw**. Before shipping anything, write the fate sentence (briefs/implementor.md) and check the
 denominator ([[43]] §7) — the objective is in contracts, the capital is in dollars, and every
 failure in this program traces to optimising one while spending the other.

@@ -17,8 +17,9 @@ CONTRACTS (cheap contracts = more score/$). Windows are per-program (feed-driven
 daily). Profit = credits − fill losses. Fill losses are priced by a measured per-price-
 band bleed table (calib2.json, 8,240 settled markets; SIDE-split per Lane-A review: cheap
 NO ≈ 0.5-0.58 loss/$, cheap YES far less). The program ENDS Sept 1, 2026. Target:
-$200/day at $1-2k (currently proving at $600). v5 = safe/small/data at $300; v6 = the
-capital machine (marginal queue + quiet-ladder walls).
+$200/day at $1-2k (UNPROVEN — machine currently DOWN, see §6). v5 = safe/small/data at
+$300; v6 = the capital machine (marginal queue; after deploy day: rank-truncation dials +
+sticky book + measured-rate loop + seed mode).
 
 ## 2. THE CODEBASE (repo nestor, worktree ~/Documents/senate/nestor-wt-lipv5, pkg tools/lip_v5/)
 Branches: `lip-v5-build` = LIVE v5 (frozen fallback once v6 boards); `v6` = approved v6
@@ -99,10 +100,19 @@ prefix). Kalshi UI numbers OUTRANK our books — Ryan's screenshots are ground t
    with receipts or concede with proof. Your confidence is a hypothesis, never a gate.
 5. Deploy only after review + (for capital changes) Ryan's word. Record everything in
    the vault immediately (standing order).
+6. **DEPLOY GATE #0 (permanent, 2026-07-31): v6 never deploys blind.** `lip_v5.dryrun`
+   prints the EXACT production would-buy book against the live board offline; WE verify it
+   against expectation before anything runs. Ryan is NOT an approval step — the burden is
+   ours; he only ever sees a machine already doing the right thing. Nothing runs until
+   Ryan says.
 
 ## 6. CURRENT STATE POINTERS (check, don't trust — this note ages)
-Note 53 = the running live-state log. Note 55's tail = latest review/fix state (F1-F9
-round). The proof gate for scaling: per-fill realized-vs-table at settlement, estimate→
-paid conversion, uptime. Known-open: p_fill_implied unmeasured until cluster-days tape;
-probe families need a live-board symbol check at deploy (armed-probe-zero-slots pages);
-smoothing window derives from recorder data at boot (60s fallback off-VPS).
+Note 53 = THE live-state note, updated in place; its CURRENT block is the truth. Note 55's
+tail = the 2026-07-31 deploy-day record: seven deploys, all pulled by Ryan; **v5 AND v6
+both STOPPED; v6 disabled (cannot return on reboot)**. Deploy gate #0 (§5.6) is the
+re-entry condition. Open questions, in order: (1) do seed orders emit on the wire (fix
+committed, untested live); (2) what book the corrected v4-rank chooser builds (needs ~4
+undisturbed min from cold boot); (3) THE open question of the program — the estimator is
+unvalidated and the tape contradicts it ($19.7 projected gross → ~$2 payable; prime
+suspect: competition-depth S mismeasurement). The proof gate for scaling: per-fill
+realized-vs-table at settlement, estimate→paid conversion, uptime.

@@ -40,6 +40,9 @@ Goal: derive the new per-cluster allocation A (today $10) and the new price floo
    the price floor caps the calibration gap, making filled inventory EV≈0 variance, not bleed.
    Re-measure p from cluster-days tape (loss ≥80% of cluster allocation / cluster-days)
    before scaling. With p≈8–10%: N≈25–36 → at $2k, A≈$55–80.
+   (ERRATA, [[55]]: the literal always-filled/board-price reading of p is DIAGNOSTIC-only —
+   it gives p≈0.9 ⇒ N→∞. The measured 8–10% cluster-days prior owns the LEVEL of p; the
+   funded mix enters as a ratio of calibration-degraded settle-against probabilities.)
 2. **The floor is a second dial, not a constant.** The 6¢ band edge + ~15¢ selection average
    exist to cap the calibration gap (posted-vs-realized, 8× overpriced at 1–2¢ → fills bleed;
    ≥~15¢ posted≈realized → fills are fair variance). This trades rung availability for safety.
@@ -59,3 +62,5 @@ reconstruction at any second; time-of-day competition analysis trivial. Output:
 builds done (Opus: allocator-law, 700 green; Fable: allocator-law-f, 697 green) — differ on
 short-window target (strict 1.50 vs pro-rate-clamped-at-$1) and oversize scope; Fable
 manager adjudicating head-to-head, grafts via send-backs, one survivor.
+**(Resolved 2026-07-30 ~21:50 MT: the Fable branch WON with three Opus grafts — record in
+[[55]] "§7 UPDATE — APPROVED FINAL".)**

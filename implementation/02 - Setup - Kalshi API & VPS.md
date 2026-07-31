@@ -1,6 +1,6 @@
 # 02 — Setup: Kalshi API & VPS
 
-> ✅ **Still valid (2026-07-23).** Auth, signing, order placement, and VPS steps are unchanged and needed — but apply them to the **streak ≤44¢ build (build #1)**, not the weather sleeve. See [[18 - LIVE STATE (2026-07-23)]].
+> ✅ **Still valid as REFERENCE (2026-07-31).** Auth/signing/VPS facts here are correct; the builds it was written for (streak, weather) are done or parked ([[38]]). LIP-lane ops live in [[56]] §4.
 
 > Everything needed to get the [[01 - Weather Sleeve Spec]] running live on a server. Do this before the go-live checklist.
 
@@ -49,4 +49,4 @@ Kalshi uses **API key + RSA private key request signing** (not a simple bearer t
 - Whether live Open-Meteo `forecast` endpoint serves the morning 00Z run at 9am ET.
 - Kalshi rate limits (fine for weather; matters for the lock poller later).
 
-Related: [[00 - Implementation Overview]] · [[01 - Weather Sleeve Spec]]
+Related: [[01 - Weather Sleeve Spec]]

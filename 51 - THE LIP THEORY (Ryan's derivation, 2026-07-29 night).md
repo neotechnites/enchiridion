@@ -66,6 +66,11 @@ so **11–20¢ is simultaneously the cheapest floor to clear ($3.68 median), the
 the only band without measured negative bias.** That is a better answer than either a variance
 floor or a flat "go cheap."
 
+> ⚠ CORRECTION (2026-07-30, the g-table): "no measured negative bias at 11–20¢" FELL —
+> side-split calibration shows 10–28¢ ≈ 35% bleed per $ filled (7σ), persisting to ~50¢.
+> The band argument survives only NET OF BLEED, which the machine now prices directly
+> (`bleed.py` g(side, band); [[47]] §3 correction).
+
 ## 5. WHAT WAS NOT PREVIOUSLY CAPTURED (new here)
 
 - **Pool size was the special thing about the receipt venues.** All six credited events had
@@ -86,17 +91,18 @@ floor or a flat "go cheap."
 ## 6. THE TWO LIVE CONFLICTS
 
 **A. FREE_RIDE_ONLY is contested inside the vault, and the build picked a side silently.**
-[[46]] and [[47]] §6 call it **"actively harmful — a covert instruction to quote the cheap crowded
-side"** (only 144 of 536 mid-priced sides clear target_size, and those are the crowded ones).
+**RESOLVED 2026-07-30, moot: the law builds DELETED the free-ride flag entirely ([[54]]) —
+qualification cost is folded into the ranking formula.** The record: [[47]] §6 called it
+**"actively harmful — a covert instruction to quote the cheap crowded side"** (only 144 of 536 mid-priced sides clear target_size, and those are the crowded ones).
 [[48]] sets `FREE_RIDE_ONLY = True`. `work/audit-nonlip-strategies-2026-07-28.md` measures it as
 **the strongest single rule on the tape** (−$51.40 vs −$75.10). **Both are true:** it is the best
 loss-reducer *and* it steers to 1¢ where rival score is 6,618. **Resolution: free-ride is correct
 only when paired with a band constraint** — free-ride *within* 7–20¢. Armed today (commit 3 of 4)
 **without** that pairing. Unresolved; do not deploy on the strength of [[48]] alone.
 
-**B. λ is still unmeasured.** [[47]] §7 lists "fill probability on resting cheap bids" as OPEN;
-[[50]] §5 lists the λ filter as unimplemented (needs a new classify-sweep field). §1 above makes λ
-the *binding* input, so this is now the highest-value measurement, ahead of venue work.
+**B. λ is still unmeasured.** **RESOLVED: λ ≡ φ and it is measured now** — ledger `fill_obs` +
+presence tape, empirical-Bayes shrinkage posterior ([[55]] PHI SHRINKAGE), recorder-derived φ
+for untouched markets, and the measured-rate loop replaced the modeled version entirely.
 
 ## 7. WHAT THIS CHANGES ELSEWHERE
 - [[47]] §5's "survivability is governed by independence, not price" gets the regime qualifier in

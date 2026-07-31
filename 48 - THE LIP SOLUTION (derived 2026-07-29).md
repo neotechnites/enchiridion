@@ -1,5 +1,11 @@
 # 48 - THE LIP SOLUTION — derived from first principles, 2026-07-29 ~7:30am MT
 
+> ⚠ **SUPERSEDED IN TURN (2026-07-29→31): do not implement from this note.** Its numbers are
+> snapshot artifacts ([[50]] §4 — three independent allocators mined the same compmap tail) and
+> its decisions (D3–D9, FREE_RIDE_ONLY, the $376 model) were replaced by [[52]] → [[54]] → [[55]].
+> WHAT STANDS: §1 — the count-vs-dollars trap dissolves at floor-clearing SIZE; the escape is
+> size, not price — and the derivation shape.
+>
 > Supersedes the design half of [[47 - THE LIP PROBLEM]]; 47's MEASUREMENTS all stand.
 > Every decision below is derived from the goal and closed against a measurement on our own
 > tape or on the live board. Where a number is a model and not a receipt it says so.
@@ -55,7 +61,7 @@ free to stand where the contract is not garbage, because you are no longer buyin
 
 ---
 
-## 2. THE FATE SENTENCE ([[23]] Part V — the blocking item, now fillable)
+## 2. THE FATE SENTENCE (note 23 Part V, git history — the blocking item, now fillable)
 
 > *A position acquired by this system ends by **settling at $0 or $1**, worth on average
 > **~84% of the ~$0.40 paid** (calibration-weighted over the chosen band), against a subsidy of
@@ -190,5 +196,5 @@ free-ride only, no acquire floor. Next morning, read the **Credits page** and co
 
 - **[[43]] §7** — the two-denominator hazard is **conditional, not structural**: it binds only when you must buy COUNT, i.e. when you fund qualification yourself or rivals' score is high. At floor-clearing size on an already-qualifying book it does not bind. Amend §7 to say so, and to say the escape is **size**, not price.
 - **[[47]] §1** — "do not fix this by banning cheap rungs" stands, and now has its positive form: fix it by **buying only as many contracts as the floor requires**.
-- **[[23]] Part V** — the fate sentence is filled (§2 above); the program may ship an acquiring system again.
-- **[[23]] Part IV capital corollary** — needs its mirror: *"every non-earning dollar displaces an earning dollar"* presumes the dollar has somewhere to go. Under a NON-binding capital constraint, rate-maximisation is the wrong objective and actively concentrates the book. That is what D7 measured.
+- **Note 23 Part V (git history)** — the fate sentence is filled (§2 above); the program may ship an acquiring system again.
+- **Note 23 Part IV capital corollary (git history)** — needs its mirror: *"every non-earning dollar displaces an earning dollar"* presumes the dollar has somewhere to go. Under a NON-binding capital constraint, rate-maximisation is the wrong objective and actively concentrates the book. That is what D7 measured.

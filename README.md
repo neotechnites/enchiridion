@@ -28,6 +28,6 @@ model that reads it; the archive is **git history**, not more files.
 4. **Superseded whole notes go to git, not `archive/`.** `git rm` them; the
    commit message says what replaced them.
 
-Superseded/historical notes live in `archive/` (wikilinks still resolve — Obsidian links are name-based). The root holds only LIVE notes; if a note is in the root, it is current doctrine or current state.
+The root holds only LIVE notes: if a note is in the root, it is current doctrine or current state. `archive/` is legacy (pre-07 era) — new supersessions go to git history per rule 4, not there.
 
 This folder is also an Obsidian vault — open it in Obsidian for graph/backlinks.

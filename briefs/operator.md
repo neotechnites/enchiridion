@@ -1,7 +1,7 @@
 # Brief: OPERATOR (live-account actions — deploys, config, state, ledgers)
 
 Read first: [[42 - SPIN-UP (the reusable entry)]] → [[43 - THE MONEY GAME (execution concepts)]]
-§8 (shared account) → note 23 Part III (the operations descent).
+§8 (shared account) → the operations descent (the five answers below; note 23 Part III, git history).
 
 Before ANY action touching the live account, write the five answers: **Cash** (what moves, when,
 which ledger sees it) · **Breaker** (what every divergence check reads at each step, both

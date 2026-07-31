@@ -2,11 +2,11 @@
 
 > Written after a session in which a fully-spun-up Claude produced **eight consecutive confident
 > conclusions, each overturning the last**, and burned Ryan's morning. Not one of them carried an
-> error bar. The corpus had the file that would have prevented it ([[07 - Overfitting &
-> Validation Discipline]]) and the entry path did not route to it.
+> error bar. The corpus had the file that would have prevented it (note 07, Overfitting &
+> Validation Discipline — git history) and the entry path did not route to it.
 >
-> [[23 - Derivation First]] makes ONE attempt careful. This note makes attempts COMPARABLE and
-> stops them from thrashing. They are two halves; 23 alone produced the thrash.
+> Note 23 (Derivation First — git history) makes ONE attempt careful. This note makes attempts
+> COMPARABLE and stops them from thrashing. They are two halves; 23 alone produced the thrash.
 
 ---
 
@@ -43,9 +43,9 @@ Every measurement that touches a decision carries three things or it is not admi
   one market are one unit. Rungs of one ladder are one unit ([[43]] §3). Orders inside one day are
   not independent across days.
 - **an interval**, computed, not asserted.
-- **its out-of-period status**: in-sample / out-of-period / untested. [[07]]'s case study is the
-  standard — the favourite edge passed *four* checks including split-half and died out-of-period,
-  because every check lived in one window.
+- **its out-of-period status**: in-sample / out-of-period / untested. Note 07's case study (git
+  history) is the standard — the favourite edge passed *four* checks including split-half and
+  died out-of-period, because every check lived in one window.
 
 ### R2 — THE ANTI-OSCILLATION RULE (the one that would have saved today)
 **A point estimate may not overturn a standing conclusion.** To overturn, the new measurement must
@@ -83,9 +83,9 @@ and it breaks the venue/price/size confound that makes every single-configuratio
 
 ## WHAT CHANGES ELSEWHERE
 
-- **[[42 - SPIN-UP]]** — [[07]] joins the mandatory concept list, and this note with it. The entry
+- **[[42 - SPIN-UP]]** — note 07 (git history) joined the mandatory concept list, and this note with it. The entry
   path routed a fresh session past the exact file it needed.
-- **[[23 - Derivation First]]** — Part VI: a derivation whose inputs have no intervals is not a
+- **Note 23, Derivation First (git history)** — Part VI: a derivation whose inputs have no intervals is not a
   derivation, it is arithmetic on guesses. "Every claim carries its because" now also reads
   **"every measurement carries its n and its interval."**
 - **`briefs/`** — every brief carries R1–R4 as a stanza, and the reviewer brief's first question

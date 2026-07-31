@@ -1,8 +1,24 @@
-# 53 - LIVE STATE — 2026-07-29 ~23:00 MT, note-52 build done
+# 53 - LIVE STATE (updated in place — the CURRENT block below is the truth)
 
-> Read [[42 - SPIN-UP]] → [[52 - THE LIP STRATEGY (settled with Ryan, 2026-07-29 night)]] →
-> this.  Supersedes [[50]]'s state half.  The strategy is note 52; this is where the build
-> stands against it.
+> Entry: [[56 - THE MACHINE (fresh-Claude implementation guide)]] → 55 → 54 → 47; then this
+> note's CURRENT block. Everything below CURRENT is the dated running log, newest first by
+> section date; supersedes [[50]]'s state half.
+
+## CURRENT — 2026-07-31 end of day (details in [[55]]'s tail)
+- **v5 STOPPED** (Ryan's order, ~12:03 PM MT 07-31; 43 positions ride to settlement — it
+  never sells). The $1-earned day confirmed the dispersion diagnosis: $10 seats accrue
+  under the $1 cliff and forfeit.
+- **v6 STOPPED + DISABLED** (cannot return on reboot) after seven same-day deploys, all
+  pulled by Ryan — churn at the truncation boundary, then EV-crumb books (ledger carried
+  the dead book across deploys; fixed by clean-slate archiving), then an unexplained SME
+  placement lane. Committed on v6-build: sticky book (proven live, zero churn), measured-
+  rate loop, seed mode (untested on wire), multi-market-per-cluster, rank-truncation dials
+  (C_DIALS=2000 vs C_CASH=deposit), v4-rank chooser (corrected full-wall denominator).
+- **DEPLOY GATE #0 (permanent)**: no v6 deploy until `lip_v5.dryrun` prints the production
+  would-buy book offline and WE verify it against expectation. NOTHING runs until Ryan says.
+- Open: seeds on the wire? · what book the corrected chooser builds (~4 undisturbed min
+  from cold boot) · the estimator vs the tape ($19.7 projected vs ~$2 payable — THE open
+  question; prime suspect S mismeasurement).
 
 ## STATE — DEPLOYED AND LIVE, 2026-07-29 ~23:40 MT (Ryan's explicit go)
 - **v5 LIVE on the VPS** (`lip-v5.service` active, commit `0f576a1`).  Ryan, verbatim: "go

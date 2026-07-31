@@ -1,7 +1,7 @@
 # Brief: RESEARCHER (kill-tests, audits, backtests, hunts)
 
 Read first: [[42 - SPIN-UP (the reusable entry)]] → [[43 - THE MONEY GAME (execution concepts)]]
-(execution lanes) or [[33 - The Mesh (idea substrate)]] (ideation lanes) → your lane's question.
+(execution lanes) or note 33, The Mesh (git history — ideation lanes) → your lane's question.
 
 The money-claims doctrine binds every dollar figure: RECONSTRUCT from primary records (fills,
 settlements, balances), never infer; label UNVERIFIED what cannot be reconstructed. Defect and

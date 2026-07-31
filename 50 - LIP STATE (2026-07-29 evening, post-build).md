@@ -1,7 +1,9 @@
 # 50 - LIP STATE — 2026-07-29 evening, post-build
 
-> Written at context exhaustion. Read [[42]] entry path, then this. **Supersedes the design half
-> of [[47]] and ALL of [[48]]** — note 48's allocator numbers are artifacts, see §4.
+> Written at context exhaustion. **Supersedes the design half of [[47]] and ALL of [[48]]** —
+> note 48's allocator numbers are artifacts, see §4.
+> ⚠ Itself superseded: strategy by [[52]], state by [[53]]. Its MEASUREMENTS (§4) stand and
+> are cited by [[51]]/[[52]].
 
 ## 1. STATE RIGHT NOW
 - **v5 STOPPED**, disarmed. Ryan stopped it 2026-07-29 ~06:10 MT. Nothing is trading but nestor.

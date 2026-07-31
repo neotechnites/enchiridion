@@ -5,6 +5,11 @@
 > corrected repeatedly. **Supersedes the strategy half of [[47]], [[50]] §4 and [[51]].** Where
 > this note and any earlier note disagree, this one is newer and was argued through.
 >
+> ⚠ **SUPERSEDED IN PART (2026-07-30/31):** the allocator half — water-fill shape, D5′, D9,
+> D11, D12 mechanics, pass-2, displacement — by [[54 - THE ALLOCATOR LAW]]; one-sided D9 by
+> [[55]]'s two-sided final amendment; D13's regime question by the measured-rate loop
+> ([[55]]). The MEASUREMENTS (§3, §4's method, §6, §7) stand.
+>
 > Provenance is marked on every number: **MEASURED TONIGHT** = pulled first-hand from Kalshi's
 > API on 2026-07-29 between 20:15 and 21:00 MT · **MEASURED (prior)** = a previous session's
 > figure, inherited, not re-verified, treat with suspicion per Ryan's standing instruction ·
@@ -224,7 +229,7 @@ Everything above is inside v5 (D1). Ceiling $300 (D2).
 - **[[49]]** gains a case: R4 ("the sample must contain the configuration you are proposing") was
   satisfied *retroactively* — the whole 11–20¢ plan rests on a band our tape has never observed,
   and the capture in §7.1 exists because of that rule.
-- **[[23]] Part V** — the fate sentence is now writeable and should be written from the settlement
+- **Note 23 Part V (git history)** — the fate sentence is now writeable and should be written from the settlement
   filter: *a position acquired by this system ends by settling within 7 days, worth $1 or $0 at a
   price we chose, against a subsidy of ≥$1.00 per market-period.*
 

@@ -1,5 +1,8 @@
 # 37 - Sliding Capital Allocation (concept spec — drafted at strategy #2, 2026-07-25)
 
+> ⚠ PARKED (pre-LIP era, 2026-07-25). Concept for nestor's multi-strategy capital shares; never
+> ruled on; not part of the LIP lane. Referenced notes 24/15 live in git history.
+>
 > Promised when the second strategy arrived (note 24). CONCEPT for Ryan's verdict — no code until
 > he rules on it. Purpose: replace binary live/dead strategy decisions with earned capital share,
 > so the portfolio reallocates continuously the way the kill taxonomy (15) says ideas should.

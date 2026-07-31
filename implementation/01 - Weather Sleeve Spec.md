@@ -1,6 +1,6 @@
 # 01 — Weather Sleeve Spec (FIRST BUILD)
 
-> ⏸️ **ON HOLD (2026-07-23) — weather is NOT the first build.** Its edge is unverdicted: forward capture (`ens_forward_capture.py`, daily 13:00Z) is accumulating; verdict in ~3-4 wks. If it verdicts TRADE, this spec becomes the build plan as written. Until then: no code. Build #1 = streak ≤44¢ ([[18 - LIVE STATE (2026-07-23)]]).
+> ⏸️ **ON HOLD (2026-07-23; still parked 2026-07-31).** Edge unverdicted: forward capture (`ens_forward_capture.py`, daily 13:00Z) matures ~mid-Aug — tracked in [[38 - The Strategy Book (living inventory)]]. If it verdicts TRADE, this spec becomes the build plan as written. Until then: no code. (Streak, the former build #1, was built and went live 2026-07-25.)
 
 > The first live component of Nestor Core. Forward-confirmed 2026-07-15 (HELD: 6/6 tradeable cities positive, precip + MAE→EV filters persisted). Grounded in [[08 - Broad-Kalshi & Cross-Venue]] (weather sections) and the forward test. Go-live: **live at tiny size**, VPS, daily.
 
@@ -74,4 +74,4 @@ Every trade: date, city, raw_fc, bias, corrected_t, predicted_bucket, entry_ask,
 - Capacity is real — this sleeve makes hundreds, not thousands. It's the satellite, not the engine.
 - 20 days / one season of pricing data. The live log is the real test.
 
-Related: [[00 - Implementation Overview]] · [[02 - Setup - Kalshi API & VPS]] · [[08 - Broad-Kalshi & Cross-Venue]]
+Related: [[02 - Setup - Kalshi API & VPS]] · [[08 - Broad-Kalshi & Cross-Venue]]
