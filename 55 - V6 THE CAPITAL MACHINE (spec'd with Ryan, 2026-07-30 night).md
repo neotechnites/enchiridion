@@ -361,3 +361,40 @@ consumers) — overnight: 36 partial scans, healthy top-earner rungs recalled
 bleeding on our best seats all night. FIXED + DEPLOYED to live v5 within the hour
 (completeness gate + structural guard, 753 green); ported to v6 as F9 with an
 absence-as-evidence audit of all new modules. Attack scripts preserved in scratchpad.
+
+## Round 3 — the F1-F9 consolidation (frozen 2026-07-31, commit e2061ff on v6-build)
+Builder delivered all nine fixes on ONE frozen commit: **e2061ff**. 924 tests green ARMED
+and DISARMED (4 armed-only skips — the v5-fallback claim holds); mutation battery 48/48
+killed, every fix has a clause-level mutant with a named killer.
+- F1: banked credit sunk via `net = paid(q) − paid(0)`; sunk constant in q → deepen
+  derivative untouched (asserted numerically at q=20/80/300); paid(0)=0 below the cliff →
+  the sub-$1 rescue is untouched. Dead cluster now rotates (entry_rate −0.11 vs +20.73
+  pre-fix on the reproduction fixture).
+- F2: `g_for_price(p, leg)` — leg REQUIRED, no pooled fallback. Shipped constants at 20c:
+  NO 0.5679, YES 0.1122 (pooled was 0.3508). YES-negative g clamped 0 ("risk charges do
+  not pay rebates" — stated policy). PROBE_WING_MAX_C re-derived on split tables (same 4c,
+  now computed — a synthetic-table test kills the hardcode).
+- F3+F5 merged into ONE lane accounting read by plan AND place(): fresh pass stakes $80.08
+  across 8 tenors (cluster rail exceeded, seat binds at $10.01); after $120 of fills the
+  lane stakes $0. Positions charge the lane at placement — F3/F5 share the ledger.
+- F4 verdict = earned vs predicted ≥ 0.5 (REPORT otherwise; no denominator ⇒ report).
+  F8: requote skips counted with distinct reasons. F9 ported with both tests. F6 pinned
+  both directions.
+- **Builder deviation 1 (flagged, to adjudicate):** ordinary rail derived from the
+  ORDINARY lane's capital — $480/30 = **$16.00** at C=600, not $20 from full C. Argument:
+  full-C rail lets the lane hold 24 clusters while claiming 30 → ruin bound stated but
+  not met; cites this note's own "the $480 runs the ordinary law book".
+- **Builder deviation 2 (flagged):** bug-alarm threshold is a CORRECTION not a comment
+  fix — the statistic only moves on settlements, so family = settlements, m = N×days =
+  960, α = 5.2e-5, **z = 3.8807**, invariant to loop rate.
+- Process find worth keeping: a defensive DUPLICATE of a guard is a clause no mutation
+  can kill (the unreachable pop-side gate survived the battery until deduplicated).
+  Rule: enforce each guard at exactly one reachable point.
+
+## Round 3 tri-lane re-review — LAUNCHED 2026-07-31
+Three fresh Fable lanes (A theory-first, B premises-vs-data, C red team) launched against
+the pinned frozen worktree at e2061ff. Each must return verdicts on all three axes (nine
+approves total); defend protocol in force — no claimed defect accepted without executed
+reproduction. Both builder deviations put to all three lanes for adjudication. Deploy
+condition unchanged: nine approves AND Ryan's $600 deposit — no clock-waiting; first act
+is the 120/480 probe.
