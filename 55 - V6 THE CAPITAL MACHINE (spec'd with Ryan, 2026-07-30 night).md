@@ -850,3 +850,26 @@ Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
 **Round 6 score: 3 THEORY approves; premises+impl 0/6. Round 7 consolidates: B6-1
 FATAL (treasury-blind probe), two-lane fact bound + identity, draining wiring, three
 fix-site survivors, B16 inert-clause deletion, minors.**
+
+## Round 7 — frozen e7d74c2, tri-lane re-review launched — 2026-07-31
+All six on one commit: 1066 green armed AND disarmed; battery 96/96 AND NOW IN THE TREE
+(lip_v5/battery/run.py); parity fuzz 0/3000. My spot-checks: suite green; real treasury
+tenors probe-eligible (KXUST10AD/2AD → True); disarm has TWO production callers
+(verdict + silence); the fact bound enforces BOTH directions (ordinary-first defers
+probe wall 5 at room $4 → fact $116 ≤ $120; probe-first refuses ordinary at room $0);
+fills convert-never-add; disarmed plan funds ordinary in the former probe cluster
+(starvation gone). R7-1 fixed at the IDENTITY level: series_of (the wire's name)
+answers family membership, cluster_of (the risk name) answers a different question —
+"symbols are premises" is now a tests rule with the real five tenors pinned. R7-2(b)
+COUNTER-DERIVED: facts group by UNDERLYING, not (underlying, settle-day) — day-aware
+needs a settle timestamp for every held row (close cache can be stale/missing) and a
+bound that silently splits on an unreadable timestamp FAILS OPEN; underlying-grouping
+fails CLOSED (defers dollars on genuinely-independent windows — priced, logged). R7-6:
+inert B16 min-term DELETED with the algebra + a synthetic-geometry cross-fire test;
+record corrected (the 142→0 was the harness). Builder found two more while fixing:
+B6-3 was still live (in-pass probe charges eating the ordinary rail — now ONE predicate
+rail_exempt), and lane_of didn't consult armed (disarmed probe kept multi-market
+licence + rail exemption = $40 in one cluster — both now gated, isolated tests).
+PROCESS: several cross-round survivors trace to scripted edits that silently no-op'd
+on drifted anchors — `assert old in s` now on every scripted edit. Tri-lane launched
+on e7d74c2; the fact-identity counter-derivation is the round's main adjudication.
