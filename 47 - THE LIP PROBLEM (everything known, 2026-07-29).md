@@ -1,8 +1,8 @@
 # 47 - THE LIP PROBLEM — everything known, 2026-07-29 ~6:30am MT
 
-> The measured foundation of the LIP lane. Read order: [[42]] → [[56]] → this as needed;
-> concept file [[43 - THE MONEY GAME]] first if unread. (Refs to retired notes point to git
-> history; the epistemics live in [[42]].)
+> The measured foundation of the LIP lane. Read order: [[SENATE STATEMENTS]] →
+> [[LIP STATEMENTS]] → [[56]] → this as needed; concept file [[43 - THE MONEY GAME]] first
+> if unread. (Refs to retired notes point to git history.)
 > Everything below is measured unless marked UNVERIFIED. Do not re-derive it; argue with it.
 > **§§1–6, 8, 10 (measurements) STAND. §7 and §9 are HISTORICAL** — that v5 was rebuilt into
 > the law machine ([[54]]/[[55]]); read them as the defect record, not the present.
