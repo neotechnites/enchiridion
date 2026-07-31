@@ -1365,3 +1365,23 @@ deploys: all between ~10:20 AM and 11:33 AM MDT.
 For the next session: the ONLY unanswered question is what book the corrected chooser
 builds — it needs ~4 undisturbed minutes from a cold boot (startup recon sweep ≈2 min
 on this account's position count) before the first orders can exist.
+
+## THE ROOT CAUSE OF THE DAY + CLEAN-SLATE DEPLOY — 2026-07-31 ~12:00 PM MDT
+The day's every-deploy-buys-EV mystery, fully closed by dead-log forensics + offline
+reproduction: (1) gas was excluded from candidacy by THREE stacked gates — position-
+divergence, unpriced-skip, and the seed close-unknown gate that refused 3,345/3,345
+candidates board-wide (a defensive check demanding a classifier field that BY
+DEFINITION doesn't exist for unclassified markets; fixed: falls back to the program's
+own window end; offline proof: 6,356 candidates emit incl. all 17 gas pairs at
+est_rate 0.78 ≈ 100× the field); (2) even with seeds emitting live, THE LEDGER
+CARRIED THE DEAD BOOK ACROSS DEPLOYS — stop cancels wire orders, but the committed
+book replays at boot, the sticky floor adopts it, the requoter RE-PLACES it (fresh
+timestamps, same EV/SME book), and the budget is eaten before the ranking spends a
+dollar (gas pair $60 vs budget_left $29 → cant_afford_entry). Deploy script rev 4:
+ARCHIVE THE LEDGER AT DEPLOY (clean slate; positions ride). Also fixed en route: the
+v4-rate denominator (marginal entry block → FULL wall cost — Ryan caught the
+inversion from his own order snapshot). Manual live math on record: gas $100/rung
+16h ρ=6.26/h vs EV $40/rung ρ=1.48/h — gas 13-90× better per dollar; EV was only
+ever "best of the poisoned remainder." Clean-slate deploy live ~12:00 PM MDT;
+expectation: 2 gas pairs (~4 orders × ~$30) + remainder down-rank; ~$16/pair over
+the remaining ~10h window if the walls accrue as the tape says.
