@@ -873,3 +873,39 @@ licence + rail exemption = $40 in one cluster — both now gated, isolated tests
 PROCESS: several cross-round survivors trace to scripted edits that silently no-op'd
 on drifted anchors — `assert old in s` now on every scripted edit. Tri-lane launched
 on e7d74c2; the fact-identity counter-derivation is the round's main adjudication.
+
+## Round 7 re-review, Lane A record — 2026-07-31 (frozen e7d74c2)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**. All confirmed by
+orchestrator at source (+ A7-1's key symbol confirmed from v5's own LIVE BOOK —
+KXAAAGASW-26AUG03 positions are riding right now).
+- **A7-1 (MAJOR): FACT_MAP misses the REAL gas siblings.** Lane A queried the live
+  Kalshi API: KXAAAGASW (weekly) and KXAAAGASM (monthly) are real open series; FACT:GAS
+  members are (KXAAAGASD, KXNATGAS, KXGAS, KXNGAS) — the map's own comment states the
+  intent, the member list omits the real symbols, and the shipped fixture "proves"
+  cross-series binding with the INVENTED KXNATGAS — the symbols-are-premises rule
+  violated inside the fix that cites it. Executed: probe full $120 + weekly $15.90
+  admitted = $135.90 = 22.65% through the real sibling.
+- **A7-2 (MAJOR): the ordinary-side gate is SERIES membership, not FACT membership**
+  (bars_ordinary = armed AND is_probe_family) — with the map patched, the weekly leg
+  is STILL admitted; two independent doors. Fix: gate on fact_of. (+ KX7Y in FACT_MAP
+  but not PROBE_FAMILIES — alias asymmetry.)
+- **A7-3 (MAJOR): draining is not restart-durable.** Probe is unconditionally rebuilt
+  ARMED from config flags at Maker init; disarm has zero persistence consumers.
+  Verdict REPORT → restart → armed=True, new wall places; after settlement a restart
+  stakes a FRESH $120 into a falsified thesis. Money bounded (lane seeds from replayed
+  positions, ≤ d×C instantaneous) but note 55's "If not → STOP, nothing else deploys"
+  is held only in RAM. Fix: persist disarm (ledger row consumed at replay, or verdict
+  re-derived from world facts at boot).
+- A7-4 MINOR: draining-window plan-funds/place-refuses on wing-priced family legs
+  (~$32, self-heals at release — same seam as B6-2, fails closed). NITs: stale
+  cluster_of prose at config.py:1624/README:400.
+- Verified clean: R7-2 deploy-night + mirror engine-real both directions; R7-3 all
+  three transitions disarm in production, walls ride, silence unlatches, release →
+  rail $20; battery 96/96 with 0 anchor-skips (its own re-run); five tenors = one
+  FACT:RATES adjudicated CORRECT under the one-curve frame.
+- **Fact-identity counter-derivation ADJUDICATED: shape ACCEPTED by construction**
+  (refusal-only bound → over-grouping is provably one-sided-conservative; cost ≤ ~$32
+  deferred ≤ one settle cycle) — **but the shipped input is rejected**: it swapped a
+  runtime input for a static symbol map that is missing the very siblings the doctrine
+  names, and the gate re-introduces the wire-vs-risk confusion R7-1 diagnosed.
+  FACT_MAP joins PROBE_FAMILIES in the live-board symbol test.
