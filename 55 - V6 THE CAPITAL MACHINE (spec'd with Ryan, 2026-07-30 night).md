@@ -591,3 +591,28 @@ the unclamped floor; the unreachable-clause deletion removed a property with no 
 test). New rule: before deleting a guard as unreachable, write the test that pins the
 PROPERTY it expressed; a refactor that widens a domain must re-run the invariants of
 everything reading that domain.
+
+## Round 5 — frozen 27544f6, 2026-07-31
+All six RV defects fixed on one commit: 1007 green armed AND disarmed; battery 65/65
+copy-based. My spot-checks: suite green; all three Lane C finding-fixtures now FAIL
+(= defects gone — negfloor lands on greedy, verdict REPORTs through restart both
+directions, probe wall places in the stuck-tolerance state); NC15 mutant killed (2
+failures). Notables: (1) TWO self-found units bugs while pinning RV-3 — variance book
+charged turnover-inflated capital instead of resting collateral, and room min'd against
+capital-denominated terms unconverted; both silent under-offers at T>1, both pinned by
+a T=2.4-vs-T=0 same-size fixture. (2) n3's real fix: token-presence tests let stale
+prose survive — the test now carries a BLACKLIST of superseded numbers (0.0617, $21.43,
+N=28...) so rot fails wherever it happens. (3) The resurrection rule is adopted: the
+probe-unrefusability property has a named test; property test BEFORE deleting any
+guard as unreachable. (4) **Builder COUNTER-DERIVED RV-5's fix shape, with evidence:**
+seeding plan ledgers from resting_basis breaks the ordinary book — at steady state
+resting collateral IS the plan's own allocation (requoter cancels what's not in it), so
+counting it → next pass plans $0, all markets cluster_rail_full → whole-book oscillation
+every cycle (measured: $16.00 → $0.00). Real inconsistency was one-directional: probe
+was exempt from the rail but the rail wasn't exempt from the probe. Fix: cluster_admits
+excludes probe rows when judging a NON-probe order — symmetric with B18's exclusion,
+requoting untouched, both the fixture and the oscillation evidence in the suite. FOR
+THE LANES TO ADJUDICATE: does the symmetric exclusion open a concentration hole
+(ordinary rail + probe walls stacking in one cluster), or is that exactly the priced
+d×C + rail split the spec already states? Round 5 tri-lane re-review launching on
+27544f6.
