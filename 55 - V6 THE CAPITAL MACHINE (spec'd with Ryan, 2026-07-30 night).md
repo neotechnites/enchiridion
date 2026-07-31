@@ -1297,3 +1297,26 @@ his law. Fix in the current freeze: gate deleted, dollar-rail-only intra-cluster
 knee saturation emergent, quiet-ladder license subsumed, "~2 knee markets" pinned as
 a fixture citing this note. NEW REVIEW RULE: any code comment citing a law gets
 diffed against the note text it cites.
+
+## THE MANUAL RANKING + SEED MODE — 2026-07-31 ~2 PM MT (Ryan's order)
+Ryan ordered a MANUAL rank off live Kalshi data (not our logs). Findings (live API,
+this hour): **gas daily = richest per-market pools on the entire board by ~10×**
+($100/rung over ~16h ≈ $6.26/h × 17 rungs, 11.9h left) — and ALL 17 books EMPTY both
+sides, zero competition. Today's settles (4.115+ all NO) locate AAA. **Treasuries have
+NO live reward window right now** (the "8 live UST" was a prefix false-match — KXPLTR-
+AUGCUST contains "UST"). Next tier: hourly index HUDs ~$57/h but 0.9h left; RAIN
+$2.34/h; META/YTVIEWSHIGH/MCD ~$1-1.6/h. The clusters v6 funded: $0.06-0.6/h — 10-100×
+poorer. Ryan's 4×$30 guess priced manually: $30@3c = 1000 contracts = target_size →
+~100% share of a half-pool = ~$37/seat over 12h, ~$150 estimate on $120 staked, vs the
+funded book's measured 2c/12h. Caveats stated: empty book = no ref (may score zero) —
+v3/v4 solved by quoting BOTH SIDES (manufactures the ref — THE answer to why two-sided
+earned); pick-off bounded at wing collateral; July tape says gas wall fills rare.
+**THE DEFECT THIS EXPOSED: the machine cannot INITIATE a market** — empty book →
+"unpriced" → scanner skip → the board's richest pools structurally invisible. v3/v4's
+$70 days were initiation. **SEED MODE ordered into the freeze:** live pool + empty
+book → seed candidate; quote both sides wing-priced (≤~3c), each side sized to clear
+target_size; estimate carries the S=0 discount; the measured-rate loop governs within
+~30 min (dead-recall kills duds in one move); existing rails bound everything ($66
+cluster rail ≈ 2 seeded rungs — the note's own "~2 knee markets"); narrow license,
+non-reward unpriced still skipped. Freeze = seed + sticky book + measured-rate +
+multi-market-per-cluster + truncation.
