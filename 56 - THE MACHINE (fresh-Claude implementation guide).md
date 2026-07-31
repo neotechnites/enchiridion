@@ -7,6 +7,8 @@
 > outrank your intuition; nothing outranks the tape. Ryan's rules: answer questions,
 > don't act on them; never wait when work is approved; never state clock times unchecked
 > (times below are MT unless marked); measure, don't opine; every refusal logs its reason.
+> VAULT LAW: never create a new numbered note — EDIT the note that owns the topic
+> (dated line, delete what it supersedes). The archive is git history, not more files.
 
 ## 1. WHAT THE BUSINESS IS
 Kalshi pays liquidity rewards: per market per side per program window,
