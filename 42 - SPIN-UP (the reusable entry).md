@@ -55,3 +55,6 @@ missing or inadequate, fix the brief first, then spawn.
 Track what you do (log entries, commits — always-update per [[19]]). Keep LIVE STATE current.
 Times to Ryan in Mountain Time. Money actions: the five-question operations descent (note 23 III),
 staged calls with a veto seam, one state writer, nothing hand-authored into money ledgers.
+
+**LIP lane (2026-07-31+):** for anything touching the LIP maker (v5/v6), the entry is now
+[[56 - THE MACHINE (fresh-Claude implementation guide)]] → 55 → 54 → 47.
