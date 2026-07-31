@@ -288,3 +288,24 @@ concentration); never-sell unchanged; treasuries+gas = two settle sources, both-
 the full $120, priced and accepted. The $480 runs the ordinary law book (denominator +
 steady credits). 3× the signal of the $40 probe, verdict within one settle cycle (both
 families run daily windows). v6's boot mode executes exactly this split.
+
+## ERRATA to §4 / RUIN-p (2026-08-01 early, validated by convergent evidence)
+Both v6 builders, working blind, independently found §4's p-definition self-contradictory:
+the literal always-filled/board-price reading gives p ≈ 0.87–0.97 ≫ d=0.20 ⇒ N→∞ ⇒ v6
+funds NOTHING. Both independently shipped the same resolution, and the adjudicator
+reproduced the arithmetic: **the measured 8–10% cluster-days prior owns the LEVEL of p;
+the funded mix enters as a RATIO of calibration-degraded settle-against probabilities**
+(preserving floor↓⇒p↑⇒N↑⇒A↓ one-directionally and reproducing this note's own N=25–36
+band and A=C/30 values). The implied fill factor is logged on every derivation so the
+cluster-days tape can falsify the anchoring. §4's always-filled framing survives only as
+a diagnostic instrument (RUIN_ALWAYS_FILLED pages "don't play").
+
+## V6 ADJUDICATION (2026-08-01 early): Opus lane Wins as base + 2 blocking grafts
+Winner v6-build (850 tests, exact cancel-all spine, disarmed-mode = bit-for-bit green v5
+fallback, floor-dial correct: band → min tick when armed, bleed/net screens do the
+refusing — the Fable lane's kept 6¢ band refused the 1¢ treasury wall outright, deploy
+plan inexecutable there). Grafts from Fable: N = max(30, formula) (diversification floor,
+"run 30"); deepening carries the oversize evidence clauses (proven: 0.5 contract-hour
+rung deepened to the $19.95 rail — the quiet-afternoon incident through a new door).
+Minor: probe seat-exemption fix; PROBE_FAMILIES = KXAAAGASD + boot pages on zero-slot
+probe family. Final battery after grafts → APPROVED FINAL → merge to v6, deploy on deposit.
