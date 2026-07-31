@@ -1414,6 +1414,8 @@ and he cancels. Machine STOPPED+DISABLED. **NEW PERMANENT RULE — DEPLOY GATE #
 v6 never deploys blind again. A dry-run book printer (lip_v5.dryrun) runs the EXACT
 production plan against the live board offline and prints the full would-buy book
 (every order + rates + top refusals). Ryan approves the PRINTED book before anything
-runs; the deploy then executes an already-approved book. Builder building it now +
-must name the line that placed SME.** Every future session: no v6 deploy without a
-Ryan-approved dryrun print first.
+runs. CORRECTED PER RYAN: he is NOT an approval step — the burden is OURS. The
+dryrun print is verified AGAINST EXPECTATION BY US before any deploy; Ryan only ever
+sees a machine already doing the right thing. Builder building it now + must name
+the line that placed SME.** Every future session: no v6 deploy until the dryrun
+book has been printed and verified correct by the operator-side (us), offline, first.
