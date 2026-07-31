@@ -275,3 +275,16 @@ loss ≤ ~1.5× table, estimates paid as stated, credits ≥ realized bleed.
    estimates feed watched across 2 reward batches — the thesis' load-bearing link measured
    before the rest deploys. If share flows → the queue deploys the book. If not → STOP,
    nothing else deploys, thesis rework.
+
+## THE DEPLOY PLAN — RYAN'S 120/480 (2026-07-31 night, supersedes the $40 probe)
+Ryan: stake $120 in treasury + gas (the measured top earners), "not worry about risk,"
+test earnings; the rest stabilizes. VERIFIED AGAINST THE MATH: worst case of the $120
+(everything fills, everything settles wrong) = exactly d×C = 20% of $600 — the
+concentrated probe is precisely as safe as the diversified book by the day-stop's own
+arithmetic (the ruin formula inverted). Conditions that keep it honest: WINGS AND WALLS
+ONLY (treasury qualification walls across tenors at 1-2¢ sides ~$10-20 each + gas ladder
+wings across strikes; NEVER mid-priced fat legs — that's what killed v4, not
+concentration); never-sell unchanged; treasuries+gas = two settle sources, both-die-day =
+the full $120, priced and accepted. The $480 runs the ordinary law book (denominator +
+steady credits). 3× the signal of the $40 probe, verdict within one settle cycle (both
+families run daily windows). v6's boot mode executes exactly this split.
