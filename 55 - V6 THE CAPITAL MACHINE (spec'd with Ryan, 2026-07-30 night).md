@@ -976,3 +976,25 @@ Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
 **Round 7 score: 3 THEORY approves; premises+impl 0/6 — but the defect surface is now
 entirely the SYMBOL/LIFECYCLE layer; economics, enforcement machinery, safety, and
 battery discipline all held on all three lanes. Round 8 consolidates.**
+
+## Round 8 — frozen 1585994, tri-lane re-review launched — 2026-07-31
+All items on one commit: 1091 green armed AND disarmed; battery 103/103 in-tree (my
+own re-run confirms 0 survivors); parity fuzz 0/3000. My spot-checks: real siblings
+KXAAAGASW/M → FACT:GAS probe-eligible; foreign KXNATGASW correctly its own fact.
+R8-1's ground truth: calib2.json's `ser` field settles every symbol question (435
+settled KXAAAGASD, 83 KXAAAGASW, five tenors 52-61 each; the aliases NEVER settled a
+market) — test_symbols.py refuses unresolvable members and requires PROBE_FAMILIES ==
+FACT_MAP members structurally. R8-3(b) DERIVED: a landed verdict is a world fact
+within the program — persisted as a `probe_state` ledger row, replays like
+settlements; "fires on boot" = FIRST boot. R8-5 DERIVED: note 55's gate is a function
+OF REWARD BATCHES — zero batches = the gate not yet answering, NOT a third verdict;
+silence pages and changes nothing; the unlatch problem dissolves; stated cost: a dead
+family keeps d×C staked in ~0-hazard wings until a human acts ("nothing else deploys"
+is Ryan's sentence to invoke). 5th and 6th unkillable clauses removed. **BUILDER
+CONFESSION, WORSENING: three more scripted edits silently no-op'd this round — one
+left the R8-3 bound INERT until a test caught it; a majority of cross-round survivors
+trace to unverified string edits, a tooling failure unfixed since Round 5.** All
+three lanes explicitly tasked with an EDIT-LIVENESS AUDIT (walk the diff hunk-by-hunk,
+verify each claim present AND live) plus the new-listing hole (KXAAAGASM is live but
+likely absent from calib2's historical ser field — which way does the symbol test
+fail?), the lifecycle state machine × restart grid, and the routing grid fuzz.
