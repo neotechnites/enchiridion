@@ -1346,3 +1346,10 @@ whether seeds now emit on the wire. Ryan's standing alternatives: (a) one more f
 check (~4 min) to confirm/deny seeds; (b) the v4-style chooser (first-dollar rate at
 land-grab prices — lip_maker_v4.py:1292, read and understood) as the ranking, with
 v6's rails; (c) v4 itself still exists as a service. NOTHING RUNS until Ryan says.
+
+## STOPPED, 2026-07-31 ~5:45 PM MT — Ryan: "zero orders. stop v6."
+Fourth deploy of the day (v4 rung chooser + seeds + truncation armed) placed ZERO
+orders per Ryan's UI; stopped and disabled on his order before diagnosis. Watcher
+agent killed. UNDIAGNOSED: why zero orders under V4_RANK (candidates exist, rank
+should top gas — the block is somewhere between rank and place; the last cycle rows
+were not pulled). v6 down, disabled, nothing runs until Ryan says.
