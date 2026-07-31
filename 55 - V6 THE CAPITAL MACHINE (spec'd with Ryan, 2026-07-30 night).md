@@ -1186,3 +1186,32 @@ Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
   go/no-go instrument can silently say nothing forever while $120 rides."**
 **Score: 3 (Lane B full) + 1 (C theory) = 4 of 9 so far. Lane A out. Round 10 = the
 gate seam + Lane B's prose corrections.**
+
+## Round 9 FINAL review, Lane A record + ROUND 9 TALLY — 2026-07-31 (frozen f6a9f37)
+Lane A verdicts: THEORY **APPROVE** · PREMISES **APPROVE** · IMPL **APPROVE**.
+- **Evidence exception ADJUDICATED SOUND with the load-bearing premise executed:**
+  there is NO per-series calibration anywhere in the machine (g is side+price-band
+  population-wide), so an unsettled series is not a new risk class; at wing prices the
+  monthly draws the table's MOST conservative rows (1c NO g=1.0000). All four bounds
+  fired under execution; test_symbols forces the entry out of the exception when
+  settles arrive (fail-loud). Note for the record: monthly walls extend DRAINING up
+  to a month — conservative.
+- **n5 ADJUDICATED BUILDER-RIGHT in every constructible state**: plan strictly
+  tighter everywhere; worst-case cross-pass conversion $110.05 never crossed d×C;
+  the counter-factual (aligning the filter) mechanically reproduces R6-3.
+- R9-2 restart durability 4/4 through the real Maker+ledger (pages 4×/24h under 3h
+  restarts; PASS lands under 45-min restarts with interleaved ledger noise; batch
+  counter exact across restart; double-replay idempotent). Spine: dials to the digit,
+  g row-for-row, F1/rescue/sunk, greedy oracle 0/400 (its own 39 hits were its own
+  harness — honest correction), fact bound both directions, R9-3 both sides, N3/N21.
+- Findings, none blocking: MINOR the SAME stale README line as Lane B (third round
+  surviving a "swept" claim); MINOR conservative: ordinary wing rows placed while
+  draining keep drained() False → for the centerpiece book release is effectively
+  unreachable and the d×C carve-out persists (capital OCCUPIED inside the carve-out,
+  not idle; fails toward under-deploy; operator lever = PROBE_ARMED=False; extends
+  B6-5 — for the builder to document or derive); NIT item-11 vocabulary.
+**ROUND 9 TALLY: 7 of 9 — Lanes A and B FULL APPROVALS (six), Lane C theory approve
+(seven) with premises+impl rejects on ONE localized seam: the verdict gate's batch-
+counting semantics (dead zone C9-1 + two unpinned-seam survivors C9-2/C9-3). Round 10
+= one condition, one counter, three fixtures, plus the prose sweep both approving
+lanes demanded. Then the final tri-lane pass.**
