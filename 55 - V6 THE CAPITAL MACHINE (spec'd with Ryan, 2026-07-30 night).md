@@ -215,3 +215,12 @@ linear-recovery arithmetic in (1) overstates recovery cost of a drawdown and the
 derivation is conservative; (5) rounded to **20%** — "not restricting us all that much."
 Revisit only when p's error bars shrink with tape (loosen) or the funded mix cheapens
 (tighten via the floor–cap coupling).
+
+## PHI SHRINKAGE (Ryan, 2026-07-30 night — in build, deploys to v5 on approval)
+Incident: quiet afternoon tape → "measured 0" → oversize-to-$10 fired → evening flow ate the
+seats (42 fills, ~$76 inventory in 8h; fees only $1.23 — clean maker fills, not crossing).
+Fix (Ryan): "take our global average and use the rung's history to adjust it until the
+history is very long" = empirical-Bayes shrinkage: φ̂ = (fills + k·prior)/(exposure_h + k),
+prior = bucket→global, k derived from cross-market φ dispersion (gamma-Poisson), NOT chosen.
+Kills both prior failure modes: thin-quiet ≠ zero (no premature oversize), unknown ≠ high
+(no R3 un-funding deadlock). Oversize gate becomes posterior-low AND history-dominates.
