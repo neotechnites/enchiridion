@@ -1127,3 +1127,23 @@ one") now enforced by machinery, not memory. Builder's own honest record: NINE R
 — the machine survived attack once written; the inputs (guessed symbols, caller-less
 hooks) were the defect source. Final tri-lane launched on f6a9f37 — if all nine
 verdicts are APPROVE, v6 is deploy-ready and waits on Ryan's $600.
+
+## Round 9 FINAL review, Lane B record — 2026-07-31 (frozen f6a9f37)
+Verdicts: THEORY **APPROVE** · PREMISES **APPROVE** · IMPL **APPROVE** — the first
+full-lane approval of the build. No FATAL/MAJOR. Findings all prose: MINOR — deploy
+checklist item 2 (README:399-401) still describes prefix/cluster_of semantics R9-1
+abolished (zero R9 hunks in that file — the "swept for real this time" claim is false
+at that half; config.py half WAS swept); NITs — item 9 understates page cadence
+(once/6h shipped, "once per window" written), item 11 prefix vocabulary, n5 rationale
+lives in commit message not at site. Correction demanded in next commit; "no
+re-review implied by anything I measured."
+Approve evidence (its own execution): suite 1108/1108 both modes; battery 0/115 +
+static proof all anchors exist; full diff hunk-by-hunk — every CODE claim live; 7 own
+symbol mutations all killed; live wire re-verified independently (KXAAAGASM 200,
+KXNATGAS 404, KXAAAGASMAXTX 200); restart chains to the cent vs controls (dead family
+3h×8 pages 4=4; rollover-during-gap banks $0.75, earned == hand-truth at 1e-9;
+healthy-restarted PASSes 1.0; dead REPORTs 0.0089 — no false-PASS door); torn row →
+prior row; armless row → DRAINING+page. RECORD CORRECTION (Lane B's, verified
+equivalent by execution): R9-2's mechanism is the accumulator persisted INSIDE the
+fsync'd probe_state row, not probe_accrual replay.
+**Score: 3 of 9. Lanes A and C out.**
