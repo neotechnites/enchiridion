@@ -1,8 +1,8 @@
 # 53 - LIVE STATE (updated in place — the CURRENT block below is the truth)
 
-> Entry: [[56 - THE MACHINE (fresh-Claude implementation guide)]] → 55 → 54 → 47; then this
-> note's CURRENT block. Everything below CURRENT is the dated running log, newest first by
-> section date; supersedes [[50]]'s state half.
+> Entry: [[42 - THE SENATE (the system)]] → [[56 - THE MACHINE (fresh-Claude implementation
+> guide)]] → this note's CURRENT block. Everything below CURRENT is the dated running log;
+> supersedes [[50]]'s state half.
 
 ## CURRENT — 2026-07-31 end of day (details in [[55]]'s tail)
 - **v5 STOPPED** (Ryan's order, ~12:03 PM MT 07-31; 43 positions ride to settlement — it

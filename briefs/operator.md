@@ -1,6 +1,6 @@
 # Brief: OPERATOR (live-account actions — deploys, config, state, ledgers)
 
-Read first: [[42 - SPIN-UP (the reusable entry)]] → [[43 - THE MONEY GAME (execution concepts)]]
+Read first: [[42 - THE SENATE (the system)]] → [[43 - THE MONEY GAME (execution concepts)]]
 §8 (shared account) → the operations descent (the five answers below; note 23 Part III, git history).
 
 Before ANY action touching the live account, write the five answers: **Cash** (what moves, when,

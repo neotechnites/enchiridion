@@ -83,7 +83,7 @@ and it breaks the venue/price/size confound that makes every single-configuratio
 
 ## WHAT CHANGES ELSEWHERE
 
-- **[[42 - SPIN-UP]]** — note 07 (git history) joined the mandatory concept list, and this note with it. The entry
+- **[[42 - THE SENATE (the system)]]** — note 07 (git history) joined the mandatory concept list, and this note with it. The entry
   path routed a fresh session past the exact file it needed.
 - **Note 23, Derivation First (git history)** — Part VI: a derivation whose inputs have no intervals is not a
   derivation, it is arithmetic on guesses. "Every claim carries its because" now also reads

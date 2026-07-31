@@ -1,9 +1,10 @@
 # 56 - THE MACHINE — fresh-Claude implementation guide
 
-> You are a fresh Claude taking over the Kalshi LIP maker. READ ORDER: this note →
-> [[55 - V6 THE CAPITAL MACHINE]] (the design + every amendment/errata/review record) →
-> [[54 - THE ALLOCATOR LAW]] (the law + capital scaling) → [[47 - THE LIP PROBLEM]]
-> (the measurements everything rests on). Notes OUTRANK code comments; code comments
+> You are a fresh Claude taking over the Kalshi LIP maker. READ ORDER: [[42 - THE SENATE
+> (the system)]] FIRST (the laws bind this lane) → this note → [[53]]'s CURRENT block.
+> Then PAGE IN by task, never whole: [[55 - V6 THE CAPITAL MACHINE]] (design + amendments +
+> deploy-day record) · [[54 - THE ALLOCATOR LAW]] (the law + capital scaling) ·
+> [[47 - THE LIP PROBLEM]] (the measurements). Notes OUTRANK code comments; code comments
 > outrank your intuition; nothing outranks the tape. Ryan's rules: answer questions,
 > don't act on them; never wait when work is approved; never state clock times unchecked
 > (times below are MT unless marked); measure, don't opine; every refusal logs its reason.

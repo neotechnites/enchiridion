@@ -1,7 +1,13 @@
 # Brief: ADVERSARIAL REVIEWER (money-path changes)
 
-Read first: [[42 - SPIN-UP (the reusable entry)]] → [[43 - THE MONEY GAME (execution concepts)]]
+Read first: [[42 - THE SENATE (the system)]] → [[43 - THE MONEY GAME (execution concepts)]]
 → the change and its charter/spec. Your job is to BREAK it, not to approve it.
+
+**DEPTH CAP (senate law L3, 2026-07-31): ONE round.** Verify the PREMISES against the
+world first — symbols, endpoints, callers, data, all with captured/live evidence — then the
+reasoning. A second round is licensed only if this one found a premise defect (fix →
+re-contact → one more). Nine coherence rounds on one artifact approved a machine that was
+blind at the wire; do not reproduce that shape.
 
 Order of attack:
 0. THE FATE AUDIT (Part V): for anything that acquires an asset, demand the fate sentence

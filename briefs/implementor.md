@@ -1,6 +1,6 @@
 # Brief: IMPLEMENTOR (money-path code)
 
-Read first: [[42 - SPIN-UP (the reusable entry)]] → [[43 - THE MONEY GAME (execution concepts)]]
+Read first: [[42 - THE SENATE (the system)]] → [[43 - THE MONEY GAME (execution concepts)]]
 → your task's charter/spec. Then work.
 
 You are implementing an INTENT; the spec is evidence of intent, not truth. Before writing:

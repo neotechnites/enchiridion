@@ -6,8 +6,10 @@ The handbook of **the Senate** — the shared knowledge between
 doctrines, backtest conclusions, operating method, and the live project state.
 This is what any fresh Claude reads to spin up cold.
 
-- **Entry point: `56 - THE MACHINE (fresh-Claude implementation guide).md`** — read order 56 → 55 → 54 → 47. Everything else is evidence behind pointers.
-- Current operational snapshot: the highest-numbered **LIVE STATE** note (state, not concept).
+- **SYSTEM ENTRY (read first, always): `42 - THE SENATE (the system).md`** — the goal, the
+  laws, the operating loop, and the autopsy of why four builds failed. Everything else obeys it.
+- **Lane entry (LIP): `56 - THE MACHINE (fresh-Claude implementation guide).md`**; then note
+  53's CURRENT block. 55/54/47 are paged in by task, never held whole.
 - `implementation/` — build orders and specs that bridge research → nestor. True implementation detail lives in the code repos; what's here is the shared contract.
 - Verdicts are DATED and change weekly by design (kill-scan). The newest dated note wins every conflict.
 - Secrets never live here: keys are in `SECRETS.local.md` (untracked, gitignored).
