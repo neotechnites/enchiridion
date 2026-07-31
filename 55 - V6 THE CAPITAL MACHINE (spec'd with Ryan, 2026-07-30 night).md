@@ -711,3 +711,30 @@ What held: RV-2 vs independent oracle 0/400; RV-4 admit rule pointwise sound (pr
 sketch: ceiling ⟺ v_next≤max OR ≤v_now); stuck-walk lands $70.20 all inside rails, V
 monotone down; no attacker basis reaches the wire; 15/16 new mutants killed; disarmed
 fallback exact.
+
+## Round 6 — frozen 50303e0, tri-lane re-review launched — 2026-07-31
+Builder delivered all five on one commit: 1029 green armed AND disarmed; battery 80/80;
+Lane C's fuzz 0/3000. My spot-checks: suite green; R6-2 confirmed at source (var ledger
+positions-only, delegated to guards.cluster_book); R6-1 verified by execution (healthy
+wall through rollover: banks $0.20 realized, reset NOT a batch, verdicts PASS at true
+ratio 0.86). TWO COUNTER-SHAPES shipped, both flagged to the lanes:
+- **R6-4 counter-shape:** instead of ordering/pre-pass/atomic, each cluster held to the
+  designed book's own share v_max/N — order-independent BY CONSTRUCTION (v_max IS N
+  equal clusters at v_max/N each), survives interleaved fills. Getting there surfaced:
+  the plan had NEVER modeled B16 (158 of the 142-trial fuzz refusals were market_cap),
+  and the FUZZ HARNESS itself diverged from production (planned against rail only) —
+  corrected to min(rail, market_leg_cap). Harness-vs-production parity is now a lane
+  verification item.
+- **R6-5 counter-shape (replaces my adjudicated armed-bar):** the note's sentence AS AN
+  INVARIANT — no single settle source carries more than d×C counting BOTH lanes, one
+  predicate read by plan and place. Probe empty → costless; fills → ordinary tightens;
+  measured: mid leg admitted on empty, refused single_fact_cap at $120 full; single-
+  fact total EXACTLY $120 = 20% = d×C. Builder's evidence against my bar: KXAAAGASD is
+  both a live probe family and the canonical fixture family — the bar broke 55 tests
+  and forfeits a top-earning quiet-class gas LADDER (not 2 clusters) even when the
+  probe holds nothing. Also new: ARMED vs DRAINING — disarm does not make probe
+  collateral ordinary; rows stay probe-governed to settlement while active bounds
+  switch off. OPEN QUESTION dispatched to all three lanes: SEQUENCING — the cap refuses
+  new orders only, positions ride and never sell; who gets refused when the other lane
+  got there first, and can fills of already-resting orders on both lanes push a fact
+  past $120 (checked at place, exceeded at fill)? Round 6 tri-lane launched on 50303e0.
