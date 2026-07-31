@@ -22,8 +22,7 @@ how bad, never what happens. The lip maker had every constant derived, every mir
 adversarial rounds, and lost 84% of its money to positions whose fate nobody had ever written
 down.
 
-EXTERNAL BOUNDARIES ARE VERIFIED AGAINST THE SYSTEM, NEVER DERIVED ([[45 - CONTACT (the
-boundary with reality)]]). Endpoint paths, payload shapes, field names, units, error semantics:
+EXTERNAL BOUNDARIES ARE VERIFIED AGAINST THE SYSTEM, NEVER DERIVED ([[42 - THE SENATE (the system)]] theory-1). Endpoint paths, payload shapes, field names, units, error semantics:
 capture a real response and build the fixture FROM it, citing the capture. A fake written from
 your assumptions tests your assumptions back to you — that is how 575 green tests certified a
 parser that had never seen a real response, and how a live maker placed 130 duplicate orders.
@@ -45,7 +44,7 @@ derivations, UNDERIVED list, test names+results, and anything you disputed rathe
 a deliberate deviation with a derivation is a contribution; a silent one is an incident.
 
 ## MEASUREMENT STANDARD (added 2026-07-29)
-Per [[49 - MEASUREMENT DISCIPLINE]]: every constant you justify with a measured number must carry
+Per [[42 - THE SENATE (the system)]] theory-4: every constant you justify with a measured number must carry
 that number's **n_eff** and **interval** next to it, and its **out-of-period status**. A constant
 derived from a point estimate is UNDERIVED and gets flagged upward exactly like a missing
 derivation. If the sample does not contain the configuration you are building, say so — silence in

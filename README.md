@@ -1,35 +1,21 @@
 # Enchiridion
 
-The handbook of **the Senate** — the shared knowledge between
-[athena](https://github.com/neotechnites/athena) (research) and
-[nestor](https://github.com/neotechnites/nestor) (execution): strategy verdicts,
-doctrines, backtest conclusions, operating method, and the live project state.
-This is what any fresh Claude reads to spin up cold.
+The handbook of **the Senate** — the system that turns a stock Claude into a member
+working Ryan's goal. Shared between athena (research) and nestor (execution).
 
-- **SYSTEM ENTRY (read first, always): `42 - THE SENATE (the system).md`** — the goal, the
-  laws, the operating loop, and the autopsy of why four builds failed. Everything else obeys it.
-- **Lane entry (LIP): `56 - THE MACHINE (fresh-Claude implementation guide).md`**; then note
-  53's CURRENT block. 55/54/47 are paged in by task, never held whole.
-- `implementation/` — build orders and specs that bridge research → nestor. True implementation detail lives in the code repos; what's here is the shared contract.
-- Verdicts are DATED and change weekly by design (kill-scan). The newest dated note wins every conflict.
-- Secrets never live here: keys are in `SECRETS.local.md` (untracked, gitignored).
+**Spin-up is three reads, then act:**
+1. `42 - THE SENATE (the system).md` — goals, theory, practice, the Refinement Law.
+2. `56 - THE MACHINE (fresh-Claude implementation guide).md` — the live lane (Kalshi LIP).
+3. Note 53's CURRENT block — what is true right now.
 
-## Vault law: EDIT, don't create (2026-07-31)
+Everything else is paged in by task, never held whole: [[47]] the LIP measurements ·
+[[54]]/[[55]] the allocator law and v6 record · [[43]] execution concepts · [[38]] the
+non-LIP inventory · `briefs/` worker stances · `work/` and git history as evidence.
 
-The vault was purged of notes 36 and below — it had grown into context poison.
-The enchiridion is a **prompt**, not an archive. Large stale context degrades the
-model that reads it; the archive is **git history**, not more files.
+**The Refinement Law (42) governs this folder:** the corpus must get smaller and sharper
+as capability grows. Edit, never create; delete what you supersede; a lesson becomes a
+refined principle or a blocking test/gate, never appended prose. The archive is git
+history — not `archive/`, not new files. Newest dated statement wins every conflict.
 
-1. **Never create a new numbered note.** Every topic already has an owner file
-   (37–56). New understanding gets EDITED into the note that owns it, with a
-   dated line. A new file requires an explicit order from Ryan.
-2. **One LIVE STATE.** Update the current LIVE STATE note in place — do not
-   mint a new dated LIVE STATE file per day. Old state is in git.
-3. **Delete as you write.** When you add a dated correction, remove the
-   paragraph it supersedes. A note that only grows is poisoning the next reader.
-4. **Superseded whole notes go to git, not `archive/`.** `git rm` them; the
-   commit message says what replaced them.
-
-The root holds only LIVE notes: if a note is in the root, it is current doctrine or current state. `archive/` is legacy (pre-07 era) — new supersessions go to git history per rule 4, not there.
-
-This folder is also an Obsidian vault — open it in Obsidian for graph/backlinks.
+Secrets never live here: keys are in `SECRETS.local.md` (untracked, gitignored).
+This folder is an Obsidian vault — open it in Obsidian for graph/backlinks.

@@ -3,7 +3,7 @@
 Read first: [[42 - THE SENATE (the system)]] → [[43 - THE MONEY GAME (execution concepts)]]
 → the change and its charter/spec. Your job is to BREAK it, not to approve it.
 
-**DEPTH CAP (senate law L3, 2026-07-31): ONE round.** Verify the PREMISES against the
+**DEPTH CAP ([[42]] theory-3): ONE round.** Verify the PREMISES against the
 world first — symbols, endpoints, callers, data, all with captured/live evidence — then the
 reasoning. A second round is licensed only if this one found a premise defect (fix →
 re-contact → one more). Nine coherence rounds on one artifact approved a machine that was
@@ -16,7 +16,7 @@ Order of attack:
    (count vs dollars, volume vs P&L, presence vs value)? If so, maximising the objective may
    walk the capital into the fire — that is how the lip maker's own optimiser found the rungs
    that returned −100%. A cap is not a fate.
-0a. THE CONTACT AUDIT ([[45 - CONTACT (the boundary with reality)]]): for every external
+0a. THE CONTACT AUDIT ([[42 - THE SENATE (the system)]] theory-1): for every external
    interface the change touches, demand the CAPTURED ARTIFACT behind it — the real response,
    the saved transcript, the live probe. A fixture with no provenance is an assumption, and a
    suite that passes against it proves only self-consistency. This outranks everything below:
@@ -44,7 +44,7 @@ coverage. End with the deploy question answered plainly: what happens when this 
 and what can bite.
 
 ## MEASUREMENT STANDARD (added 2026-07-29 — ask this FIRST, before code-vs-spec)
-Per [[49 - MEASUREMENT DISCIPLINE]]:
+Per [[42 - THE SENATE (the system)]] theory-4:
 1. **"List every number in this work. For each: n_eff, interval, in-sample or out-of-period?"**
    n_eff is INDEPENDENT units — one ladder is one unit, one market's fills are one unit, one day
    is one unit. Row counts are not n.

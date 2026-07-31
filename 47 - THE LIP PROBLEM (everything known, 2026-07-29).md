@@ -1,8 +1,8 @@
 # 47 - THE LIP PROBLEM — everything known, 2026-07-29 ~6:30am MT
 
-> The measured foundation of the LIP lane. Read order: [[56]] → [[55]] → [[54]] → this;
-> concepts [[43 - THE MONEY GAME]] and [[45 - CONTACT]] first if unread. (Old refs to notes
-> 23/07 point to git history; their load-bearing rules are inlined in [[49]] and `briefs/`.)
+> The measured foundation of the LIP lane. Read order: [[42]] → [[56]] → this as needed;
+> concept file [[43 - THE MONEY GAME]] first if unread. (Refs to retired notes point to git
+> history; the epistemics live in [[42]].)
 > Everything below is measured unless marked UNVERIFIED. Do not re-derive it; argue with it.
 > **§§1–6, 8, 10 (measurements) STAND. §7 and §9 are HISTORICAL** — that v5 was rebuilt into
 > the law machine ([[54]]/[[55]]); read them as the defect record, not the present.
@@ -266,7 +266,28 @@ worst-case caps; the burst breaker (caught a real loop at 3 orders instead of 13
   `/tmp/credits_jul28.json` (the 24 credit line items).
 - Ledger of all analysis: `work/audit-nonlip-strategies-2026-07-28.md`, Appendices A–H.
 
-## 10. THE STANDING WARNING
+## 10. FACTS FOLDED IN FROM THE SUPERSEDED STRATA (notes 48/50/51/52, deleted — full text in git)
+- **Score = discount^ticks × CONTRACTS; price is absent from scoring.** Each side is scored
+  separately — a one-sided quote earns at most pool × share ÷ 2. The $1 floor is per market
+  per PROGRAM PERIOD (hourly programs owe $1 each hour).
+- **Two clocks, weakly coupled:** the program window (how long you can earn) vs the market's
+  settlement (how long a fill traps capital). Conflating them built the two-cluster book.
+  Pools are per-window, paid at the window's end.
+- **Pool sizes: modal $20, median $45; the receipt venues were all $100.** Credit is linear
+  in pool — extrapolating from the receipt silently assumes the tail.
+- **Presence as-run was 10.6% — the largest free lever.** Matched pairs +$39.63; unmatched
+  legs −$587.42. No ex-ante rung-picking signal ever tested predictive.
+- **Fills are an adverse-selected subset** — filled orders are not a fair sample of resting
+  orders.
+- **Size, not price, dissolves the §1 trap:** floor-clearing size Q = S/(P−1) has no price
+  term (§5); the −100% cohort was ~40× the size the reward required.
+- **Ruin shape at N equal rungs:** V ≤ 0.25 needs avg price ≥ 1/(1+N/4) (12¢ at N=30) —
+  operationally superseded by [[54]]/[[55]]'s dials, but this is why a floor exists at all.
+- **Breadth pays ~40%/rung of pool** moving N_eff 2→38 — and is worth it.
+- **"Green" means self-consistent, not correct** — 626 tests once passed with two blockers
+  and a deletable load-bearing guard.
+
+## 11. THE STANDING WARNING
 
 Every elegant idea this program has produced lost money on its own tape. The two that survived
 measurement are boring: **don't buy what you can't sell**, and **don't let fifty tickets be one

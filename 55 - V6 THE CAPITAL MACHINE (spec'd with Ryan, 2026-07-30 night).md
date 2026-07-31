@@ -3,7 +3,7 @@
 > Written to be BUILT TODAY and TURNED ON TOMORROW (2026-07-31). Everything here was
 > derived in conversation with Ryan on 2026-07-30; premises and reasoning included so the
 > builder needs no other context. Companion: [[54 - THE ALLOCATOR LAW]] (v5's law — v6 is
-> the same machine with three dials changed), [[52]], [[47]], [[48]].
+> the same machine with three dials changed) and [[47]] (notes 48/50/51/52 folded into 47 §10; full text in git).
 
 ## 0. THE FRAME (Ryan's, agreed)
 **v5 is written to be safe, earn a little, and gather data.** Its $10/rung seat is a
