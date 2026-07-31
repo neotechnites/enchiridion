@@ -337,3 +337,15 @@ protocol, all three rejections were CROSS-EXAMINED and CONFIRMED by my own execu
 Plus: probe verdict strengthened (earned vs PREDICTED, ratio ≥ 0.5) — "earned>0" passed a
 10×-discounted wall. Fix round with the builder; Lanes B (implementation) and C (red team)
 still out; all nine verdicts required before deploy.
+
+## Lane B (implementation) record — 2026-08-01
+Verdicts: THEORY-AS-IMPLEMENTED approve (every formula hand-verified; block-jump pinned
+to brute force; 21-mutation battery, 20 killed) · LOGIC/PREMISES reject · IMPLEMENTATION
+reject. Central defect CONFIRMED at source: the probe's cluster-rail exemption exists in
+the PLAN only — place() enforces the unexempted rail, so the $120 probe deploys ~$30-40
+on the wire with six walls refusing forever (violates the codebase's own one-expression-
+of-the-rail premise; fails CLOSED — behavior bug, not money-safety). Fixes F5-F8
+dispatched: exemption expressed once via probe.eligible world-facts at both plan and
+place + end-to-end regression; M17 survivor pinned (family evidence licenses, never
+manufactures); probe walls excluded from funded-mix p (double-charge argument — builder
+to derive or counter); the last two unlogged skips counted. Lane C (red team) still out.
