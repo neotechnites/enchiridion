@@ -1404,3 +1404,16 @@ tasked: one offline script pushing a real gas seed slot through the real admissi
 name the killer line, fix, and add CANDIDATE CONSERVATION to the provenance logging
 (slots in = funded + named refusals + counted drops, tested) so silent death is
 structurally impossible. Machine down throughout.
+
+## RYAN'S ULTIMATUM + THE PERMANENT DEPLOY GATE — 2026-07-31 ~12:30 PM MDT
+Seventh deploy bought SME fat legs BOTH SIDES + Panama 731@92c again despite the
+rank-order fix and seed-discount parity — under V4 rank SME at 62c cannot
+mathematically outrank gas, so a NON-heap placement lane or a wire-vs-theory
+divergence exists; unproven. Ryan: one more deploy that doesn't match expectation
+and he cancels. Machine STOPPED+DISABLED. **NEW PERMANENT RULE — DEPLOY GATE #0:
+v6 never deploys blind again. A dry-run book printer (lip_v5.dryrun) runs the EXACT
+production plan against the live board offline and prints the full would-buy book
+(every order + rates + top refusals). Ryan approves the PRINTED book before anything
+runs; the deploy then executes an already-approved book. Builder building it now +
+must name the line that placed SME.** Every future session: no v6 deploy without a
+Ryan-approved dryrun print first.
