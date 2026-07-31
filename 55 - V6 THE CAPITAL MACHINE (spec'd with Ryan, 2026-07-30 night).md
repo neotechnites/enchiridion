@@ -774,3 +774,44 @@ Verdicts: THEORY **APPROVE** · PREMISES **REJECT (FATAL)** · IMPL **REJECT**.
   **R6-5 invariant ADJUDICATED the better resolution** (bar was genuinely mispriced —
   a ladder, not 2 clusters) — but its LIFECYCLE (B6-2) and its IDENTITY FUNCTION
   (B6-4) are not done.
+
+## Round 6 re-review, Lane A record — 2026-07-31 (frozen 50303e0)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
+- **A6-1 (MAJOR): the single-fact invariant is ONE-SIDED.** Enforced only on ordinary
+  orders (place routes probe orders to ProbeLane.admits = lane cap only; plan gates the
+  fact check on lane != probe). Mirror sequencing executed: ordinary $16 lands FIRST →
+  all six probe walls admitted → fact $136.00 = 22.7% — C5-5's number back through the
+  other lane's door. Also fully-live path: probe 100/20 split, sibling family settles,
+  restake into gas admitted, $136 end-to-end THROUGH THE ENGINE. Fix is small:
+  ProbeLane.admits mins against single_fact_room_usd (max cost $16 of walls deferred).
+- **A6-2 (MAJOR, = B6-2 CONVERGENT, sharpened): `disarm` has ZERO production callers**
+  (grep: probe.py:260 + tests only — the verdict landing does NOT call it; the F-A1/
+  retirement orphaned-hook class AGAIN) — and when invoked, plan never reads `armed`
+  (funds all 4 walls) while place refuses all 4 probe_disarmed: permanent forbidden
+  state. Mutant deleting the disarmed refusal survives all 1029 — the draining claim
+  is unpinned AND broken AND unreachable.
+- **A6-3 (MAJOR, battery rule): two surviving mutants in Round-6 fix sites** — M4
+  in-pass resting charge (R6-5's plan half) `if False` survives (re-offer class);
+  M10 B16-in-plan reverted survives AND is proven arithmetically INERT (rail ≤ 2.7%C
+  < B16 ≥ 10%C at every reachable geometry — min always picks rail; the unkillable-
+  clause class the doctrine deletes).
+- MINORS: m1 share-bound residual coupling (positions-fat cluster zeroes siblings'
+  room — conservative; "no cross-cluster coupling" claim overstated); m2 share-bound
+  breadth cost on dispersed cheap books (2c cluster clamped $5.77 vs $16 rail; zero
+  cost at-mix — equal-VARIANCE displacing equal-DOLLAR semantics, on the record next
+  to the Jensen note); m3 stuck book can no longer self-repair through the plan (room
+  $0; place would admit the repair; settlement-clock recovery only — conservative,
+  priced); m4 check_silence LATCHES (wall dead 6h then healthy earns $8 — verdict
+  stays "silent" forever, a genuine PASS can never land). NITs: double-init in
+  Probe.__init__; plan-time vs place-time projected_day_reward (unreachable today).
+- Verified clean: R6-1 algebra exact on five fixtures; R6-2 END-TO-END through engine
+  seeding (oscillation dead: 460.34/458.79/458.79); R6-3; B16 parity ⊆ place; its own
+  3000-trial rerun of C5-1's harness: 0/3000 (the path-dependence defect is DEAD).
+- **R6-4 ADJUDICATED: ACCEPT with the claim trimmed** (not fully order-independent —
+  couples via others, shrink-only; breadth cost real on cheap books; repair channel
+  forfeited — all conservative and priced). **R6-5 ADJUDICATED: ACCEPT the shape,
+  REJECT the shipped enforcement** (invariant is the honest reading of Ryan's
+  sentence; one-sided enforcement falsifies the letter).
+Lane C still out. Round 7 will consolidate: B6-1 FATAL (probe blind to treasury),
+A6-1/B6-4 (two doors on the fact bound), A6-2/B6-2 (draining orphan+split), A6-3
+survivors, B6-3/B6-5, minors.
