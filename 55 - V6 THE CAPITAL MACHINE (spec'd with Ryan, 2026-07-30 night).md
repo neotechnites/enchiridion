@@ -224,3 +224,17 @@ history is very long" = empirical-Bayes shrinkage: φ̂ = (fills + k·prior)/(ex
 prior = bucket→global, k derived from cross-market φ dispersion (gamma-Poisson), NOT chosen.
 Kills both prior failure modes: thin-quiet ≠ zero (no premature oversize), unknown ≠ high
 (no R3 un-funding deadlock). Oversize gate becomes posterior-low AND history-dominates.
+
+## INCIDENT: THE MISSING BLEED TERM (2026-07-30 late night) — v5 STOPPED by Ryan
+Resting book slid to avg 8.2¢ (two 300-lot 3¢ walls, a 1¢ rung) vs held 12.3¢ vs ~15¢
+design. ROOT CAUSE: my spec translation. The law ranks by capital-to-target only; the old
+★'s expected-fill-loss term (φ × loss-given-fill) was dropped when the metric changed —
+builders built the spec faithfully, review reviewed against the spec. The 15¢ average was
+an EMERGENT property of the old machine; its cause was never encoded. FIX in build
+(wt-bleed): g(bucket) derived from calib2.json (8,240 settled) = expected loss fraction
+per $ filled; effective_need = W·max(1,T) + W·T·g ranks the toxicity; viability screen
+target > W·T·g ("bleed_exceeds_credit", logged); envelope bleed charged at envelope size
+(self-limits at low φ). No average-price rule — the average re-emerges as consequence.
+Also: phi-shrinkage review caught a second incident-door (zero-prior bucket ⇒ k=0 ⇒ any
+exposure "dominates" ⇒ envelope on quiet tape) — sent back, fix in flight. v5 stays OFF
+until both land + Ryan's go.
