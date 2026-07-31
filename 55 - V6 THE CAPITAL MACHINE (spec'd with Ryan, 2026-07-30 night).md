@@ -1282,3 +1282,18 @@ refund to next rung (this is the sticky book's only measured mover); per-seat
 measured/predicted calibration row logged every batch. Redeploy gate: tape replay
 ~0 requotes + measurement sane on the recorded estimates. Ryan: "it was close to
 correct" — back up as soon as the gate passes.
+
+## SPEC VIOLATION CAUGHT BY RYAN — 2026-07-31 ~1:30 PM MT
+The code kept "one MARKET per cluster" (marginal.py §2, relaxed only for quiet
+ladders). THE NOTE SAYS THE OPPOSITE, in the cluster-cap derivation above: the $66
+rail "naturally holds ~2 knee markets," and $66 was chosen OVER $33 precisely so the
+second knee funds in the double-fast clusters. The rule was dropped in the v6 spec;
+the cluster DOLLAR cap is the correlation bound. Live evidence: 35 cluster_taken
+refusals in the 15-min run — the top-heavy clusters' second markets sent down-rank.
+Survived NINE review rounds because everyone (builder, three lanes × 3 rounds, and
+me) verified the code's §2 comment as self-consistent instead of diffing it against
+the note's derivation section — and I then explained the code's behavior to Ryan AS
+his law. Fix in the current freeze: gate deleted, dollar-rail-only intra-cluster,
+knee saturation emergent, quiet-ladder license subsumed, "~2 knee markets" pinned as
+a fixture citing this note. NEW REVIEW RULE: any code comment citing a law gets
+diffed against the note text it cites.
