@@ -57,19 +57,28 @@ unratified assumptions and lost money proving they were wrong.
 
 8. `[PROPOSED]` Resting earns credit; being filled costs money, because the person who
    chooses to trade against a resting order usually knows something we don't.
-9. `[PROPOSED]` That cost is measured, not assumed: across 8,240 settled markets, filled
-   collateral loses a fraction g of itself, and g differs by side — laying favorites
-   (cheap NO, 6–50¢) loses g ≈ 0.48–0.58 while the opposite side loses ≈ 0.
-   *(source: data/calib2.json, mids sampled ≥60 min before close)*
+9. `[DISPUTED 2026-07-31 — DO NOT RELY ON]` A derived table (g) claims that across 8,240
+   settled markets, filled collateral loses a fraction of itself that differs by side —
+   laying favorites (cheap NO, 6–50¢) losing g ≈ 0.48–0.58 while the opposite side loses
+   ≈ 0. *(source: data/calib2.json, mids sampled ≥60 min before close)*
+   **Ryan's objection, unanswered: a systematic 48–58% loss on one side of the market is a
+   gigantic takeable edge, and an edge that size would not sit unclaimed — so either the
+   number is contaminated, or it is real but unharvestable.** A direct test is running:
+   compute what a TAKER taking the allegedly-good side would actually have realized on the
+   same dataset. If that prints, the table is suspicious; if it is ≈0, the table is
+   mis-computed and this line is wrong. **No code, sizing, or refusal may cite g until this
+   resolves.**
 10. `[PROPOSED]` φ is fills per contract-hour of exposure; over a horizon h the expected
     number of turnovers is T = φ × h.
 11. `[PROPOSED]` Expected loss = q × p × T × g, while capital tied up = q × p × max(1, T).
 12. `[PROPOSED]` A seat's worth is net(q) = credit(q) − loss(q). Our share of a side is
     q/(q+S) against rival depth S, which is concave in q, while capital is linear in q.
-13. `[PROPOSED]` **Therefore each additional dollar in a seat earns less than the one
-    before it**, at the rate
-    `r(q) = [ S/(q+S)² × (ρ/2) × h ÷ p − T·g ] ÷ max(1,T)`, which declines monotonically
-    as the seat grows.
+13. `[RATIFIED 2026-07-31]` Marginal return within a rung is **near-linear while our size
+    is small next to rival depth S**; the exact rate is
+    `r(q) = [ S/(q+S)² × (ρ/2) × h ÷ p − T·g ] ÷ max(1,T)`, which declines monotonically,
+    but the decline only bites as q approaches S. **Therefore diminishing returns inside a
+    rung is real math and a weak force at the sizes we trade — what decides where a dollar
+    goes is pool, competition, price, and time left.**
 14. `[PROPOSED]` A budget is best spent by always buying the highest available marginal
     rate. **Therefore the optimal book equalizes r across every seat, and the rate at
     which the money runs out defines how deep each seat goes — that depth is an output of
@@ -78,10 +87,13 @@ unratified assumptions and lost money proving they were wrong.
     seat's real value is the probability it clears the threshold × the credit it would
     pay. **Therefore capital belongs wherever it is most likely to clear, not wherever it
     exactly reaches the threshold on paper.**
-16. `[PROPOSED]` Credit already banked cannot be lost and cannot be increased by anything
-    we do next. **Therefore banked credit argues for nothing.** Credit accrued but still
-    under the threshold will vanish if unfinished, so completing it can be the most
-    valuable dollar available.
+16. `[RATIFIED 2026-07-31]` Credit already banked cannot be lost or increased by anything
+    we do next. **Therefore banked credit argues for nothing.** But a rung that has ALREADY
+    CLEARED the threshold carries no threshold risk on anything further it earns, while an
+    uncleared rung's credit is worth only face × P(it clears). **Therefore at equal gross
+    rate a cleared rung's next cent is worth more than an uncleared rung's** — and credit
+    accrued but still under the threshold vanishes if unfinished, so completing it can be
+    the most valuable dollar on the board. *(Ryan, 2026-07-31)*
 
 ## C. RISK
 
@@ -133,6 +145,63 @@ unratified assumptions and lost money proving they were wrong.
 30. `[PROPOSED]` A small stake reveals whether the best seats pay what the model says. A
     large stake buys the breadth that makes owning many such seats survivable.
     **Therefore they answer different questions and must not be confused for one another.**
+
+## F. THE OBJECTIVE, AND WHAT THE MECHANISM ACTUALLY COSTS
+*(ratified 2026-07-31 — Ryan's corrections and additions)*
+
+31. `[RATIFIED 2026-07-31]` **Profit = rewards − position profit and loss.** Rewards alone
+    is a vanity metric; a day can earn well and lose money.
+32. `[RATIFIED 2026-07-31]` A fill costs twice: the position's expected loss, **and the
+    presence we stop earning while we are out of the book**. On a rung that fills often,
+    the second cost can dominate — each fill removes us from the pool and we must re-enter
+    to keep scoring. *(Ryan, 2026-07-31)*
+33. `[RATIFIED 2026-07-31]` Each market's pool is finite, and our share of a side saturates
+    as we come to dominate it. **Therefore breadth buys access to more pools — it is an
+    earnings mechanism, not only a risk one** — though whether a second dollar in the best
+    rung beats a first dollar in the next-best is always an empirical comparison, never a
+    doctrine.
+34. `[RATIFIED 2026-07-31]` Variance scales with the fraction of capital that **converts to
+    positions**, not with the capital deployed. **Therefore fill rate and the average price
+    we need are one question, not two.**
+35. `[RATIFIED 2026-07-31]` Three constraints share one budget: N ≥ N_min (enough
+    independent settle sources), size ≥ size_min (enough per rung to clear the threshold
+    given competition, time left, and re-entry after fills), and N × size ≤ capital.
+    **Therefore if N_min × size_min exceeds capital, the strategy does not fit at that
+    capital and no cleverness repairs it — only more capital, more accepted variance, or
+    rungs that are cheaper to clear.**
+36. `[RATIFIED 2026-07-31]` Kalshi's hierarchy is **Series → Event → Market**; one rung is a
+    *market*, a ladder is an *event*. **But the risk unit is neither: it is correlation of
+    settlement, which can span events** (a daily and a weekly settling off the same print
+    are one bet).
+37. `[RATIFIED 2026-07-31]` Score-per-dollar ∝ 1/price systematically tilts us toward
+    longshots. **Therefore our book is not a random draw — it is a draw biased toward high
+    variance, and the ruin question follows from that bias, not from bad luck.**
+
+## G. WHAT THE RECEIPTS SAY — the 2026-07-28 day, verified
+*(ratified 2026-07-31; source: Kalshi Credits statement, cross-checked against
+`~/nestor/data/lip/external_cash.jsonl` and the v4/v5 ledgers)*
+
+38. `[RATIFIED 2026-07-31]` On 2026-07-28 Kalshi **paid $71.34**, in 24 line items across
+    6 events. This is a receipt, not an estimate.
+39. `[RATIFIED 2026-07-31]` **Gas daily paid $38.80 and treasuries paid $23.58 — 87% of the
+    day** (UST 7yr $12.38, 10yr $8.29, 5yr $2.91; MLB mention $6.76; EV commodity $2.20).
+40. `[RATIFIED 2026-07-31]` The two hourly index markets our own maker's model credited with
+    $34.01 that day (`KXINXHUD`, `KXNDQHUD`) **were paid $0.00**. That accrual was phantom.
+    **Therefore our model has produced large fictitious earnings, and any earnings figure
+    not traced to a receipt is suspect.**
+41. `[RATIFIED 2026-07-31]` UST 2yr and 30yr **forfeited everything** that day — no rung
+    reached $1.00. The threshold is real and it bites at our sizes.
+42. `[RATIFIED 2026-07-31]` Kalshi credits **by event, not by market**. **Therefore a
+    per-rung record of what was actually paid does not exist anywhere, and event level is
+    the finest truth obtainable.**
+43. `[RATIFIED 2026-07-31]` The book that earned it was **not a resting book**: the v4 loop
+    placed and cancelled orders every one to two seconds all day.
+44. `[RATIFIED 2026-07-31]` July's paid total of $80.96 = $7.48 (Jul 27, verified receipt) +
+    $71.34 (Jul 28) + $2.14 on unidentified days.
+45. `[RATIFIED 2026-07-31 — UNVERIFIED CLAIM]` The ~−$195 of position losses associated with
+    that day is **not present in any ledger on our machines**: those positions were still
+    open when the run stopped and settled off-record. The number is remembered, not
+    sourced.
 
 ## F. WHAT TESTING HAS TAUGHT US — *(data being reconstructed 2026-07-31; nothing here yet)*
 
