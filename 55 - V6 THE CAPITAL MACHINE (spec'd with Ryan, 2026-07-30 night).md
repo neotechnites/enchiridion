@@ -1320,3 +1320,11 @@ target_size; estimate carries the S=0 discount; the measured-rate loop governs w
 cluster rail ≈ 2 seeded rungs — the note's own "~2 knee markets"); narrow license,
 non-reward unpriced still skipped. Freeze = seed + sticky book + measured-rate +
 multi-market-per-cluster + truncation.
+
+## RYAN'S STANDING CORRECTION — 2026-07-31 afternoon
+v3 CHOSE RUNGS, AND CHOSE THEM BETTER. Do not characterize it as ranking-less. Its
+realized book = an empirical rank table (rank by NET per market-side: rewards − fill
+losses, from the v3/v4 ledgers + July payments). NOT being implemented right now on
+his order — the current freeze proceeds as designed (measurement-first ranking, seed
+mode, W1/W2/W3) — but the v3-net-snapshot boot prior is a READY OPTION he can invoke
+with a word; it drops into the same measurement store W2 pre-seeds.
