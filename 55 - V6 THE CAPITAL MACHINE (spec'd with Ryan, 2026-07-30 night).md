@@ -1147,3 +1147,42 @@ prior row; armless row → DRAINING+page. RECORD CORRECTION (Lane B's, verified
 equivalent by execution): R9-2's mechanism is the accumulator persisted INSIDE the
 fsync'd probe_state row, not probe_accrual replay.
 **Score: 3 of 9. Lanes A and C out.**
+
+## Round 9 FINAL review, Lane C record — 2026-07-31 (frozen f6a9f37)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
+- **C9-1 (MAJOR, orchestrator-confirmed at source): the verdict gate has a DEAD ZONE
+  between one batch and two.** Silence mutes forever on sum(batches)>0 (any batch
+  EVER, incl. settled windows); the verdict needs max(per-ticker)≥2; daily windows
+  RE-KEY tickers (KXAAAGASD-26AUG01→02→03) so per-ticker can never reach 2 — a stable
+  orbit: no verdict, no page, indefinitely, armed, restaking d×C — and R9-2's replay
+  makes the stall RESTART-DURABLE (the persisted batch is what mutes the page after
+  every reboot; engine-real 48h × 3h-watchdog: 0 pages, no verdict). This is the
+  WEAK-SHARE failure — share flowed once, weakly, died — the center mass of what the
+  probe exists to detect, and the instrument is blind there. Falsifies R8-5's
+  residual-risk argument over its most probable case. Fix shape: silence keys on time
+  since LAST batch; verdict counts batch EVENTS (observe passes where any watched
+  ticker increased) so scattered/per-window evidence accumulates; pin the semantics.
+- **C9-2 (MAJOR, battery rule): silent_paged_at persistence unpinned BOTH directions**
+  (state_row-writes-None and restore-discards each pass all 1108; the round-trip
+  fixture enumerates eight fields, omits this one). Shipped behavior correct; mutated
+  copy: 25 pages vs 4 under 45-min restarts. **C9-3 (MAJOR, battery rule, false-PASS
+  direction): _maybe_verdict max→sum passes all 1108** — one batch on each of two
+  tickers verdicts PASS from half the specced evidence on the mutant.
+- NITs: 1/3000 C6-5 residual (previously adjudicated); KXGAS in two non-probe v5-law
+  fixtures (nothing masked); LIVE_VERIFIED enforcement is test-only BY DESIGN (the
+  fabricated-evidence residual is offline-unclosable, correctly on the checklist);
+  hand-poisoned row unreachable by engine writes.
+- HELD (all executed): R9-2 replay under all EIGHT poison sequences (duplication,
+  reordering, stale windows/tickers, crash orderings — conservative every time);
+  R9-1 exact on every frontier one char at a time; R9-3 cadence shipped-correct;
+  safety s1-s4; routing 27/27; partial drains k=0..6; release exactly-once;
+  no-restake; deploy-night stack ≤ d×C 0/400; fixture inversions across all nine
+  rounds; battery 115/115 zero anchor-skips. New mutants 16: 13 killed, 3 survived
+  (the two C9-2 + C9-3).
+- **Its closing words: "nine rounds of attack have left nothing standing in the money
+  paths... What remains defective is exactly one seam, three ways: the batch-counting
+  semantics of the verdict gate... a small, well-localized fix — one condition, one
+  counter, three fixtures — but I cannot call a machine deploy-ready when its
+  go/no-go instrument can silently say nothing forever while $120 rides."**
+**Score: 3 (Lane B full) + 1 (C theory) = 4 of 9 so far. Lane A out. Round 10 = the
+gate seam + Lane B's prose corrections.**
