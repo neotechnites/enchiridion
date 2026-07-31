@@ -939,3 +939,40 @@ Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
 - Fact-identity adjudication: underlying-grouping RIGHT and error-direction verified —
   but fail-closed is CONDITIONAL on membership completeness, and membership was
   checkable against the tree's own data. The doctrine holds; the input didn't.
+
+## Round 7 re-review, Lane C record — 2026-07-31 (frozen e7d74c2)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
+- **C7-1 (= A7-1/B7-1, THIRD blind confirmation + the sharpest facts):** live API —
+  KXAAAGASW/KXAAAGASM exist (AAA gasoline, same underlying as the probe family);
+  mapped alias KXNATGAS is a **404**; KXNATGASW/KXNGAS are DIFFERENT underlyings
+  (Pyth/EIA natural gas) wrongly grouped INWARD. $136 executed. N13 survivor:
+  fact_of's prefix semantics unpinned against a real suffixed sibling.
+- **C7-2 (= A7-4/B7-3): draining routing split** — plan routes on armed, place routes
+  on world-facts → wing-priced family candidates plan-funded ordinary, place-refused
+  probe_disarmed; 6/6 cycles, 39/3000 fuzz. Builder's fixture dodges (unaffordable
+  wall).
+- **C7-3 (MAJOR, premises — the deepest one): the fact bound is gated on ARMED but
+  the RISK rides to settlement.** Verdict disarms (normal path) → during the hours-
+  long draining window the ordinary book re-enters the fact under the $16 rail →
+  wire PLACES the $135.90 stack end-to-end. The gate belongs on DRAINED (rows
+  riding), not armed.
+- MINORS: silence-disarm destroys the probe → the silence-unlatch is unreachable in
+  the exact no-fill case it describes; draining is memory-only across restart (= A7-3;
+  **FLAG FOR RYAN**: note 55 says "probe fires on boot" — resolution proposed: fires
+  on FIRST boot; a landed verdict is a world fact that must survive restarts within
+  the program — builder to derive, Ryan can overrule). NITs: release needs a slotted
+  pass; stale prose; None-basis TypeError (unreachable); C6-5 residual 1/3000.
+- Held: R7-2a both directions + fills-convert + 0/400 interleave; deploy-night no-
+  deadlock (probe re-routes to treasury when gas is capped, 30 cycles clean); RATES
+  one-fact adjudicated correct ($150 five-fact stack refused); all five tenors live-
+  verified probe-eligible; battery 96/96 twice with zero anchor-skips; every prior
+  fixture inverts; safety/rails/absence/oracle/halt-during-draining all clean;
+  release exactly-once with nothing caching the stale rail.
+- Fact-identity adjudication: shape AGREE; "fail-closed" is TRUE ONLY INSIDE MAP
+  COVERAGE and coverage is the fail-open door (guessed aliases, one a 404, real
+  siblings missing, future listings degrade silently to per-series). The fix is the
+  round's own medicine: live-board-verified members, real-sibling fixtures, prefix-
+  semantics killer.
+**Round 7 score: 3 THEORY approves; premises+impl 0/6 — but the defect surface is now
+entirely the SYMBOL/LIFECYCLE layer; economics, enforcement machinery, safety, and
+battery discipline all held on all three lanes. Round 8 consolidates.**
