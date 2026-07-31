@@ -1103,3 +1103,27 @@ Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
   probe_state × halt interaction clean; finding-fixture inversions across all rounds.
 **Round 8 score: 3 THEORY, 2 PREMISES, 0 IMPL. The state machine is sound by attack;
 the blindness is the two INPUTS (which symbols, how many batches). Round 9 dispatched.**
+
+## Round 9 — frozen f6a9f37, FINAL tri-lane review launched — 2026-07-31
+All items on one commit: 1108 green armed AND disarmed; battery 115/115 in-tree;
+parity fuzz 0/3000. My spot-checks: strangers excluded (KXAAAGASMAXTX, KXUSTESTSMATH →
+not eligible, own facts), siblings included (KXAAAGASM → FACT:GAS), fail-closed new
+listing (KXAAAGASQ → own fact); LIVE_VERIFIED = {KXAAAGASM: (2026-07-31, live API
+200, no settles yet)}. R9-1 = EXACT enumeration, eight names, equality membership
+(prefix provably cannot work: KXAAAGASMAX startswith KXAAAGASM); the invented KXUST-
+ticker flushed from ~40 fixtures. **Evidence exception DERIVED on the asymmetry:
+omitting a real sibling from the fact map = UNBOUNDED (the R8-1 hole); including an
+unsettled one = BOUNDED (wing edge, cliff, bleed screen, d×C) — so the exception goes
+to inclusion, once, flagged with date+method, both test-enforced.** R9-2 accumulator
+replays like the verdict (probe_accrual rows re-consumed at boot; Lane C's two
+restart controls are fixtures). R9-3 silence latch on condition + re-page on the
+bound; N12 pinned BOTH sides (600 cycles → 1 page; 3 across 19h). n5 DOCUMENTED not
+changed — builder's counter-argument stands for adjudication: riding walls ARE probe
+collateral (bought against the probe's budget); the fact bound at d×C is their
+instrument; aligning the filter would re-introduce R6-3. NEW STRUCTURAL ENFORCEMENT:
+has-a-caller AST tests for lifecycle hooks + test_symbols for all symbol premises —
+the two defect classes of the whole build ("I asserted a premise instead of verifying
+one") now enforced by machinery, not memory. Builder's own honest record: NINE ROUNDS
+— the machine survived attack once written; the inputs (guessed symbols, caller-less
+hooks) were the defect source. Final tri-lane launched on f6a9f37 — if all nine
+verdicts are APPROVE, v6 is deploy-ready and waits on Ryan's $600.
