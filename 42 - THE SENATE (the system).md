@@ -75,3 +75,6 @@ capability grows.** Rules:
 - Delete what you supersede in the same edit. History is git, never text.
 - Any session may — and should — rewrite any file to say the same truth in fewer, better
   words. Leaving a file better and shorter than you found it is contribution, not risk.
+
+
+**LIP STATEMENTS** (vault root) is the canonical truth for the LIP strategy — theory only, every line ratified by Ryan by hand. It outranks code, comments, and every numbered note. Nothing enters it without his thumbs-up; `[PROPOSED]` lines may not justify code or a deploy.
