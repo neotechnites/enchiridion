@@ -1353,3 +1353,15 @@ orders per Ryan's UI; stopped and disabled on his order before diagnosis. Watche
 agent killed. UNDIAGNOSED: why zero orders under V4_RANK (candidates exist, rank
 should top gas — the block is somewhere between rank and place; the last cycle rows
 were not pulled). v6 down, disabled, nothing runs until Ryan says.
+
+## FINAL STOP — 2026-07-31 11:33 AM MDT (Ryan: "stop v6. now")
+Fifth and final deploy of the morning (v4 chooser with the CORRECTED full-wall
+denominator + seeds + truncation) was stopped ~2 minutes after boot, mid-startup —
+before its first plan pass could place anything. The corrected chooser and the seed
+path remain UNTESTED on the wire. v6: inactive, disabled, cannot restart on reboot.
+Positions ride (never sells). Everything is committed on v6-build; the deploy script
+(rev 3) arms truncation+seeds+V4RANK. Sequence of true timestamps for the day's five
+deploys: all between ~10:20 AM and 11:33 AM MDT.
+For the next session: the ONLY unanswered question is what book the corrected chooser
+builds — it needs ~4 undisturbed minutes from a cold boot (startup recon sweep ≈2 min
+on this account's position count) before the first orders can exist.
