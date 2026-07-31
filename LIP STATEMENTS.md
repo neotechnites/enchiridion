@@ -49,28 +49,53 @@ unratified assumptions and lost money proving they were wrong.
    outcome.**
 6. `[PROPOSED]` Only resting orders score. A fill ends the earning and leaves a position
    behind.
-7. `[PROPOSED]` Score counts contracts while cost is price × contracts. **Therefore reward
-   per dollar is inversely proportional to price: a 3¢ contract earns roughly twenty times
-   per dollar what a 60¢ contract earns.**
+7. `[RATIFIED 2026-07-31 — replaces the earlier 1/price claim, which was WRONG]`
+   Our share ≈ our contracts ÷ rival contracts, and our contracts = dollars ÷ price.
+   Therefore share ≈ dollars ÷ (price × rival contracts), and
+   **reward per dollar ≈ half-pool ÷ (the DOLLARS of collateral resting against us).
+   Price cancels.** A dollar earns the same whether it is 100 contracts at 50¢ or 1,000 at
+   5¢. **Therefore the ranking metric is pool ÷ competing dollars — not 1/price.**
+   *(Ryan, 2026-07-31: "100 contracts at 50c is 50 dollars. If that is 10% of the pool,
+   that's cheaper than 1000 contracts at 10 cents for 100 dollars if that's only 1%.")*
+7a. `[RATIFIED 2026-07-31]` Price does not affect the earn rate, but it affects three other
+   things: **(i)** the qualifying threshold is denominated in CONTRACTS (~1,000), so a
+   cheap market costs far less to qualify in — at 3¢ that door costs $30, at 62¢ it costs
+   $620, and this is the real advantage of cheap markets; **(ii)** variance per dollar if
+   the order converts is (1−p)/p, so cheap positions are the volatile ones; **(iii)** the
+   1–4¢ tick floor, where contracts are genuinely overpriced (see line 9a).
+   **Therefore price determines what it costs to participate and what it costs to be
+   wrong; competition determines what we earn.**
 
 ## B. WHAT A SEAT IS WORTH
 
 8. `[PROPOSED]` Resting earns credit; being filled costs money, because the person who
    chooses to trade against a resting order usually knows something we don't.
-9. `[DISPUTED 2026-07-31 — DO NOT RELY ON]` A derived table (g) claims that across 8,240
-   settled markets, filled collateral loses a fraction of itself that differs by side —
-   laying favorites (cheap NO, 6–50¢) losing g ≈ 0.48–0.58 while the opposite side loses
-   ≈ 0. *(source: data/calib2.json, mids sampled ≥60 min before close)*
-   **Ryan's objection, unanswered: a systematic 48–58% loss on one side of the market is a
-   gigantic takeable edge, and an edge that size would not sit unclaimed — so either the
-   number is contaminated, or it is real but unharvestable.** A direct test is running:
-   compute what a TAKER taking the allegedly-good side would actually have realized on the
-   same dataset. If that prints, the table is suspicious; if it is ≈0, the table is
-   mis-computed and this line is wrong. **No code, sizing, or refusal may cite g until this
-   resolves.**
+9. `[REFUTED 2026-07-31 — the table is an ARTIFACT, do not use it]` A derived table (g)
+   claimed that filled collateral loses a large fraction of itself, side-split, with cheap
+   NO (6–50¢) losing 0.48–0.58. **It is a measurement artifact and the claim is false.**
+   Proof: restrict the same dataset to quotes taken 1–2 hours before close and the toxic
+   band's g becomes **+0.018 (n=431) — statistically zero**; the "bleed" comes entirely
+   from quotes sampled hours before close on markets whose outcome was already decided,
+   where the book is dead and the recorded "mid" is half an ask against no bid (4,157 of
+   8,240 rows have bid = 0; mean spread 6.3¢, p90 16¢). The side split was the artifact's
+   fingerprint, not a finding: a determined-YES market leaves a stale NO quote at 5–25¢,
+   while a determined-NO market has no bid at all so its residue lands under 2¢ — which
+   poisons the NO bands and leaves YES clean. Ryan's objection was the correct test: an
+   edge that size would be takeable, and it is not there — buying the allegedly-good side
+   at the real ask on live books earns **−0.3% ± 2.8%**.
+   **Therefore fills in the 5–50¢ range are approximately EV-neutral, and every refusal
+   made on the strength of g was made on a fabricated cost.**
+9a. `[RATIFIED 2026-07-31]` One real effect survives every correction: **at the 1–4¢ tick
+   floor, contracts are systematically overpriced** — buying them at the ask loses ~93%
+   (z ≈ −30), and it persists at 1–2 hour leads. Its harvestable mirror pays 1–2% on
+   95–99¢ collateral, which is fee-sized, **which is why it survives rather than being
+   arbitraged away.** **Therefore the cheapest wings are the one place where a fill
+   carries a real, measured, negative expectation.**
 10. `[PROPOSED]` φ is fills per contract-hour of exposure; over a horizon h the expected
     number of turnovers is T = φ × h.
-11. `[PROPOSED]` Expected loss = q × p × T × g, while capital tied up = q × p × max(1, T).
+11. `[PROPOSED — the g term is REFUTED, see 9]` The SHAPE is: expected loss = q × p × T ×
+    (loss per fill), while capital tied up = q × p × max(1, T). The shape stands; the g
+    values do not, and no number may be substituted until one is measured honestly.
 12. `[PROPOSED]` A seat's worth is net(q) = credit(q) − loss(q). Our share of a side is
     q/(q+S) against rival depth S, which is concave in q, while capital is linear in q.
 13. `[RATIFIED 2026-07-31]` Marginal return within a rung is **near-linear while our size
