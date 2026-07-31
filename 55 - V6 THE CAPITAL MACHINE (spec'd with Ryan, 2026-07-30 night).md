@@ -738,3 +738,39 @@ ratio 0.86). TWO COUNTER-SHAPES shipped, both flagged to the lanes:
   new orders only, positions ride and never sell; who gets refused when the other lane
   got there first, and can fills of already-resting orders on both lanes push a fact
   past $120 (checked at place, exceeded at fill)? Round 6 tri-lane launched on 50303e0.
+
+## Round 6 re-review, Lane B record — 2026-07-31 (frozen 50303e0)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT (FATAL)** · IMPL **REJECT**.
+- **B6-1 (FATAL, orchestrator-confirmed at source): THE PROBE CANNOT SEE THE REAL
+  TREASURY BOARD.** is_probe_family matches the CLUSTER key; CLUSTER_MAP rewrites all
+  five real treasury wire series (KXUST2AD/5AD/7AD/10AD/30AD) to "RATES"; no
+  PROBE_FAMILIES prefix matches "RATES". On deploy night: the $120 probe's treasury
+  half NEVER EXISTS (real tenors fund as ONE $10 ordinary order — RATES is a single
+  cluster), the verdict silently scores on gas alone, and the armed-zero-slots page
+  does NOT fire (needs zero matches; gas matches). Survived SIX ROUNDS because every
+  probe fixture uses "KXUST-" symbols that dodge the map — the fixture-vs-wire
+  divergence NO plan/place parity fuzz can see. This was the pending deploy-checklist
+  item ("probe-family live-board symbol check") — it is not a checklist item, it is a
+  code defect.
+- **B6-2 (MAJOR, Round-6-introduced, confirmed at source): DRAINING is a plan/place
+  split** — marginal.py never consults `armed` (zero occurrences); ProbeLane.admits
+  refuses everything probe_disarmed. Post-verdict (the NORMAL path, within one settle
+  cycle): plan funds gas walls with zero refusal reasons, place refuses all, permanent
+  re-offer on the top-earner family forever after the verdict.
+- B6-3 MINOR: in-pass probe charges consume the ordinary in-pass cluster ledger
+  (R6-3 fixed the seed, not in-pass) — same lockout class, plan tighter. B6-4 MINOR:
+  "single settle source" = cluster_of = one SERIES; gas daily full ($120) + gas weekly
+  ordinary leg ($15.90) on a shared Friday closing fact = $135.90 = 22.6% — the exact
+  number the sentence forbids, re-entered through cluster identity. B6-5 MINOR: the
+  $120 never returns to the ordinary lane after full probe settlement (rail stays $16
+  not $20 forever; conservative, compounds B6-2).
+- Verified clean: R6-1 all seven negative-delta paths (incl. double-rollover, payment-
+  then-rollover, elapsed capped on program_end_ts — the right stamp); its own 1,200-
+  slate engine-realistic fuzz 0 refusals/13,696 plan-funded orders (its first run's 459
+  hits were its OWN harness artifact — honest correction); T=2.4 B16 parity; draining
+  ledger behavior; blacklist now package-wide, stale prose gone.
+- **R6-4 counter-shape ADJUDICATED AGREE** (share bound = v_max one level down; total
+  V ≤ v_max in any arrival order; B16-in-plan belt-and-braces correct direction).
+  **R6-5 invariant ADJUDICATED the better resolution** (bar was genuinely mispriced —
+  a ladder, not 2 clusters) — but its LIFECYCLE (B6-2) and its IDENTITY FUNCTION
+  (B6-4) are not done.
