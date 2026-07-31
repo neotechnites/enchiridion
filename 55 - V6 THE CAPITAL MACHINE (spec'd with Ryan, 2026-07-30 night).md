@@ -416,3 +416,29 @@ exactly-60 before close; NIT stale pooled-g in dials.py:44 comment; NIT note's "
 is 230.8h. None blocking. Disclosed non-recomputables (correctly handled in build):
 p=0.09 is note 54's prior + VPS-logged 19.7c ref; 42x tape is VPS-only and feeds no
 constant. Lanes A and C still out.
+
+## Round 3 Lane A (theory-first) record — 2026-07-31
+Verdicts: THEORY **APPROVE** · LOGIC/PREMISES **APPROVE** · IMPLEMENTATION **REJECT**.
+The reject: **F-A1 (MAJOR, orchestrator-confirmed at source)** — `probe.note_predictions`
+has ZERO production callers (grep: definition + tests only; engine calls retune/clusters/
+observe, never it) → on the wire `predicted` is always empty, ratio None, and the probe
+verdict — the deploy plan's load-bearing instrument — can only ever say "report", never
+PASS. Same defect class as the retirement bug: a hook with no production consumer, masked
+by tests that hand-feed it. Fix has TWO halves: wire the planned credit (mq_entered's
+credit_usd) in plan_marginal, AND pro-rate predicted to elapsed window — full-horizon
+credit vs a 2-batch verdict fails even a perfect wall (false STOP).
+Non-blocking: F-A2 MINOR — marginal.py's `rate<=0: break` termination clause is
+unreachable/unkillable (entry+deepen both pre-filter positive rates; mutation to `if
+False` survives the full 924) — the duplicate-guard trap again; F-A3 MINOR — alarm
+family should count settled TICKERS not clusters (ladders settle many/day; at 60/day
+effective family-wise alpha = 0.10 vs stated 0.05; worst case a false halt-and-flatten,
+no money risk) — fix: m from funded tickers; F-A4 NIT — dials header worked example
+stale again post-F2 (quotes pooled-g numbers).
+Verified clean by its own execution: F1 sunk/rotation/rescue/deepen-derivative; full
+dials chain; both g tables re-derived end-to-end; clamp monotone through PAVA (no
+reorder, conservative every channel); probe cap/retune/place-substitution (if/elif, no
+duplicate clause); phi min-only; toll. BOTH deviations ADJUDICATED AGREE with executed
+counterexample for the rail ($20 in a $480 lane = 24 fundable clusters, z-day loss
+20.68% — bound violated; $16 gives 19.45% — holds).
+Round 3 score: A approve/approve/reject · B approve/approve/approve · C out.
+Plan: consolidate A+C findings into ONE builder round on a new frozen commit.
