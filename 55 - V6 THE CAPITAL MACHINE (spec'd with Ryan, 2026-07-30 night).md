@@ -1215,3 +1215,29 @@ Lane A verdicts: THEORY **APPROVE** · PREMISES **APPROVE** · IMPL **APPROVE**.
 counting semantics (dead zone C9-1 + two unpinned-seam survivors C9-2/C9-3). Round 10
 = one condition, one counter, three fixtures, plus the prose sweep both approving
 lanes demanded. Then the final tri-lane pass.**
+
+## RYAN'S ORDERS, 2026-07-31 midday — THE DEPLOY PLAN CHANGES
+1. **v5 STOPPED** on his order (clean shutdown 07-31 ~12:03 PM MT, handback written,
+   43 positions riding to settlement — it never sells). The $1-earned day confirmed
+   the dispersion diagnosis: $10 seats accrue under the $1 cliff and forfeit.
+2. **The 120/480 probe is superseded by RYAN'S OWN DESIGN — RANK-TRUNCATION MODE:**
+   run the machine with the $2,000 dials (rail $66.67, N=30, full law geometry) but
+   fund only the actual ~$120-132 deposit. The law ranks the whole board exactly as
+   the $2k machine would and funds down the marginal-rate order until the cash runs
+   out — the top ~2 clusters get $66 seats, everything below the budget line doesn't
+   exist. NO hardcoded family list, NO probe lane (PROBE_ARMED=False) — the emergent
+   ranking IS the probe; "top earners are first in rank order, and with a truncated
+   budget, first = only." Ryan EXPLICITLY ACCEPTS the concentrated swing: the 20%-day
+   bound is knowingly waived — the unstaked $1,868 is the risk reduction. What it
+   measures: the actual daily earnings of the $2k machine's best seats, for ~$132
+   exposure. Two capital constants, explicitly split: C_DIALS=2000 (geometry) vs
+   C_CASH=deposit (budget + cash guards); every capital consumer audited and assigned
+   with a derivation; waivers documented where the day-stop would have applied;
+   standard mode provably unchanged. Builder folding into the Round-10 commit; then
+   ONE focused tri-lane pass on the new seam + the verdict-gate fixes; then deploy-
+   ready on Ryan's funding (~$120-132).
+   Context from the exchange with Ryan: "$66/cluster" is not a fixed limit — the rail
+   is C/N ($66.67 only at $2k; $16 at $600; ~$4 at $120), which is why concentration
+   at small capital requires either an exemption (the old probe) or notional dials
+   (this mode). He never ordered the hardcoded family list — that was our expression
+   of the exemption boundary; this mode removes the need for it.
