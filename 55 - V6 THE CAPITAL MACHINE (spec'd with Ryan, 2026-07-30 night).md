@@ -482,3 +482,29 @@ because note 55's deploy plan explicitly prices its concentration (d×C, "not wo
 risk"); PORTFOLIO_VAR_MAX for the ordinary book gets re-derived from the v6 dials frame
 (N=30, d=20%, floor mix) instead of the inherited v5 12c-mix constant — builder derives,
 reviewers re-adjudicate, and this line is the flag if Ryan wants it decided differently.
+
+## Round 4 record — 2026-07-31 (frozen 02b6ed8, then R4-6 sent back)
+Builder delivered all five MAJORs + five minors on 02b6ed8: 967 green armed AND disarmed;
+battery 50/50 on a verified-green baseline. R4-1: verdict wired under the production call
+pattern AND re-based to a RATE vs elapsed hours (full-horizon bar would have STOPped a
+perfect wall at 0.083). R4-2: B18 in the plan (var_room_usd), probe exempt via guards'
+`exclude` callback, tolerance re-derived V_max=(1−p)/(N·p) — reproduces ~0.25 at the v5
+12c mix (proof it's the same statement, not a loosening); all six walls place, $120 of
+$120, seventh stops on probe_lane_cap. FLAGGED for lane re-adjudication. R4-3: block
+tests each contract's own discrete rate; repro lands exactly on the greedy optimum.
+R4-4/R4-5: named killers (my re-runs confirm — M02 killed; the true seeding site killed
+when I re-targeted the mutant at it). m2 moves the alarm to settled-ticker family:
+m=1,920, z=4.0461.
+**Builder's confession, propagate everywhere: the in-place mutation harness fails GREEN**
+— a timeout between write and restore left a stub in the tree, one test failed in every
+later run, every mutant looked killed. Two earlier battery rounds invalidated; harness
+now mutates a COPY and asserts a green baseline first. Four genuine survivors surfaced
+on the clean re-run, all pinned.
+**My spot-check found R4-6:** the PLAN-side probe exclusion in cluster_var_book
+(engine.py:288) is an unpinned clause — `if False and` there survives all 967 (my
+execution). Conservative direction today (probe fills would count as concentration →
+plan under-offers → fails closed), but it is a surviving mutant in a fix site AND the
+exclusion is expressed TWICE (guards' exclude callback + this inline clause) with the
+identity untested — the divergence path back to plan-offers-what-place-refuses. Sent
+back for a named killer + single-expression (or identity test). Lanes relaunch on the
+refrozen commit.
