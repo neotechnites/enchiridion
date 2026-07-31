@@ -151,6 +151,9 @@ unratified assumptions and lost money proving they were wrong.
 
 31. `[RATIFIED 2026-07-31]` **Profit = rewards − position profit and loss.** Rewards alone
     is a vanity metric; a day can earn well and lose money.
+31a. `[RATIFIED 2026-07-31]` **The goal is $200 of profit per day on $1,000–2,000 of
+    capital.** That is roughly 10–20% of the bank per day, and it is the number every
+    design decision is ultimately judged against. *(Ryan)*
 32. `[RATIFIED 2026-07-31]` A fill costs twice: the position's expected loss, **and the
     presence we stop earning while we are out of the book**. On a rung that fills often,
     the second cost can dominate — each fill removes us from the pool and we must re-enter
