@@ -909,3 +909,33 @@ KXAAAGASW-26AUG03 positions are riding right now).
   runtime input for a static symbol map that is missing the very siblings the doctrine
   names, and the gate re-introduces the wire-vs-risk confusion R7-1 diagnosed.
   FACT_MAP joins PROBE_FAMILIES in the live-board symbol test.
+
+## Round 7 re-review, Lane B record — 2026-07-31 (frozen e7d74c2)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
+- **B7-1 (MAJOR, = A7-1+A7-2 BLIND-CONVERGENT, proved from the tree's OWN DATA):**
+  calib2.json contains exactly KXAAAGASD (gas daily), KXAAAGASW (gas weekly, 83 rows),
+  and the five KXUST*AD tenors — FACT:GAS instead carries three INVENTED aliases
+  (KXNATGAS/KXGAS/KXNGAS) and omits the real weekly. $136 = 22.67% executed through
+  place_allowed. ROOT CAUSE NAMED: KXAAAGASD is the AAA RETAIL GASOLINE index, not
+  natural gas — the map comment's wrong underlying is how the aliases got invented.
+  Second door confirmed independently: the gate keys on PROBE_FAMILIES membership,
+  not fact identity — must be fact_of(ticker) ∈ probe facts, expressed once.
+- **B7-2 (MAJOR, new): the absent-family page fires per PREFIX and 8/10 prefixes are
+  dead.** On a fully healthy board (all real tenors + gas live) the urgent
+  probe_no_families page fired on EVERY plan pass ("8 of 10 matched ZERO"), raw ntfy,
+  no latch. A page that always fires on a healthy night trains the operator to ignore
+  it — burying the genuine absent-family signal it exists for. The passing test
+  invents live markets for all eight dead aliases.
+- **B7-3 (MAJOR, = A7-4 upgraded): the draining-window plan/place split is CERTAIN,
+  not an edge.** All live treasuries price 1-2c ≤ the 4c wing edge, so post-verdict
+  the plan funds ordinary-shaped cheap rungs in the families ($9.63 gas + $7.82
+  KXUST10AD executed) and place refuses probe_disarmed — after EVERY verdict, until
+  the last probe row settles. R7-3's tests dodge it (15c mid / S=0 walls).
+- MINORS: README deploy checklist still says cluster_of (the artifact the operator
+  follows); probe.py claims a cardinality checklist item that doesn't exist.
+- Clean: battery 0/96 (its own re-run), R7-2 both doors on real tenors, R7-3d release
+  exactly-once (rail 16→20, probe→None), verdict trichotomy end-to-end through
+  m.cycle (PASS 1.00 / REPORT 0.0007 / silence unlatch), spot checks all hold.
+- Fact-identity adjudication: underlying-grouping RIGHT and error-direction verified —
+  but fail-closed is CONDITIONAL on membership completeness, and membership was
+  checkable against the tree's own data. The doctrine holds; the input didn't.
