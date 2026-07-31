@@ -320,3 +320,20 @@ PROBE_FAMILIES against the live board — armed-probe-zero-slots pages). The 120
 fires on boot; estimates feed adjudicates the wall thesis within ~2 reward batches.
 v5 soaks meanwhile on lip-v5-build; v6-f (Fable lane) frozen unmerged, its two winning
 ideas live in G1/G2.
+
+## TRIPLE-REVIEW ROUND (Ryan-mandated, 2026-08-01) — Lane A (theory) record
+Verdicts: THEORY approve · LOGIC/PREMISES reject · IMPLEMENTATION reject. Per the defend
+protocol, all three rejections were CROSS-EXAMINED and CONFIRMED by my own execution:
+1. **Banked accrual not sunk** (source-confirmed: paid(q)=accrued+credit): dead past-cliff
+   incumbents rank at inflated entry rates, block clusters, buy negative-EV contracts —
+   rotation structurally broken. Fix: entry uses the increment.
+2. **Side-pooled g table hides favorite-laying toxicity** (data-confirmed from calib2, my
+   own split): NO-side g at 6-50¢ collateral = 0.23–0.58 vs YES-side ≈ 0-to-negative;
+   pooled 0.35 undercharges the toxic side — same defect class as the 07-30 incident.
+   Fix: side-split table, g ≥ 0 clamp, bucket key = (side, unit).
+3. **Probe d×C cap per-pass only** (source-confirmed: spent_by_lane={} each pass; position
+   basis never charges the lane) → intraday restaking can exceed $120 in the capitulation
+   regime. Fix: seed lane spend from probe-eligible position basis.
+Plus: probe verdict strengthened (earned vs PREDICTED, ratio ≥ 0.5) — "earned>0" passed a
+10×-discounted wall. Fix round with the builder; Lanes B (implementation) and C (red team)
+still out; all nine verdicts required before deploy.
