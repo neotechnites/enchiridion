@@ -349,3 +349,15 @@ dispatched: exemption expressed once via probe.eligible world-facts at both plan
 place + end-to-end regression; M17 survivor pinned (family evidence licenses, never
 manufactures); probe walls excluded from funded-mix p (double-charge argument — builder
 to derive or counter); the last two unlogged skips counted. Lane C (red team) still out.
+
+## Lane C (red team) record — 2026-07-31
+Verdicts: THEORY approve-qualified (p_fill_implied assumed-not-measured — known, flagged) ·
+LOGIC/PREMISES reject (probe families are SINGLE clusters — unfixed, the $120 deploys ~$30;
+converges with Lane B's F5) · IMPLEMENTATION reject (it reviewed the worktree MID-FIX-ROUND
+— my process error; re-review runs on a frozen commit). ITS NEW FIND WAS FIRING LIVE:
+retirement diff runs against possibly-partial scans (last_scan_complete had ZERO production
+consumers) — overnight: 36 partial scans, healthy top-earner rungs recalled
+(retired_venue_recalled: MCMORROW-NOONE, TRUMPTIME-H2, EURUSD, TRUMPACT-T3) — presence
+bleeding on our best seats all night. FIXED + DEPLOYED to live v5 within the hour
+(completeness gate + structural guard, 753 green); ported to v6 as F9 with an
+absence-as-evidence audit of all new modules. Attack scripts preserved in scratchpad.
