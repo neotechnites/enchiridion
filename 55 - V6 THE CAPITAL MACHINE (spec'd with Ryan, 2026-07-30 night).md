@@ -248,3 +248,30 @@ term bites. g-table headline: gap persists to ~50¢ (10–28¢: 35% bleed/$ fill
 "fair above 15¢" claim was WRONG; funded-book natural average ~19.7¢. Ryan's plan: 24h run
 → tomorrow 8pm deposit $1k → v6. Proof gate: presence ≥90%, 20+ rungs, per-fill realized
 loss ≤ ~1.5× table, estimates paid as stated, credits ≥ realized bleed.
+
+## FINAL AMENDMENTS BEFORE THE V6 BUILD (settled with Ryan, 2026-07-31 night)
+1. **TWO-SIDED, as law**: additive revenue IFF the second side's expected fill cost < its
+   half-pool credit — per-market arithmetic, machine-checked (already live in v5: shared
+   envelope, split-guarded oversize, fundable-counterpart detection). At the wings the
+   condition ~never holds (calibration is symmetric: whichever side is CHEAP is the
+   overpriced one — the "+EV lottery-sale" claim is DEAD, killed by the file). It holds in
+   mid-priced markets and, decisively, in the quiet class where both sides rest unfilled.
+2. **THE CENTERPIECE — ladder-wide presence in quiet venues.** The $70-day decomposition:
+   v4 grossed $70 via fat rungs (~$8) across ENTIRE ladders (dozens of per-strike pools,
+   both sides, $448 deployed) — at −$195 of fills. Net −$124: volume at negative margin.
+   v6 builds the same revenue shape where the margin is ~zero: quiet families (treasuries,
+   hourly-price ladders — φ≈0 structurally), every affordable strike, both sides where
+   clean, seats sized to qualify walls. One-market-per-cluster is RELAXED for this class:
+   the cluster cap bounds DOLLARS (per note 55 reconciliation); per-strike $1 floors
+   require fat-enough-per-strike or wall-qualified sides — the builders must derive this
+   arithmetic (per-strike credit = share × pool/2 must clear $1/window per strike funded).
+3. **CAPITAL = $600 recommended** (Ryan nervous, correctly — money follows receipts).
+   Seats ~$20 = knees + cheapest walls (1-2¢ ladders); the decisive treasury-wall test
+   identical at $600 vs $1k; ceiling ~$60-100/day if thesis holds. Scale to $1k+ only
+   AFTER the wall verdict + a proven profitable day.
+4. **Deploy rule**: v6 goes live the moment (a) reviewer's battery passes AND (b) the
+   deposit lands — no clock-waiting. v5 freezes as fallback binary at the fork commit.
+5. **First act at deploy**: the ~$40 treasury wall (one quiet ladder market, qualified),
+   estimates feed watched across 2 reward batches — the thesis' load-bearing link measured
+   before the rest deploys. If share flows → the queue deploys the book. If not → STOP,
+   nothing else deploys, thesis rework.
