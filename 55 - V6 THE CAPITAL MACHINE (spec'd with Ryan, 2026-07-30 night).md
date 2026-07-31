@@ -815,3 +815,38 @@ Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
 Lane C still out. Round 7 will consolidate: B6-1 FATAL (probe blind to treasury),
 A6-1/B6-4 (two doors on the fact bound), A6-2/B6-2 (draining orphan+split), A6-3
 survivors, B6-3/B6-5, minors.
+
+## Round 6 re-review, Lane C record — 2026-07-31 (frozen 50303e0)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
+- **C6-1 (= A6-1 CONVERGENT, + engine-real): the fact bound is enforced only against
+  the SECOND lane, and only if ordinary.** Deploy-night state executed: boot with $16
+  of INHERITED v5 gas positions (the actual live book) → probe stakes $105.07 on top →
+  fact $121.07 > d×C, CERTAIN on deploy night, not sequencing luck. Fills never breach
+  on their own (a fill converts, never adds) — the breach is entirely at placement
+  through the probe branch.
+- **C6-2 (= A6-2/B6-2 TRI-CONVERGENT, + starvation): draining unreachable (disarm has
+  zero production callers), unpinned (M13 place-guard survivor), and when entered the
+  phantom probe allocations consume the ONE global budget — ordinary book STARVED of
+  $105.01 vs control, 156/3000 fuzz, permanent.**
+- **C6-3 (MAJOR, false-PASS direction): M3 survivor — `banked = prev` (baseline
+  dropped in reset banking) passes all 1029**; dead wall at 1.7% of promise with a
+  pre-watch baseline verdicts PASS 0.93 through R6-1's own reset path. Unpinned.
+- **C6-4 (= A6-3/M10 CONVERGENT): B16-in-plan PROVABLY INERT** (market_leg_cap ≥
+  0.1C, rail ≤ 0.027C — min always picks rail) and the round record's "142→0/3000"
+  claim belongs to the HARNESS correction, not the code (old divergent harness still
+  shows 127/3000 on this commit). Fix-site survivor + false claim in the record.
+- C6-5 MINOR: "order-independent by construction" overstated — 1-4/3000 boundary-thin
+  refusals under ADVERSARIAL order via intra-cluster blend-price (0/3000 under the
+  engine's actual deterministic order — fixed where the wire walks). C6-6 MINOR:
+  flapping-feed inflation (every decrease banks as realized — 6× over 50 flips;
+  pathological feed, false-PASS direction). A-m4 (Lane A): check_silence LATCHES —
+  dead-6h-then-healthy wall can never PASS. NITs: double-init; re-entry dead-gap.
+- Battery note: builder's 80-mutant battery NOT in the tree — unverifiable; Lane C's
+  own 15 substituted (12 killed, 3 survivors, all in R6 fix sites). RULE for Round 7:
+  the battery ships IN THE TREE.
+- Held: safety s1-s4, rails, refusal-only everywhere (no sell/cancel of riding
+  positions on any new guard), R6-1 clean on all monotone+restart paths, R6-2 dead,
+  finding-fixture inversion sweep across ALL prior rounds correct.
+**Round 6 score: 3 THEORY approves; premises+impl 0/6. Round 7 consolidates: B6-1
+FATAL (treasury-blind probe), two-lane fact bound + identity, draining wiring, three
+fix-site survivors, B16 inert-clause deletion, minors.**
