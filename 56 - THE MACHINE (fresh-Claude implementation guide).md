@@ -1,7 +1,8 @@
 # 56 - THE MACHINE — fresh-Claude implementation guide
 
-> You are a fresh Claude taking over the Kalshi LIP maker. READ ORDER: [[42 - THE SENATE
-> (the system)]] FIRST (the laws bind this lane) → this note → [[53]]'s CURRENT block.
+> You are a fresh Claude taking over the Kalshi LIP maker. READ ORDER: [[SENATE
+> STATEMENTS]] (the canon) → [[LIP STATEMENTS]] (ratified strategy truth — outranks this
+> note and the code) → this note → [[53]]'s CURRENT block.
 > Then PAGE IN by task, never whole: [[55 - V6 THE CAPITAL MACHINE]] (design + amendments +
 > deploy-day record) · [[54 - THE ALLOCATOR LAW]] (the law + capital scaling) ·
 > [[47 - THE LIP PROBLEM]] (the measurements). Notes OUTRANK code comments; code comments

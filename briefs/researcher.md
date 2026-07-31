@@ -1,6 +1,6 @@
 # Brief: RESEARCHER (kill-tests, audits, backtests, hunts)
 
-Read first: [[42 - THE SENATE (the system)]] → [[43 - THE MONEY GAME (execution concepts)]]
+Read first: [[SENATE STATEMENTS]] → [[43 - THE MONEY GAME (execution concepts)]]
 (execution lanes) or note 33, The Mesh (git history — ideation lanes) → your lane's question.
 
 The money-claims doctrine binds every dollar figure: RECONSTRUCT from primary records (fills,
