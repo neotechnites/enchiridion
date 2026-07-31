@@ -998,3 +998,36 @@ three lanes explicitly tasked with an EDIT-LIVENESS AUDIT (walk the diff hunk-by
 verify each claim present AND live) plus the new-listing hole (KXAAAGASM is live but
 likely absent from calib2's historical ser field — which way does the symbol test
 fail?), the lifecycle state machine × restart grid, and the routing grid fuzz.
+
+## Round 8 re-review, Lane A record — 2026-07-31 (frozen 1585994)
+Verdicts: THEORY **APPROVE** · PREMISES **APPROVE** · IMPL **REJECT** — first
+two-axis approve from any lane since Round 5; ONE MAJOR stands.
+- **A8-1 (MAJOR, orchestrator-confirmed at source): the silence page STORMS at the
+  cycle rate** — R.ntfy unlatched (ntfy_once exists one file over), message embeds
+  elapsed hours so it could never latch; 120 pages in 120 reads = ~1,400-5,000/day on
+  the topic that must carry probe_verdict. The EXACT class this round fixed for the
+  family page, and R8-5's entire residual risk (d×C until a human acts) is carried by
+  this page being effective — by the tree's own doctrine a cycle-rate page equals no
+  page. Fix: condition-keyed latch + derived re-page cadence; pin CADENCE not just
+  existence.
+- MINORS: prefix identity fails OPEN for a future colliding series (hypothetical
+  KXUSTEEL shares "KXUST" prefix → probe-eligible+rail-exempt; bounded by lane cap/
+  seat/wing; pin foreign-collision EXCLUSION not just sibling inclusion); corrupt
+  probe_state row missing `armed` re-arms (safer default: disarmed+page; truncated-
+  row fallback is correct). NIT: operator-only end for a never-answering probe with
+  filled walls → probe=None makes riding collateral count ordinary (conservative).
+- Verified LIVE end-to-end (its own execution): R8-3 riding-rows bound (refused at
+  $120 riding, admitted at partial $10, admitted drained; plan agrees all three);
+  REAL Maker restarts on shared data dir (verdict row idempotent, restart disarmed,
+  re-release without staking, fresh dir = armed — "first boot" = fresh ledger, retune
+  on deposit does NOT re-arm — correct); R8-4 12-cell routing grid agrees every cell;
+  R8-1 calib2 gate LIVE (dead alias → 3 failures); battery 103/103 with 0 anchor-
+  skips (the drift class ABSENT this round).
+- **Calib2-as-authority ADJUDICATED RIGHT** (strongest offline statement of the wire;
+  the one residual: a NEW same-underlying sibling under a DIFFERENT series name
+  silently degrades the fact bound to per-series — no offline test can close it —
+  goes on the deploy checklist explicitly as accepted bounded risk). **Silence
+  re-derivation ADJUDICATED CORRECT** (zero batches = no reading; dead-link vs
+  dead-thesis need opposite responses; the prior auto-disarm provably deadlocked;
+  cost inside note 55's acceptance) — the design is sound, its one mitigation
+  shipped defective (A8-1).
