@@ -676,3 +676,38 @@ Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
   AGREE (second lane): premise true in code (requoter cancels off-allocation), max
   one-settle-source stack $136 = 22.7% of C is the spec's own priced d×C + rail split;
   the pre-fix counting was an accident, not a bound.**
+
+## Round 5 re-review, Lane C record + orchestrator adjudication — 2026-07-31 (27544f6)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
+- C5-1 MAJOR: plan/place variance parity is PATH-DEPENDENT — plan charges its var book
+  in heap-pop order (in-pass repairs unlock cross-cluster room), the wire places in
+  slot order → 5/3000 engine-realistic fuzz trials hit plan-funds/place-refuses without
+  a stuck book. Usually self-heals in one cycle (= Lane A's A5-3, convergent
+  observation), but the doctrine bans the state and a stable refusal fixed point is not
+  excluded. Fix shapes: place in plan order / judge plan against raw pre-pass book /
+  batch-atomic admission.
+- C5-2 MAJOR (battery rule): max(0,·) clamp in earned_usd is an unpinned clause in this
+  round's own fix — survives all 1007. Conservative-only direction proven, but the
+  resurrection rule forbids exactly this. Named killer required.
+- C5-3 MINOR = A5-2 = B5-3 (TRI-convergent): cluster_spent seeds probe fills unexcluded
+  → the mid leg RV-5 deployed is refused again ONE FILL EVENT later.
+- C5-4 MINOR: reset-counts-as-batch → perfect wall REPORTs at 0.0 (same family as
+  A5-1/B5-2; B's payment path makes the negative delta DOCUMENTED code behavior, so
+  the tri-convergent MAJOR stands).
+- **C5-5 MAJOR (PREMISES) — LANE SPLIT, adjudicated by orchestrator:** C executed the
+  stack: one settle fact can carry $135.75 (22.6% of C), both-family fact-day $152
+  (25.3%), vs note 55's sentence "worst case of the $120 = exactly d×C." A+B priced
+  the day-UNION (accepted since Round 3: ~$213 both-die-day); C is RIGHT that the
+  SINGLE-FACT sentence is falsified — pre-RV-5 the rail accidentally enforced lane
+  separation per cluster; the fix removed it. **RESOLUTION (mine, conservative, keeps
+  Ryan's sentence true, FLAGGED and reversible): bar ordinary entries from probe
+  clusters while the probe is ARMED — expressed in BOTH plan and place (no re-offer
+  state). Costs 2 of 30 clusters for the probe's ~one-settle-cycle life; restores
+  single-fact worst to exactly $120 = d×C. RYAN: if you'd rather re-price the sentence
+  (accept 22.6% single-fact) and keep the 2 clusters, say so — one-line reversal.**
+  Also: exclusion has no retirement path (verdict-complete probe positions stay
+  rail-excluded until settlement, bounded ~daily) — the armed-bar subsumes this.
+What held: RV-2 vs independent oracle 0/400; RV-4 admit rule pointwise sound (proof
+sketch: ceiling ⟺ v_next≤max OR ≤v_now); stuck-walk lands $70.20 all inside rails, V
+monotone down; no attacker basis reaches the wire; 15/16 new mutants killed; disarmed
+fallback exact.
