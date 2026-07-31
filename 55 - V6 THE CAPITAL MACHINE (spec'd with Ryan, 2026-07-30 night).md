@@ -1241,3 +1241,31 @@ lanes demanded. Then the final tri-lane pass.**
    at small capital requires either an exemption (the old probe) or notional dials
    (this mode). He never ordered the hardcoded family list — that was our expression
    of the exemption boundary; this mode removes the need for it.
+
+## LIVE INCIDENT + STAND-DOWN — 2026-07-31 ~12:45 PM MT
+Rank-truncation v6 (8cee2ad + VPS-armed config, $132) ran ~15 min live and CHURNED —
+Ryan watched orders placing/rescinding continuously (his pre-launch fear, verbatim).
+STOPPED on his order; **v6 STAYS DOWN until Ryan says otherwise.** Anatomy: (1) at a
+fully-spent budget the rank boundary is razor-thin — world jitter reshuffles the funded
+set every pass (SME q 13↔14, spent 55↔70 oscillating); (2) cancel-first renders every
+move as disappear/reappear; (3) churn drained the ratelimit token bucket → 51
+reserve_floor refusals → place-after-cancel refused → dark slots → re-place next pass
+→ more churn. What the 15 min also showed, all law-working-as-built: the EV-commodity
+entries were CLIFF RESCUES of v5's morning accrual (pennies to bank ~$1 each); WMG
+(72c accrued) untouchable — position_divergence (v5's −4 riding) and the safety law
+won't quote a diverging rung, so that 72c forfeits; Clayton's 40c rung refused
+entry_net_negative WITH RECEIPTS (T=3.2 turnovers/day, bleed 2.03 vs credit 1.08, net
+−0.95 — the 40c was gross); Panama $39 = the deepen gate concentrating into the ONE
+rung with 400h of proven no-fill tape. RYAN'S TWO STANDING QUESTIONS FROM THE RUN:
+(a) same brain as v5 → same board with bigger seats — concentration is history-gated
+so day-one money flows to v5's old rungs only; (b) THE ESTIMATOR IS UNVALIDATED and
+yesterday's tape contradicts it ($19.7 projected gross → ~$2 payable; EV cluster 2c in
+12h vs ~$1/window estimated). Zero settlements have flowed through the estimate→paid
+proof gate. Prime suspect: competition depth S mismeasurement. THIS is the open
+question of the program.
+FIX IN FLIGHT (builder, no deploy pressure): THE STICKY BOOK — placed money never
+moves on rank/size improvements; only hard invalidations (settle/close, fill, off-best
+beyond dead-band persistent N reads, hard viability failure); plan seeds from the
+resting book and only ADDS; pinned by "unchanged/jittered world ⇒ ZERO cancels over
+100 cycles." Redeploy gate: replay against the RECORDED live tape (~60 moves/min) must
+show ~0. Builder dropped once on an API error mid-build and was resumed.
