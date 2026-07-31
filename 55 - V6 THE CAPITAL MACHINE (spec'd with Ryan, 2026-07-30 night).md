@@ -616,3 +616,32 @@ THE LANES TO ADJUDICATE: does the symmetric exclusion open a concentration hole
 (ordinary rail + probe walls stacking in one cluster), or is that exactly the priced
 d×C + rail split the spec already states? Round 5 tri-lane re-review launching on
 27544f6.
+
+## Round 5 re-review, Lane A record — 2026-07-31 (frozen 27544f6)
+Verdicts: THEORY **APPROVE** · PREMISES **APPROVE** · IMPL **REJECT** (one MAJOR).
+- **A5-1 (MAJOR, orchestrator-confirmed at source): RV-1's delta breaks at the WINDOW
+  ROLLOVER.** Feed accrual resets to 0 at the program-window boundary; the reset itself
+  counts as a batch (abs(acc−prev) trips), max(0, acc−baseline) floors earned at $0
+  against the stale baseline, and the verdict fires PERMANENT REPORT on a healthy wall
+  (true ratio 0.86 → earned $0.0000). Conservative (cannot false-PASS) but the false-
+  STOP class again, reachable whenever boot lands within hours of a boundary — and both
+  probe families run daily windows. Zero tests feed decreasing accrual. Fix: on
+  decrease, bank (prev−baseline) into a realized accumulator, re-base baseline=0,
+  don't count the reset as a batch; rollover fixture.
+- A5-2 MINOR: RV-5's exclusion missing at the plan's ledger SEEDING (positions counted
+  unexcluded) — plan tighter than place (conservative, no re-offer possible), but the
+  one-expression doctrine broken at the exact seam RV-5 fixed; same exclusion + named
+  test. A5-3 MINOR: placement-ORDER transient — legal final book, V-raising order
+  placed before its sibling repair refuses for ONE cycle then heals (3/500 slates);
+  rate-ordered placement would close it. NITs: ratio exactly 0.500 passes (per spec);
+  an entirely-dead probe family never batches → silence not REPORT (predates R5,
+  operator-watched).
+- Clean: RV-2 via independent greedy oracle 400 slates 0 violations; RV-3 units; RV-4
+  property under stuck/full states; spine re-verified; all four R5 fix-site mutants
+  killed on its own re-run.
+- **RV-5 counter-derivation ADJUDICATED: builder RIGHT, both halves.** Oscillation
+  reproduced mechanically ($16→$0→$16 six-cycle sim — the plan charging itself for its
+  own output); the symmetric exclusion opens NO hole: worst stack $135.90 on one settle
+  fact = 22.6% of C, each dollar charged by exactly ONE instrument (probe by d×C which
+  already assumes 100% loss, ordinary by the rail inside the z-day bound) — the
+  pre-RV-5 behavior was a DOUBLE-CHARGE, same class F7 removed from the mix.
