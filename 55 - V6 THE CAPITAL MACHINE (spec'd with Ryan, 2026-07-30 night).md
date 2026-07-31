@@ -645,3 +645,34 @@ Verdicts: THEORY **APPROVE** · PREMISES **APPROVE** · IMPL **REJECT** (one MAJ
   fact = 22.6% of C, each dollar charged by exactly ONE instrument (probe by d×C which
   already assumes 100% loss, ordinary by the rail inside the z-day bound) — the
   pre-RV-5 behavior was a DOUBLE-CHARGE, same class F7 removed from the mix.
+
+## Round 5 re-review, Lane B record — 2026-07-31 (frozen 27544f6)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
+- **B5-2 (MAJOR, CONVERGES with A5-1 — blind, second convergence on this instrument):
+  the verdict false-REPORTs at any accrual DECREASE.** Not just window rollover: a
+  settlement PAYMENT (engine.credit_paid subtracts paid credit from accrued) produces
+  the same negative delta → wall earns exactly its promise, gets paid, verdicts REPORT
+  $0.0000 vs $2.0167 (control without boundary: PASS 1.00x). Both probe families settle
+  daily; the verdict is specced to land within one settle cycle — the boundary is the
+  NORMAL case, not the edge. Fix: bank prev−baseline into a realized register on
+  decrease, rebase, don't count the reset as a batch, cap elapsed at the window.
+- **B5-1 (MAJOR, new): the VARIANCE ledger re-creates the oscillation RV-5 fixed in the
+  cluster ledger.** cluster_var_book seeds positions PLUS RESTING (source-confirmed);
+  the plan then charges its own candidate offers on top → at steady state the plan
+  double-charges its own allocation → period-2 whole-book size oscillation, measured
+  $478.71 → $121.16 → $478.71 at the designed book, carried to the wire every ≥30s.
+  Fails toward under-deploy/churn. Fix = the builder's own doctrine: var book seeds
+  from positions only (probe-excluded), matching cluster_spent.
+- B5-3 MINOR = A5-2 (convergent): cluster_spent seeding lacks the probe exclusion —
+  plan tighter than place, ordinary lane locked out of probe families while probe
+  positions ride. B5-4 MINOR: the n3 blacklist scans dials.py only — the superseded
+  $21.43/N=28 numbers are alive in test_dials.py:5 and test_quiet.py:176 prose. B5-5
+  DEPLOY-CHECKLIST FLAG: earned sums per-PROGRAM accrual once per watched TICKER — if
+  a probe family's program spans strikes, earned inflates by strike count (false-PASS
+  direction); verify program→ticker cardinality on the live feed before trusting PASS.
+- Units audit at T=2.4 (its special focus): CLEAN end-to-end, every ledger matches
+  hand-derivation to 1e-9; plan strictly tighter at T>1 by design. RV-1/2/3/4/6 all
+  verified pinned by its own mutant re-runs. **RV-5 counter-derivation ADJUDICATED
+  AGREE (second lane): premise true in code (requoter cancels off-allocation), max
+  one-settle-source stack $136 = 22.7% of C is the spec's own priced d×C + rail split;
+  the pre-fix counting was an accident, not a bound.**
