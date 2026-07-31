@@ -398,3 +398,21 @@ approves total); defend protocol in force — no claimed defect accepted without
 reproduction. Both builder deviations put to all three lanes for adjudication. Deploy
 condition unchanged: nine approves AND Ryan's $600 deposit — no clock-waiting; first act
 is the 120/480 probe.
+
+## Round 3 Lane B (premises-vs-data) record — 2026-07-31
+Verdicts: THEORY **APPROVE** · LOGIC/PREMISES **APPROVE** · IMPLEMENTATION **APPROVE**.
+All by execution on e2061ff: 924/924 armed, 924 (4 skips) disarmed; independent
+reimplementation of the g-derivation matched shipped tables ROW-FOR-ROW; side-split
+proven real boundary-free (z=4.64 on 5-25c; NO more toxic in 37/47 cent buckets,
+p=4.9e-5); every dials number reproduced to the digit (p_from_mix(0.197)=0.0900,
+N=30, rail $16@480/$20@600, 819-day prior = exactly the ±1pp precision); all five
+scoring premises match code; probe symbol check real and pages loud (scan-complete
+gated). BOTH deviations ADJUDICATED AGREE: $16 rail is the note's own "$480 runs the
+ordinary law book" ($20 would claim N=30, fund 24); z=3.8807 matched by independent
+bisection, m=960 conservative vs actual per-family settle cadence (windows 15.5-87h).
+Findings: MINOR per-family g-direction flips (metals/gas daily — cannot undercharge a
+probe leg, bands there charge 0.65-1.0 both sides); MINOR calib mids are ≥60min-not-
+exactly-60 before close; NIT stale pooled-g in dials.py:44 comment; NIT note's "232h"
+is 230.8h. None blocking. Disclosed non-recomputables (correctly handled in build):
+p=0.09 is note 54's prior + VPS-logged 19.7c ref; 42x tape is VPS-only and feeds no
+constant. Lanes A and C still out.
