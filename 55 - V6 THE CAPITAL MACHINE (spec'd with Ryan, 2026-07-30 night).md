@@ -238,3 +238,13 @@ target > W·T·g ("bleed_exceeds_credit", logged); envelope bleed charged at env
 Also: phi-shrinkage review caught a second incident-door (zero-prior bucket ⇒ k=0 ⇒ any
 exposure "dominates" ⇒ envelope on quiet tape) — sent back, fix in flight. v5 stays OFF
 until both land + Ryan's go.
+
+## BOTH LANES APPROVED + LIVE — the 24h proof run started
+φ-shrinkage 4c88a2e + fill-bleed 89fc682 (both APPROVED FINAL after adversarial review:
+independent g-table reproduction, PAVA-totals adoption, one-callable ordering with AST
+guard, six+ mutations re-run per lane). Merged, 748 green, deployed, v5 STARTED. First
+cycles show the bleed screen refusing with numbers (bleed_exceeds_credit) — live proof the
+term bites. g-table headline: gap persists to ~50¢ (10–28¢: 35% bleed/$ filled, 7σ) — the
+"fair above 15¢" claim was WRONG; funded-book natural average ~19.7¢. Ryan's plan: 24h run
+→ tomorrow 8pm deposit $1k → v6. Proof gate: presence ≥90%, 20+ rungs, per-fill realized
+loss ≤ ~1.5× table, estimates paid as stated, credits ≥ realized bleed.
