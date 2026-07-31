@@ -1328,3 +1328,21 @@ losses, from the v3/v4 ledgers + July payments). NOT being implemented right now
 his order — the current freeze proceeds as designed (measurement-first ranking, seed
 mode, W1/W2/W3) — but the v3-net-snapshot boot prior is a READY OPTION he can invoke
 with a word; it drops into the same measurement store W2 pre-seeds.
+
+## STAND-DOWN, FINAL FOR THE DAY — 2026-07-31 ~5:15 PM MT (Ryan: "same exact shit. pull it down")
+Three deploys in one afternoon, three pull-downs. v6 STOPPED AND DISABLED (cannot
+return on reboot). Orders cancelled at shutdown; small positions ride. Where it ended:
+sticky book PROVEN live (churn 0 across all checks); money arithmetic PROVEN live
+(exposure_ok true, reconciled row); estimator guard WORKING (29 honest pages);
+the REAL estimator bug found and fixed (qualification zero → share=1.0 on thin
+unqualified ladders — the EV lie); seed mode shipped but NEVER CONFIRMED LIVE — two
+serial blockers found by contact (divergence gate, then the classifier-table catch-22,
+fixed), and the machine was pulled before the third check could confirm gas candidates
+flow. My errors on the record: bare restart bypassing the arming script (one wasted
+cycle); the DF theory accepted before the builder falsified it itself.
+STATE OF PLAY for the next session: latest commit on v6-build has everything incl.
+the seed-source program-iteration fix (untested live). The open question is ONLY
+whether seeds now emit on the wire. Ryan's standing alternatives: (a) one more fire
+check (~4 min) to confirm/deny seeds; (b) the v4-style chooser (first-dollar rate at
+land-grab prices — lip_maker_v4.py:1292, read and understood) as the ranking, with
+v6's rails; (c) v4 itself still exists as a service. NOTHING RUNS until Ryan says.
