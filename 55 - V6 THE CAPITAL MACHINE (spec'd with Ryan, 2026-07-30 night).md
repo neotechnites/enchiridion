@@ -1031,3 +1031,35 @@ two-axis approve from any lane since Round 5; ONE MAJOR stands.
   dead-thesis need opposite responses; the prior auto-disarm provably deadlocked;
   cost inside note 55's acceptance) — the design is sound, its one mitigation
   shipped defective (A8-1).
+
+## Round 8 re-review, Lane B record — 2026-07-31 (frozen 1585994)
+Verdicts: THEORY **APPROVE** · PREMISES **APPROVE** · IMPL **REJECT** — same shape as
+Lane A, and the SAME single MAJOR (convergent).
+- **B8-1 (MAJOR = A8-1): probe_silent pages at the CYCLE RATE** — executed through the
+  real engine: 10 urgent pages in 10 cycles; at CYCLE_HZ=1.0 that is ~3,600/hour to
+  the SHARED topic carrying the watchdog and bug alarm, indefinitely — burying the
+  genuine alarms and training the operator to filter the one page whose job is to
+  summon the human who owns "STOP, thesis rework." Message body varies per pass so
+  naive ntfy_once won't latch — needs a stable-key latch/throttle. The n1 class fixed
+  sixty lines above in this same round.
+- **EDIT-LIVENESS AUDIT: CLEAN.** Full e7d74c2→1585994 diff (1,298 lines) walked hunk
+  by hunk; every R8 edit present AND live by execution (incl. the R8-3a bound the
+  confession said was momentarily inert — live at both readers; plan plans $0.00 into
+  a riding fact post-disarm through the real engine). Battery anchors pre-scanned:
+  zero skips possible.
+- **KXAAAGASM new-listing question RESOLVED: no contradiction** — the lists carry
+  PREFIXES; the test requires each prefix to resolve to ≥1 settled series (D/W
+  satisfy); the monthly is eligible+fact-mapped through the prefix today; a genuinely
+  new PREFIX still requires evidence. Correct direction both ways.
+- MINORS: README operator contract stale at TWO of this round's own fix sites (item 9
+  still says silence stamps a verdict/"treat as FAIL"; item 10 says disarm lifts the
+  fact bound — drain does); R7 prose NITs claimed swept but alive (README:399-400 +
+  config.py:1631 still say cluster_of); phantom test citation (test_clusters.TestThe
+  FactMapIsBuiltFromREALSymbols → actually test_symbols); NIT: probe_state rows not
+  fsync'd — a TORN disarm row replays ARMED (fail-open on power-loss only, bounded by
+  lane seeding ≤ d×C).
+- Premises verified to the digit (calib2 ser counts 435/83/61/56/53/52/55; symbol test
+  enforces both directions by executed mutation; replay contract clean; note 55's own
+  lines support R8-5; the never-answering probe distorts nothing but the page channel).
+**Round 8 score with two lanes in: 4 approves, 2 impl rejects on ONE convergent MAJOR
+with the fix pattern already in the tree. Lane C out.**
