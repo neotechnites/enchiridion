@@ -523,3 +523,41 @@ not just drift. Three fresh Fable lanes launched on 36de3dd (A theory, B premise
 team), briefed on all Round 4 re-derivations to adjudicate (V_max=(1−p)/(N·p), verdict
 rate-basis, discrete marginal rate, z=4.0461@m=1920) and on the harness fail-green
 confession (battery claims to be independently re-run). Nine approves required.
+
+## Round 4 re-review, Lanes A + B records — 2026-07-31 (frozen 36de3dd)
+**Lane A: THEORY approve · PREMISES reject · IMPL reject. Lane B: THEORY approve ·
+PREMISES reject · IMPL reject.** Lane C still out. Both flagged re-derivations
+ADJUDICATED AGREE by both lanes with independent derivations (V_max=(1−p)/(N·p)
+reproduces the v5 0.25 at its own calibration point — the old constant WAS this formula
+at 12c/N=30; alarm family/z matched to 1e-6).
+Three MAJORs, all orchestrator-confirmed at source:
+- **RV-1 (Lanes A+B CONVERGENT, blind — the strongest signal): the probe verdict can
+  false-PASS.** earned = LIFETIME sum(last_accrued) but predicted = rate × hours since
+  first_seen; the baseline at first read is stored and never subtracted. Any mid-window
+  restart (Probe rebuilt in Maker.__init__; restarts are normal here) re-seeds the
+  baseline with pre-restart accrual → dead wall at 2.5-5% of promise verdicts PASS
+  (A: ratio 6.275; B: ratio 5.05 — independent fixtures). The instrument that tells
+  Ryan to scale, failing in the scale direction. Fix: score the delta since first read.
+- **RV-2 (Lane A): R4-3's negative-marginal defect RESURRECTED by the m1 refactor.**
+  runner_up = -heap[0][0] unclamped + m1's unconditional deepen push → heap legally
+  holds negative rates → _block_to_rate floors the top rung at a NEGATIVE rate, past
+  its interior optimum. Repro: q=460 vs greedy 122, $9.03 net destroyed; 400-slate fuzz:
+  36/400 mismatches incl. bleed>paid violations (worst $479.68 vs $47.74). The one-line
+  clamp max(0.0, ·) leaves all 976 green — fixture gap proven. Confirmed at source:
+  the m1 comment relies on the pop-level rate<=0 break, which never guards the FLOOR.
+- **RV-3 (Lane B): B18 plan-room prices the increment at the ORDER's price; place()
+  prices the BLENDED cluster.** Conservative only for cheap-into-expensive; a requote
+  after drift or a richer ladder strike over-offers → place refuses → permanent re-offer
+  (pure function, same plan next cycle). Executed engine-realistic: plan funds $9.08,
+  place refuses at v_next 0.1442 > 0.1381. Fails closed. Confirmed at source — the
+  code's own comment concedes px is between the two and defends one direction only.
+  Fix: room on the post-add blended price or plan calls portfolio_variance itself.
+Non-blocking: A-MINOR Jensen gap in V_max on price-dispersed mixes (conservative);
+A-MINOR/B-NIT alarm family vs intraday ladders (gas daily 15.5h windows → realized
+alpha drifts toward 7-8% on a gas-heavy book; hourly ladders worse if funded);
+B-MINOR dials 45c prose stale THIRD instance (pinned test carries correct values,
+prose doesn't); B-NIT denominator asymmetry max(ceiling,deployed) vs ceiling-strict
+(unreachable under B15). Verified clean by both lanes: verdict rate-basis correct
+(healthy wall 0.975 PASS where full-horizon bar false-STOPped at 0.081), spine intact
+(F1 rotation, rescue, dials chain, side-split consumption, phi min-only, toll), R4-6
+pinned both halves (B's own mutants: 7 and 3 failures).
