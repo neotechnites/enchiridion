@@ -309,3 +309,14 @@ plan inexecutable there). Grafts from Fable: N = max(30, formula) (diversificati
 rung deepened to the $19.95 rail — the quiet-afternoon incident through a new door).
 Minor: probe seat-exemption fix; PROBE_FAMILIES = KXAAAGASD + boot pages on zero-slot
 probe family. Final battery after grafts → APPROVED FINAL → merge to v6, deploy on deposit.
+
+## V6 APPROVED FINAL — 1af221a (2026-08-01 early), merged to branch v6, DEPLOY-READY
+Final battery clean (7 mutations re-run by the adjudicator, 872 green armed AND disarmed).
+THE STRONGEST SIGNAL THIS PROCESS PRODUCES: after grafts, the two blind-built lanes yield
+the IDENTICAL funded book on the shared board (wall $10.01 / mid $2.85 / rich $20.00 /
+rescue $1.92 / thin $1.20). Note's printed dial pairs reproduce exactly. Disarmed mode =
+green v5 fallback. Deploy = deposit lands → set C → boot (README deploy checklist: verify
+PROBE_FAMILIES against the live board — armed-probe-zero-slots pages). The 120/480 probe
+fires on boot; estimates feed adjudicates the wall thesis within ~2 reward batches.
+v5 soaks meanwhile on lip-v5-build; v6-f (Fable lane) frozen unmerged, its two winning
+ideas live in G1/G2.
