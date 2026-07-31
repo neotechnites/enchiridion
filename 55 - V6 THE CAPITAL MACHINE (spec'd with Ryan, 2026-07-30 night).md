@@ -1385,3 +1385,22 @@ inversion from his own order snapshot). Manual live math on record: gas $100/run
 ever "best of the poisoned remainder." Clean-slate deploy live ~12:00 PM MDT;
 expectation: 2 gas pairs (~4 orders × ~$30) + remainder down-rank; ~$16/pair over
 the remaining ~10h window if the walls accrue as the tape says.
+
+## TRIPLE-FORENSICS VERDICT — 2026-07-31 ~12:20 PM MDT (three parallel agents, all rows quoted)
+The "immortal book" is NEITHER inherited NOR resurrected: (1) boot recovers zero
+(ledger 0 rows/0 orders/0 positions; adoption deleted, sync subtract-only, handback
+empty); (2) ALL stops fully cancel (cash delta drains to exactly 0.0 — exchange-side
+proof; zero cancel refusals all day — Ryan was right that it comes down properly);
+(3) held:9/floored:8/$111 = pass-2 correctly counting the machine's OWN pass-1
+placements. EVERY RUN FRESHLY CHOSButtonS THE SAME CRUMB BOOK — accrual (exchange-side,
+$14.13, survives any wipe) makes those markets toll-free and cheap-to-finish, so they
+win instantly; SME won on plain rate with $0.03 accrued.
+THE ONE REMAINING SEAM: ~3,400 seed slots (gas first) injected EVERY pass; the queue's
+refusal accounting covers ~148 candidates — **~3,200 seeds DIE SILENTLY between the
+engine hook and queue admission.** Suspects: plan-path p6/classify re-check on fields
+seeds don't carry; the SETTLE_LAG 8h haircut vs the $1 cliff; Curve-admission gates
+(cliff_unreachable ×126 in an earlier run) untouched by the V4-rank edit. Builder
+tasked: one offline script pushing a real gas seed slot through the real admission,
+name the killer line, fix, and add CANDIDATE CONSERVATION to the provenance logging
+(slots in = funded + named refusals + counted drops, tested) so silent death is
+structurally impossible. Machine down throughout.
