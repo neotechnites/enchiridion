@@ -442,3 +442,43 @@ counterexample for the rail ($20 in a $480 lane = 24 fundable clusters, z-day lo
 20.68% — bound violated; $16 gives 19.45% — holds).
 Round 3 score: A approve/approve/reject · B approve/approve/approve · C out.
 Plan: consolidate A+C findings into ONE builder round on a new frozen commit.
+
+## Round 3 Lane C (red team) record — 2026-07-31
+Verdicts: THEORY **APPROVE** · LOGIC/PREMISES **REJECT** · IMPLEMENTATION **REJECT**.
+Four MAJORs, ALL orchestrator-reproduced by execution before acceptance:
+- **C-1 (deploy-blocking, fails closed): the B18 portfolio-variance rail refuses v6's own
+  book.** PORTFOLIO_VAR_MAX=0.25 is a v5 constant derived for a ~12c mix (config's own
+  derivation says so); the probe's 1-4c walls hit V=0.44 at $40 of one-cluster collateral
+  → place() refuses the second wall; ~$43 of the $120 deploys; the plan never models B18
+  → permanent plan-vs-place re-offer (the codebase's own forbidden state). The ordinary
+  v6 cheap-floor book breaks it too (30×$16 at 2c → V≈1.05). The builder's F5 place-tests
+  passed only because they construct PlaceContext WITHOUT portfolio_var_max — the real
+  engine always arms it. Same magnitude as the original F5 ($120→~$43), one rail down.
+- **C-2: the deepening arm buys negative-marginal contracts.** _block_to_rate bisects on
+  AVERAGE rate from q0, not marginal; with heap empty + budget left it deepens past the
+  interior max of net(). Reproduced: q=588 funded at marginal −0.079 vs greedy optimum
+  q=279 — $1.42 net destroyed, $2.89 extra bleed, $27 extra capital at risk for negative
+  return. Violates the module's own header invariant and the knee. The pinned block-vs-
+  brute-force identity never leaves the budget-bound regime — fixture gap.
+- **C-3 (surviving mutant, F2 site): the QUEUE's consumption of the side-split is
+  unpinned** — mutant g_for_price(p,"yes") at marginal.py:217 survives all 924 (my rerun
+  confirms). bleed.py's split is pinned; the ranking's use of it can silently regress.
+- **C-4 (surviving mutant, F3 site): lane seeding unpinned** — `if False and` on the
+  position-basis seeding survives all 924 (my rerun confirms). Money held by F5's place
+  cap, but the plan re-offers $40 instead of $5 and the F3 fix has no named killer.
+MINOR: alarm 2 pages a genuine 2×-bleed bug at median ~583 settlements ≈ 19 days — it is
+a program-scale backstop; the per-fill realized-vs-table proof-gate stays the day-scale
+manned instrument. WHAT HELD under attack (all executed): the entire safety law (s1-s4),
+rails a1-a7, probe restart/replay accounting p1-p3, queue no-double-charge + bleed<paid
+over 400 fuzz slates, all absence-as-evidence sites, 16/18 of its new mutants killed
+incl. all safety guards. BOTH deviations ADJUDICATED AGREE by execution (rail: $16 holds
+19.45%≤20%, $20 breaks at 20.68%; alarm z derived-not-picked, 0 false pages in 300
+simulated programs, authorized probe worst case does NOT page).
+**Round 3 final score: 7 of 9 axes approve-equivalent, 2 reject. Five MAJORs to fix:
+F-A1, C-1, C-2, C-3, C-4.** Consolidated Round 4 dispatched to the builder on top of
+e2061ff; tri-lane re-review to relaunch on the new frozen commit.
+**For Ryan (C-1 design point, spec-derived resolution):** the probe is exempted from B18
+because note 55's deploy plan explicitly prices its concentration (d×C, "not worry about
+risk"); PORTFOLIO_VAR_MAX for the ordinary book gets re-derived from the v6 dials frame
+(N=30, d=20%, floor mix) instead of the inherited v5 12c-mix constant — builder derives,
+reviewers re-adjudicate, and this line is the flag if Ryan wants it decided differently.
