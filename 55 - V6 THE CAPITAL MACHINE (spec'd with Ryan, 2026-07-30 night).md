@@ -561,3 +561,33 @@ prose doesn't); B-NIT denominator asymmetry max(ceiling,deployed) vs ceiling-str
 (healthy wall 0.975 PASS where full-horizon bar false-STOPped at 0.081), spine intact
 (F1 rotation, rescue, dials chain, side-split consumption, phi min-only, toll), R4-6
 pinned both halves (B's own mutants: 7 and 3 failures).
+
+## Round 4 re-review, Lane C record — 2026-07-31 (frozen 36de3dd)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**. Six MAJORs; three
+CONVERGE with A/B (verdict false-PASS found by ALL THREE lanes blind; negative floor by
+A+C — C's repro is worse: q=3253 vs greedy 166, net −$21.40, bleed EXCEEDS paid, the
+pinned invariant falsified; plan-room price basis by B+C). Three new, all
+orchestrator-confirmed:
+- **C4-1: B18 stuck-state refuses the PROBE.** The tolerance MOVES with dials.mix_price
+  daily while positions ride to settlement; a book built legally at a 2c mix (V=0.209)
+  meets a 19.7c tolerance (0.1359) next day → place() refuses EVERYTHING absolutely —
+  including probe walls whose v_next == v_now, falsifying guards' own "the check cannot
+  refuse it" comment. Deploy's first act places $0 in this state. Source-confirmed: the
+  exclusion guarantees v_next == v_now, NOT v_next ≤ max — deleting the "unreachable"
+  probe clause per mutation doctrine removed the property without testing it first.
+- **C4-3: resting probe walls are invisible to the plan's cluster ledger** (positions
+  only, engine.py:1161-1168) → a mid-priced same-family leg is plan-funded and
+  place-refused (cluster_admits counts resting) → re-offer. Source-confirmed.
+- **C4-6: surviving mutant in the R4-1 fix site** — note_predictions max→last passes
+  all 976 (my re-run confirms). The max-not-last semantic is documented load-bearing.
+What held: entire safety law rerun, rails, probe cap incl. restart restaking ($92-108 ≤
+$120), F1, alarm 0/300 false pages, builder battery 54/54 re-run independently, both
+deviations again. All three lanes AGREE on V_max derivation and z — every REJECT is in
+the integration seams (plan/place parity, verdict accounting), not the theory.
+**Round 4 score: 3 THEORY approves, 0/6 on premises+impl. Six consolidated defects
+(RV-1..RV-6) dispatched as Round 5.** Process lesson pinned for the vault: TWO of six
+were RESURRECTIONS caused by Round-4 fixes themselves (m1's unconditional push exposed
+the unclamped floor; the unreachable-clause deletion removed a property with no named
+test). New rule: before deleting a guard as unreachable, write the test that pins the
+PROPERTY it expressed; a refactor that widens a domain must re-run the invariants of
+everything reading that domain.
