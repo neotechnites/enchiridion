@@ -1269,3 +1269,16 @@ beyond dead-band persistent N reads, hard viability failure); plan seeds from th
 resting book and only ADDS; pinned by "unchanged/jittered world ⇒ ZERO cancels over
 100 cycles." Redeploy gate: replay against the RECORDED live tape (~60 moves/min) must
 show ~0. Builder dropped once on an API error mid-build and was resumed.
+
+## RYAN'S RULING on validation — 2026-07-31 ~1 PM MT
+"We don't need to wait for settlement. Estimates are accurate, if anything a little
+low. We have access to every estimate — use them. The rate for a resting order at a
+given contract number is very stable — measure and change if needed." → THE
+MEASURED-RATE LOOP, folded into the sticky-book freeze: every funded seat's realized
+accrual rate measured off the estimates feed (probe machinery generalized to all
+seats); measured beats modeled after 2 batches; a seat is DEAD iff accrued +
+measured_rate × h_left < the $1 cliff sustained past grace → exactly ONE recall,
+refund to next rung (this is the sticky book's only measured mover); per-seat
+measured/predicted calibration row logged every batch. Redeploy gate: tape replay
+~0 requotes + measurement sane on the recorded estimates. Ryan: "it was close to
+correct" — back up as soon as the gate passes.
