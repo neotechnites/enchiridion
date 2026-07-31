@@ -1063,3 +1063,43 @@ Lane A, and the SAME single MAJOR (convergent).
   lines support R8-5; the never-answering probe distorts nothing but the page channel).
 **Round 8 score with two lanes in: 4 approves, 2 impl rejects on ONE convergent MAJOR
 with the fix pattern already in the tree. Lane C out.**
+
+## Round 8 re-review, Lane C record — 2026-07-31 (frozen 1585994)
+Verdicts: THEORY **APPROVE** · PREMISES **REJECT** · IMPL **REJECT**.
+- **C8-1 (MAJOR, deploy-blocking): the R8 prefixes OVER-MATCH the live rewarded
+  board.** Live incentive_programs API (40k in-program markets, full pagination):
+  KXAAAGAS also matches KXAAAGASMAX/MIN state-yearly-extreme families (60 rewarded
+  markets — different observation, different window); KXUST also matches
+  KXUSTESTSMATH (US Test scores). Executed: $117.13 of the $120 staked in FOREIGN
+  underlyings; one Texas-yearly cluster placed $120 vs the $16 rail; the treasury
+  verdict produced by a test-scores market. These are thin yearly longshot books —
+  wall-shaped — exactly what the probe preferentially ranks: the LIKELY deploy book,
+  not a corner. test_symbols asserts each prefix matches ≥1 evidenced series, never
+  ONLY the family; calib2 (historical) can't see the new foreign listings. Six rounds
+  of guessed-enumeration → one round of over-matching prefixes: the lesson is EXACT
+  series enumeration, evidence-validated, with foreign-collision EXCLUSION pinned on
+  the real stranger symbols.
+- **C8-2 (MAJOR): R8-3(b) persisted the VERDICT but not the ACCUMULATOR.** batches/
+  first_seen/baseline/realized rebuilt empty every restart. Executed with controls:
+  watchdog-every-3h × dead family → 0 silence pages in 24h (control: 36); healthy
+  wall restarted every 45min → 12 real batches, gate counts {}, verdict never lands.
+  Both halves of R8-5 fail under restart cadence < batch cadence: gate can't answer
+  AND can't page — $120 riding, human never told. Same orphan class as F-A1/
+  retirement/disarm, one field over.
+- **C8-3: three R8 fix-site survivors** — N3 riding-rows SEMANTICS (lane_usd>0 vs
+  bool(rows) undistinguished), N12 the REPEATS property of the silence page (R8-5's
+  whole safety argument, unpinned — compounds C8-2 and converges with A8-1/B8-1),
+  N21 a SEVENTH inert duplicate clause (rail_exempt's armed test — routes() ⊆ armed).
+- MINORS: C8-4 draining place-side rail hole (ordinary wing rows in probe families
+  invisible to cluster_admits — up to $105-120 admissible at place vs $16 rail; FAILS
+  CLOSED in practice, plan strictly tighter — engine-driven control equal); C8-5
+  probe_state idempotence process-local (40 identical rows on 40 restarts). NITs:
+  restore-before-halt-refusal ordering; per-process probe_released re-log; 1/3000
+  C6-5 residual.
+- HELD (all executed): routing grid 27/27; fuzz 0/3000 (its first 56 hits were its
+  OWN harness modeling a rowless draining state production can't reach — honest
+  correction per the standing rule); riding-rows bound at every partial drain k=0..6;
+  lifecycle × restart incl. no-restake and no stale-row brick; safety s1-s4 with
+  probe_state × halt interaction clean; finding-fixture inversions across all rounds.
+**Round 8 score: 3 THEORY, 2 PREMISES, 0 IMPL. The state machine is sound by attack;
+the blindness is the two INPUTS (which symbols, how many batches). Round 9 dispatched.**
