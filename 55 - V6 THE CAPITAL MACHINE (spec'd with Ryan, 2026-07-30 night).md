@@ -508,3 +508,18 @@ exclusion is expressed TWICE (guards' exclude callback + this inline clause) wit
 identity untested — the divergence path back to plan-offers-what-place-refuses. Sent
 back for a named killer + single-expression (or identity test). Lanes relaunch on the
 refrozen commit.
+
+## R4-6 refrozen + Round 4 tri-lane re-review LAUNCHED — 2026-07-31
+Builder refroze at **36de3dd**: 976 green armed AND disarmed; battery 54/54 copy-based on
+green baseline. Fix took the single-expression shape: guards.cluster_book = the ONE
+aggregation (called by portfolio_variance AND engine.cluster_var_book), Maker.var_exclude
+= the ONE exclusion predicate (read by plan and place_context). Pinned by EFFECT (probe
+positions change what the plan offers, in dollars; plan-side == rail-side cluster-for-
+cluster and v to 12 places; structural test forbids cluster_var_book growing its own
+loop). My mutant re-run on 36de3dd: FAILED (failures=2) — killed. Bonus from the
+collapse: a PRE-EXISTING untested clause (the unpriced-leg 0<basis<1 guard, predating
+R4-2) became visible and is now pinned — the one-expression doctrine catches old debt,
+not just drift. Three fresh Fable lanes launched on 36de3dd (A theory, B premises, C red
+team), briefed on all Round 4 re-derivations to adjudicate (V_max=(1−p)/(N·p), verdict
+rate-basis, discrete marginal rate, z=4.0461@m=1920) and on the harness fail-green
+confession (battery claims to be independently re-run). Nine approves required.
