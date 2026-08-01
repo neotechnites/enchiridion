@@ -3,7 +3,28 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-02 ~3:15 AM MT: FORMULA MODE LIVE (commit d9948ce + coverage gate)
+## CURRENT — 2026-08-01 evening MT: FORMULA HARD RULES + QUALIFYING DOOR (commits 8cb7059, c24ec1b)
+- **Brent autopsy (Ryan caught it twice)**: first live selections kept picking
+  KXBRENTMON-26AUG31 (rank 0.094) — a "new_event" promo, $20/18h window, near-empty
+  book. It earned ZERO all day (zero estimate rows). Root cause: `target_size_fp`
+  (the qualifying door — pool pays NOBODY until that many contracts rest) was parsed,
+  carried as c["target"], and never checked; Brent's door is 1,000 vs 62 resting.
+  The empty books pool-per-rival loves are exactly the ones that can't qualify —
+  rival absence in month-locked small pools is CONSENSUS, not alpha (Ryan's law).
+- **Three formula gates now live**: (1) door gate — skip unless qy+qn+2S ≥ target
+  (qy/qn were built for this and never wired); (2) hard max fill-lock 7 days
+  (kills every monthly; replaces derate-only); (3) min pool $10/day. Lock carry +
+  PROGRAM_END_TS exclusion + two-pass close fetch (finalists only) still in front.
+- Funding doors deliberately NOT done for big doors: Brent would cost ~$450-600
+  resting to unlock ≤$10/side-window. Doors of 10-100 self-fund via our 2×30 seats
+  and pass the gate naturally.
+- Post-fix selection: gas 4.100 both sides (17c/82c, rank 0.169) — verifying wider
+  re-pick as sweep coverage climbs (~1.7k/5.4k @ 260 books/cycle). Bankroll $378,
+  in-flight $622, realized today −$31.
+- Sweep raised VIRGIL_FORMULA_SWEEP_N=260; selection metadata pool_day/days_left
+  persist as zeros (cosmetic, open).
+
+## EARLIER 2026-08-02 ~3:15 AM: FORMULA MODE LIVE (commit d9948ce + coverage gate)
 - Deployed VIRGIL_MODE=formula: the backtested allocator (rank = pool$/window-day ÷
   (rivals+2S); top 40, ≤5/family, S=30 BOTH sides at joins; 4h rebalance gated on
   ≥60% depth-cache board coverage; catastrophe shell only: day-stop 20%, $50 rung
