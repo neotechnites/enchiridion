@@ -3,7 +3,36 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-07-31 ~4:20 PM MT: VIRGIL LIVE
+## CURRENT — 2026-07-31 ~7:30 PM MT: VIRGIL v2 (v4 economics) LIVE on $700
+- **Relaunched 7:26 PM MT** after a full economics rebuild. Day-1 lessons, all measured:
+  $10 dust seats earn ~nothing; quoting at stale best levels scores ~zero (halving/cent);
+  quoting AT mid in same-day-settling thin books = informed-flow food ($376 converted,
+  $193 of it dying JUL31 rain); restarts were resetting fill budgets (fixed: rebuilt from
+  ledger); fills must charge the earn rate via v4's hurdle φ·d/p, NOT as 100%-of-float
+  (that collapsed the book to $52).
+- **Virgil now runs v4's exact economics** (ported from lip_maker_v4.py with provenance):
+  ρ=pool/window-hours; rank/fund by ρ/(2pS) first-dollar rate, S in contracts
+  (max of live book, historical tape); water-fill $10 slices to equalized r*; hurdle
+  φ·d/p with d=min(7¢,p); pinned exclusion; quote at reference; pair-sum ≤99¢. Rails
+  kept: never-sell, $50/rung/day fill budgets (persist across restarts), conversion cap
+  20%/day WITH settlement-lag weighting, per-source swing ≤20%, tick-floor refusal
+  (Ryan's order), φ floor 0.02 unless 20k+ contract-hours (Ryan: never assume φ=0).
+- **30-day tape measurement (ladder_days.md, ratify-worthy): treasuries are the business**
+  (+$20-26/day/series at receipt-anchored 2.3% share, breakeven 0.2-0.6%, worst day −$28);
+  **gas is breakeven-to-negative** (breakeven 2.20% vs achieved 1.25-2.28%, worst day
+  −$340, negative skew) — matches the Jul27 receipt day exactly (gas $38.80 paid vs
+  ~$39 fill damage = wash; TREASURIES were the real earner). Tight (1¢) beats wide;
+  small share beats large. Treasury churn doubled late in sample — re-measure weekly.
+- **Tonight**: zero placements until Denver midnight (today's $368 conversion remembered
+  → budget correctly exhausted at $700 capital/$140 cap). At midnight: rain AUG01/02
+  pairs (~$10/side = ~90% of those tiny sides — saturated share, NOT dust; the overnight
+  estimates feed answers whether dominated rain sides pay dollars or pennies) + gas
+  26AUG02 small. Monday: treasury dailies = the real test. Monitor agent briefed,
+  reports 7 AM MT.
+- ~$376 in positions riding (JUL31 rain + gas AUG01 settle tonight; ~$40 long-dated).
+- Kill: `sudo systemctl stop virgil` (cancels own vg-* orders only; account shared).
+
+## PRE-VIRGIL-v2 — 2026-07-31 ~4:20 PM MT: VIRGIL LIVE
 - **VIRGIL is the LIP maker now** — new standalone package `tools/virgil/` (nestor worktree
   nestor-wt-lipv5), NOT a lip_v5 version. Five boxes: alpha (rate = share×pool/2×presence,
   rank by marginal rate) / risk (conversion cap 20%/day HARD — Ryan; swing √(Σw²(1−p)/p) ≤
