@@ -3,7 +3,57 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-01 ~1:15 PM MT: Virgil v3 LIVE, deploying under receipt-prior Kelly
+## CURRENT — 2026-08-02 ~3:15 AM MT: FORMULA MODE LIVE (commit d9948ce + coverage gate)
+- Deployed VIRGIL_MODE=formula: the backtested allocator (rank = pool$/window-day ÷
+  (rivals+2S); top 40, ≤5/family, S=30 BOTH sides at joins; 4h rebalance gated on
+  ≥60% depth-cache board coverage; catastrophe shell only: day-stop 20%, $50 rung
+  budgets, tick floor, pinned, bankroll=mandate−in-flight). Depth sweep reads
+  ~120 books/cycle over the full ~3.7k reward board (fixes the NFLT100 scanner
+  blindness; NFL cluster sits just under T=0.05 — admitting it = VIRGIL_FORMULA_T
+  ≈0.035, Ryan's knob). Pre-deploy adversarial review: 3 money bugs fixed (stale
+  maintain re-cross loop, locked-book ask-parking, dead-program persistence);
+  123 tests green. THIS deploy was the LAST book-flatten (hygiene live: stops
+  preserve the book, boots adopt vg-* back).
+- Capital: ~$271 cash at deploy; ~$710 of already-settled EV posts through the
+  morning → ~$980; ~$1,050 by Sunday night. No selling (spread+fees > waiting).
+- Expected next 24h: backtest baseline ~$200-220 accrued; conservative row
+  $70-100; the decisive live measurement = weather fill costs (backtest's one
+  unverified leg) + per-seat accrual vs backtest prediction (monitor reports 8 AM).
+
+## EARLIER 2026-08-02 ~1 AM: THE ANSWER, measured — and the formula that backtests $100+/day
+- **Why v4 earned and Virgil didn't (three fresh-agent investigations, all numbers):**
+  presence VOLUME was never the gap (both ~7k contract-hours/day). The gap is
+  placement quality, 10-50x: (1) pond size — v4 avg 74 rival contracts (share 0.61),
+  Virgil 491 (share 0.15); (2) cliff dispersion — v4 cleared 17 programs/kept 74%,
+  Virgil cleared 2 of 187/forfeited 79%; (3) one-sided (v4 both sides 83/117 mkts,
+  Virgil 24/103); (4) staleness (2s vs 148s requote; 1.0c vs 1.8c from ref = 1.78x
+  score). Same-market control: gas, $30.60 vs $5.22 per 1k ch. Presence autopsy:
+  book empty 41% of clock; 47 operator restarts (58% of $-gap); 59% of placements
+  were no-op churn; Mallory evicted 17x by plan jitter, never by any gate; gates
+  only 6% of the gap. Comp map (40M deltas): NO free pools (3 of 2,091), rivals are
+  24/7 bots, depth DOUBLED in 24h = August program rollover being resaturated —
+  v4's day was the July-tail lull. Unfound: KXNFLT100 cluster (25 mkts x $100/30d,
+  15-25 rivals, hidden from pool/day scanners — ours included).
+- **THE FORMULA (backtested on real 3-day books, tuned 7/30-31, FROZEN-validated 8/1):**
+  every 4h rank ALL reward markets by pool$/window-day ÷ (rivals near touch + 2S);
+  top 40, ≤5/family, S=30 contracts BOTH sides at the joins, $1k collateral.
+  Net: +$48(4h tape)/+$227/+$261 — validation day best. Rate $5.8-6.9/1k ch sits
+  between the real anchors (Virgil 1.69, v4 17.8). Survives depth+100%, φx2,
+  share-cap 0.50 singly; knock-out of top-8 clusters still $82-98/day. CAPACITY
+  binds, not capital ($1k→$261, $5k→$273). Thinnest leg: weather fill costs
+  (unmeasured in ladder study) — measure live first. Uptime linear.
+- **Built tonight (committed 5bbd4ea + formula-mode in flight, NOT deployed):**
+  presence hygiene — restarts preserve the book + boot adopts vg-* back; sticky
+  seats + 1.15x incumbent hysteresis (ends Mallory evictions); size-to-free-bank
+  (60% floor, presence outranks the hurdle below it — flagged econ change).
+  v4-mode draft shelved (Ryan: not running a literal v4). Formula mode: builder
+  running (depth-cache full-board rotating sweep fixes the NFLT100 scanner
+  blindness; V4Shell catastrophe gates only).
+- Live machine: still on the pre-hygiene engine, untouched tonight. Rewards accrued
+  this window: $28.66 total, only $9.92 above cliffs (172 sub-$1 crumbs = the
+  dispersion disease, now formula-target #2).
+
+## PRE-FORMULA — 2026-08-01 ~1:15 PM MT: Virgil v3 LIVE, deploying under receipt-prior Kelly
 - **The allocator (Ryan-ratified by construction, built today):** deploy to the
   liquidity edge (mandate $1,000; in-flight fills release at settlement, stale
   closed-market collateral force-released); Kelly-with-RECEIPT-PRIOR source caps
