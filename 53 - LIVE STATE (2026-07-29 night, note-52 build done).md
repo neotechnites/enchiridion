@@ -8,8 +8,16 @@
   markets passing his two questions (earns? / too risky?); "20% swing" bounds the
   SWING OF FILLS (avg price per contract of the position book), NEVER deployment;
   resting is not risk (fills EV-neutral); don't add where our position is already big
-  (source walls); take empty pools where a reference exists. Builder implementing
-  locally; **nothing deploys until Ryan is back** (his order).
+  (source walls); take empty pools where a reference exists. **BUILT + 3-lane
+  adversarial review (units / rail-bypasses / ledger-integrity): 19 findings fixed,
+  suite 49 green, commit f42c9d1. Money bugs caught pre-deploy: NO-side fills booked
+  on the yes axis (a $10 lock read as $190 — the "ATL $338 fill storm" was largely
+  this illusion); shared-account settlement revenue crediting our bank ($507 for $7);
+  boot blind to fills-while-down (now trued up from wire positions); reconcile/plan
+  thread race minting phantom fills (one lock now); source wall splitting across
+  window boundaries (now keyed by market close, Denver time); --live now REFUSES to
+  boot without the bank baseline. Operator notes in the fixer report. NOTHING deploys
+  until Ryan's go** (his order).
 - Day-2 fixes already live: feed pagination 20→140 pages (20 pages MISSED the new gas
   windows entirely — why no gas seated overnight); fill budgets keyed (market,side)
   not price (ATL filled $338 by minting a fresh $50 budget per re-pegged cent); source
