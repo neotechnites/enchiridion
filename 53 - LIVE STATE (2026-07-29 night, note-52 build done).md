@@ -3,7 +3,27 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-01 ~1:45 AM MT: Virgil live (old risk model); v3 risk redesign building, DEPLOY HELD for Ryan's go
+## CURRENT — 2026-08-01 ~1:15 PM MT: Virgil v3 LIVE, deploying under receipt-prior Kelly
+- **The allocator (Ryan-ratified by construction, built today):** deploy to the
+  liquidity edge (mandate $1,000; in-flight fills release at settlement, stale
+  closed-market collateral force-released); Kelly-with-RECEIPT-PRIOR source caps
+  f* = (y/carry)·p/(1−p) — y floored at 5%/day on 300+-contract walls (receipts:
+  v4 $71/day on $250; McMorrow 3.7%/day), carry = 1 + min(1,φ·24)·lag with the
+  wall-JOIN φ prior 0.005 (v4 tape); v4 join-the-wall pricing (two-sided by
+  construction, 9-fills-in-14h queue protection); ruin guard at 1σ=bank; $50/rung
+  budgets; cross-alarms; no yield floor / pool cap / market clamp (subsumed).
+- **Book now: $229 resting (Fox-mention $119, gas daily 4.090 $100, PHX rain $10)
+  + ~$540 real open positions** (rain AUG01/02 settle tonight-tomorrow, gas AUG02
+  tonight) = at the honest liquidity edge. Caps widen as accrual proves yields
+  (attribution feeds y). Treasuries Monday = first full-size day.
+- Day-2 lesson chain (each measured, each fixed): stale in-flight starved the bank
+  ($743 counted vs ~$560 real — closed-market release added); lag must price the
+  FILL, not the seat (carry, not /30); the busy-φ fallback was an artifact of at-mid
+  quoting; the 1,000-contract door is fundable when affordable (our contracts count);
+  top-N clamp starved ladders once Kelly caps existed.
+- 3-lane adversarial review (19 findings) all deployed; suite 49 green.
+
+## PRE-NOON — 2026-08-01 ~1:45 AM MT: v3 risk redesign building, deploy held
 - **Ryan's overnight directive (his words are the spec):** deploy 100% of capital into
   markets passing his two questions (earns? / too risky?); "20% swing" bounds the
   SWING OF FILLS (avg price per contract of the position book), NEVER deployment;
