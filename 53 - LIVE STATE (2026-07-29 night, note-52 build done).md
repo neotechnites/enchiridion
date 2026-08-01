@@ -3,7 +3,27 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-07-31 ~7:30 PM MT: VIRGIL v2 (v4 economics) LIVE on $700
+## CURRENT — 2026-08-01 ~1:45 AM MT: Virgil live (old risk model); v3 risk redesign building, DEPLOY HELD for Ryan's go
+- **Ryan's overnight directive (his words are the spec):** deploy 100% of capital into
+  markets passing his two questions (earns? / too risky?); "20% swing" bounds the
+  SWING OF FILLS (avg price per contract of the position book), NEVER deployment;
+  resting is not risk (fills EV-neutral); don't add where our position is already big
+  (source walls); take empty pools where a reference exists. Builder implementing
+  locally; **nothing deploys until Ryan is back** (his order).
+- Day-2 fixes already live: feed pagination 20→140 pages (20 pages MISSED the new gas
+  windows entirely — why no gas seated overnight); fill budgets keyed (market,side)
+  not price (ATL filled $338 by minting a fresh $50 budget per re-pegged cent); source
+  walls count unsettled fills; realized settlement P&L adjusts the working bank; price-
+  scaled source wall (20%×bank×√(p/(1-p)), $200 absolute ceiling — Ryan's numbers).
+- Measured tonight: post-never-cross φ = 0.18-0.27 in rain (was 1.0+ — the fill storm
+  was largely our own crossing). 105 settlements returned ~$501 overnight. ATL position
+  ($338 at ~6c NO) settles ~1 AM MT — outcome in the morning report.
+- Treasuries Monday (weekend = no UST). Gas 26AUG02 in scan since the pagination fix;
+  books empty at 1 AM, seats fund when makers populate them.
+- Monitor agent on watch; 7 AM MT consolidated report (accrual/seat, ATL outcome,
+  gas seating).
+
+## PRE-v3 — 2026-07-31 ~7:30 PM MT: VIRGIL v2 (v4 economics) LIVE on $700
 - **Relaunched 7:26 PM MT** after a full economics rebuild. Day-1 lessons, all measured:
   $10 dust seats earn ~nothing; quoting at stale best levels scores ~zero (halving/cent);
   quoting AT mid in same-day-settling thin books = informed-flow food ($376 converted,
