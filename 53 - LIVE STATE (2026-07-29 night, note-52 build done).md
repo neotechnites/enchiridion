@@ -3,6 +3,37 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
+## CURRENT — 2026-08-02 ~12:45 PM MT: SPEC-CORRECT MACHINE LIVE AT $1K DEPLOY
+- Rebuilt on the CFTC spec end-to-end and LIVE (commits c148109..63d5198):
+  exact scorer module (lip_score.py, 14 tests) drives selection share; deficit-
+  affordable universe (not target<=600 — big pools whose books already qualify
+  admit at pro-rata); derived sizing max(cliff completion, sqrt water-fill) с
+  $50/side resting notional; greedy yield/$ fill; source gross cap (half
+  deploy, floored one pair); deploy/risk split (VIRGIL_DEPLOY_USD=1000,
+  capital 1000, fresh baseline) — day-stop/-bankroll era-scoped after legacy
+  settlements tripped the stop at -$233.
+- RISK NOW STATE-BASED (bot-standard): fills recorded, never bench (asymmetric
+  first, then removed entirely); swing = net caps + notional + source cap +
+  exchange order-group breaker (armed for real — contracts_limit must be INT,
+  was silently 400-bad-request all along); bleed = era day-stop -$200.
+- PLACEMENT: pre-send BBO recheck on every placement (skip, never chase —
+  morning gas crossed a moved book for ~$200 of instant fills, budgets capped
+  it); DF/cutoff-gated behind-the-touch (df>=0.7 AND depth-ahead < TargetSize
+  else cutoff zeroes us — Ryan's catch), re-evaluated EVERY fast-lane pass;
+  maintain clamps legality only (lane owns pricing).
+- Boxes: completing side never benched/cancelled (Ryan's law: no reason ever);
+  recovery lane persists exits for all position markets.
+- MEASURED: overnight new-era book accrued ~2x the 0.25-calibration floor
+  (APRPOTUS 39.3 crossed $1 payable). Noon book: ~$920 working, stored
+  prediction $66.74/day floor (realistic $60-130). Truth mode: 1 AM board
+  $12.29/day, 11 AM board $21.45/day @ $250.
+- Constants ledger (all disclosed): 0.25 calib + 30-min pre-close (lip-maker
+  reconciled data), $50/side + day-stop (ratified), 6h/24h exclusions (our
+  receipts), 0.005/day carry + DF>=0.7 + breaker 400 (judgment, data-pending).
+- NEXT: measured-vs-predicted reconciliation (predictions stored per seat);
+  markout control + observed-share blend once data accumulates; websocket
+  build (deferred by Ryan); rebalance 4h + rollover trigger.
+
 ## CURRENT — 2026-08-02 ~2 AM MT: VIRGIL OFF; TRUE LIP SPEC FOUND (10-agent research sweep)
 - **Virgil stopped+disabled by Ryan** after hourly-temp incident: rank artifact
   admitted 1h-window promos; toxic near-close fills; my liquidation retries
