@@ -3,6 +3,49 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
+## CURRENT — 2026-08-02 ~2 AM MT: VIRGIL OFF; TRUE LIP SPEC FOUND (10-agent research sweep)
+- **Virgil stopped+disabled by Ryan** after hourly-temp incident: rank artifact
+  admitted 1h-window promos; toxic near-close fills; my liquidation retries
+  STACKED (positions-feed lag) and flipped a winning short into 98-99c longs
+  (~$300 damage, mine). HARD RULE saved to memory: never touch positions
+  without fresh explicit permission; money orders never roll forward.
+- **THE REAL LIP SPEC (CFTC filing Aug-2025 + Feb-2026 amendment; cross-
+  confirmed by derekduenas/lip-maker, a production farmer w/ payout
+  reconciliation)**: score = size x DF^(ticks from SAME-SIDE BEST BID); DF
+  per-market = discount_factor_bps/1e4 (0.20-1.00); TargetSize walk from best
+  = cutoff, deeper levels score ZERO, side w/o TargetSize pays nobody; since
+  Feb-28 a snapshot lacking TargetSize depth on EITHER side pays NOBODY
+  (market-wide, not per-user); pools per-market for the whole Time Period
+  (period_reward = centi-cents for the PERIOD, $10-1000/day bounds); $1 min
+  per program-period (dilution, no per-window forfeit); scoring finalized
+  AFTER program end, estimates non-binding, unclaimed pool evaporates;
+  presence linear (my f^1.15 was fitting the two-sided-exclusion artifact).
+  Reality pays ~0.25x naive theory (lip-maker's reconciled calibration).
+- **At $250: only small-TargetSize markets are viable** (share ~0 where
+  target>=1000). Sizing = cliff-first (target - competition + ~30 buffer),
+  THEN water-fill残 marginal yield. qual_rate (fraction of paying snapshots)
+  <0.3 => market pays ~$0 regardless of placement.
+- **Weather: never quote two-sided** (monotone observable ratchet; the only
+  sound Kalshi MM quotes one side, blacklists range buckets; obs latency:
+  api.weather.gov lags 20-45min vs aviationweather.gov METAR). One-sided
+  still earns LIP (two-sided snapshot rule is market-wide).
+- **Ops unlocked**: WS (wss://external-api-ws.kalshi.com/trade-api/ws/v2,
+  zero REST cost, fill channel w/ post_position_fp kills positions-lag);
+  real budget 100 write tok/s (create=10, cancel=2) => ~8 requotes/s;
+  amend endpoint (atomic, closes cancel/fill race); decrease keeps queue;
+  queue_positions endpoint; ORDER GROUPS = exchange-side breaker
+  (contracts_limit per rolling 15s cancels whole group); STP required in v2;
+  v1 /portfolio/orders paths are 410.
+- **Safety stack to adopt**: pre-send BBO recheck, identical-quote cache,
+  zombie cancel >=3c off best, pull all 30min pre-close (+$60/wk audited),
+  volatility backoff, toxicity score (consec same-dir fills + markout +
+  fill rate -> widen), 200ms frame-staleness discipline.
+- **REBUILD PLAN (presented, awaiting Ryan's go)**: P1 wire (WS mirror,
+  amend, order groups, STP/path audit) -> P2 TRUTH MODE (exact CFTC scorer
+  on live snapshots, ZERO orders: per-market qual_rate + what $250 earns
+  where) -> P3 live only where measurement says it pays. Mandate 250.
+  Research agents' repo clones in session scratchpad repos/.
+
 ## CURRENT — 2026-08-01 evening MT: FORMULA HARD RULES + QUALIFYING DOOR (commits 8cb7059, c24ec1b)
 - **Brent autopsy (Ryan caught it twice)**: first live selections kept picking
   KXBRENTMON-26AUG31 (rank 0.094) — a "new_event" promo, $20/18h window, near-empty
