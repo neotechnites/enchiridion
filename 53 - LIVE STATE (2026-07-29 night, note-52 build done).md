@@ -33,9 +33,27 @@
   maintain re-joins the fresh book every cycle (1c sticky bounds churn).
   Backstop close_time bug also fixed (b1d98a8): ticker-embedded settle date
   overrides Jan-2027 placeholder closes that excluded 93/120 candidates.
-  UNEXPLAINED: GROK 4x under in a 1c book; NYC rain 9x under at touch —
-  researcher agent fitting the true scoring model (total-book dust dilution
-  suspected) + re-tuning S/M/K/T grid on rows.pkl; honest $/day pending.
+  UNEXPLAINED-then-SOLVED: the refit (7 live points + 499 measured ladders,
+  logRMS 0.576) found the real mechanism = **WINDOW PRESENCE f^1.15** — credit
+  scales with (elapsed window/window length)^1.15, so day-one programs pay
+  ~nothing (THIS zeroed Brent + the mention markets; door and distance decay
+  were both wrong: door measured FALSE — TRUMPENDORSE-A3 paid at 836/1000;
+  decay cancels at the touch, rivals decay too, rho=0.878 tight/0.666 wide).
+  Honest re-run: frozen S30/M40/T.05 LOSES money (−$32 on 07-31); tuned
+  winner S=30 M=10 K=10 T=0.01 nets +$23/+$32/day at ~$300 collateral
+  (cliff punishes thin spreading; capital NOT binding). Deployed c148109.
+- **CAPITAL ONE-WAY CONVERSION SOLVED (Ryan's box demand, ~1 AM 08-02)**:
+  fills were near-perfectly one-sided per market (BOS 361y/0n, ATL 0/528);
+  executor L1 never-reduce REFUSED the box-completing side 237x while the
+  eaten side re-armed 12+ times under the $50 rung budget. Fixes live:
+  box_ok seats bypass L1 (maker box completion = Kalshi returns $1/pair,
+  never-sell bars taker liquidation only); net-exposure cap (side net-long S
+  stops re-arming, completing side keeps its join); dup-order leak fixed
+  (SEA double-yes). Suspects left: fit's own share term unvalidated
+  (degenerate share≡1 fits better — sample lacks power); period_reward may
+  be PER-DAY not per-window (all windows end 04:00Z — if so long windows
+  are ~4.5x richer; check one program's accrual across a 04:00Z boundary);
+  lipband_capture.py records empty books (top-level orderbook_fp, 1-line fix).
 
 ## EARLIER 2026-08-02 ~3:15 AM: FORMULA MODE LIVE (commit d9948ce + coverage gate)
 - Deployed VIRGIL_MODE=formula: the backtested allocator (rank = pool$/window-day ÷
