@@ -23,6 +23,19 @@
   in-flight $622, realized today −$31.
 - Sweep raised VIRGIL_FORMULA_SWEEP_N=260; selection metadata pool_day/days_left
   persist as zeros (cosmetic, open).
+- **DISTANCE DECAY + REQUOTE (3d57ae8, same evening)**: 50-min live calibration —
+  tight books at the touch earn ON model (gas $0.32 vs $0.35 pred); wide books
+  10-30x under EVEN at the touch (SNAP 7c spread $0.027 vs $0.49); stale prices
+  lethal (SATX 36c below moved touch, dead). Kalshi pays 0.5^(cents from
+  reference≈mid) — the old rank/backtest had NO decay, so dollar forecasts
+  ($227/$261) were optimistic by the spread's decay factor. Fixes live: rank ×=
+  0.5^half-spread (empty-and-tight is gold, empty-and-wide is a mirage) +
+  maintain re-joins the fresh book every cycle (1c sticky bounds churn).
+  Backstop close_time bug also fixed (b1d98a8): ticker-embedded settle date
+  overrides Jan-2027 placeholder closes that excluded 93/120 candidates.
+  UNEXPLAINED: GROK 4x under in a 1c book; NYC rain 9x under at touch —
+  researcher agent fitting the true scoring model (total-book dust dilution
+  suspected) + re-tuning S/M/K/T grid on rows.pkl; honest $/day pending.
 
 ## EARLIER 2026-08-02 ~3:15 AM: FORMULA MODE LIVE (commit d9948ce + coverage gate)
 - Deployed VIRGIL_MODE=formula: the backtested allocator (rank = pool$/window-day ÷
