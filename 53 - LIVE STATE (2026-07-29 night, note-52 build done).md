@@ -54,6 +54,21 @@
   be PER-DAY not per-window (all windows end 04:00Z — if so long windows
   are ~4.5x richer; check one program's accrual across a 04:00Z boundary);
   lipband_capture.py records empty books (top-level orderbook_fp, 1-line fix).
+- **STALE FILLS WERE NEGATIVE EV, measured** (Ryan's autopsy, ~9:45 PM 08-01):
+  7/7 JUL31 rain naked positions settled $0; AUG01 cohort -$127 pending on
+  $199 basis. Not variance — adverse selection on frozen quotes (fills only
+  when informed flow ran through us). NOT a predictive signal: info arrives
+  WITH the fill; post-fill price already correct ("take the other side" has
+  no edge a priori — flow-continuation is testable from our 131 ledger fills,
+  open R&D). Mandate back to 1000 (the +500 was stop-gap, returned).
+- **4a523c0 (~11:30 PM MT 08-01)**: FAST REPEG LANE — daemon thread cycles
+  ONLY the selected seats' books, surgically re-pegs resting orders to fresh
+  joins (executor.repeg: min-life, 1c epsilon, pair guard; never creates
+  sides) — v4's ~2s cadence class on our 10 seats within the 3 req/s budget.
+  Plus ROLLOVER-TRIGGERED REBALANCE: >50% of selected seats dead with their
+  programs -> re-pick now (n0 baseline prevents thin-selection churn); kills
+  the ~90-min idle gap after the nightly 04:00Z window close. Websocket feed
+  = queued R&D (client is REST-only).
 
 ## EARLIER 2026-08-02 ~3:15 AM: FORMULA MODE LIVE (commit d9948ce + coverage gate)
 - Deployed VIRGIL_MODE=formula: the backtested allocator (rank = pool$/window-day ÷
