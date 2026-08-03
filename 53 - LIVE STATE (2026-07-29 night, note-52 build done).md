@@ -3,7 +3,42 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-03 ~9 AM MT: RESEARCH VERDICT + CLASS-BASED MACHINE
+## CURRENT — 2026-08-03 ~EVENING MT: SEATS ENGINE BUILD (post-audit)
+- **True P&L (audited, coid-level, reconciles to Kalshi −$1,112)**: loss is
+  97% LIP-family: virgil −$866/2.8d, lip_v5 −$215, v4 −$138; nestor +$2
+  (never the problem). Virgil fills: 91% of losses from sub-15c acquisitions
+  (wings); boxing paid >$1/pair (−$65/day pure arithmetic bug); diesel −$158
+  = day-one ladder, both tails filled, settled center.
+- **Reward truth**: winner-take-all at touch (DF=0.5/tick; best level takes
+  median 99.2% of side reward). Capital elasticity ~0.07 (more $ in same
+  book earns ~nothing); scale = seat COUNT in quiet books. Pools real
+  (units 1e-4 verified vs receipts). $1/period floor burned 23% of accrual.
+  Realized share median 0.30%, max 10.6% → receipts calibration K≈0.06
+  (survey's K=0.243 was fit to our best-ever day).
+- **Audits killed**: value-anchored making (−27c/ct — market prices gas 10x
+  tighter than any public model; profit = passive symmetric inventory, not
+  signal-chasing), seating dead pools (fills eat 24x reward), taker
+  inversion (takers lose −1.5c), set-sum arbs (zero exist), 34/79 survey
+  seats (24 = marketable-seat pricing bug, 10 = stale-book evaporation).
+- **What survived every check**: quiet-seat portfolio $25-40/day at K=0.06
+  ($1k, 43 audited seats, 68% concentrated UST+diesel, 74% expires <24h →
+  reseat 3-4x/day); taker stack $19/day bounded (open-hour +11c/ct h0-1
+  cell, temp h-6 cutoff, maker leg); 7-day replay: spec +$174 vs lip_v5
+  −$214 / virgil −$707 on the same days, fills CONTROLLED (1.2/seat-day,
+  worst single −$11). Replay covers only 7% of pool — hourly-temp
+  ($144k/day since Aug 1) is unbacktestable (books vanish at close); our
+  one live datapoint: 1.86% of a $1,440 pool in 1 hour.
+- **DEPLOYING TONIGHT (Ryan go)**: new seats.py (~500 lines, isolated from
+  virgil.py, vgs- coids) — join-don't-lead touch seats, ≥15c floor,
+  marketable guard (never bid through live offer), box guard ≤99c, $50/mkt
+  escrow, family cap 4, evict-on-fill + day blacklist, $50 day-stop /
+  $100 total kill, K=0.06 selection, fresh-book-at-placement. $200 day one
+  → $1k if scoreboard (estimates accrual + fill ledger) matches. Swing
+  tolerance ratified $200/day. Estimates=cash ratified by Ryan (Credits
+  page; payments have always been ≥ estimates).
+- Artifacts: VPS /home/ubuntu/{an,qual,audit,var,replay7,taker,fuelq,curse}.
+
+## PRIOR — 2026-08-03 ~9 AM MT: RESEARCH VERDICT + CLASS-BASED MACHINE
 - **Ryan's 0/54 instinct proven**: residual (unboxed) inventory reaching
   settlement lost 54/54 lifetime (P<1e-3 fair; vs measured 63.4% maker win
   rate P=2.7e-24). Mechanism: residue = the informed side's discard pile;
