@@ -3,6 +3,41 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
+## CURRENT — 2026-08-03 ~9 AM MT: RESEARCH VERDICT + CLASS-BASED MACHINE
+- **Ryan's 0/54 instinct proven**: residual (unboxed) inventory reaching
+  settlement lost 54/54 lifetime (P<1e-3 fair; vs measured 63.4% maker win
+  rate P=2.7e-24). Mechanism: residue = the informed side's discard pile;
+  in Class-A books fair value is a PUBLIC TICK STREAM (Pyth/CF candles;
+  METAR locks the day's high hours pre-close; free 4:34pm intermediate CLI
+  pins settlement 85.5% w/ 7.5h left; AAA ~85% predetermined by wholesale
+  lags OOS R2 0.64). ~100% pickoff there is EQUILIBRIUM — exit, never
+  optimize. Counterparty = ~2,000 small latency bots (not SIG), structural.
+- **Viability (Whelan 313,972 obs; Bartlett-O'Hara 41.6M trades)**: Kalshi
+  makers +1-2c/contract aggregate, ALL from favorite-longshot bias: maker
+  ≥50c +2.6%, ≤10c −60%; final-10-min 10-40c contracts "resolve favorably
+  almost never" (24M trades). Doctrine: residual must land on FAVORITES;
+  flat before prints; box>95% or rewards cover; binaries have NO hedge near
+  settle — flat is the only protection.
+- **Ceiling ($1k, documented)**: nothing reaches $200/day. Stack: LIP $3-10
+  net (program ENDS SEPT 1 — 4wk runway), weather-informed $2-8+ (running-
+  max floor trades are deterministic), AAA lag model small, favorite-bias
+  $1-5. Realistic $15-40/day. Reading public feeds = legal (Rule 5.17(y)
+  covers pre-publication info only).
+- **MACHINE NOW (b73cbac)**: websockets live (ws.py, lane ws-first);
+  blocklist = prints + SIG flagships + lip-maker audited losers + long-
+  dated one-shots; maker-fee series gate (130 double-taxed econ prints);
+  absorbability cap (rest ≤ opposing depth); volatility backoff; asymmetric
+  budgets → no benches; boxes never cancelled; era-scoped day-stop/deploy;
+  hourly re-rank + rotation threshold; breaker 2000 armed (int bug found).
+  Book = Class-C only (mentions/politics — no observable underlying;
+  insider risk episodic not structural).
+- **PENDING RYAN**: build order for (a) METAR weather feed + deterministic
+  lower-bound trades, (b) AAA lag model, (c) favorite-side quoting bias.
+  Rewards paid receipts: ~$32 estimates → counter (phantom question live).
+- Research artifacts in session scratchpad; 8 agent reports (viability,
+  ecology, blocklists, feeds, forecastability, small-capital, betting
+  exchanges, ws build).
+
 ## CURRENT — 2026-08-02 ~12:45 PM MT: SPEC-CORRECT MACHINE LIVE AT $1K DEPLOY
 - Rebuilt on the CFTC spec end-to-end and LIVE (commits c148109..63d5198):
   exact scorer module (lip_score.py, 14 tests) drives selection share; deficit-
