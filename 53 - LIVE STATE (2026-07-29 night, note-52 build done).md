@@ -27,10 +27,19 @@
   order surgery; spec→build→test→one deploy. Recovery path that worked:
   session file-history for exact code, seats_log.jsonl replay for state
   truth, engine's own boot/reseat for the book.
-- **9pm batch (BATCH-2026-08-04.md, 13 fixes) NOT deployed** — Ryan: park
-  it for now. seats.py/tests still uncommitted in the worktree; review
-  requires a frozen commit first. Prior rulings that stand: rotation OFF
-  (one-time reshape, not standing); no KXYT ban; open dials.
+- **Evening tunes LIVE (~6pm MT, one restart, commit 12ba669)** — Ryan
+  ratified: total-stop $200; mention cap REMOVED (999999 — "it hasn't
+  mattered"); earnings-calendar T-2h exits (data/earnings_calendar.json,
+  mtime-hot-reload; LYFT+ABNB call Wed 20:30Z → exit 18:30Z; others fall
+  back to safe 18:00Z-day-before heuristic); dials MIN_POOL 5→4,
+  MAX_VOL24 500→1000. Boot after deploy: 36/36 orders adopted, 0 gone.
+  Git NOW the law: 5ddbc37 = parked 13-fix batch (pre-revert, not
+  deployed), 12ba669 = LIVE baseline (3pm v20 + tunes).
+- **Parked by Ryan**: phantom-fill immunity, exit rework, not-open ban,
+  repeg re-qual, free-balance floor (the 4 unverified + structural bugs);
+  measured-over-model; recency boost; one-sided half-funding; manx-aware
+  placement; fragility gate; telemetry. Prior rulings stand: rotation OFF;
+  no KXYT ban; open dials.
 - Key measured facts standing: 4.3%/day per $ flat across qualifying seats
   (6.4% overnight); MEMB own-the-level = only premium; fat pools crowd flat
   in hours; premium is captured AT LISTING; supply saturates ~$2.6k escrow
