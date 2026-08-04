@@ -35,11 +35,19 @@
   MAX_VOL24 500→1000. Boot after deploy: 36/36 orders adopted, 0 gone.
   Git NOW the law: 5ddbc37 = parked 13-fix batch (pre-revert, not
   deployed), 12ba669 = LIVE baseline (3pm v20 + tunes).
+- **Second tune wave LIVE (~6:40pm MT, commit fca9000, one restart, boot
+  36/36)**: one-sided seats fund at HALF cap ($30 — full-cap was
+  double-paying a lone side); fragility gate (rival-only side score >=46
+  both sides, SEATS_MIN_SIDE_SCORE); share+depth telemetry (seat_share
+  per estimates poll, touch_depth per 30min — the screen's food).
 - **Parked by Ryan**: phantom-fill immunity, exit rework, not-open ban,
-  repeg re-qual, free-balance floor (the 4 unverified + structural bugs);
-  measured-over-model; recency boost; one-sided half-funding; manx-aware
-  placement; fragility gate; telemetry. Prior rulings stand: rotation OFF;
-  no KXYT ban; open dials.
+  repeg re-qual, free-balance floor (structural/unverified bugs);
+  measured-over-model (Ryan: the RIGHT version is the calculable swap
+  rule — challenger modeled_rate×P(clears $1) vs incumbent measured rate,
+  minus forfeited sub-$1 accrual — v20 has NO voluntary-replacement path
+  today); recency boost (Ryan: rudimentary — the screen is the real
+  version); manx-aware placement (Ryan: don't). Rulings stand: rotation
+  OFF; no KXYT ban; open dials.
 - Key measured facts standing: 4.3%/day per $ flat across qualifying seats
   (6.4% overnight); MEMB own-the-level = only premium; fat pools crowd flat
   in hours; premium is captured AT LISTING; supply saturates ~$2.6k escrow
