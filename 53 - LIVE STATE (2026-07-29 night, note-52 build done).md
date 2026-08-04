@@ -3,7 +3,33 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-03 ~EVENING MT: SEATS ENGINE BUILD (post-audit)
+## CURRENT — 2026-08-04 ~3PM MT: SEATS LIVE AT $1,150, RATE MEASURED
+- **Measured rate: $35-38/day on ~$850-890 escrow (4.3%/day per $; three
+  clean hours agree within cents). Overnight thin-book premium 6.4%/day.
+  Realized +$2.99 today, 3 evictions ALL positive-or-flat. Payouts proven:
+  $76.31 legacy rewards hit cash overnight (~95c/$1 of estimates).**
+- Rank-compression proven 3 ways: qualifying seats earn ~flat ~4%/day;
+  model ordering = noise in the middle, signal at extremes. MEMB = the
+  exception that defines the next strategy: own-the-level seat (share~1
+  both sides) earns ~15%/day. Plan: screen for thin-stable touches (built
+  from week's tape, validating vs 20 measured seats) + penny-the-touch test
+  Wed (lead 1c in proven-quiet books = manufacture MEMBs). Size curve:
+  flat $18-60, concave at $100 in deep books (tests running: MEMB/CTCQ
+  upsized w/ own baselines, NBIS-UBER deep-book $100, $30 tier population).
+- Engine framework proven: evict/grace/family-bench/caps all fired
+  correctly; fills RARE (~0.2/seat-day) and cheap; day = fix-bugs-live
+  (walk starvation, class-cap increment, 429-flatten, cap-per-side) — cost
+  ~70% of one hour's rate, lesson: batch deploys only.
+- Batch tonight ~9pm MT: see nestor-wt-lipv5/tools/virgil/BATCH-2026-08-04.md
+  (11 fixes incl iso_ts fuel unlock + measured-rank rotation + exit rework;
+  dials flow<=1000 pool>=4). Wed: supply proof at noon mention-exit ->
+  gates deposit decision ($2k ~= $75-90/day measured math; capital only
+  converts via quality supply — extra $150 at bottom of ranking bought $0).
+- Ryan rulings: mentions default home; no reserved experiment capital;
+  swing tolerance $200/day; day-stop $100/total $200; estimates=cash
+  ratified (receipt now also proves it).
+
+## PRIOR — 2026-08-03 ~EVENING MT: SEATS ENGINE BUILD (post-audit)
 - **True P&L (audited, coid-level, reconciles to Kalshi −$1,112)**: loss is
   97% LIP-family: virgil −$866/2.8d, lip_v5 −$215, v4 −$138; nestor +$2
   (never the problem). Virgil fills: 91% of losses from sub-15c acquisitions
