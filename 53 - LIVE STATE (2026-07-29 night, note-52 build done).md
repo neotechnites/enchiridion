@@ -3,32 +3,34 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-04 ~7PM MT: POST-SPIRAL STATE, ENGINE STOPPED PENDING RESTART
-- **Day ledger (all positive)**: accrual ~$13-14 engine-attributed (clean rate
-  $35-38/day on ~$850, best hr $51.95); realized +$2.99 engine + $0.95 gas
-  loops (3 round-trips ~fee-free) ; payouts $76.31 cash landed (estimates→
-  cash ~95c/$ PROVEN); zero realized losses all day.
-- **Afternoon spiral (lesson, not loss)**: Claude hand-edited live orders/state
-  → resize-read-as-fill mass evictions, mispriced taker fills (~$29, exiting
-  +1c), book restored by hand. Rule now in permanent memory: NO manual order
-  surgery ever; spec→agent-build→test→one deploy; read files not memory;
-  code in git (initialized TONIGHT — was never under vcs).
-- **Book now (Ryan's 3pm composition, resting+earning, engine-proof manx ns)**:
-  10 mention pairs $30/30 (CELH x4, LYFT DOOR/BAID/NVID+MEMB, NBIS x2, WEN),
-  CTCQ, ABNB exits, gas remnants. ~$719 seats + $132 exit float. Engine
-  STOPPED+disabled; env neutralized to 3pm behavior (rotation 0, crosser off,
-  fragility off, deploy 1000, stops 100/200).
-- **Tonight's approved build (agent running)**: (1) not-open-market ban;
-  (2) phantom-fill immunity (evict only on real position change); (3) repeg
-  re-qualification; (4) free-balance floor; (5) dust-floor bug fix; (6)
-  calendar file (LYFT/ABNB Wed after-close → T-2h exits; pre-market stays 4am
-  default); (7) recency boost x1.5 <24h listings; (8) measured-over-model
-  protective floor; (9) one-sided half-funding; (10) manx-aware placement
-  (engine skips operator-held markets; inherits at natural expiry). Rotation
-  stays OFF (Ryan: the reshaping was one-time, not a standing rule).
-- **Restart contract**: engine cannot touch/double manx book; works free
-  budget only; inherits mentions Wed. Ryan rulings: no KXYT-specific ban;
-  family-escrow-cap and overnight-hold dropped; universe stays open-dials.
+## CURRENT — 2026-08-04 ~5:20PM MT: ENGINE RESTORED TO 3PM SELF, LIVE
+- **Engine LIVE on the exact 3pm code** (recovered byte-identical from Claude
+  file-history v20 — the 16:23Z deploy; all post-3pm code/state/env chaos
+  reverted). Env: deploy $1,150, day-stop $100, total-stop $100, escrow
+  $60/market ($30/side — Ryan raised from 30 at restart), mention cap $730,
+  K=0.06. State repaired: wrongly-purged CTCQ-0.0 blacklist restored; day
+  P&L intact (+$2.99 day / +$3.15 cum); ABNB family blacklist + CTRA 30d
+  (Chad Tracy ruling) stand; graces burned by the 21:45Z real fills stand.
+- **Book**: Ryan flattened ALL orders during recovery; engine re-placed its
+  own mention-family book at $30/side (first wave 24 orders ~$714: CELH/
+  LYFT/NBIS). Five exits re-placed at pre-chaos prices, manx-r- coids
+  (engine-foreign): gas 4.090 61@1c, ABNB DOME 32.64@54c + WORL 12@75c,
+  CTCQ-N0.5 27@39c ask, LYFT MEMB 106@19c ask. LYFT-WAYM short 29 has NO
+  exit (never had one — open item).
+- **Day ledger (all positive)**: accrual ~$13-14 engine-attributed (clean
+  rate $35-38/day on ~$850, best hr $51.95); realized +$2.99 engine + $0.95
+  gas loops; payouts $76.31 cash landed (estimates→cash ~95c/$ PROVEN).
+- **Afternoon spiral (lesson, not loss)**: 3:18-4:04pm MT — mid-edit code
+  deployed live 3x, hand-culled seats read as fills (resize-read-as-fill
+  mass evictions, ~$29 mispriced taker fills), state hand-rewritten 3x,
+  engine disabled, book hand-replaced. Permanent memory rule: NO manual
+  order surgery; spec→build→test→one deploy. Recovery path that worked:
+  session file-history for exact code, seats_log.jsonl replay for state
+  truth, engine's own boot/reseat for the book.
+- **9pm batch (BATCH-2026-08-04.md, 13 fixes) NOT deployed** — Ryan: park
+  it for now. seats.py/tests still uncommitted in the worktree; review
+  requires a frozen commit first. Prior rulings that stand: rotation OFF
+  (one-time reshape, not standing); no KXYT ban; open dials.
 - Key measured facts standing: 4.3%/day per $ flat across qualifying seats
   (6.4% overnight); MEMB own-the-level = only premium; fat pools crowd flat
   in hours; premium is captured AT LISTING; supply saturates ~$2.6k escrow
