@@ -40,14 +40,30 @@
   double-paying a lone side); fragility gate (rival-only side score >=46
   both sides, SEATS_MIN_SIDE_SCORE); share+depth telemetry (seat_share
   per estimates poll, touch_depth per 30min — the screen's food).
+- **Third wave LIVE (~7:30pm MT, commits c7ca86b..)**: SWAP LAW (Ryan's
+  words: swappable only if banked>=$1.30 this period AND seated>=3h;
+  challenger must model >=2x incumbent's MEASURED $/day; pass every 2h,
+  max 2/pass, next-day blacklist out; uncleared seats untouchable) +
+  drop-fast (judge at 3h not 6h; evict if pace doesn't project to CLEAR
+  $1, was 60%). New-series half-escrow KILLED (unratified day-one builder
+  guard — Ryan: why do we have it). WAYM exit placed (manx-r-waym, 29 @
+  55c bid vs ~61c basis). Fill today: DOOMSDAY-BRI (Avengers) NO 43@69c
+  taken 5:28pm — engine evicted/exited/re-seated correctly, $0 mark.
+- **CALENDAR COMPLETE + family-agnostic** (covers metric markets too;
+  hot-reloads): SHOP call Aug5 12:30Z pre-mkt (exit 10:30Z), CELH Aug6
+  12:00Z pre (exit 10:00Z), LYFT Aug6 ~18:00Z conservative (exit 16:00Z),
+  ABNB+SG Aug6 21:00Z after-close (exit ~19:00Z), WEN Aug7 12:30Z pre
+  (exit 10:30Z), CTCQ report Aug13 10:00Z (exit 08:00Z). ALL verified vs
+  IR pages tonight. NBIS TRAP: call moved to Aug 12 but Kalshi tickers
+  say AUG06 — left on heuristic, exits Aug5 18:00Z. Supply proof
+  therefore lands THU (Aug 6), not Wed noon. Estimates today: $44.77
+  (7am) → $64.57 (6:12pm) = ~+$19.80 accrued + $2.99 realized;
+  10-min watch agent live (restart-if-dead only, ntfy alerts).
 - **Parked by Ryan**: phantom-fill immunity, exit rework, not-open ban,
   repeg re-qual, free-balance floor (structural/unverified bugs);
-  measured-over-model (Ryan: the RIGHT version is the calculable swap
-  rule — challenger modeled_rate×P(clears $1) vs incumbent measured rate,
-  minus forfeited sub-$1 accrual — v20 has NO voluntary-replacement path
-  today); recency boost (Ryan: rudimentary — the screen is the real
-  version); manx-aware placement (Ryan: don't). Rulings stand: rotation
-  OFF; no KXYT ban; open dials.
+  recency boost (Ryan: rudimentary — the screen is the real version);
+  manx-aware placement (Ryan: don't). Rulings stand: no KXYT ban; open
+  dials.
 - Key measured facts standing: 4.3%/day per $ flat across qualifying seats
   (6.4% overnight); MEMB own-the-level = only premium; fat pools crowd flat
   in hours; premium is captured AT LISTING; supply saturates ~$2.6k escrow
