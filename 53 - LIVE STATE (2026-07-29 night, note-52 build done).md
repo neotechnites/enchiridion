@@ -56,6 +56,24 @@
   fat-pool rent = ordinary). Tier-A/size tests died of handling — re-run
   clean only via engine, pre-registered, untouched windows.
 
+## TOMORROW (Wed 2026-08-05) — earnings agenda, in priority order
+1. FINISH+DEPLOY tonight's 10-item build (killed mid-file on stop order;
+   repo committed state = last good) then engine ON — prerequisite for all.
+2. Supply proof at NOON: mention book exits pre-Thu-calls; where ~$700
+   re-lands + at what rate = THE number. Gates deposit ($2k ~= $75-90/day;
+   ceiling ~$110/day at ~$2.6k saturation).
+3. Diesel first sight (parser fix): thin-book fat-pool own-the-level retest.
+4. Penny-the-touch test: 2 proven seats lead 1c vs controls — the only 10x
+   lever (winner-take-all share).
+5. Capture-at-listing: recency boost grabs fresh batches at open (premium
+   exists only in first hours — measured).
+6. Calendar T-2h: LYFT/ABNB report after Wed close → exit 2pm not 4am =
+   ~full extra day rent on biggest seats.
+7. Loop sleeve decision: gas loops closed +$0.31/loop ~fee-free; code as
+   busy-favorite sleeve ($5-15/day potential) or shelve.
+8. UST fresh-period probe seats each morning (most-stable books measured).
+9. Size test redone clean: engine-run, pre-registered, untouched window.
+
 ## PRIOR — 2026-08-04 ~3PM MT: SEATS LIVE AT $1,150, RATE MEASURED
 - **Measured rate: $35-38/day on ~$850-890 escrow (4.3%/day per $; three
   clean hours agree within cents). Overnight thin-book premium 6.4%/day.
