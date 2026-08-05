@@ -44,9 +44,21 @@ unratified assumptions and lost money proving they were wrong.
 4. `[PROPOSED]` A side pays nothing at all until resting depth on it reaches the program's
    target size (typically 1,000 contracts), and our own contracts count toward reaching
    that target.
-5. `[PROPOSED]` Credit below $1.00 in a window is forfeited instead of paid. **Therefore
-   the payoff is a step, not a slope: earning $0.99 and earning nothing are the same
-   outcome.**
+5. `[PROPOSED — now sourced, awaiting Ryan's ratification]` Credit below $1.00 is
+   forfeited instead of paid, and the threshold applies **PER MARKET PER TIME PERIOD**.
+   Source: CFTC filing "Liquidity Incentive Program — February 11, 2026 Update"
+   (rules02112639183.pdf): *"Each Time Period Liquidity Provider Score is multiplied by
+   the Time Period Reward, and if the result is greater than or equal to $1.00, the
+   result is paid out to the corresponding user, rounded down to the nearest cent."*
+   A program specifies ONE market (its own Target Size, Discount Factor and Time Period
+   Reward of $10-$1,000 per calendar day); our own programs feed confirms 1:1 — every
+   program row carries exactly one market_ticker. Kalshi's help centre agrees: "a final
+   reward below $1 for an individual program is not paid." **Therefore the payoff is a
+   step, not a slope: earning $0.99 and earning nothing are the same outcome — and it
+   is settled per market, so scattering escrow across sibling strikes of one event
+   multiplies the number of cliffs we must clear.** (Statement 42's "Kalshi credits by
+   event" describes the STATEMENT granularity, not this threshold — they do not
+   conflict. Verified 2026-08-05.)
 6. `[PROPOSED]` Only resting orders score. A fill ends the earning and leaves a position
    behind.
 7. `[RATIFIED 2026-07-31 — replaces the earlier 1/price claim, which was WRONG]`
