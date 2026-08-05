@@ -76,6 +76,19 @@ Also live: SEATS_WS_FILLS=1 · SEATS_LONGDATED_ENABLE=0 · SEATS_FAMILY_CAP=6 ·
 SEATS_DEPLOY_USD=1150 · day/total stop 100/200 · K=0.06 (WRONG, see below) ·
 markout + shadow ranking collecting · 10 trap families blacklisted.
 
+### WHAT COLLATERAL ACTUALLY IS (fixed 2026-08-05, commit 2f21347)
+A Kalshi market holds ONE SIGNED position, so YES and NO cannot coexist and buying the
+opposite side always NETS. Therefore **an order that REDUCES inventory reserves NOTHING**
+— a closing ask sells what we own, and a closing bid nets the pair and pays $1, so its
+fill brings cash IN. Collateral = own-axis price x (count MINUS what inventory covers),
+allocated ONCE per market. **The capital of an exit is not in the order, it is in the
+POSITION** (cash already spent; the exchange reports it as `market_exposure_dollars`).
+The engine had this wrong in both directions at once: a long-YES round trip reported
+$0.00 while holding real contracts, and a closing bid was charged price x count it never
+holds — $1,432 believed against a $1,150 mandate one hour, a budget collapsed to $43 the
+next. committed_capital = seat escrow + exit escrow + inventory, and `capital_reconcile`
+now logs engine-vs-wire every 5 min so drift is visible instead of silent.
+
 ### KNOWN-WRONG, BEING FIXED
 - **K_eff measures 0.361 (IQR 0.20-0.56), code uses 0.06.** As a CONSTANT K does not
   change ordering — but it VARIES per market, so one constant mis-ranks selection. It
