@@ -3,74 +3,62 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-04 ~5:20PM MT: ENGINE RESTORED TO 3PM SELF, LIVE
-- **Engine LIVE on the exact 3pm code** (recovered byte-identical from Claude
-  file-history v20 — the 16:23Z deploy; all post-3pm code/state/env chaos
-  reverted). Env: deploy $1,150, day-stop $100, total-stop $100, escrow
-  $60/market ($30/side — Ryan raised from 30 at restart), mention cap $730,
-  K=0.06. State repaired: wrongly-purged CTCQ-0.0 blacklist restored; day
-  P&L intact (+$2.99 day / +$3.15 cum); ABNB family blacklist + CTRA 30d
-  (Chad Tracy ruling) stand; graces burned by the 21:45Z real fills stand.
-- **Book**: Ryan flattened ALL orders during recovery; engine re-placed its
-  own mention-family book at $30/side (first wave 24 orders ~$714: CELH/
-  LYFT/NBIS). Five exits re-placed at pre-chaos prices, manx-r- coids
-  (engine-foreign): gas 4.090 61@1c, ABNB DOME 32.64@54c + WORL 12@75c,
-  CTCQ-N0.5 27@39c ask, LYFT MEMB 106@19c ask. LYFT-WAYM short 29 has NO
-  exit (never had one — open item).
-- **Day ledger (all positive)**: accrual ~$13-14 engine-attributed (clean
-  rate $35-38/day on ~$850, best hr $51.95); realized +$2.99 engine + $0.95
-  gas loops; payouts $76.31 cash landed (estimates→cash ~95c/$ PROVEN).
-- **Afternoon spiral (lesson, not loss)**: 3:18-4:04pm MT — mid-edit code
-  deployed live 3x, hand-culled seats read as fills (resize-read-as-fill
-  mass evictions, ~$29 mispriced taker fills), state hand-rewritten 3x,
-  engine disabled, book hand-replaced. Permanent memory rule: NO manual
-  order surgery; spec→build→test→one deploy. Recovery path that worked:
-  session file-history for exact code, seats_log.jsonl replay for state
-  truth, engine's own boot/reseat for the book.
-- **Evening tunes LIVE (~6pm MT, one restart, commit 12ba669)** — Ryan
-  ratified: total-stop $200; mention cap REMOVED (999999 — "it hasn't
-  mattered"); earnings-calendar T-2h exits (data/earnings_calendar.json,
-  mtime-hot-reload; LYFT+ABNB call Wed 20:30Z → exit 18:30Z; others fall
-  back to safe 18:00Z-day-before heuristic); dials MIN_POOL 5→4,
-  MAX_VOL24 500→1000. Boot after deploy: 36/36 orders adopted, 0 gone.
-  Git NOW the law: 5ddbc37 = parked 13-fix batch (pre-revert, not
-  deployed), 12ba669 = LIVE baseline (3pm v20 + tunes).
-- **Second tune wave LIVE (~6:40pm MT, commit fca9000, one restart, boot
-  36/36)**: one-sided seats fund at HALF cap ($30 — full-cap was
-  double-paying a lone side); fragility gate (rival-only side score >=46
-  both sides, SEATS_MIN_SIDE_SCORE); share+depth telemetry (seat_share
-  per estimates poll, touch_depth per 30min — the screen's food).
-- **Third wave LIVE (~7:30pm MT, commits c7ca86b..)**: SWAP LAW (Ryan's
-  words: swappable only if banked>=$1.30 this period AND seated>=3h;
-  challenger must model >=2x incumbent's MEASURED $/day; pass every 2h,
-  max 2/pass, next-day blacklist out; uncleared seats untouchable) +
-  drop-fast (judge at 3h not 6h; evict if pace doesn't project to CLEAR
-  $1, was 60%). New-series half-escrow KILLED (unratified day-one builder
-  guard — Ryan: why do we have it). WAYM exit placed (manx-r-waym, 29 @
-  55c bid vs ~61c basis). Fill today: DOOMSDAY-BRI (Avengers) NO 43@69c
-  taken 5:28pm — engine evicted/exited/re-seated correctly, $0 mark.
-- **CALENDAR COMPLETE + family-agnostic** (covers metric markets too;
-  hot-reloads): SHOP call Aug5 12:30Z pre-mkt (exit 10:30Z), CELH Aug6
-  12:00Z pre (exit 10:00Z), LYFT Aug6 ~18:00Z conservative (exit 16:00Z),
-  ABNB+SG Aug6 21:00Z after-close (exit ~19:00Z), WEN Aug7 12:30Z pre
-  (exit 10:30Z), CTCQ report Aug13 10:00Z (exit 08:00Z). ALL verified vs
-  IR pages tonight. NBIS TRAP: call moved to Aug 12 but Kalshi tickers
-  say AUG06 — left on heuristic, exits Aug5 18:00Z. Supply proof
-  therefore lands THU (Aug 6), not Wed noon. Estimates today: $44.77
-  (7am) → $64.57 (6:12pm) = ~+$19.80 accrued + $2.99 realized;
-  10-min watch agent live (restart-if-dead only, ntfy alerts).
-- **Parked by Ryan**: phantom-fill immunity, exit rework, not-open ban,
-  repeg re-qual, free-balance floor (structural/unverified bugs);
-  recency boost (Ryan: rudimentary — the screen is the real version);
-  manx-aware placement (Ryan: don't). Rulings stand: no KXYT ban; open
-  dials.
-- Key measured facts standing: 4.3%/day per $ flat across qualifying seats
-  (6.4% overnight); MEMB own-the-level = only premium; fat pools crowd flat
-  in hours; premium is captured AT LISTING; supply saturates ~$2.6k escrow
-  (~$110/day ceiling; $2k ≈ $75-90/day IF supply proof holds Wed noon).
-- Gas loop test CLOSED (+$0.95 net, 3 loops, favorite-touch loops validated;
-  fat-pool rent = ordinary). Tier-A/size tests died of handling — re-run
-  clean only via engine, pre-registered, untouched windows.
+## CURRENT — 2026-08-05 ~11:50AM MT: EXIT DOCTRINE REWRITTEN ON EVIDENCE
+
+- **THE $1 CLIFF IS PER MARKET PER TIME PERIOD** — sourced to the CFTC filing
+  (Feb-11-2026 update): "Each Time Period Liquidity Provider Score is multiplied
+  by the Time Period Reward, and if the result is >= $1.00, the result is paid".
+  One program = one market. Proposed into LIP STATEMENTS A.5, awaiting Ryan.
+  Consequence: scattering escrow across sibling strikes multiplies cliffs.
+- **THE REAL POSITION KILLER WAS A CODE PATH, NOT INFORMED FLOW.** LLY
+  TARI/TAIL/HEAD/PENN lost $100.50 (100% of basis). Mechanism: we joined a
+  touch, the rivals cancelled, and repeg's `continue  # guards say sit tight`
+  left us as the ONLY bid 20c above a real book (we held 88-91% of the touch at
+  23-45c while 1,450 contracts sat at 2c). Someone sold into the free money.
+  FIXED: gap guard refuses a seat when the next rival level is >5c behind
+  (SEATS_MAX_GAP_C); abandonment repeg cancels instead of sitting stranded.
+  Verified live: 11 candidates/hour now refused, e.g. LYFT-COMP 36c with next
+  rival 26c.
+- **EXIT POLICY, MEASURED (n=3,011 positions / 1,292 settled markets from our
+  own book tape)**: keep the opposite side of the seat quote RESTING at the
+  touch until it fills = +3.26c/contract, sd 8.75, worst -63, completes 92.8%.
+  HOLD = +2.64c, sd 33.53, worst -98. EVERY stop-loss is significantly WORSE
+  than holding (clustered t -5.9 to -6.9) because an adverse move and a wide
+  book are the same event. T-2h flatten = -0.22c and pays 7.6c spread vs 3.0c
+  at T-8h. Mentions only: WORK_NOW +1.26 vs HOLD -0.95 (sd 2.68 vs 41.10).
+  ARITHMETIC: yes+no = $1/pair, so the exit IS the other side of our own quote;
+  EVICT-ON-FILL was cancelling exactly the order that completes the round trip.
+- **FEES, NOT PRICE, ARE THE LOSS.** Account realized -$15.17 of which $11.23
+  is FEES; before fees the entire seats era is -$3.94. Crossing makes us a
+  taker; resting is free. Clock-based crossing DISABLED (SEATS_EXIT_CROSS_H=999,
+  event-window backstop only) after one 4h sweep cost ~$4 of fees to close
+  positions that had lost ~nothing on price.
+- **SUPPLY IS NOT THE CONSTRAINT — WE ARE.** 1,866 live reward programs across
+  81 families pass the feed gates; we were seated in 18 markets across 6
+  families, pinned by FAMILY_CAP=4 on our three best earners while $102 of
+  mandate sat idle. FAMILY_CAP now env-tunable, Ryan raised to 6; deploy raised
+  1150 -> 1400 because exit-capital accounting (correctly) counts our own
+  closing bids and had squeezed the seat budget to ~$43. Result: 21 seats,
+  $1,100 escrow, LIVE RATE $56.2 -> $63.9/day.
+- **CLASS-A IS NOT ACTUALLY BLOCKED** — exclusions cover rain/sports/BTC-ETH/
+  index/4 FX pairs/TRUEV, but NOT treasuries, gold-silver-WTI 15M, DXY, CPI,
+  GDP, FedFunds. Only MAX_VOL24=1000 keeps us out incidentally, and KXUST +
+  KXAAAGASD are PROBE families that skip the accrual floor. The fattest pools
+  on the board are exactly this class (DXY $7,087/day, metals/WTI $1,931/day).
+  Screen agent running to rank all 1,866 and name families to blacklist.
+- **REPORTING RULE (Ryan)**: never quote total estimates again. $104 headline
+  contains ~$46 of DEAD legacy balances earning nothing. Only the measured
+  delta counts — est_history.jsonl snapshots every 10 min (cron, added 01:15).
+- Deploys today, all verified + mutation-checked: 2dbcad7 cliff horizon +
+  finish-what-you-started · aec155b size-skew (OFF) · 036e0df exit rework +
+  KeyError guard + exit capital · 84ff7ec round-trip-on-fill + gap guard +
+  abandonment repeg · bb9caff underperf judged on OUR horizon (CTCQ squatted at
+  $0.13/day because it projected to program end) · family cap env-tunable.
+- **NOT DONE, stated plainly**: markout logging (recommended, never built);
+  dust floor and iso_ts/diesel stay unported by ruling; rotation OFF by ruling.
+- Ryan's target: needs ~$4,500 over 27 remaining days = $167/day vs $63.9 today.
+  Levers in evidence order: more families (6 of 81 examined), cap raise (done),
+  then capital — which buys nothing until seats exist worth funding.
 
 ## TOMORROW (Wed 2026-08-05) — earnings agenda, in priority order
 1. FINISH+DEPLOY tonight's 10-item build (killed mid-file on stop order;
