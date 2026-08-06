@@ -27,13 +27,31 @@ inverts the vault's late-drift finding — markets that ROSE T−48h→T−24h a
 (+9.17c), because that is premium building, not information. The 84%-settles-YES drift result
 is the LAST day only. Two different windows, both true.
 
-**The size answer: NO, not at $1k.** Event-bootstrap, 25% max per call, $1k deployed:
-ALL markets **mean +$26.59/day** (p10 −$134, P(down day) 46%) · band 55–85c **mean +$48/day**
-(p10 −$261). $100/day needs **2,639 fills/day = ~$1,863 of capital** unfiltered, or ~$690 in
-the band at a fill share we have never measured. **The binding constraint is calls, not
-capital: 79 calls in 70 days ≈ ONE call a day.** A day is close to a single bet, which is why
-p10 is a quarter of the bank. Honest range at $1k: **$25–50/day**, consistent with the
-independently-derived $15–40/day ceiling.
+**THE OPERATING POINT THAT PAYS $100/day AT $1k** — walked over the real 70-day calendar,
+capital committed at entry and released at each call, not a bootstrap:
+
+> **Short YES on `KXEARNINGSMENTION*`, as a maker at the resting ask, entered T−48h before
+> the call, mid 40–90c at entry, 50% of capital per call split evenly across that call's
+> phrases, held to settlement. No stop, no exit, never cross.**
+> **→ $135/day on $1,000. 896 fills/day. Worst day −$399, max drawdown −$399, 25% down days.**
+
+**Lead time is the lever, not band or filter.** T−48h earns **+6.65c/contract** vs +3.79c at
+T−24h — the premium is fattest before the pre-call decay starts, and the earlier entry keeps
+more calls live at once, which is also what halves the drawdown. It needs FEWER fills (896/day
+≈ <1% of the complex's ~104k contracts/day), so **capacity stops binding at 48h.**
+
+**50% per call, never 100%.** At 100% the tape returns *less* ($125/day) with 3x the drawdown
+(−$1,300): the concentration penalty is real and it is measurable. The calendar is lumpy —
+37 of 70 days have NO call; active days carry a median of 2, p90 5, max 8.
+
+The frontier, all at 48h/50%: all-markets **$79/day, worst −$207** (fits the $200 swing
+tolerance) · 40–90c **$135/day, worst −$399** · 55–85c **$154/day, worst −$525**.
+
+**THE WARNING THAT GOVERNS ALL OF IT: the edge halves in the recent half of the tape.**
+40–90c is +10.23c (t 3.26) in the first half and **+3.08c (t 0.92) in the second** — same
+in every band. At the second-half number the operating point pays **~$63/day, not $135.**
+Either the edge is decaying or the recent half is first-cycle series behaving differently.
+**Aug 6–7 settlements are the tiebreaker.** Size to the second-half number until they land.
 
 **The load-bearing assumption, unmeasured:** that we get filled AT the ask without crossing,
 and that our fills are not much worse than the tape. Our own liquidation fills measured
