@@ -67,6 +67,45 @@ day-average) ≈ 30%**, and net of the measured fill shortfall the per-contract 
 - **Per-call returns have sd ~96% with a −100% floor.** Whatever the edge, Kelly is small and
   a 50%/call operating point is not compoundable.
 
+### INDEPENDENTLY CONFIRMED ON 24× THE DATA (second lane, different families, 2026-08-05)
+13,587 settled NON-earnings mention markets, 61 series, **698 events** — a universe this
+program had never touched. Same pre-registered spec, T−48h, 40–90c:
+
+| | n | events | at ASK | **at MID** | fillable-vol weighted |
+|---|---|---|---|---|---|
+| non-earnings mentions | 468 | **257** | +5.68c (t 2.67) | **−0.14c (t −0.07)** | **−13.49c (t −3.52)** |
+| — sports | 374 | 199 | +5.41c | −0.71c | **−16.88c (t −4.76)** |
+| — scheduled speech | 90 | 55 | +6.18c | +1.60c (t 0.29) | +8.68c (t 0.78) |
+
+**At the mid the edge is exactly zero on 257 independent events.** The whole +5.68c is
+half-spread. And weighted by volume that could actually fill us it is **negative and
+significant** — the markets that trade through your ask are the ones going YES. That is
+adverse selection, measured, not theorised.
+
+**THE PHANTOM-QUOTE NUMBER, which is the whole story:** markets where the tape NEVER printed
+at or above our entry ask average **+68.95c (n=38, t=+27.17)**. They are 8.1% of the sample
+and carry **98% of the headline** (+5.59c of +5.68c). Drop them and the edge is **+0.08c
+(t=0.04)**. On the earnings family they are 4.6% of markets and carry 45%. A +68c "edge" on
+markets where no contract could ever have been bought from us is an ask parked near $1.00 in
+a market that resolved NO, scored as if it filled.
+
+**THE LEAD-TIME GRADIENT DOES NOT EXIST.** Restricted to ≤2c books, across BOTH families and
+five leads (12/24/48/72/96h) — 10 cells, n from 27 to 386 — **not one is significant, signs
+are mixed, and the two families' rank orders are anti-correlated.** "Earlier is better" was
+wide books at long lead: thin early books quote wider, so the ask-vs-mid gap grows with lead
+(15–100c spread cell: ASK +17.29c vs MID +4.08c). Fix the spread and the gradient vanishes.
+My "lead time is the lever" claim was measuring the spread widening, nothing else.
+
+**THE PROPOSED OOS FAMILIES DO NOT EXIST.** `KXMENTIONEARN*` — 13 series in the catalog,
+**zero markets ever listed** (announced, never launched). `KXEARNIGNSMENTIONJPM` — 13 markets,
+all closed unsettled, zero volume, voided. The "cleanest out-of-sample test available" had
+no data in it.
+
+**STRUCTURAL, worth keeping:** most political/news mention markets open **<24h before the
+event** (median life: KXVANCEMENTION 22.7h, KXCARNEYMENTION 10.9h, KXPSAKIMENTION 7.3h), so
+a T−48h strategy has data only in SPORTS — which is exactly where the widest books and the
+most phantom quotes live. Any future long-lead idea must check market LIFETIME first.
+
 ### THE LAW THIS PAYS FOR (third time this program has bought it)
 **A backtest that reads a price off a book must prove that price was TRADEABLE — that volume
 crossed it — before it may report an edge.** The g-table artifact (stale one-sided quotes on
