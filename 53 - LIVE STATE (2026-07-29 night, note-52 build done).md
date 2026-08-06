@@ -3,104 +3,85 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-05 ~6:30PM MT: THE LIP-FREE STRATEGY, MEASURED EX-ANTE
+## CURRENT — 2026-08-05 ~8:00PM MT: THE T−48h SHORT-YES STRATEGY IS DEAD. IT WAS THE SPREAD.
 
-Ryan's question: pretend LIP never existed; from its data, taker or maker, $100/day on $1k?
-Re-ran the 1,208-market mentionstudy corpus as an **ex-ante decision at T−24h before the
-call**, entry at the resting ask, hold to settlement, event-clustered errors (a call is one
-bet), 1.0c adverse-selection haircut. `~/ins.py ins2.py ins3.py` on the VPS.
+Ryan asked: pretend LIP never existed; from its data, taker or maker, $100/day on $1k?
+I built one, measured it at **+6.65c/contract (event-clustered t=+2.87, n=566, 70 calls) =
+$135/day on $1,000**, and wrote it into this note as an operating point. **An adversarial
+lane then killed it. The correction is below and it supersedes everything I wrote today.**
 
-**MAKER, decisively.** Short-YES at the ask, all 1,159 markets with a two-sided book:
-**+4.79c gross / +3.79c net, t_clustered +2.46 over 79 calls.** Same trade as a TAKER:
-**−0.61c.** The gap of 5.4c = spread + the 1.75c fee at p≈0.5, and it is larger than the
-edge itself. This is the same fact the LIP era paid $14.52 in fees to learn.
+### WHY IT WAS FALSE — the artifact, in one line
+`snap()` accepted books with spreads up to **50c**, and "sell at the resting ask" in a 26c
+spread means quoting **13c above mid — a price nobody ever lifts.** The backtest sized with
+`n=per/c` and never asked whether one contract ever traded there.
 
-By band (net, clustered t): 40–60c **+4.82c** (t 1.26) · **60–75c +9.18c (t 2.59)** ·
-55–80c **+7.48c** (t 2.64) · 75–90c +2.69c (t 0.98) · **90c+ −1.73c — never sell YES on a
-near-certainty.** Collateral is 30c/contract in the 55–80c band vs 47c overall, so that band
-is ~25%/cycle ROC against ~8%. Taker is positive ONLY in 60–75c (+4.37c), at half the return.
+| decomposition of the +6.65c | value |
+|---|---|
+| sell at ASK (the claim) | +6.65c |
+| sell at MID | +3.85c (t +1.69) |
+| sell at BID | +1.04c (t +0.46) |
+| → **mechanical half-spread** | **2.81c = 42% of it** |
 
-**What does NOT survive:** the tighter filters. Adding spread≤3c and drift>−3c LOWERS
-significance (t 2.43 → 1.72), and the band decays out-of-sample (first half +8.18c, second
-+3.11c). **Take the band unfiltered; the extra selection is fitting.** Also: early drift
-inverts the vault's late-drift finding — markets that ROSE T−48h→T−24h are the best to sell
-(+9.17c), because that is premium building, not information. The 84%-settles-YES drift result
-is the LAST day only. Two different windows, both true.
+And it lives **entirely in wide books**: spread ≤2c → **+1.03c (t +0.33, n=262)** · 3–4c
++6.92c · 5–8c +12.97c · 9–15c +10.75c · >15c +17.29c. **31 markets (5.5%) where the price
+NEVER once printed at or above our ask — i.e. zero fills were possible — carry +2.91c of the
++6.65c**, and standing alone they "earn" +53.16c.
 
-**THE OPERATING POINT THAT PAYS $100/day AT $1k** — walked over the real 70-day calendar,
-capital committed at entry and released at each call, not a bootstrap:
+### WHAT IT IS WORTH ONCE FILLS ARE REQUIRED TO BE POSSIBLE
+Weighting each market by the volume that actually traded **at or above our ask** (this is
+alpha-invariant — it assumes no participation rate): **+0.37c, 90% CI [−8.72c, +9.46c],
+t=+0.07.** Weighted by volume that traded strictly *through* the ask: **−0.02c.** Capped at
+3,000 ct/market: **−3.63c.** The edge falls monotonically as fillable size rises — textbook
+maker adverse selection. Block bootstrap over the 70 calls: **P(edge < 0) = 50.2%.**
 
-> **Short YES on `KXEARNINGSMENTION*`, as a maker at the resting ask, entered T−48h before
-> the call, mid 40–90c at entry, 50% of capital per call split evenly across that call's
-> phrases, held to settlement. No stop, no exit, never cross.**
-> **→ $135/day on $1,000. 896 fills/day. Worst day −$399, max drawdown −$399, 25% down days.**
+### OUR OWN 40,290 REAL MENTION FILLS SAY THE SAME THING
+Short-YES maker fills held to settlement, call-clustered: equal-weight +4.08c but
+**contract-weighted +1.97c (t +1.53)**. In spread ≤2c — **where 87% of our size actually
+happens** — **+0.78c (t +0.62)**. Our real fills land at **mid+1.43c**, not the mid+2.81c the
+backtest assumed (mid+0.55c in tight books): a **1.38c shortfall against a 1.37c
+capacity-weighted breakeven.** The measured shortfall alone consumes the entire gross edge.
 
-**Lead time is the lever, not band or filter.** T−48h earns **+6.65c/contract** vs +3.79c at
-T−24h — the premium is fattest before the pre-call decay starts, and the earlier entry keeps
-more calls live at once, which is also what halves the drawdown. It needs FEWER fills (896/day
-≈ <1% of the complex's ~104k contracts/day), so **capacity stops binding at 48h.**
+### THE "DECAY" WAS SPREAD COMPRESSION, NOT DEATH OF AN EDGE
+First-half +10.23c vs second-half +3.08c is **not** composition or first-cycle series. Median
+half-spread went 4.26c → 1.35c and the wide-spread share 62.5% → 17.0%. **Hold spread fixed
+and both halves are the same and both are zero** (1st ≤2c +1.57c t=0.26; 2nd ≤2c +0.86c
+t=0.23). The market matured. The wide quotes that generated the headline are gone.
 
-**50% per call, never 100%.** At 100% the tape returns *less* ($125/day) with 3x the drawdown
-(−$1,300): the concentration penalty is real and it is measurable. The calendar is lumpy —
-37 of 70 days have NO call; active days carry a median of 2, p90 5, max 8.
+Same inversion on the calendar: quiet weeks **+14.24c (t 3.61)**, busy weeks **+4.80c**. The
+$/day was carried by off-season weeks — exactly where the wide, unfillable quotes live. It
+gets *worse* as earnings season densifies, which is the opposite of what I told Ryan.
 
-The frontier, all at 48h/50%: all-markets **$79/day, worst −$207** (fits the $200 swing
-tolerance) · 40–90c **$135/day, worst −$399** · 55–85c **$154/day, worst −$525**.
+### HONEST NUMBER
+At a 15% participation rate in volume at-or-above our ask (our live short-maker participation
+is 14.7% of total mention volume): **≈ $15/day on $1,000, 90% CI ≈ [−$25, +$45], P(losing
+day-average) ≈ 30%**, and net of the measured fill shortfall the per-contract edge is
+**≈ −1.0c**. Tight-spread-only with a size cap: **−$0.44/day. NOT TRADEABLE.**
 
-**NO TAKER VERSION EXISTS.** At T−48h, taker short-YES (sell at the bid, pay 0.07·p·(1−p)):
-40–90c **+0.58c t=+0.26** · all markets −0.78c · the only positive cell is 55–70c at +3.18c
-with **t=+0.82, i.e. noise.** Maker in the same cells is +6.65c / +4.68c / +10.90c. **The
-6c maker−taker gap IS the transaction cost and it is larger than the edge.** Stop looking for
-a taker trade in this venue; there isn't one.
+### WHAT SURVIVES FROM THE DAY (all of it independent of the fill assumption)
+- **No taker version exists.** T−48h taker short-YES: 40–90c +0.58c (t 0.26), all −0.78c,
+  best cell 55–70c +3.18c (t 0.82 = noise). The maker−taker gap IS the transaction cost.
+- **Phrases on one call are NOT one bet.** Variance 82% within-call / 18% between-call, 8.1
+  phrases/call. The old "six phrases on one call are correlated" doctrine is wrong.
+- **Any strategy here is scale-free** (we are microscopic vs the book, maker fees are zero) —
+  which cuts both ways: it means a dead edge is dead at every size too.
+- **Per-call returns have sd ~96% with a −100% floor.** Whatever the edge, Kelly is small and
+  a 50%/call operating point is not compoundable.
 
-**CORRECTION — PHRASES ON ONE CALL ARE NOT ONE BET.** Variance decomposition, 40–90c at
-T−48h: total 0.2188 = **within-call 0.1803 (82%)** + between-call 0.0385 (18%), mean 8.1
-phrases/call. The doctrine that "six phrases on one call are correlated" is wrong at the
-level that matters — 82% of the risk is idiosyncratic to the phrase. **Therefore breadth
-comes from PHRASE COUNT, not only call count, and the per-call cap earns its keep for a
-different reason than assumed: it stops one call locking all capital until settlement so the
-next call can be funded.** It is a capital-availability dial, not a correlation dial.
+### THE LAW THIS PAYS FOR (third time this program has bought it)
+**A backtest that reads a price off a book must prove that price was TRADEABLE — that volume
+crossed it — before it may report an edge.** The g-table artifact (stale one-sided quotes on
+decided markets), the "one-sided seats 0.0156 vs 0.0446" artifact (markets with NO price),
+and now this are the SAME error wearing three costumes: **a quote is not a trade.** Any
+future edge measured from candle bid/ask must report its spread decomposition (ask/mid/bid)
+and its fillable-volume weighting IN THE SAME TABLE, or it does not get written down.
 
-**IT IS SCALE-FREE.** Same walk at $100/$250/$500/$1k/$2k returns **13.5%/day at the
-full-tape edge and 6.25%/day at the second-half edge — identical at every size.** We are far
-below capacity and maker fees are zero, so nothing degrades going down. Integer-lot
-granularity costs ~100 skipped rungs at $100 and does not move the percentage.
-**$5/day on $100 = yes (tape says $6.21 pessimistic, $13.41 optimistic). $50/day on $1k =
-yes ($62.54 pessimistic). $135/day on $1k needs the full-tape edge, not the recent one.**
-Drawdown scales identically: ~32% down days at every size, p10 −12.5% of capital pessimistic
-/ −27% optimistic.
-
-**THE 50%/CALL OPERATING POINT IS OVER-KELLY AND CANNOT BE COMPOUNDED.** The $135/day and
-6.25%/day figures were computed on FIXED capital with no reinvestment. Per-CALL return is
-mean +36.2% (full tape) / +21.1% (2nd half) with **sd 96.6%**, 37–41% of calls losing, and a
-floor of **−100% of committed capital** (all 8 phrases settle YES ⇒ the whole call's stake is
-gone). Kelly on that distribution is **f* = 49%/call full tape, 26%/call second-half** — so
-50% is full Kelly on the optimistic edge and DOUBLE Kelly on the honest one. Reinvested at
-50%/call the second-half edge gives a **78% chance of a −80% drawdown** and a median of $17
-from $100. **Arithmetic and geometric returns diverge violently here; the headline number is
-the arithmetic one.**
-
-**SURVIVABLE SIZING IS 5–10% PER CALL, NOT 50%.** Reinvested over 250 calendar-matched days
-from $100, second-half edge: **5%/call → median $1,023, p10 $390, median maxDD −28%**;
-10%/call → median $6,246, p10 $1,005, maxDD −50%. That is **~1%/day compounded, i.e. ~$1/day
-on $100 and ~$10/day on $1k** — not $6 and $62. The high-f medians the sim prints ($41B) are
-artifacts of a model with no capacity constraint and must not be read as forecasts.
-
-**THREE THINGS CAP COMPOUNDING BEFORE THE MATH DOES:** (1) capacity — 896 fills/day at $1k is
-<1% of the complex's ~104k contracts/day, so ~$5–20k is where the earnings-mention family
-alone saturates; (2) seasonality — 4 earnings seasons/yr, roughly half the calendar dead;
-(3) capital is locked entry(T−48h)→settlement, so turnover is 2–3 days and cannot be forced.
-
-**THE WARNING THAT GOVERNS ALL OF IT: the edge halves in the recent half of the tape.**
-40–90c is +10.23c (t 3.26) in the first half and **+3.08c (t 0.92) in the second** — same
-in every band. At the second-half number the operating point pays **~$63/day, not $135.**
-Either the edge is decaying or the recent half is first-cycle series behaving differently.
-**Aug 6–7 settlements are the tiebreaker.** Size to the second-half number until they land.
-
-**The load-bearing assumption, unmeasured:** that we get filled AT the ask without crossing,
-and that our fills are not much worse than the tape. Our own liquidation fills measured
-−7.07c vs −1.2c predicted. The haircut used here is 1.0c. If the true haircut is 4c the band
-still pays; if it is 7c nothing does.
+### THE ONE OPEN TEST
+The empirical **fill curve**: P(our resting sell fills | price − mid, resting time). Data is
+already on disk — join `~/kalshi_data/virgil/data/seats_log.jsonl` (every seat_placed /
+amended / cancelled with price and ts) to `mention_fills.jsonl`. Zero market risk, no new
+pull. If we fill ≥1.4c above mid at a meaningful rate, something survives; if fill rate
+collapses past +1c above mid — which our measured +0.55c in tight books predicts — it is dead
+as specified. Lane C artifacts: `laneC_*.py` in `mentionstudy/` and `markoutstudy/`.
 
 ## PRIOR — 2026-08-05 ~4:30PM MT: THE DAY THE MECHANISM WAS MEASURED
 
