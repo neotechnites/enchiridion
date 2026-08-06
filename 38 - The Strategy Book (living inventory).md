@@ -688,3 +688,50 @@ Gates: 1 PASS · 2 PASS · 3 PASS · 4 PASS-as-kill · 5 PASS-as-kill (family-wi
   showed +40¢ gaps; on pre-game-listed markets only, every game collapses into one stratum.
 Artifacts: `~/kalshi_data/hunt/` (`kauth.py`, `ka.py`, `pull_all.py`, `drive.py`, `an_*.py`,
 `K_*.jsonl` candles, `M_*.jsonl` markets — 33,097 markets, 1-min bid/ask, resumable).
+
+## VENUE-WIDE LOCK SCAN (2026-08-06) — 0 executable locks. But the SCANNER is now a durable asset.
+Full live venue: **9,178 events · 78,190 markets · 3,268 series** (the "10,418 series" figure is the
+all-time catalogue — **7,865 have no open market; the live universe is 3,268**, all covered, 46 pages
+verified non-truncating). Identity groups priced: 4,402 numeric + 3,654 categorical-ME + 26
+cross-series-rules + 13 cross-series-CF.
+**33 baskets gross-positive · 0 net after fees · peak total $0.00.** Best gross anywhere **+3.00¢
+against a 4.00¢ minimum 2-leg fee.** Net is negative at EVERY N — the ceil-per-order fee amortises
+with size but never below the gross. Both known locks confirmed DEAD live: KXBTCY 28-bin ladder
+cover 100.10 / pack 99.90 (−0.10¢); KXETHY 100.30/99.70 (−0.30¢); DUTCHBOOK no lock in any of 3
+snapshots across the settlement window.
+**STRONGEST VALIDATION — the symmetry gate:** across 3,986 groups, `cover_cost + pack_recv` =
+**exactly 200.00 in 94.4%** (median 200.00, min 200.00). **Kalshi's book is unified, so
+single-market complementary-pair arbitrage is structurally impossible.** That is a gate, not a
+strategy.
+**Base rate (thin — 2 snapshots):** Jul 24 (on-disk venue snapshot) 4 net locks, **$11.01 total**
+(3× commodity MON/W at +3/+3/+1¢, KXBTCY +1.30¢ with capacity ONE contract = $0.013 over 161 days ≈
+3% annualised). Aug 6 live: **0, $0.00.** Caveat: Jul 24 is top-of-book only and cannot be
+orderbook-walked, so those four may not have been executable either.
+🔑 **DUTCHBOOK'S WINDOW IS 15 MINUTES WIDE — this is why it was missed and why a naive sweep finds
+nothing.** All 32 paper locks (9.4/day, median +0.61¢, **$22.87/day**) landed **within 15 min of the
+hourly close, median 4.2 min**. Only one 15M bucket is open at a time and **only the `:45→:00` one
+shares a close_time with the hourly ladder.** A scan at an arbitrary minute misses the family
+entirely. **The scanner must be pinned to :45–:00 hourly** (plus month-end/week-end collision dates).
+**NEW IDENTITY FAMILY (calendar-gated):** `KXCOPPERMON`/`KXCOPPERW` (also NATGAS, SILVER) settle on
+the **identical CCU6 1-minute candle close** — verified from `rules_primary` — **but only on dates
+where week-end and month-end coincide.** Today: Aug 31 vs Aug 7, no shared close, group does not
+exist. Rare and calendar-predictable, not continuous.
+🔧 **SEVEN PHANTOM-LOCK BUGS (974 candidates → 4 on the same data).** Same hazard class as everything
+else today: different subjects sharing a strike in one event (+96¢) · `norm_rules` stripping digits
+inside product names, NVIDIA **H100** vs **H200** (+96¢) · blanking numbers merging category **1** vs
+**3** hurricanes (+42¢) · direction-stripping merging "ever above" (running max) with "ever below"
+(running min) (+46¢) · placeholder `floor_strike=0` overriding subtitle "Exactly 1" vs "Exactly 3"
+(+68¢) · **`strike_type='less'` with `floor==cap==N` means "EXACTLY N", not "N or below" (+94¢, ran
+13 days undetected)** · constant point-mass width on the 0.1-wide KXCPICORE ladder (+84¢). Plus a
+real arithmetic bug: `fee_c` returned DOLLARS while being added to CENT quantities — **a 100×
+understatement of the toll.**
+**UNEXPLORED, the one identity class left:** MVE **parlay** markets (79k of them) carry a genuine
+implication lock — `YES(leg) + NO(parlay)` pays ≥100 always — but every one quotes
+`yes_ask=0.0000 / no_ask=1.0000`, i.e. **no book at all.** Untradeable today; worth re-checking if
+parlays ever get quoted.
+⚠️ `/markets?status=open` is **unusable for enumeration** — its cursor returns parlay markets first
+(79,005 of the first 80,000 were two esports series, only 43 distinct series reached). Enumerate via
+`/events`. Kept as `lock_markets_DEGENERATE_80k_parlay_slice.json`.
+Artifacts: `~/kalshi_data/lock_scan.py` (cover/pack DP, identity algebra, fees, depth walk,
+persistence) · `lock_pull_events.py` · `lock_crypto_window.py` · `lock_verify_live.py` ·
+`lock_confirm.py` · `lock_{coverage,depth,cands}.json`.
