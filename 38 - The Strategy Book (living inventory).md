@@ -40,13 +40,8 @@
   stop, probe metrics via `nestor house-report`. Promote/kill per protocol after 2-3 days.
 
 ## COLUMN 3 — AWAITING FABLE TESTING (with tonight's evidence workers in flight)
-1. **SEED-PRIOR** listing harvest — TOP of column 3. Gate #2 CLOSED (build-seed-prior.md):
-   hierarchical word-prior from the FULL settled corpus (14,410 markets — 30× the first lane,
-   which hadn't paginated), LOO-validated +26.4¢ net / 0.774 hit on the confident subset
-   (n=7,798); artifact ~/kalshi_data/seed_prior.json + runtime procedure written. Remaining
-   gate #1 (closes passively): confirm non-earnings families get the flat 0.54 seed — the
-   60s fast-snap catches the next new listing's seeds. Caveat held: confirmed-seed family
-   (earnings) is only +5.8¢; the fat edge rides on unverified-seed families.
+1. ~~**SEED-PRIOR** listing harvest~~ — **DEAD 2026-08-05, see DEAD list. Gate #1 was the
+   whole strategy and it FAILED: the flat 0.54/0.46 seed does not exist.**
 2. **DOGE MAX ivol ramp** — RULING (verify-doge-ivol.md): real but NOT money. Persists across
    both retrievable issuances (4/4 NO wins, ~+33¢/contract first-hour) BUT DOGE-specificity
    FALSIFIED (BTC/ETH tops same pattern same months = quiet-regime artifact, rally month
@@ -97,6 +92,25 @@ Continuous (ideator bursts + verify lanes). ~200 raw ideas processed to date; tr
 mortality is the funnel working (cheapest decisive kill first). Survivors surface into column 3.
 
 ## DEAD (with numbers — money the kills saved)
+**SEED-PRIOR (killed 2026-08-05)** — the +26.4¢ was two compounding errors. (1) PRICING BUG:
+`scripts/seed_prior_build.py:14` sets `SEED_NO_PRICE = 0.46`, but on Kalshi `no_ask = 1 −
+yes_bid`, so against a 0.54/0.46 seed buying NO costs **0.54, not 0.46** — both sides cost 54¢
+and the 8¢ was the spread. Correcting it: blind fade +8.84¢ → **−1.16¢**; confident subset
++26.45¢ → +21.39¢. (2) THE SEED REGIME IS GONE: **0 of 39 live mention markets** sit at
+0.54/0.46 and only 14 of 107 captured new listings do (median new-listing spread **83¢**;
+46% over 20¢, i.e. untradeable). Kalshi's mention MM now prices **per word** (corr(prior,mid)
+=+0.52). And the prior has **zero coverage of new listings** — every new earnings-mention
+series is a brand-new family, so all 107 fell through to the global 0.4516 backoff, where
+|0.4516−0.50|<0.15 means **the signal never fires**. ~60% of the validated P&L came from
+**delisted** series (WC 30.2%, MLB 16.2%, LoveIsland 5.8% — all 0 markets on the API).
+At real executable prices: **1 confident signal in 12.4 days, ~$28 of capacity, $0.00/day on
+$1,000.** The word prior itself IS a real time-validated predictor (+17.9¢, t=15.3, fit-early
+/test-late) — it just has no trade surface, because the counterparty it beats doesn't exist.
+*(`build-seed-prior.md` and `verify-seed-prior.md` both carry the 0.46 error — do not trust
+their numbers.)*
+**GATE THIS PAYS FOR: any backtest must state the side it buys and prove that price is the
+real touch. `no_ask = 1 − yes_bid`; a "cheap" NO is a dear YES.**
+
 FOMC-move ladder buying (0/12 recent clear the priced move) · EIA-day wings (−6..−8¢ every
 family) · crypto favorite-buying 95-98¢ (n≈4,700) · xvenue MLB arb (pre+in-game; artifacts) ·
 deribit hourly gate (tenor artifact) · earnings-MENTION lag (closes-on-occurrence) · naive
