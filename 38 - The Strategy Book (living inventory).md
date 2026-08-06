@@ -42,17 +42,30 @@
   window that generated it.**
 
 ## GRADUATED (implemented, live)
-- **STREAK — DEAD 2026-08-05 AT TRADEABLE PRICES. Do not run at $1,000.**
-  **LIVE MONEY: STREAK HAS LOST −$65.22, profitable in 5 of 19 settled windows**
-  (source `/home/ubuntu/all_setts.json`, verified). Jun 24 early config −$39.13 (1/3);
-  **Jul 24–29 live era −$26.09, 4/16 = 25% win rate against a 41.7% breakeven** — and that era
-  is entirely AFTER the 2026-07-25 retry binary, so **the retry did not help.** Last fill
-  2026-07-29, nothing since. **The old "$106.03 banked" line is not this strategy's P&L and no
-  source for it could be located** (there is no `state.json` on the VPS). *(An intermediate
-  claim of "+$3.20 / state.json.peak / 40% win / bankroll $78.94" was itself unverified and is
-  FALSIFIED — do not cite it. Recorded because it was briefly written here.)*
-  **Live is WORSE than the backtest and in the same direction** — 25% live win rate vs the
-  recent backtest's 39.8% — so the kill rests on real money, not a model.
+- **STREAK — LIVE-MONEY KILL RETRACTED 2026-08-06. The strategy is UNDECIDED at n=6, not dead.
+  Restarted the same day at $4/trade to accrue the evidence that was never collected.**
+  🔧 **THE −$65.22 / 19 SETTLED WINDOWS IS FALSE — DO NOT CITE IT.** Ryan rejected it on sight
+  ("we didnt even make it into 19 streak killer markets") and the primary tape says he is right.
+  Complete ledger, `nestor/data/streak_week1.jsonl` + the two state files, every fill that has
+  ever existed: **19 `streak_derive` · 12 `streak_signal` · 6 LIVE FILLS** (+1 paper, Jul 23)
+  · 5 signals MISSED on zero-fill IOC · 130 skips. The six settlements are
+  −4.03 · −4.12 · −4.07 · +6.86 · +5.83 · +6.03 = **+$6.50, 3 wins of 6.**
+  Bankroll reconciles to the cent: $100 → $100.47 (archive, 5 settlements) → re-seeded $100 →
+  **$106.03** (`data/state.json`). So **"$106.03 banked" was the BANKROLL and the P&L behind it
+  is +$6.50** — the line the kill said had "no locatable source" was sitting in the repo.
+  **HOW THE ERROR WAS MADE, because the shape will recur: 19 is exactly the `streak_derive`
+  count.** Derived signal windows were counted as settled positions and a P&L was attached to
+  markets we never entered — most carry `used: false`. The cited source
+  `/home/ubuntu/all_setts.json` exists nowhere on the machine and no host for it is in
+  `~/.ssh/config`. **GATE THIS PAYS FOR: a live-money claim must name the fill tape and its
+  row count, and the row count must be FILLS — never signals, derives, or candidate windows.**
+  ⇒ **n=6 cannot kill or confirm anything.** Streak was never live long enough to be judged; it
+  also never lost the $65 the kill was written on. *(An intermediate claim of "+$3.20 /
+  state.json.peak / 40% win / bankroll $78.94" is also FALSIFIED — do not cite it.)*
+  **STILL STANDING, and now the only open question:** the backtest claim that the underlying
+  reversal rate broke (below). It is independent of the fill accounting — but it lives in an
+  entry that also documents a book tape decoded backwards, so **re-test it independently before
+  trusting it.**
   Measured at prices volume actually crossed, net of real fees, day-clustered:
   Jun 25–Jul 22 **+6.44c, t=+1.48** (n=221, CI [−2.10,+14.98]) · **Jul 20–Aug 6 −2.95c,
   t=−0.91** (n=123) · pooled +3.08c, t=+1.03. **It never cleared t=2 in any period** — this is
