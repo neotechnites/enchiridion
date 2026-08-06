@@ -47,6 +47,29 @@ more calls live at once, which is also what halves the drawdown. It needs FEWER 
 The frontier, all at 48h/50%: all-markets **$79/day, worst −$207** (fits the $200 swing
 tolerance) · 40–90c **$135/day, worst −$399** · 55–85c **$154/day, worst −$525**.
 
+**NO TAKER VERSION EXISTS.** At T−48h, taker short-YES (sell at the bid, pay 0.07·p·(1−p)):
+40–90c **+0.58c t=+0.26** · all markets −0.78c · the only positive cell is 55–70c at +3.18c
+with **t=+0.82, i.e. noise.** Maker in the same cells is +6.65c / +4.68c / +10.90c. **The
+6c maker−taker gap IS the transaction cost and it is larger than the edge.** Stop looking for
+a taker trade in this venue; there isn't one.
+
+**CORRECTION — PHRASES ON ONE CALL ARE NOT ONE BET.** Variance decomposition, 40–90c at
+T−48h: total 0.2188 = **within-call 0.1803 (82%)** + between-call 0.0385 (18%), mean 8.1
+phrases/call. The doctrine that "six phrases on one call are correlated" is wrong at the
+level that matters — 82% of the risk is idiosyncratic to the phrase. **Therefore breadth
+comes from PHRASE COUNT, not only call count, and the per-call cap earns its keep for a
+different reason than assumed: it stops one call locking all capital until settlement so the
+next call can be funded.** It is a capital-availability dial, not a correlation dial.
+
+**IT IS SCALE-FREE.** Same walk at $100/$250/$500/$1k/$2k returns **13.5%/day at the
+full-tape edge and 6.25%/day at the second-half edge — identical at every size.** We are far
+below capacity and maker fees are zero, so nothing degrades going down. Integer-lot
+granularity costs ~100 skipped rungs at $100 and does not move the percentage.
+**$5/day on $100 = yes (tape says $6.21 pessimistic, $13.41 optimistic). $50/day on $1k =
+yes ($62.54 pessimistic). $135/day on $1k needs the full-tape edge, not the recent one.**
+Drawdown scales identically: ~32% down days at every size, p10 −12.5% of capital pessimistic
+/ −27% optimistic.
+
 **THE WARNING THAT GOVERNS ALL OF IT: the edge halves in the recent half of the tape.**
 40–90c is +10.23c (t 3.26) in the first half and **+3.08c (t 0.92) in the second** — same
 in every band. At the second-half number the operating point pays **~$63/day, not $135.**
