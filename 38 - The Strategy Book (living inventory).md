@@ -169,6 +169,37 @@
   (t=0.43, n=331, NOT significant) · ETH −1.61¢ · SOL +0.40¢ · XRP +2.67¢ · DOGE +1.74¢ —
   only XRP survives and it does not clear the +1.3¢ adjustment with margin. No rescue gate
   exists: a min-vol gate and a raw-distance floor were both tested, neither improved EV.
+  **DEFECT LOCATED EXACTLY (2026-08-06 recon lane):** `lockrescan_pull2.py::do_spot()` does
+  `have[c[0]] = c[4]` — Coinbase `granularity=60`, `c[0]` = bucket START, `c[4]` = CLOSE, so the
+  row stamped T carries the price at T+60. `lockrescan_analyze.py::spot_at()` then reads it as
+  the price at T (mean +30s ahead). The July study used `bisect_right(ts, t−60)−1` (mean −30s).
+  **Which alignment is right, proven empirically** (n=154,395): at seconds where the market is
+  47–53¢, spot must sit at K. Mean |spot−K| by row lag: −60s → 25.70 · **0 (re-scan) → 16.07**
+  · **+60s (July) → 14.13** · +120s → 17.43. Minimum at +60s ⇒ the July alignment is correct.
+  **CORRECTION TO AN EARLIER READING: the price source contributed 0.00¢.** Per-second bars and
+  trade prints give bit-identical answers (the "per-second bars" were the SAME `/markets/trades`
+  API, just fuller pagination — never a second source). The whole gap is spot alignment. The
+  "finer data ⇒ worse edge" story was wrong about the mechanism.
+  **NEITHER PUBLISHED NUMBER IS RIGHT.** The re-scan's +3.39¢ is future-shifted; the July
+  holdout's −1.72¢ used a CONTINUOUS per-second scan, which enters on transient dips INTO
+  93–97¢ (touching the band from above = the favorite is deteriorating) and costs −3.83¢ that
+  nestor never pays, since production polls discrete checkpoints. Trustworthy config = honest
+  spot + discrete checkpoints: **POOL n=840, 97.14% win, +0.89¢ @0.5¢ spread, −0.33¢ @ the
+  live-measured 1.80¢.** Breakeven spread **+1.45¢** vs real **+1.80¢** — short by 0.35¢ before
+  slippage. The lookahead had erased **17 of 24 losses** and inflated EV 3.7×.
+  Per-asset Z≥4 @1.8¢: BTC −0.03 (n=199) · ETH −3.83 (n=155) · SOL −0.27 (n=148) · **XRP +1.57
+  (n=205)** · DOGE +0.32 (n=133). Only XRP clears, and Z≥6 "rescues" are post-hoc and fail on
+  ETH/SOL/DOGE.
+  **THE ONE LIVE CAVEAT (honest bracket):** LAGGED spot is 0–60s stale (mean t−30s); FRESH is
+  0–60s ahead (mean t+30s). **A live WS spot feed sees exactly t — better than either**, and is
+  unavailable in 1-min close bars. So the true live value is BRACKETED in **[+0.89¢, +3.29¢]**
+  (Z≥4, 0.5¢ spread) and cannot be narrowed from data on disk. **Highest-value outstanding
+  measurement if this is ever revisited: log real-time WS spot alongside each signal for ~2
+  weeks, then re-run the ablation with a third arm.** Note this cuts toward the edge, not away.
+  ⚠️ **UNRECONCILED:** the recon lane counts ~20 signals/day pooled (n=840 / 6wk) on lagged
+  spot, while the `lock-dryrun` on LIVE books + real-time spot found **0 in ~25 window-series**
+  (max Z below 97¢ = 3.46). Both are credible and they disagree on whether the entry population
+  even exists. Resolving this is prerequisite to any revival.
   SECOND INDEPENDENT DEFECT — the price source: live orderbook capture measured `/markets`
   reading LOW vs the real book by median +1.30¢ in 93–97¢ (p90 +8.0¢; **29% of moments exceed
   the entire claimed edge**) and +5.00¢ in 90–93¢ (61% exceed 3¢). Corroborated on the tape by
