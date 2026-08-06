@@ -3,7 +3,44 @@
 > Entry: [[SENATE STATEMENTS]] → [[56 - THE MACHINE (fresh-Claude implementation guide)]] →
 > this note's CURRENT block.
 
-## CURRENT — 2026-08-05 ~4:30PM MT: THE DAY THE MECHANISM WAS MEASURED
+## CURRENT — 2026-08-05 ~6:30PM MT: THE LIP-FREE STRATEGY, MEASURED EX-ANTE
+
+Ryan's question: pretend LIP never existed; from its data, taker or maker, $100/day on $1k?
+Re-ran the 1,208-market mentionstudy corpus as an **ex-ante decision at T−24h before the
+call**, entry at the resting ask, hold to settlement, event-clustered errors (a call is one
+bet), 1.0c adverse-selection haircut. `~/ins.py ins2.py ins3.py` on the VPS.
+
+**MAKER, decisively.** Short-YES at the ask, all 1,159 markets with a two-sided book:
+**+4.79c gross / +3.79c net, t_clustered +2.46 over 79 calls.** Same trade as a TAKER:
+**−0.61c.** The gap of 5.4c = spread + the 1.75c fee at p≈0.5, and it is larger than the
+edge itself. This is the same fact the LIP era paid $14.52 in fees to learn.
+
+By band (net, clustered t): 40–60c **+4.82c** (t 1.26) · **60–75c +9.18c (t 2.59)** ·
+55–80c **+7.48c** (t 2.64) · 75–90c +2.69c (t 0.98) · **90c+ −1.73c — never sell YES on a
+near-certainty.** Collateral is 30c/contract in the 55–80c band vs 47c overall, so that band
+is ~25%/cycle ROC against ~8%. Taker is positive ONLY in 60–75c (+4.37c), at half the return.
+
+**What does NOT survive:** the tighter filters. Adding spread≤3c and drift>−3c LOWERS
+significance (t 2.43 → 1.72), and the band decays out-of-sample (first half +8.18c, second
++3.11c). **Take the band unfiltered; the extra selection is fitting.** Also: early drift
+inverts the vault's late-drift finding — markets that ROSE T−48h→T−24h are the best to sell
+(+9.17c), because that is premium building, not information. The 84%-settles-YES drift result
+is the LAST day only. Two different windows, both true.
+
+**The size answer: NO, not at $1k.** Event-bootstrap, 25% max per call, $1k deployed:
+ALL markets **mean +$26.59/day** (p10 −$134, P(down day) 46%) · band 55–85c **mean +$48/day**
+(p10 −$261). $100/day needs **2,639 fills/day = ~$1,863 of capital** unfiltered, or ~$690 in
+the band at a fill share we have never measured. **The binding constraint is calls, not
+capital: 79 calls in 70 days ≈ ONE call a day.** A day is close to a single bet, which is why
+p10 is a quarter of the bank. Honest range at $1k: **$25–50/day**, consistent with the
+independently-derived $15–40/day ceiling.
+
+**The load-bearing assumption, unmeasured:** that we get filled AT the ask without crossing,
+and that our fills are not much worse than the tape. Our own liquidation fills measured
+−7.07c vs −1.2c predicted. The haircut used here is 1.0c. If the true haircut is 4c the band
+still pays; if it is 7c nothing does.
+
+## PRIOR — 2026-08-05 ~4:30PM MT: THE DAY THE MECHANISM WAS MEASURED
 
 ### WHAT THE BUSINESS IS, from first principles (this is the frame — read it first)
 A mention market is a binary on a speech act resolving at a scheduled call. It cannot
