@@ -70,6 +70,27 @@ yes ($62.54 pessimistic). $135/day on $1k needs the full-tape edge, not the rece
 Drawdown scales identically: ~32% down days at every size, p10 −12.5% of capital pessimistic
 / −27% optimistic.
 
+**THE 50%/CALL OPERATING POINT IS OVER-KELLY AND CANNOT BE COMPOUNDED.** The $135/day and
+6.25%/day figures were computed on FIXED capital with no reinvestment. Per-CALL return is
+mean +36.2% (full tape) / +21.1% (2nd half) with **sd 96.6%**, 37–41% of calls losing, and a
+floor of **−100% of committed capital** (all 8 phrases settle YES ⇒ the whole call's stake is
+gone). Kelly on that distribution is **f* = 49%/call full tape, 26%/call second-half** — so
+50% is full Kelly on the optimistic edge and DOUBLE Kelly on the honest one. Reinvested at
+50%/call the second-half edge gives a **78% chance of a −80% drawdown** and a median of $17
+from $100. **Arithmetic and geometric returns diverge violently here; the headline number is
+the arithmetic one.**
+
+**SURVIVABLE SIZING IS 5–10% PER CALL, NOT 50%.** Reinvested over 250 calendar-matched days
+from $100, second-half edge: **5%/call → median $1,023, p10 $390, median maxDD −28%**;
+10%/call → median $6,246, p10 $1,005, maxDD −50%. That is **~1%/day compounded, i.e. ~$1/day
+on $100 and ~$10/day on $1k** — not $6 and $62. The high-f medians the sim prints ($41B) are
+artifacts of a model with no capacity constraint and must not be read as forecasts.
+
+**THREE THINGS CAP COMPOUNDING BEFORE THE MATH DOES:** (1) capacity — 896 fills/day at $1k is
+<1% of the complex's ~104k contracts/day, so ~$5–20k is where the earnings-mention family
+alone saturates; (2) seasonality — 4 earnings seasons/yr, roughly half the calendar dead;
+(3) capital is locked entry(T−48h)→settlement, so turnover is 2–3 days and cannot be forced.
+
 **THE WARNING THAT GOVERNS ALL OF IT: the edge halves in the recent half of the tape.**
 40–90c is +10.23c (t 3.26) in the first half and **+3.08c (t 0.92) in the second** — same
 in every band. At the second-half number the operating point pays **~$63/day, not $135.**
