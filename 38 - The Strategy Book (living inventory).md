@@ -864,7 +864,7 @@ Realised maker markout on our own tape: **−4.299¢/contract.**
 🔧 **The reward-capture model is 38× OPTIMISTIC** — models $1,610/day at $1,000; **measured capture
 is $39–42/day** — and it concentrates 90% of capital into the two most contested HFT books on the
 exchange. **Do not size with it.**
-🔧 **Program ends 2026-08-30 04:00Z — 23.2 days, not 26.**
+🔧 **PROGRAM END = 2026-01-01 → JANUARY 1, 2027 (Ryan, from Kalshi's own program page, 2026-08-06). ~148 days, NOT 23.** Both prior readings were WRONG: the vault's "ends Sept 1" and the survey's "ends 2026-08-30T03:59Z". **The `/incentive_programs` feed shows only a ROLLING ~23-day window horizon** (12,000 rows, 640 distinct end_dates, range −9 to +23 days) — the furthest-listed window reads ~23 days out EVERY day, regardless of the actual program end. **Never infer program termination from that feed.** Kalshi's note: it can end or modify the program at any time.
 🔧 **The seat marginal is `(pool/2)·q/(q+R)²`, NOT `(pool/2)·R/(q+R)²`** as HANDOFF §3 states — the
 briefed form understates by `q/R`. Reward field confirmed `period_reward × 1e-4 / days`;
 `reward_amount_centicents` **does not exist** in 133,600 live rows.
