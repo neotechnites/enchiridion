@@ -42,8 +42,37 @@
   window that generated it.**
 
 ## GRADUATED (implemented, live)
-- **STREAK** [Class A-minus — 66d Kalshi (6,229 mkts) + 189d Poly (49,720 mkts) + 2yr-validated price gate; NOT a full 2yr backtest — R150 correction] — fade 4-streaks ≤44¢, BTC+ETH 15m. $106.03, first win
-  banked, retry binary live 2026-07-25. Week-2 sizing pending.
+- **STREAK — DEAD 2026-08-05 AT TRADEABLE PRICES. Do not run at $1,000.**
+  **THE $106.03 WAS A CATEGORY ERROR: it is `state.json.peak`, nestor's peak account
+  BANKROLL, not strategy P&L. Real STREAK lifetime realized P&L is +$3.20** (15 live
+  market-windows, 148 contracts, avg entry 37.55c, win **6/15 = 40.0%**, fees $1.22). The old
+  line here was wrong by ~33×. Bankroll now $78.94, `halted: true`, no fill since 2026-07-29.
+  Measured at prices volume actually crossed, net of real fees, day-clustered:
+  Jun 25–Jul 22 **+6.44c, t=+1.48** (n=221, CI [−2.10,+14.98]) · **Jul 20–Aug 6 −2.95c,
+  t=−0.91** (n=123) · pooled +3.08c, t=+1.03. **It never cleared t=2 in any period** — this is
+  "never established, now negative", not "was real, then died". Independent book-tape method
+  agrees: −1.09c (n=27). Recent weekly EV monotone negative: −1.81c, −2.52c, −6.51c.
+  **The underlying reversal rate broke:** 4-streak reversal 55.27% (n=474) → **48.28%**
+  (n=408) at Jul 20, **z=+2.07**, replicated independently on SOL/XRP/DOGE (54.85% → 50.46%,
+  z=+2.04). Last three weeks all below 50%. The vault's 55.8%/56.0% anchors are stale.
+  **Our own fills corroborate the kill** — live win rate 40.0% (n=15) matches the recent
+  backtest's 39.8% (n=123) almost exactly. The backtest predicts our real fills; it just never
+  predicted the vault's 54.7%. Capacity binds before capital: $1,000 at 41c is 2,440 contracts
+  = **104–169% of ALL flow crossing the ≤44c gate in the first 60s**. At $25/trade the NEW era
+  is **−$18.95/day, maxDD 50% of bank, 67% down days**; at $50/trade maxDD is 105% = ruin.
+  Retry binary is UNEVALUABLE (first live fill 2026-07-25, so there is no pre-retry live P&L).
+  **TWO METHODOLOGY DEFECTS FOUND — they invalidate other work, not just this:**
+  (1) `work/verify-streak-retry.md` **decodes the book tape backwards** — it assumes
+  "field1=yes_ask, field2=no_ask" but `scripts/capture_kbt.py:compact()` stores
+  `yes_best_bid`/`no_best_bid` and DISCARDS the ladders. Its 30.7% entry universe, "median
+  first-fire ask 42.0c", and the **+18pp fill-rate gain that justified deploying the retry**
+  all rest on an inverted decode. (2) **Those bid fields go stale when a side empties**
+  (`yes_bid=0.46` with `ytot=0.0`): unfiltered the pair sums to median **1.23** (p90 1.60), an
+  impossible arbitrage, and 124/350 windows show a strictly non-decreasing yes_bid. Requiring
+  `depth>0 AND yes_bid+no_bid ≤ 1.00` restores median 0.990. **Any study using these fields
+  unfiltered is measuring prices nobody could trade.**
+  *(Minor, verified against 26 live fills: the Kalshi taker fee rounds up to 1/100 cent per
+  order, not the whole cent — the whole-cent assumption overstates fees ~3–4% at size 1.)*
 
 ## COLUMN 4 additions — FABLE REVIEW 2026-07-25 (primary ledgers read)
 - **H10 econ point-ladder maker** + **H9 political spread-capture** — IMPLEMENTED SAME DAY
