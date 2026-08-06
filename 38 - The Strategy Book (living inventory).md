@@ -990,3 +990,54 @@ Retrievability is inversely related to volume, and volume is outcome-correlated.
 Artifacts: `~/kalshi_data/hunt/pred_settled_30d.json`, `pred_ktrades_deep.jsonl` (1.3 GB, full 900 s
 windows), `pred_Mdeep.pkl`, `pred_kraken_seq.jsonl`, `pred_{a_settle,g_deep,j_core,l_struct,o_vol,
 n_truth,p_partial,q_econ}.py`.
+
+## 🔧 RULE-B CORRECTED (2026-08-06, deep pass) — real, but $18–19/day and far riskier than reported
+**THE +1.420¢ HEADLINE WAS ATTEMPT-WEIGHTED.** Same attempt set, four weightings:
+| weighting | n_obs | fill | markout | t |
+|---|---|---|---|---|
+| attempt-weighted (as first reported) | 52,354 | 0.521 | **+1.420** | 5.59 |
+| **FIRST qualifying per market (law-compliant)** | 16,343 | 0.557 | **+0.772 ± 0.271** | **2.85** |
+| random qualifying per market | 16,343 | 0.582 | +0.188 | 0.70 |
+| LAST qualifying per market | 16,343 | 0.587 | **−0.903** | −3.10 |
+**Markets whose favourite-NO WON offer 3.23 qualifying attempts; losers offer 2.63 — attempt-weighting
+over-samples winners 1.226×.** The `prim` hash-one-per-market flag does NOT fix it (it is
+attempt-weighting with more noise). Reward series survive far better: **+1.662 ± 0.443 (t=3.75)**;
+non-reward collapses +0.955 → +0.417.
+
+## 🔑 MECHANISM SOLVED — it is a YES-SIDE premium, not a longshot effect
+Bias = realised YES% − mid, **no fill model at all**, one obs/market:
+| band | n_mkt | mid | realised YES% | bias | t |
+|---|---|---|---|---|---|
+| **cheap-YES tail 2–12¢ (where the rule lives)** | 5,169 | 6.69 | 5.65 | **−1.046** | **−3.00** |
+| mirror 88–98¢ (NO is the longshot) | 4,405 | 93.49 | 93.60 | +0.107 | 0.19 |
+| control 30–70¢ | 21,165 | 48.31 | 48.07 | −0.245 | −0.62 |
+**Cheap YES is dear by ~1¢; cheap NO is not.** Held out: hash A −0.801 / B −1.446; excluding all
+MLB/ATP/ITF −1.134 (t=−2.66). Decomposition of the rule: longshot-YES premium **+1.046** + half-spread
+**+1.394** = gross **+2.440**, adverse fill selection **−1.668** ⇒ **realised +0.772**. The mirror
+(buy favourite YES at bid) is **−0.612**: both sides earn a similar half-spread and pay similar
+adverse selection — **only the NO side has a real 1.05¢ mispricing behind it.**
+**RETAIL-FLOW TEST PASSES HARD:** ex-ante average trade size before the quote — markets under
+**134 ct/traded-min bias −2.185 (t=−4.53)**; at or above 134, **+0.389 (t=0.75)**. Time-of-day is flat.
+**The mechanism is WHO trades, not when.**
+
+## Frontier: flat, and CAPACITY-bound not capital-bound
+Rest-policy sweep (collateral is reserved while resting): 30 min $14.64/day · 60 min $18.25 ·
+2 h $18.46 · **6 h $19.05** · to close $12.66. **The only free gain in the whole surface is raising the
+rest cap from 60 min to 2–6 h (+4%).** Joint 80-cell sweep: best is P≥92/age≥6h/rest 6h at $20.81 —
+**and it FAILS held-out series** (A +1.182 t=4.28, B +0.285 t=0.60). P≥90/age≥6h is already the
+maximum of flow × markout. **Every refinement raises ¢/contract and LOSES dollars** by cutting flow.
+No structural feature predicts the 7¢ per-series spread — `life`, `tick`, `spread`, `frac two-sided`,
+`strike type`, `flow`, trade size all reverse across halves. The series' own past markout does
+generalize (+1.539, t=3.16) but **cuts flow 54% and loses money** ($8.98/day vs $11.92).
+**EARLY EXIT IS DEAD:** at fill −0.037 · +1m −0.124 · **+30m −1.344 (t=−5.53)** · +2h −0.793 ·
+**settlement +1.030 (t=2.63)**. Every intermediate horizon is negative.
+**CAPACITY CEILING: 212 qualifying markets/day × 20ct × 0.203 capital-days = 860 concurrent contracts
+= $806 of collateral.** Median NO-side queue at touch is **18 contracts**, so Q=40 is not executable.
+**Capital beyond ~$1,100 cannot be deployed — $/day scales with SERIES BREADTH, not capital.
+$2,000 buys $21/day, not $37.**
+🔧 **RISK WAS UNDERSTATED 18×.** Daily P&L **sd $72.4**, **worst observed day −$244 on $806 deployed
+(−30%)**, 68.4% of days positive, 5.6% of fills lose 92.4¢. **Daily Sharpe 0.26 ⇒ ~150 trading days to
+2-sigma.** The earlier "±$3.9/day" was the STANDARD ERROR OF THE MEAN, not the daily P&L sd.
+**⇒ FINAL: keep the rule exactly as written, set the rest cap to 2–6h. Expect $18–19/day at $1,000
+with $806 deployed and a −$244 worst day. Add nothing — every filter tested loses dollars.**
+Artifacts: `~/kalshi_data/hunt/deep_*.{json,log,py}`, `deep_parts/`, `deep_ff/`, `deep_meta.npy`.
