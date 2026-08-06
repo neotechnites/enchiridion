@@ -424,3 +424,53 @@ LOCK corroboration above.
 0.1¢-grid rebuild answered it offline for free. The queue question was moot; the fills were phantom.
 Artifacts: scratchpad `calib_*.py|.out|.npz` (build, surface, drift, rule, maker, valid, select,
 probe, queue, econ).
+
+## ⚠️ GATE 7 — RETRIEVAL-DEPTH INVARIANCE (new law, 2026-08-06, cost: two false edges in one day)
+**Every sample must be shown invariant to how completely its data was RETRIEVED.** It is a one-line
+split and it would have killed both of today's survivors in five minutes.
+
+**The mechanism, measured, not theorised.** Kalshi's `/markets/trades` returns only the most recent
+~1000 prints. Whether a market's early window is retrievable inside that cap is a function of its
+**total print count over the whole 900s** — i.e. it encodes POST-PLACEMENT information. A market
+retrievable back to 880s is one whose tape **went quiet, because the outcome became obvious.**
+At the SAME anchor price (~83¢), unconditional favourite win rate:
+
+| asset | natively deep (retrievable) | added by backfill (was invisible) |
+|---|---|---|
+| ETH | 83.7¢ → **94.6%** (+10.9) | 82.6¢ → 81.8% (−0.9) |
+| SOL | 83.5¢ → **92.1%** (+8.6) | 81.5¢ → 67.7% (−13.8) |
+| XRP | 83.3¢ → **91.1%** (+7.8) | 81.8¢ → 74.9% (−7.0) |
+| DOGE | 82.9¢ → **91.3%** (+8.3) | 81.3¢ → 70.7% (−10.5) |
+
+**The retrieval flag is worth ±10–20 points of win probability at a fixed price.** That is future
+information relative to a tau-720 placement. It is lookahead wearing a coverage costume.
+
+## EARLY-WINDOW POCKET (fav ≥76¢, tau 690–740s) — ☠️ DEAD 2026-08-06, same artifact
+Backfilled all 5 assets past close-880s via `max_ts` backward paging (12,177 markets re-paged).
+**+3.35¢ → +0.04¢ [−1.27, +1.34], t=+0.07, n=4,600.** Split by retrieval:
+natively deep **+4.43¢ (t=+6.36, n=3,018)** · added by backfill **−10.99¢ (t=−6.76, n=1,160)**.
+Post-backfill tau curve is negative and significant from tau 30–570 and indistinguishable from zero
+from 630 out — **nothing crosses**. BTC never had a hump at all (negative/flat across 30 cells;
+its native reach was only 337s — the trap).
+**XRP WAS NEVER THE OUTLIER — it was the LEAST-CONTAMINATED ASSET.** Its −1.11¢ was three separate
+flaws (non-passive fills, coverage selection, 2-slice window); repaired it matched SOL/DOGE exactly.
+**IT PASSED AN HONEST SELECTION CORRECTION AND STILL DIED.** 12,960-cell maxT permutation with every
+refinement inside the grid → **p=0.0159**. *The problem was never multiplicity. It was the sample.*
+Split-half was perfect (H1 +5.04 / H2 +5.33) — **split-half cannot detect a bias present in both
+halves.** Gate 4 (per-asset) is what caught it, and only AFTER the data was repaired.
+
+**INDEPENDENT BUG:** `scripts/maker_favstrat.py` omits the passivity check its sibling
+`maker_surface.py` documents (`YES BID at P: passive iff p0 > P`). **51–62% of the published
+survivor's "maker fills" were orders already marketable at placement** — i.e. takes, not makes.
+
+**KBT books did not settle it.** ~10M snaps 07-24→08-06, but the mandated staleness filter
+(`depth>0 AND yes_bid+no_bid ≤ 1.00`) rejects **54–62%**, and in the 76–90¢ band at tau 690–740
+essentially nothing survives (SOL 1 valid snap, XRP 25, ETH/DOGE/BTC 0, of ~73k in-window snaps
+per asset). Field 0 is an **ISO string**, not ts_ms. `scripts/pocket_kbt.py` for whoever needs it.
+
+**CRYPTO 15m IS NOW SEARCHED OUT.** ~10 strategies killed 2026-08-06: lock (twice), longshot fade,
+barrier/touch (−11%), boxes (−2.3%), exit rules (flat), distance/vol gates (monotone worse), XRP,
+favourite-bias maker (dtype), early-window pocket (retrieval). The market is calibrated to ~1¢
+against a 1.4–3.1¢ toll. **The taker surface is negative everywhere; the maker surface is negative
+at every tradeable distance (best cell −1.17¢) with adverse selection 4–9× the zero-fee advantage.**
+Do not re-enter this market without a genuinely new mechanism — not a new gate on an old one.
