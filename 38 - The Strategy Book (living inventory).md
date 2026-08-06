@@ -74,8 +74,9 @@
   **The underlying reversal rate broke:** 4-streak reversal 55.27% (n=474) → **48.28%**
   (n=408) at Jul 20, **z=+2.07**, replicated independently on SOL/XRP/DOGE (54.85% → 50.46%,
   z=+2.04). Last three weeks all below 50%. The vault's 55.8%/56.0% anchors are stale.
-  **Our own fills corroborate the kill** — live 25% (4/16) against the recent backtest's 39.8%
-  (n=123). The backtest is if anything optimistic; nothing ever predicted the vault's 54.7%.
+  ~~**Our own fills corroborate the kill** — live 25% (4/16)~~ **FALSE, RETRACTED 2026-08-06:
+  there is no 4/16. The live tape is 6 fills, 3 wins, +$6.50 (see the retraction above). Our
+  own fills corroborate NOTHING in either direction at n=6.**
   Capacity binds before capital: $1,000 at 41c is 2,440 contracts
   = **104–169% of ALL flow crossing the ≤44c gate in the first 60s**. At $25/trade the NEW era
   is **−$18.95/day, maxDD 50% of bank, 67% down days**; at $50/trade maxDD is 105% = ruin.
@@ -338,7 +339,43 @@ deribit hourly gate (tenor artifact) · earnings-MENTION lag (closes-on-occurren
 count-lag (29/29 priced) · buy-the-jump on liquid ladders (n≈1,576) · thin-frontier structural
 locks (4,740-event scan).
 
-## FAVOURITE-BIAS MAKER (crypto 15m) — NEW 2026-08-06, the day's only survivor
+## FAVOURITE-BIAS MAKER (crypto 15m) — ☠️ **REFUTED 2026-08-06 11:33 MDT, same day it was found**
+> **THE RULE IS DEAD. A DATA-BUILD BUG MADE IT.** `calib_build.py` stored trade price as
+> `ps.astype(np.uint8)` — but the Kalshi crypto tape above ~1¢ is a **0.1¢ grid**, and only
+> **16.9%** of prints in the 96–98¢ band sit on a whole cent (BTC **10.3%**). The floor()
+> did three things: (a) it made the fill test `floor(P_k) ≤ floor(f)` count a trade at 96.9¢
+> as filling a bid at 96.0¢ → **phantom fills**; (b) it turned floor() on the YES side into
+> ceil() on the NO side → the side-asymmetric sampling bug, visible as 51.1/48.9 YES/NO fill
+> split vs 49.6/50.4 once fixed; (c) it did *not* much move the print-level phenomenon
+> (buy-favourite-always +1.842¢ → **+1.835¢**, unchanged — that part stands).
+> **On the true 0.1¢ grid the identical rule is +0.165¢, t=+1.64** — below its own
+> significance bar before any selection correction. Requiring the trade to print even **one
+> 0.1¢ tick through** our resting level: **+0.123¢, t=+1.20**. Through 0.5¢: **−0.112¢**.
+> Through 1.0¢: **−0.543¢, t=−4.19**. Through 2.0¢: **−1.872¢**.
+> Shrinking the assumed rest 60s→30→10→5s barely moves it (+0.249→+0.241¢) — **resting time
+> was never the binding assumption; fill realism was.**
+> Corroborated independently by the live book recorder: best-bid level lifetime **median <1s**,
+> **0 clean touches in 11,146 resting windows**, median spread 0.2–0.6¢ above 91¢, BTC a
+> locked 1¢ book. There is no cent of spread to capture at 96–98¢.
+> **The residue is the pagination artifact again.** EV by market print count: **+1.99 / +0.93 /
+> +1.11 / −0.11 / −4.69¢** across quintiles; corr(market prints, tape reach) = **−0.632**.
+> The 300–420s sub-window (+0.769¢) is +0.99¢ in deep-tape markets and **+0.03¢** in
+> truncated-tape ones. **The markets with a real book are the negative ones.**
+> **One real conditioning survives and does not save it:** |Z|≥2 at 96–98¢ = +0.971¢ (t=+5.40,
+> 5/5 assets, H1 +1.11 / H2 +0.83, Romano-Wolf p_adj 0.0001 over 50 cells), and its contrast
+> holds *inside* every volume tercile (+0.25 / +0.84 / +1.20) so it is not purely the artifact
+> — but **in the high-volume tercile |Z|≥2 is still −1.13¢**, and that is the only tercile with
+> a book to trade against. Best honest dollars: **+$11.65/day on $1,000 at 2% sizing**, on a
+> fill convention the live book already contradicts. **Do not build the queue-logging instrument.**
+> Clock: nothing. MT 08–12 is −0.789¢ (p_adj 0.011) but 74 days gives ~10 obs/weekday and a
+> **~1.1¢ corrected MDE** vs a 0.12¢ honest base — weekday is **unanswerable at this sample**.
+> Artifacts: scratchpad `refine_px.py` (grid rebuild, 1:1 aligned), `refine_fill.py|.out`
+> (strictness ladders), `refine_cover.py|.out`, `refine_honest.py|.out`, `refine_final.py|.out`.
+> **LESSON (new, general): dtype IS a modelling assumption.** `astype(uint8)` on a price is a
+> silent 0–0.9¢ market-structure change. Check the tick grid of any tape before simulating a
+> passive order on it. This is bug class 5.
+
+### Original (now-refuted) writeup, kept for the mechanism only
 **Found by the calibration-surface sweep after LOCK died.** 28.9M prints, 34,440 markets, 5 assets,
 74d (2026-05-25→08-05). Market-level YES rate **0.4944** (per-asset .4917–.4966) so there is no
 bull/bear drift contaminating it.
@@ -383,8 +420,7 @@ falsified in the expected direction, the bias SHRINKS into the close (+1.49¢ at
 0–10s): the market gets MORE accurate as the 60s index average locks; (c) deep-lock band — see the
 LOCK corroboration above.
 
-**NEXT MEASUREMENT (live, not backtest):** log our own resting-order queue position and fill
-outcomes at 96–98¢ with 2–7 min left for ~2 weeks. That single capture separates +0.80%/trade from
-−0.44%/trade. Everything else is settled.
+~~**NEXT MEASUREMENT (live):** log our own resting-order queue position…~~ **CANCELLED** — the
+0.1¢-grid rebuild answered it offline for free. The queue question was moot; the fills were phantom.
 Artifacts: scratchpad `calib_*.py|.out|.npz` (build, surface, drift, rule, maker, valid, select,
 probe, queue, econ).
