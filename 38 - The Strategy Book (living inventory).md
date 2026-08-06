@@ -735,3 +735,73 @@ parlays ever get quoted.
 Artifacts: `~/kalshi_data/lock_scan.py` (cover/pack DP, identity algebra, fees, depth walk,
 persistence) · `lock_pull_events.py` · `lock_crypto_window.py` · `lock_verify_live.py` ·
 `lock_confirm.py` · `lock_{coverage,depth,cands}.json`.
+
+## ☠️☠️ DEFINITIVE: KALSHI IS CALIBRATED AT FULL POWER (2026-08-06). The taker question is CLOSED.
+Authenticated re-run at ~100× the prior throughput. **This settles the 1–3¢ band the rate-limited
+pass explicitly could not see.**
+
+| | keyless pass | **this run** |
+|---|---|---|
+| throughput | ~4 calls/min | **3,434/min measured, 3,000 sustained, 0× 429** |
+| venue map | — | **1,133,375 settled markets · 12,511 series** |
+| candles | 3,770 markets | **124,231 markets** |
+| observations | — | **253,281** · 80 series · 24,667 events · 11 categories |
+| cell SE | 3–9¢ | **median 0.74¢ · 71/98 cells ≤1.0¢** |
+
+**VERDICT: venue-wide gap +0.34¢ (SE 0.20) against a 4.26¢ round toll. ZERO cells clear the toll on
+an implementable rule.** Gate 1 closes exactly: EV_yes −1.798 + EV_no −2.464 = **−4.262 = −(spread
+2.435 + fees 1.827)**. Category gaps all small, both taker sides negative: Sports +0.75 (SE 0.27) ·
+Mentions +1.01 (0.69) · Weather −0.82 (0.20) · Financials +0.79 (0.93) · Crypto +0.01 (0.23) ·
+Commodities −1.39 (0.75). Gate 2 placebo **fails as a kill**: real-anchor max|z| 23.95 sits BELOW
+the displaced anchors (+12h → 378.9, −24h → 123.2) ⇒ **the time axis carries no information.**
+Gate 4: every mid-band cell reverses held-out (YES 70–80¢ ×15m–1h: **+6.57 → −8.24**).
+
+🔧 **AND IT KILLS THE DAY'S LAST SURVIVOR.** Buying the near-certain side at 99¢ read **+0.552¢/ct,
+t=9.70, n=18,445, 77 series, both held-out halves positive, all 11 categories positive** — mechanism
+apparently airtight (all `linear_cent`, so a true 0.31% cannot be quoted below the 1¢ floor).
+**It is a weighting artifact.** Time-grid sampling weights each market by how long it SITS at 1¢, and
+time-in-state is outcome-correlated — markets rest at 1¢ *because they are dead*:
+
+| same trade, measured differently | realized YES | EV/ct |
+|---|---|---|
+| time-sampled snapshots | 0.314% | **+0.552¢ (t=9.70)** |
+| **one trade per market, first touch of 1¢** | **1.048%** | **−0.117¢ (t=−1.35)** |
+| one per market, ask ≤3¢ | 1.245% | −0.315¢ (t=−3.54) |
+| fixed anchor T−12..24h, book exactly 1/2 | 0.415% (n=482) | +0.516¢ t=1.76 → **95% UB ⇒ −0.569¢** |
+
+Breakeven **0.931%**; implementable rate **1.048%**. **−$1.18/day at $1,000**, capacity-unbound
+(5.35M ct/day rests there; $1k uses 0.02%) — **the edge is missing, not the depth.**
+⇒ **THE MENTION 1¢ TICK SCALP ABOVE MUST BE RE-MEASURED PER-MARKET BEFORE ANY FUNDING** — its
+645-market/zero-YES sample is exactly this time-sampled shape.
+
+🔧 **FOUR MORE FIELD-HYGIENE LAWS THIS RUN PAID FOR:**
+1. **`close_ts` is outcome-dependent ACROSS events, not only within.** MLB game duration vs fraction
+   of ladder resolving YES: **short games 36.7% · long games 64.7%.** Anchoring on game end sorted
+   observations into time buckets BY OUTCOME and manufactured **+16.34¢** at 60–70¢. Fix =
+   ticker-parsed schedule + **series-median** offset (a per-series constant, so no per-event duration
+   enters); 96.5% of events get a clean anchor.
+2. **OCCUPANCY IS A REQUIRED CELL STATISTIC.** A time bucket reachable by only some events is a
+   selected subset (KXMLBTOTAL reaches T−0..15m in **0.59** of events; KXINXU reaches 12–24h in
+   **0.32**). **Cells below 0.80 occupancy are UNINTERPRETABLE, not zero.** Every large mid-band cell
+   died on this.
+3. **`max(EV_yes, EV_no)` per observation is OUTCOME SELECTION** — it manufactured **+46.85¢** cells.
+   The side must be chosen per cell, never per observation.
+4. **Empty books are not prices** — KXMLBTB bid 0 / ask 96 created fake 50¢ mids reading −12.33¢.
+   Require two-sided AND spread ≤10¢ (keeps 80.4% of quotes).
+
+**COVERAGE:** 80 series, 11 categories, 24,667 events, **74-day reachable window** (history floor
+confirmed: `/markets?event_ticker=` returns 0 beyond ~2 months even authenticated). NOT reached:
+KXBTCY/KXETHY (zero-fee, annual expiry ⇒ ~0 settled events in the window) and 12,431 of 12,511 series
+mapped but not candled (nearly all one-off tails with <30 settled markets).
+Artifacts: `~/kalshi_data/hunt/recal_{map,pull,plan,import,run,verdict,extreme,gate3}.py`,
+`recal_mkts.jsonl` (1.13M), `recal_c/*.jsonl` (1.4 GB), `recal_FINAL*.log`.
+
+## ⇒ WHERE THE SEARCH STANDS AFTER 2026-08-06
+**Taker edge on Kalshi: CLOSED.** Calibrated to +0.34¢ ± 0.20 against a 4.26¢ toll, at cell SE 0.74¢,
+across 11 categories. ~14 strategies killed today.
+**Only two things have EVER measured positive against real displayed depth:**
+1. **DUTCHBOOK** — $22.87/day at $1,000, 32/32 locks, Jul 22–26. **Decayed by Aug 6.** Its window is
+   15 min wide (`:45→:00` only), which is why a naive sweep finds nothing.
+2. **The maker half-spread** — i.e. the existing LIP/seats business, eroded ~0.5¢ by adverse selection.
+**Everything else that looked positive was a measurement artifact.** The durable output of the day is
+the instrument set: 9 gates, the field-hygiene laws above, and `lock_scan.py`.
