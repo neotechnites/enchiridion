@@ -805,3 +805,76 @@ across 11 categories. ~14 strategies killed today.
 2. **The maker half-spread** — i.e. the existing LIP/seats business, eroded ~0.5¢ by adverse selection.
 **Everything else that looked positive was a measurement artifact.** The durable output of the day is
 the instrument set: 9 gates, the field-hygiene laws above, and `lock_scan.py`.
+
+## ✅ SURVIVOR — PASSIVE LONGSHOT FADE (venue-wide maker survey, 2026-08-06)
+> **Rest a NO bid at ≥90¢ (= offer YES at ≤10¢) in a market open ≥6h, two-sided, spread ≤10¢.**
+> Every condition uses quote-time fields only — no `close_ts`, no `volume_fp`, no `last_price`.
+
+**It is NOT market making.** It is the favourite-longshot bias executed passively to dodge the fee.
+Horizon profile is the tell — **zero microstructure edge, all the money at settlement**:
++0-60s **+0.190** · +1m +0.154 · +30m +0.009 · +2h −0.452 · **settle +1.489**.
+It was invisible to every taker survey because the 4.26¢ toll buried it; it exists only because
+**makers pay zero fees** (confirmed at 20× the original sample: maker **0.0006%** = $0.05 on $8,892;
+taker 1.947% = $93.31 on $4,793).
+
+| evidence | value |
+|---|---|
+| fill-simulated markout | **+1.420¢ ± 0.254, t=5.59** |
+| **first touch, 1 obs/market, NO fill simulation (28,019 mkts)** | ask 8.26¢, YES occurs **6.58%** ⇒ **+1.674¢ ± 0.188, t=8.88** |
+| clustering event/market/day/series/two-way | t = 4.12 / 4.36 / 4.40 / 4.15 / 4.17 |
+| Gate 9 re-cut on minutes-since-open | **+1.388, t=4.70 — STRONGER** |
+| calendar halves · hash halves | +1.116 / +1.668 · +1.402 / +1.439 |
+| per-series · per-category | **32/36 series positive · every category positive** |
+| **monotone in BOTH thresholds independently** | price 75→85→**90**→92→96¢: 0.33 → 1.01 → **1.42** → 1.43 → 0.78 · age 0→3→**6**→24→48h: 0.33 → 0.92 → **1.42** → 1.50 → 2.42 |
+| FDR | 2 of 56 cells survive Benjamini-Hochberg at 5% |
+**Dollars:** +1.505%/trade on 94.4¢ collateral; λ=1.02 (own tape) to 1.37 (sim); **1.37 capital-days
+per fill** (wait 0.98 + **hold-to-settlement 0.40**) ⇒ **+$10.96/day at $1,000 (SE $1.96)**.
+*The hold-to-settlement correction is what cuts a naive $188/day to $11 — capital cannot turn 12.5×/day.*
+**CAPACITY CEILING $1,151** (61 live matching markets × 20ct × $0.94) — **$1,000 is AT the ceiling.**
+Hits Ryan's 1–2%/trade but at **~0.7 fills/capital-day, not 5.**
+⚠️ **THE GAP THAT SHOULD STOP A DEPLOY: simulated +1.42¢ vs our OWN realized −4.30¢/contract.** The
+selections differ (our fills sit in reward-chosen crypto-15m/weather books where this survey also
+reads deeply negative — Crypto NO −7.13, KXBTC15M −9.27), but **the survey does not reconcile to our
+tape at series level. A 5.7¢ execution gap has never been closed in production. This rule has never
+been tested with real fills.**
+
+## ☠️ MARKET MAKING ON KALSHI IS DEAD — adverse selection is 1.9× the spread
+1,636,618 observations · 72,890 markets · 24,752 events · 59 series · 11 categories, wall-clock
+cadence (never time-in-state), event-clustered.
+| | ¢ |
+|---|---|
+| spread a two-sided maker collects | **+2.284** |
+| YES + NO realised markout | **−2.151** |
+| **adverse selection per round trip** | **−4.435** |
+**The 4.26¢ taker toll and the 4.44¢ maker adverse-selection wedge are nearly the same number — the
+venue extracts the same tax through a different door.** Confirmed independently on a wholly separate
+dataset (100ms depth tapes, 5 crypto families): wedge −4.35¢ conservative, no cell positive at |t|>1.3.
+Gate 1 closes exactly: `E[mo|NO fill] = half-spread − directional` to the third decimal.
+**Why "sell at the ask ≈ +2.97¢" was wrong: by the close of the minute you fill in, the mid is
+already BELOW your price (YES −0.948¢, NO −0.344¢). You never capture the half-spread.**
+Placebo passes: shuffling settlement within series lifts YES −1.846 → +3.384.
+
+## 🔴 THE LIP/SEATS BUSINESS IS NET-NEGATIVE **EVEN WITH REWARDS** — from our own 905 maker fills
+| per resting contract-day | ¢ |
+|---|---|
+| (a) REWARD | **+1.518** |
+| (b) trading markout | **−2.65** |
+| **NET** | **−1.13** |
+Realised maker markout on our own tape: **−4.299¢/contract.**
+🔧 **The reward-capture model is 38× OPTIMISTIC** — models $1,610/day at $1,000; **measured capture
+is $39–42/day** — and it concentrates 90% of capital into the two most contested HFT books on the
+exchange. **Do not size with it.**
+🔧 **Program ends 2026-08-30 04:00Z — 23.2 days, not 26.**
+🔧 **The seat marginal is `(pool/2)·q/(q+R)²`, NOT `(pool/2)·R/(q+R)²`** as HANDOFF §3 states — the
+briefed form understates by `q/R`. Reward field confirmed `period_reward × 1e-4 / days`;
+`reward_amount_centicents` **does not exist** in 133,600 live rows.
+
+🔧 **COLLECTOR BUG — the KBT crypto book tapes are largely unusable.** **38% of markets (444/1,168)
+are FROZEN**: byte-identical `(yes_bid, no_bid, ydep5)` across all ~8,900 snapshots while
+`coin_price` moves normally. Frozen tapes supply **92.2%** of all snapshots surviving the mandatory
+`yes_bid+no_bid ≤ 1.00` filter — **so the filter SELECTS FOR CACHED JSON.** Live markets retain only
+5.2%; median contiguous valid window **24.3 s**; total observed inventory across the entire 13-day
+900 MB tape is **77.4 contract-hours.** Unusable for maker study until the collector NULLS rather
+than caches the opposing bid when a side empties.
+Artifacts: `~/kalshi_data/hunt/mkr_*.py|log|json`, `mkr_parts/` (105 MB, 1.64M obs),
+`mkrbooks_*`, `mkrown_SUMMARY.json`.
