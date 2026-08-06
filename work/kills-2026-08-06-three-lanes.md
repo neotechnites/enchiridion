@@ -82,3 +82,51 @@ observable) families. Account captures **$25.43/day gross** — 0.06%. The self-
 reading of the books: seats that pay are already stuffed with 20-28k contracts at the 1c
 tick floor; thin mid-priced seats are thin because the target-size gate means they pay
 nobody. That reading is a HYPOTHESIS and the receipts are what test it.
+
+---
+
+# 4. THE GRID — one cell survived, and here is its honest size
+
+Ran every (side x series x lead x price-band) cell over the same 703k-snapshot capture at
+EXECUTABLE prices, event-clustered, net of real taker fees, spread capped at 10c.
+**32 cells with >=8 events. 10 exceeded |t|>1.96 where 1.6 were expected by chance.**
+Bonferroni 5% threshold for 32 cells = 3.16.
+
+**Survivor: SELL YES at the bid, KXWTIH (WTI hourly), mid 1-5c, 15-45 min before close.
++1.48c/contract, t=+31.9, 123 events, 439 markets. Both date halves agree (+1.54c / +1.44c).**
+
+## Why the t-stat is FAKE even though the edge may not be
+**0 of 439 markets settled YES.** Every observation is nearly identical (+1.55c minus fee),
+so the dispersion is ~0 and t explodes. **You cannot estimate a rare-event rate from zero
+events.** t=+31.9 measures "the thing never happened in our sample", not significance.
+The defensible statement uses the rule of three: 95% upper bound on true P(yes) = **0.683%**,
+at which **EV = +0.87c/contract**. Positive under the pessimistic bound — that part is real.
+
+## What it is worth at $991 — the arithmetic that decides it
+Selling YES at 1.55c posts **98.45c of NO collateral per contract**. Return per cycle =
+1.55/98.45 = **1.57% of deployed collateral**.
+- $991 fully deployed = 1,007 contracts = **$14.90 per hourly cycle**.
+- Capital is free again at settlement (<=1h), so ~8-12 cycles/day => **$120-180/day gross**.
+- Book capacity is NOT the binding constraint: 513,674 contracts rested at the bid across
+  the 11-day window (median 2,000/market), i.e. $691/day of gross if we could fund it.
+  **Capital is the constraint, not liquidity.**
+
+## Why fully deployed is RUIN, and what survivable size does to the number
+One YES outcome while fully deployed = **-$991, the entire bank**. At the rule-of-three
+p=0.683% per exposure and ~10 exposures/day, **P(ruin before Sept 1) ~ 83%**. Even at
+p=0.2% it is ~40%. Kelly on p=0.683% says 56% of bank, but Kelly computed off ZERO observed
+events is not a size, it is a guess; at a merely-pessimistic p=1.5% Kelly collapses to 3%.
+**Survivable sizing is 3-10% of bank per cycle, which turns $120-180/day into $5-15/day.**
+
+## THE THING THAT WOULD KILL IT, and it is not in the sample
+11 days, one regime, zero realizations of the only event that matters. WTI wings do not fail
+independently: an inventory print or an OPEC headline moves oil through **many strikes at
+once**, so the tail is CORRELATED across the very positions we would hold simultaneously.
+The sample cannot see this and no amount of re-slicing it will.
+**Gate before any capital: (i) reconstruct WTI hourly wing outcomes across a shock window
+(EIA Wednesdays, OPEC meetings) from the 2-year WTI history already on disk; (ii) measure
+how many strikes go YES together on those days. If simultaneous hits are common, the
+correlated tail eats years of 1.57%-per-cycle and the lane is dead.**
+
+**Status: NOT FUNDABLE. It is the first thing in six weeks that survived an executable-price
+grid with a multiple-testing correction, and its honest size at this bank is $5-15/day.**
