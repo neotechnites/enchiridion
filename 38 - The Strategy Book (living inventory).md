@@ -474,3 +474,47 @@ favourite-bias maker (dtype), early-window pocket (retrieval). The market is cal
 against a 1.4–3.1¢ toll. **The taker surface is negative everywhere; the maker surface is negative
 at every tradeable distance (best cell −1.17¢) with adverse selection 4–9× the zero-fee advantage.**
 Do not re-enter this market without a genuinely new mechanism — not a new gate on an old one.
+
+## MENTION MARKETS — surveyed 2026-08-06. Headline claim FAILS; a small survivor clears its gates.
+🔧 **DATA-INTEGRITY BUG, CONTAMINATES THE EXISTING MENTION CORPUS: `close_ts` IS OUTCOME-DEPENDENT.**
+Within the same event, YES markets close on average **15,903s (4.4h) EARLIER** than NO markets;
+**88.7% of 803 events** show YES closing first; only 1.7% share a single close time. **Any study that
+anchored time-to-resolution on `close_time` leaked the outcome into its time axis** — that includes
+the exit-policy study in HANDOFF §2 ("exit T−2h", "hold to settlement −0.82¢"). Correct anchor =
+`max(close_ts)` per event, restricted to `t < min(close_ts)` so every market is still trading.
+**Same class as gate 7: a field you thought was descriptive is actually post-outcome.**
+
+🔧 **THE HANDOFF's SPREAD PROFILE IS INVERTED.** Measured: median spread **1.0¢ at T−0..2h**, 2–4¢ at
+T−2..24h, **7.0¢ at T−48..73h** — books TIGHTEN into the event, they do not widen. And **65–77% of
+hours beyond T−24h have ZERO volume** (median vol/hr: 937 at T−0..1h → 0.0 beyond T−24h).
+**Therefore the "~3¢ overprice at T−24h" sits on a mid nobody can trade.**
+
+**The 7.8¢ mid-band claim: right sign, fails 4 of 7 gates.** Per-market −6.87¢ (335 markets, 137
+events, SE≈3.5¢) — but gate 2 FAILS (displaced anchors score BIGGER: −8.29¢ at +12h, −10.39¢ at
+−24h vs −6.87¢ real ⇒ the time axis carries no information), gate 4 FAILS (early −3.04¢ vs late
+−9.90¢; largest-n families flat — WC +0.37 n=24, BERNIE −0.63 n=19, NBA +12.80 n=17; the edge lives
+only in n=8–12 earnings families), gate 5 NOT PASSED (degenerate maxT null), gate 7 FAILS (shallow
+−4.38¢ vs deep −9.38¢). The obs-weighted −16.9¢ was within-market pseudo-replication.
+
+**SURVIVOR — the 1¢ tick scalp. First candidate all day to clear every applicable gate.**
+> When the book is `0/1`, T−0..48h, post a passive YES offer at **1¢** (= buy NO at 99¢). One fill
+> per market. Hold to settlement. **Never cross.**
+- **645 markets, 206 events, 53 series — settled YES: ZERO**
+- EV **+1.000¢/contract** in-sample; 95% upper bound on p_yes = 0.463% ⇒ **conservative +0.54¢**
+- **+1.01%/trade in-sample, +0.54%/trade conservative** — meets Ryan's 1–2%/trade at the bottom edge
+- **$/day at $1,000: $10.10 in-sample, $5.42 conservative.** CAPITAL-bound at 1,010 contracts (1¢-tick
+  flow is ~619,000 contracts/day, so flow is not the constraint — collateral is).
+- Gates: 1 PASS · 3 PASS · 4 PASS (0 YES in both halves) · 6 PASS (1¢ integer grid verified) ·
+  7 PASS (0 YES at every retrieval depth) · 2,5 n/a (mechanical, not scanned)
+- **Stands WITHOUT the LIP program** — pure settlement edge, makers pay zero fees, no exposure to
+  the 2026-09-01 sunset.
+⚠️ **Why not to size into it:** 99¢ of collateral per 1¢ of premium; the whole result rests on zero
+YES resolutions in 645 markets; **one bad settlement erases 99–183 winning contracts**; and this is
+the deepest queue on the venue — it is precisely what LIP pays everyone else to quote. "1 turn/day"
+is optimistic.
+NOTE: `mentionstudy/`, `markoutstudy/`, `screen/`, `exitstudy/` are **VPS-only, not local**, so none
+of HANDOFF §2's priors were re-verifiable in this pass. Source used: `survey_candles_mention.jsonl.gz`
+(hourly candles, 1,500 of 14,998 settled markets, 62-day span) — still being written by another
+session's capture; numbers firm up at its 3,797-market target.
+Artifacts: `~/kalshi_data/mentionsurf/` (`mention_load.py`, `mention_final.py`, `mention_extreme.py`,
+`mention_sim.py`, `mention_focus.py`, `mention_gated.py`, `mention_anchor.py`, `mention_FINAL.json`).
