@@ -569,3 +569,37 @@ KXMLBHR (3.2M contracts/day) plus the unsampled KXMLB{TB,HIT,RFI}: the highest-l
 surface on the venue. (c) a **maker-side** survey, which needs `λ_side · markout` per market and
 cannot be done from bid/ask closes.
 Artifacts: `~/kalshi_data/survey_*.{py,jsonl.gz,pkl,json}`.
+
+## CROSS-VENUE / EVENT LANES — all dead 2026-08-06, plus a systemic API break
+- **ZERO-FEE: the liquidity trigger FIRED — and it dies on CAPACITY, which is a stronger kill.**
+  14 zero-fee series (not 13); 9 active. KXBTCY: **OI 6,801,825**, vol 30.2M, 28/28 two-sided,
+  0.1–0.7¢ spreads on a 0.1¢ grid with **zero fees**. Priced the exhaustive MECE ladder lock on
+  KXBTCY-27JAN0100 (28 bins, buy every YES → receive exactly 100¢): **SUM_ASK 98.90 = +1.10¢ lock**,
+  persistent across 3 snapshots. Capacity walking all 28 books: N=1 +1.05¢ · N=10 +0.83¢ ·
+  **N=100 +0.23¢ (peak $0.23 total)** · N=250 +0.09¢ · **N=500 −0.35¢**. **Max extractable ≈ $0.23,
+  once, locked to Jan 2027.** The toll removal is real; the depth is not.
+- **DUTCHBOOK: was real in July, correctly priced now.** Construction audited SOUND (threshold
+  ordering enforced so the strike gap is a joint-WIN bonus; asks derived from opposite-side
+  `/orderbook` bids, not stale summary fields; both legs verified settlement-identical — 60s average
+  of BRTI/ERTI before 3 PM EDT). Historical paper Jul 22–26: 32/32 locks, median +0.62¢,
+  **$23.14/day at $1,000**. **Live now: BTC net −28.09¢ (n=3), ETH −18.79¢ (n=5).** The combo's fair
+  value is **100 + 100·P(joint-win band)**, not 100 — ETH prices its 3.4bp band at 15.5¢, implying
+  ~8.8bp of 7-minute vol, internally coherent. Rebuild via bucket-vs-threshold: **0 locks** on all
+  five coins. The watcher works; the opportunity decayed.
+- **POLYLAG: DEAD ON ITS OWN GATE.** 22,486 paired obs / 1,742 minute-snapshots / 14 markets.
+  Qualifying (≥3¢ Poly move) events: **0 at 1m, 0 at 5m, 0 at 15m.** Kalshi max move 0.50¢; Kalshi
+  spread a flat 3.0¢ at p10/p50/p90. The divergences are **static levels, not lags** (GNEW +10.2¢,
+  range 8.7–10.3 over 12 days; AOC +9.6¢; KHAR −7.9¢) ⇒ **a rules mismatch, not an information
+  edge**. **Recommend killing or repointing the daemon — it is accruing zero information.**
+
+🔧 **SYSTEMIC API BREAK — ACT ON THIS.** Kalshi **removed the integer fields**
+`yes_bid`/`yes_ask`/`no_bid`/`no_ask`/`open_interest`/`volume`/`volume_24h`/`liquidity`, replaced by
+`*_dollars` / `*_fp` **strings**. **49 scripts under `~/kalshi_data/scripts/` still read the old
+names, silently receive `None`, and write zeros.** This produced a false "all 9 zero-fee series are
+dead, OI=0" reading that was exactly backwards (KXBTCY has 6.8M OI). Spot-checked HEALTHY (they use
+`/orderbook` or ticker regex): `cwing_books_*.jsonl`, `deribit_gate_hourly.jsonl`, `ens_forward.jsonl`.
+**Audit anything still running before trusting its output.**
+
+🔧 **KXBTC15M IS NOW A *RELATIVE* CONTRACT** — "BTC price up in next 15 min?", target = the **60s
+average at window OPEN**, published only once the window starts (`floor_strike` is null before then).
+Not a fixed pre-announced strike. Any analysis assuming a static strike is describing an old product.
