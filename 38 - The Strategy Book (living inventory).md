@@ -173,6 +173,19 @@
   reading LOW vs the real book by median +1.30¢ in 93–97¢ (p90 +8.0¢; **29% of moments exceed
   the entire claimed edge**) and +5.00¢ in 90–93¢ (61% exceed 3¢). Corroborated on the tape by
   next-print drift (median +0.8¢ at 95–97¢, +1.0¢ at 90–93¢, cheap bands worst).
+  **THE STRUCTURAL KILL (independent, and the cleanest — live books, 2026-08-06).** The
+  `lock-dryrun` replay over 4,338 in-window rows / 25 window-series: **721 rows had a favorite
+  in 93–97¢, 480 rows had Z≥4, and ZERO had both.** Not a small-sample zero — **max Z over
+  every favorite priced under 97¢ is 3.46**, the cheapest Z≥4 favorite is **98.20¢** (median
+  **99.80¢**), and median Z rises monotonically across every 5¢ bucket. By the time the coin is
+  4 normal moves clear, the book has already priced the lock at ~99.8¢. **The entry condition
+  does not exist on real books.**
+  ⇒ **THIS IS NOTE 09'S KILL, VERBATIM.** [[09 - Deep-Favorite Lock (DEAD)]] argued in June:
+  *"if the coin is truly 4+ moves clear, the market has already priced it to 98-99¢, not 95-97¢
+  — '4 moves clear' and 'still 95-97¢' contradict each other."* Note 08 claimed the Z filter
+  was "the whole trick" that escaped it. **It never escaped it — the 60s lookahead manufactured
+  the escape**, inflating Z at cheap prices by reading future spot. The same structural
+  contradiction killed this idea twice, a month apart, and the second time we nearly funded it.
   **90–93¢ BAND = ARTIFACT, RESOLVED.** Its apparent +6.4¢ superiority was the mislabelled
   cheap price. Priced correctly the ranking INVERTS (+1.34¢ vs +1.87¢; under no-lookahead
   −4.56¢ vs −0.38¢), and it is negative in all five assets and both halves. **The 93¢ floor
