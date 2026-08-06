@@ -18,13 +18,28 @@
 > EXECUTION validation — that's mechanics, class-independent, and temporary.)
 
 ## COLUMN 4 — WORTH IMPLEMENTING (cleared Fable testing)
-- **VOLBOOK** [Class B — 9.5wk = API retention cap; harvester accruing toward 2yr] — metal
-  daily-wing seller Mon-Wed by calibration gap. **BUILT 2026-07-25 (nestor 0f89954), Fable-
-  reviewed, paper-shadowing** — per-bucket willingness-to-pay ceilings, triple-gated from live
-  (VOLBOOK_LIVE=1 + run-wiring + sizing all required). First live-shaped window: Mon T-3h.
-  AWAITING RYAN: sizing (flat/day/cluster $, small per lesser-class rule). Queued enhancements:
-  copper dollar half-weight (needs small risk ext; ranking already demotes it), oil flag
-  (verdict said minimal-not-zero; shipped OFF, one flag-flip).
+- **VOLBOOK** — **BENCHED 2026-08-05: THE METAL GAP DIED. Do not fund.** Tested on real book
+  capture (54 signals / 18 series-day clusters, 0 phantom — every in-band rung had a real
+  resting bid, which is more than most candidates manage). Executable **+2.52c, clustered
+  t=+0.49**, bootstrap 95% CI **[−8.03, +11.58]c, P(EV<0)=0.29**; mid +2.96c, far touch
+  +4.24c — **1.7c of the claimed edge is spread.** The claimed +8.61c did not survive.
+  **The decay is the finding:** implied-vs-realized touch gap **+8.3pp in week 1 (Jul 27–29)
+  → +0.04pp in week 2 (Aug 3–5)**; gold alone −14.53c (n=15), carrying 4 of 5 touches, *in a
+  window where its own p90 tail was 56% below normal*. Capacity binds anyway — $1k buys ~1,150
+  contracts against a median metals day-total top-of-book of **$1,048**: $1,000 IS the book.
+  $/day flips sign on allocator detail (+$55.60 water-fill vs **−$8.25 sequential**, maxDD
+  −$459) because it rests on 5 touch events. **CORRECTION: `data/volbook.jsonl` does not
+  exist — volbook has NEVER emitted a paper decision. The "paper-shadowing" claim above was
+  aspirational.** This is the Class-B lifetime law behaving exactly as Ryan ruled: harvest
+  while alive, expect it to stop existing.
+- **ENERGY WINGS (Brent+NatGas) — NOT FUNDABLE YET, capture running.** Same phenomenon alive
+  where metals' used to be (+11.8pp gap today; n=74, +9.39c, touch 1.35% vs implied 13.16%).
+  Refused for three reasons: **selected on the same 7 days that test it**; those days sat in a
+  tail regime 16–20% quieter than normal, which biases every touch rate low; and the Mon→Thu
+  extension rests on **exactly one Thursday**, into a family where "EIA-day wings −6..−8¢
+  every family" is already on the DEAD list (EIA natgas storage is a Thursday release).
+  **Gate: 3–4 more weeks → ~15–20 clean OOS Mon–Wed clusters, then re-test. Never fund on the
+  window that generated it.**
 
 ## GRADUATED (implemented, live)
 - **STREAK** [Class A-minus — 66d Kalshi (6,229 mkts) + 189d Poly (49,720 mkts) + 2yr-validated price gate; NOT a full 2yr backtest — R150 correction] — fade 4-streaks ≤44¢, BTC+ETH 15m. $106.03, first win
@@ -75,9 +90,32 @@
 ## OUTSIDE THE FUNNEL (Ryan's pre-senate slate — alive, own tracks)
 - **PCE/GDP index event wings** + **MSFT/META gap wings** — calendar-scheduled Jul 30 (adjacent-
   kill flag from EVENT-VOL noted; INDEX family unaffected).
-- **WEATHER** — NOT dead; parked by Ryan's own streak-first redirect. In-sample calibration (8
-  city biases) intact; named gate = FORWARD out-of-sample (ens_forward capture daily since ~Jul
-  23, matures ~mid-Aug) → returns to a weekly review with real evidence then.
+- **WEATHER** — tested 2026-08-05, three legs, one survivor and it is small.
+  · **Ensemble/bias forward OOS: DEAD — it FAILED its own named gate.** 14 days, 78 (city,day)
+  clusters: **−0.8 to −2.3c/ct** executable, clustered t −0.30 to −1.20, ~0 even at the mid.
+  Fitting per-city bias *on the test set* rescues it only to +0.77c (t=0.30), **$4.03 total
+  over the entire forward window**. The 8-city in-sample calibration does not transfer.
+  · **Deterministic floor, TAKER: DEAD.** Mechanism is real and better than claimed —
+  **1,401/1,401 signals correct, 0 wrong**, 624 city-days (CLI high ≥ METAR spot max on
+  728/730). But **98.9% of signals had ZERO fillable volume**: $310 gross over 73 days × 10
+  cities = **$4.25/day for the whole universe**, 64% of it one city-day. And the 20–45min
+  api.weather.gov lag is not an opportunity — the market is at 1c/99c *before* METAR locks
+  (median pre→post price change **0c**, p10/p90 0/0). It prices the nowcast, not the report.
+  · **Deterministic floor, MAKER: the only survivor, ~$8/day at $1k.** 7.26M contracts of
+  wrong-side post-lock flow but **99.9% of it at exactly 1c** — so the trade is rest NO at 99c
+  for 1c on 99c collateral per ~12h = 1.01% ROC, maker fee 0. $1k → ~$10/day gross, ~$8 net of
+  the 0.21% error bound. Payoff is **+1c vs −99c** and queue position is **unmeasurable** (no
+  weather depth capture exists). Not worth a build alone, but it is the right SHAPE — maker,
+  favorite side, capacity-rich — and matches the ratified "residual must land on favorites".
+- **AAA GAS LAG — DEAD at the premise (2026-08-05).** The claimed inputs do not exist: no
+  wholesale gasoline series anywhere on the VPS, `aaa_gas_2yr.json` holds **18 days**, total
+  AAA history available is **82 days**, and KXAAAGASD's earliest event ever is 26MAY25. The
+  reproducible model is AR(1) on AAA's own lags at **OOS R²=0.505**, not 0.64 from wholesale.
+  **The market beats it**: Brier 0.0473 market vs 0.0796 model (n=660). The +18.54c "edge" is
+  entirely **outlier-print pickoff** — same trades at our-side VWAP +3.33c (t=1.25), skip one
+  print +0.40c, skip two **−0.13c**. Entry print median **10 contracts = $3.24**; forcing $1k
+  in gives maxDD **−$2,733** on a $1,000 bankroll. *(Note 53's "4:34pm intermediate CLI pins
+  settlement 85.5%" is the WEATHER/CLI family — it was never an AAA claim.)*
 - **LOCK** — DECAY-benched (not structural): +1.72¢/contract in the old window → −1.07¢ on the
   recent kill-scan; the market closed it. Re-entry test built in (`nestor backtest-lock`).
 
