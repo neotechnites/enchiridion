@@ -645,3 +645,46 @@ which is outcome-correlated. Same family as the print-weighting law.
 ⇒ **Archive `implementation/01 - Weather Sleeve Spec.md`.** Its central claim — bias-corrected
 early-entry forecast beats the market before it converges — is refuted.
 Artifacts: `~/kalshi_data/wx_*.{json,pkl,jsonl,csv}`, `scripts/wx_*.py`.
+
+## 🔑 THE RATE LIMIT WAS SELF-INFLICTED (2026-08-06) — this reopens the venue survey
+**Keyless:** ~11 of 12 rapid calls return 429; ~4 successful pulls/min. That is what capped the
+venue-wide survey at ~4,000 calls and left cell SEs of **3–9¢**, i.e. able to rule out ≥5¢ edges but
+**not 2–3¢ ones — exactly the size that matters against a 1.52¢ fee.**
+**Signing the same read-only GETs with the existing prod key: 500 calls/min sustained, 0× 429 across
+~35,000 calls. ~100× throughput.** That is why the econ/props lane pulled 33,097 markets where the
+survey managed 1–2 events per econ series.
+**⇒ ALL future calibration work must authenticate. The venue survey should be re-run at full power
+before its "calibrated to ~1¢" verdict is treated as final at the 2¢ scale.**
+
+## ECON RELEASES — ☠️ STRUCTURALLY DEAD 2026-08-06. There is no repricing moment.
+**Every scheduled-release series freezes trading BEFORE the print** — not just INFLATION-FLASH:
+KXCPI closes 12:25Z vs a 12:30Z release (**−5 min**) · KXCPIYOY 12:29Z (**−1 min**) · KXFED 17:55Z
+vs 18:00Z (−5 min) · KXPAYROLLS/KXU3/KXGDP all 12:29Z (−1 min). Confirmed from on-disk prints:
+20,585 CPI trades, **last print 12:28:57.878Z, zero after.** `rules_secondary` says it outright:
+*"The market will always close at 8:25 AM ET on the scheduled day of the data release."*
+**There is no T+5m / T+1h axis to build. The front-run and the reaction are both structurally
+impossible.** Residual pre-release calibration is unreachable: `/events` lists 61 CPI events back to
+2023, but `/markets?event_ticker=` and `/events/{t}?with_nested_markets=true` both return **0 markets**
+for anything older than ~2 months (verified authenticated, two endpoints). Usable: **11 event
+clusters, 154 obs, SEs 5–30¢, MDE ≈15¢.** Closed; no amount of compute reopens it.
+
+## SPORTS PROPS — ☠️ DEAD 2026-08-06. All five families null; capacity was never the constraint.
+Anchor = scheduled first pitch parsed from the event ticker (outcome-independent by construction;
+**`close_time` here IS outcome-dependent — YES closes ~117s later than NO — and was correctly
+avoided**). Both-sides taker EV after real fees sums to −(spread+2·fee) **to the cent** in all five:
+KXMLBHR −2.11/−0.19 · KXMLBTOTAL −2.28/−1.30 · KXMLBSPREAD −1.30/−2.40 · KXMLBTB −1.72/−3.20 ·
+KXMLBRFI −0.87/−3.72. Best cell **KXMLBHR NO: −$1.07/day on $1,000** [−7.65, +5.50]; the rest
+−$15 to −$37/day. KXMLBHR trades 3.0M contracts/day — **the edge is what is missing, not depth.**
+Gates: 1 PASS · 2 PASS · 3 PASS · 4 PASS-as-kill · 5 PASS-as-kill (family-wise p 0.207–0.999) ·
+6 ENFORCED · 7 CAUGHT A FALSE POSITIVE · 8 CAUGHT THE SAME ONE · 9 PASS.
+
+🔧 **TWO MORE OUTCOME-LEAKING FIELDS — add to the field-hygiene list:**
+- **`volume_fp` is measured AT SETTLEMENT.** A "low-volume NO" cell read **+4.41¢, t=+3.00**; with
+  causal pre-anchor volume it is **+0.60¢, t=+0.52**. Low total volume ⇒ nothing happened in-game ⇒
+  realized YES 6.5% vs 12.5%. Pure outcome leakage.
+- **`last_price_dollars` on a settled market is POST-RESOLUTION.** In KXMLBHR, 99¢ appears exactly
+  298 times = exactly the YES count. It is not a pre-close price.
+- **Ladder size is outcome-dependent** — Kalshi adds strikes intraday, so "ladder-depth strata"
+  showed +40¢ gaps; on pre-game-listed markets only, every game collapses into one stratum.
+Artifacts: `~/kalshi_data/hunt/` (`kauth.py`, `ka.py`, `pull_all.py`, `drive.py`, `an_*.py`,
+`K_*.jsonl` candles, `M_*.jsonl` markets — 33,097 markets, 1-min bid/ask, resumable).
