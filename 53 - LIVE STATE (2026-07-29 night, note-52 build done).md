@@ -106,6 +106,38 @@ event** (median life: KXVANCEMENTION 22.7h, KXCARNEYMENTION 10.9h, KXPSAKIMENTIO
 a T−48h strategy has data only in SPORTS — which is exactly where the widest books and the
 most phantom quotes live. Any future long-lead idea must check market LIFETIME first.
 
+### THE FILL CURVE — MEASURED. THE VENUE IS CLOSED TO PASSIVE SELLING.
+Third lane, from our own `ledger.jsonl` order lifecycles + a 34,245-anchor synthetic touch
+curve on the mention tape. **Fill probability was never the constraint — the edge is.**
+
+- **Fills do not collapse with distance.** In a 1c book, touch-before-close: mid+0.5 **0.834**
+  · mid+1.5 **0.795** · mid+2.5 **0.761** (n≈23,600 anchors, 1,043 markets). Each extra tick
+  costs ~3.5 points. Applying our measured queue conversion of **0.52** (of orders the tape
+  actually reached, 22 of 41 filled) gives realized P(fill) ≈0.43 at the ask, ≈0.40 two ticks
+  out. You CAN get filled quoting out. It just doesn't help.
+- **Volume-weighted settlement P&L for a passive seller is NEGATIVE AT EVERY DISTANCE and
+  gets monotonically worse:** mid+0.5 **−1.80c** · +1.5 **−1.88c** · +3 **−3.83c** · +4
+  **−5.42c** · +5+ **−8.99c**; 120-min markout decays −4.08c → −15.08c over the same range.
+  Equal-weighted it rises beautifully (+1.67c → +10.19c) — that is the small-fill illusion
+  again. **Quoting further out only fills you when size is running through you.**
+- **We realize mid+0.55c in tight books**, not the mid+2.81c the backtest assumed.
+- **THE ENTRY WINDOW DOES NOT EXIST.** Only **5.53% of passive-sell fills and 3.14% of
+  volume** happen ≥24h before the call, and **zero** at 48h. The T−48h entry I specified is a
+  moment with no measured liquidity in it at all.
+- Our own order history cannot answer this and never could: 252 resting sell-YES lives, 28
+  fills, and **72.6% joined the ask exactly** — we never once chose to quote out, so
+  "distance above mid" in our data is just spread/2.
+
+**TWO SCHEMA TRAPS that silently invert this measurement — record them:** in `ledger.jsonl`
+`side:"ask"` is YES-axis (`wire.py:289`: bid=buy YES, ask=sell YES) so `price_dollars` is the
+YES sell price directly, while `seats_log.jsonl` uses NO units (YES ask = 100 − no_price).
+And our resting sell-YES fills appear in `fills_all.json` as
+`action:"sell", side:"no", book_side:"ask"` — **filtering on `side` alone returns zero fills
+and makes the entire curve read 0%.**
+
+**VERDICT: no short-YES maker strategy on mention markets is viable at any quoting distance.
+Mentions are CLOSED. Do not reopen this without new information about the world.**
+
 ### THE LAW THIS PAYS FOR (third time this program has bought it)
 **A backtest that reads a price off a book must prove that price was TRADEABLE — that volume
 crossed it — before it may report an edge.** The g-table artifact (stale one-sided quotes on
