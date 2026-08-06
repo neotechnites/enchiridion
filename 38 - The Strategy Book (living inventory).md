@@ -151,8 +151,36 @@
   print +0.40c, skip two **−0.13c**. Entry print median **10 contracts = $3.24**; forcing $1k
   in gives maxDD **−$2,733** on a $1,000 bankroll. *(Note 53's "4:34pm intermediate CLI pins
   settlement 85.5%" is the WEATHER/CLI family — it was never an AAA claim.)*
-- **LOCK** — DECAY-benched (not structural): +1.72¢/contract in the old window → −1.07¢ on the
-  recent kill-scan; the market closed it. Re-entry test built in (`nestor backtest-lock`).
+- **LOCK** — ~~DECAY-benched: +1.72¢ → −1.07¢ on the recent kill-scan; the market closed it.~~
+  **DECAY KILL RETRACTED 2026-08-06 — the −1.07¢ does not reproduce; the edge measures ALIVE.**
+  Full re-scan on complete data (34,459 markets, real `floor_strike` all 5 assets, retention
+  floor 2026-05-25 → 08-05): **every week positive, pooled and BTC-alone.** Control reproduced
+  note 13 to the digit three ways incl. a fresh independent pull (n=138, 1 loss, 99.28%,
+  +3.25%/trade). The kill's OWN "last 4 weeks" window (06-25→07-23) measures **+3.39¢/contract
+  pooled (n=752)**, not −1.07¢; BTC +2.82¢ (n=191). Post-kill 07-23→08-05: **+3.13¢ (n=428)**.
+  −1.07¢ is arithmetically unreachable: at ~96.4¢ entry it requires a **4.44% flip rate**;
+  measured Z≥4 flip rate is **0.181%** (90/49,747, Wilson UB 0.222%), monotone across Z. Could
+  not be reproduced under any cost assumption tried (1¢ spread, per-contract ceil fee, no
+  backfill, 1.5¢+ceil → worst case still +1.67¢). **What produced −1.07¢ is unknown** — a
+  dropout artifact was hypothesised and MEASURED FALSE (old `forward_lock_ticks.json.gz` is
+  missing 0 of 1981 markets). Frequency now **31.0/day pooled, 6.9/day BTC** (~2× the vault's
+  old ~16/day). Per-asset last 6wk all positive: BTC +3.20 · ETH +2.57 · SOL +3.99 · XRP +3.29
+  · DOGE +4.19% — not BTC-specific.
+  **STATUS: NOT a green light to trade.** The one untested link is unchanged since note 08 and
+  is unbacktestable: real fills/depth at 93–97¢ in the final 2–4 min (all numbers above are
+  last-trade + 0.5¢). At +3.3¢/contract, >3¢ of slippage kills it. That needs forward book
+  capture, not another backtest.
+  **NEW, contradicts a documented lesson — needs its own test:** the "hard floor at 93¢, below
+  it the edge inverts" claim NO LONGER HOLDS. Last 4wk the **90–93¢ band is the best cell**
+  (+6.4% pooled n=233 / +6.5% BTC n=66 at Z≥4; +8.2% at Z≥5, 100% win on n=102). The old floor
+  was set price-only-ish on 30 days. Do not move the operating point on this until tested.
+  **TRAP for any future pull:** `limit=1000` on the trades endpoint now reaches only ~137s
+  before close on BTC (was 293s in July) — it silently starves the 240/180/150s checkpoints.
+  `lockrescan_backfill.py` pages around it (median span 328s; ≥240s coverage on 6677/6890 BTC).
+  **A re-pull that skips the backfill is not comparable to the control.** Also: Kalshi trade
+  retention now ends **2026-05-25**, so the kill's "first 6 weeks" arm was really ~4.4 weeks.
+  Artifacts: `~/kalshi_data/lockrescan_*` ; scripts `lockrescan_{pull2,backfill,analyze,
+  dropout_audit}.py`. Re-entry test still in-code (`nestor backtest-lock`).
 
 **WEEKLY REVIEW STANDING DUTIES (added 2026-07-25 after Ryan's "are we killing real edges"
 challenge):** every weekly review must (a) run `backtest-lock` re-entry scan, (b) check weather
