@@ -152,7 +152,32 @@
   in gives maxDD **−$2,733** on a $1,000 bankroll. *(Note 53's "4:34pm intermediate CLI pins
   settlement 85.5%" is the WEATHER/CLI family — it was never an AAA claim.)*
 - **LOCK** — ~~DECAY-benched: +1.72¢ → −1.07¢ on the recent kill-scan; the market closed it.~~
-  **DECAY KILL RETRACTED 2026-08-06 — the −1.07¢ does not reproduce; the edge measures ALIVE.**
+  **DEAD 2026-08-06 (SECOND VERDICT, SAME DAY) — the edge does not survive correction. −0.38¢
+  pooled. DO NOT TRADE, DO NOT DEPLOY.** Sequence, all one day, because it is the lesson:
+  (a) the 2026-07-23 decay kill was retracted — the −1.07¢ genuinely does not reproduce;
+  (b) but the re-scan that retracted it carried a **60-SECOND LOOKAHEAD BUG**, and its clean
+  reproduction of the published control proved only that the control shared the same defect.
+  **Reproducing a pipeline exactly is fidelity, not validation.**
+  THE BUG: Coinbase 1-min candles are labelled by bucket START; `lockrescan` stored bucket
+  CLOSE, then `spot_at(t)=bisect_right(ts,t)−1` returned a price up to 60s in the FUTURE at a
+  checkpoint 30–240s from settlement. Verified 3 ways (close[T−60]==open[T] exactly on live
+  data; no-lookahead read matches real `floor_strike` MAD 1.77bp vs 3.99bp; settlement-side
+  agreement 95.9% vs 89.6%). Smoking gun: Z≥4 flip rate at 120s before close reads **0.017%**
+  buggy vs **0.362%** corrected — 0.017% two minutes out is physically impossible.
+  THE CORRECTED NUMBERS, 93–97¢ Z≥4, 73 days: **+3.08¢ → +0.84¢** (lookahead removed) **→
+  −0.38¢** (price-source error +1.3¢). Per-asset no-lookahead pre-adjustment: BTC +0.42¢
+  (t=0.43, n=331, NOT significant) · ETH −1.61¢ · SOL +0.40¢ · XRP +2.67¢ · DOGE +1.74¢ —
+  only XRP survives and it does not clear the +1.3¢ adjustment with margin. No rescue gate
+  exists: a min-vol gate and a raw-distance floor were both tested, neither improved EV.
+  SECOND INDEPENDENT DEFECT — the price source: live orderbook capture measured `/markets`
+  reading LOW vs the real book by median +1.30¢ in 93–97¢ (p90 +8.0¢; **29% of moments exceed
+  the entire claimed edge**) and +5.00¢ in 90–93¢ (61% exceed 3¢). Corroborated on the tape by
+  next-print drift (median +0.8¢ at 95–97¢, +1.0¢ at 90–93¢, cheap bands worst).
+  **90–93¢ BAND = ARTIFACT, RESOLVED.** Its apparent +6.4¢ superiority was the mislabelled
+  cheap price. Priced correctly the ranking INVERTS (+1.34¢ vs +1.87¢; under no-lookahead
+  −4.56¢ vs −0.38¢), and it is negative in all five assets and both halves. **The 93¢ floor
+  stands** — note 08's original lesson was right.
+  ~~DECAY KILL RETRACTED 2026-08-06 — the −1.07¢ does not reproduce; the edge measures ALIVE.~~
   Full re-scan on complete data (34,459 markets, real `floor_strike` all 5 assets, retention
   floor 2026-05-25 → 08-05): **every week positive, pooled and BTC-alone.** Control reproduced
   note 13 to the digit three ways incl. a fresh independent pull (n=138, 1 loss, 99.28%,
