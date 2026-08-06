@@ -944,3 +944,49 @@ selection stays as a free tiebreaker (+1.884 vs +0.933) but **must not drive siz
 **UNPROVEN BEFORE FUNDING:** the own-tape +7.3¢ rests on 709 contracts / 14 events; and the fav-YES
 asymmetry (+0.438 vs +1.884) has **no mechanism yet**.
 Artifacts: `~/kalshi_data/hunt/syn_*.{json,log}`.
+
+## ☠️ KXBTC15M PREDICTION — CLOSED 2026-08-06. The market is INSIDE the physical limit.
+**Settlement object now identified and reproduced at 100%** (the durable result):
+`expiration_value >= floor_strike` reproduces `result` **2827/2827**, and the chain identity
+**`floor_strike[N] == expiration_value[N−1]` holds exactly, 2818/2818, max abs diff 0.000000.**
+⇒ **The settled-market chain IS the BRTI avg60 series on the 15-min grid. No BRTI feed is needed to
+build the target.** Calibrated scale: sd(ev−fs) = **$160.72** over 900 s ⇒ σ ≈ $5.45/s at ~$65k;
+measured sd(ev − spot(close−60)) = **$24.58** vs theory $24.4 — the avg60 mechanics check to 1%.
+
+**THE SKILL TEST — the market wins at every horizon.** One obs/market, chronological 2-fold OOS,
+day-clustered t. Brier at close−60s: **market 0.02784 · model 0.02878 · blend 0.02863** (n=2,826).
+Best dB anywhere is negative or noise; the worst is **−0.00116, t=−3.14** at D=−60.
+**Placebo passes BOTH directions** — an illegal +10 s lookahead gives dB **+0.00185…+0.00611**,
+peaking at D=−60 exactly where it should; truth-to-±$10 gives **+0.00847**. *The machinery finds an
+edge when one exists.* Within-price-bin incremental info is sign-inconsistent (+0.0097, +0.0616,
+−0.0385, −0.0172, …): **the market has fully absorbed spot-vs-strike.**
+
+🔑 **WHY THE THESIS FAILED — the market already prices the 60-second average, not spot-at-close.**
+| D | market's implied precision | floor from a PERFECT index read + exact avg60 mechanics |
+|---|---|---|
+| −10 s | **±$1.1** | $1.7 |
+| −30 s | **±$4.8** | $8.6 |
+| −60 s | **±$13.8** | $24.4 |
+| −300 s | **±$60.8** | $87.9 |
+**The market sits at ~0.56× the unconditional mechanical floor at EVERY horizon** (an independent ML
+fit recovered α=0.55). The naive spot-at-close model the thesis assumed it was using scores **67%
+worse** than the market actually does.
+🔑 **SECOND KILLER — exchange-vs-index BASIS NOISE swamps the partial-realisation gain.** Residual sd
+of a perfect 1 s blended estimate `((60−u)·A + u·P)/60` built from the Kraken tape (1.12M prints, an
+actual BRTI constituent): D=−60 **$22.10** (theory $24.37) · D=−30 **$10.02** ($8.62) · D=−20 **$8.48**
+($4.69) · D=−10 **$7.58** ($1.66) ⇒ **a ~$7.4 basis floor exactly where the mechanical edge is
+largest.** Against a market at **±$1.1**, any exchange proxy is useless — **and even a live BRTI feed
+buys only $1.7, which is still worse than the market's own $1.1.**
+**ECONOMICS: −0.08¢ to −1.35¢/contract in every band at every horizon.** Max gross calibration edge
+anywhere **+1.26¢** against a 1.00¢ floor fee (consistent with the venue-wide +0.34¢). The one
+positive cell (+0.20¢, t=0.11) flips sign across halves (−1.97 → +2.37). Maker: zero fee, but the
+measured wedge in this family is **−7 to −9¢** against a +1.26¢ max gross edge — **dead by ~6×.**
+
+🔧 **GATE 7 NEARLY MANUFACTURED A +7¢ EDGE HERE.** A single `/markets/trades` page (1000 prints,
+median reach only **174 s**) showed 3¢ longshots realising **0/161** and 97¢ favourites **123/123**.
+Backward-paged to the full window it vanishes — **Brier(market) ratio 18× at D=−60, 45× at D=−180.**
+Retrievability is inversely related to volume, and volume is outcome-correlated. **The paging harness
+(`pred_g_deep.py`) is the reusable asset.**
+Artifacts: `~/kalshi_data/hunt/pred_settled_30d.json`, `pred_ktrades_deep.jsonl` (1.3 GB, full 900 s
+windows), `pred_Mdeep.pkl`, `pred_kraken_seq.jsonl`, `pred_{a_settle,g_deep,j_core,l_struct,o_vol,
+n_truth,p_partial,q_econ}.py`.
