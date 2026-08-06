@@ -878,3 +878,69 @@ are FROZEN**: byte-identical `(yes_bid, no_bid, ydep5)` across all ~8,900 snapsh
 than caches the opposing bid when a side empties.
 Artifacts: `~/kalshi_data/hunt/mkr_*.py|log|json`, `mkr_parts/` (105 MB, 1.64M obs),
 `mkrbooks_*`, `mkrown_SUMMARY.json`.
+
+## ✅ THE 5.7¢ GAP IS EXPLAINED — 100% SELECTION, 0% EXECUTION (2026-08-06)
+Our OWN 783 maker fills / 27,284 contracts, event-clustered, by cell:
+| cell | events | contracts | ¢/ctr | t | USD |
+|---|---|---|---|---|---|
+| **RULE B — long NO ≥90¢** | 31 | **709** | **+7.315** | **+7.87** | **+$51.84** |
+| long NO 75–90¢ | 52 | 1,056 | +9.889 | 1.57 | +$104 |
+| long NO 50–75¢ | 96 | 1,473 | +5.828 | 0.41 | +$86 |
+| **long YES 10–25¢** | 107 | 3,127 | **−15.655** | −20.59 | **−$489** |
+| **long NO 10–25¢** | 72 | 3,394 | **−13.624** | −7.65 | **−$462** |
+| long YES ≤10¢ | 72 | 7,531 | −3.795 | −3.07 | −$286 |
+| **ALL MAKER** | 783 | 27,284 | **−4.299** | −3.41 | **−$1,173** |
+**Rule B works on our own money at +7.3¢ — and it only ever held 2.6% of the capital. 52% sat in the
+two cells that lose ~14¢. The 10–25¢ shoulder alone is −$952 of the −$1,173.** The −4.30¢ and the
++1.42¢ were never in conflict; they measure disjoint cells of the same book. **Nothing is wrong with
+our execution or our queue. We were in the wrong price band.**
+
+## REWARD MARKETS ARE CLEAN, NOT TOXIC — the fear was backwards
+| cell | n_fill | markout ¢ | SE | t |
+|---|---|---|---|---|
+| ALL venue | 27,273 | +1.420 | 0.254 | 5.59 |
+| **REWARD series** | 13,970 | **+1.884** | 0.351 | **5.37** |
+| non-reward | 13,303 | +0.933 | 0.368 | 2.54 |
+| **REWARD pool ≥$100** | 4,678 | **+3.292** | 0.469 | **7.01** |
+The −7.13/−9.27 crypto-15m books **cannot qualify** — KXBTC15M/KXETH15M live 15 min, so the ≥6h-open
+condition excludes them by construction (zero qualifying attempts). **The toxicity fear dissolves.**
+
+## ⚠️ BUT THE SYNTHESIS FAILS — reward and rule B compete for the same collateral
+| | current seats | rule-B resting |
+|---|---|---|
+| reward | 1.518¢/resting-ct-day | 1.518¢/resting-ct-day |
+| collateral | $0.363/ct | **$0.948/ct** |
+| **reward per $1/day** | **4.18¢** | **1.60¢** |
+| duty cycle (rest ~1h, **hold 14.9h**) | ~100% | **6.3%** |
+**You earn the markout OR the reward, never both** — rule B holds to settlement and earns no reward
+while holding. Reward falls to **$1.01/day at $1,000 = 4% of P&L. Rewards become irrelevant, and so
+does the 148-day LIP runway.**
+
+## 💰 THE NUMBERS — a ~$56/day swing on capital already deployed
+markout **+1.877¢ (SE 0.352, t=5.33)**, 13,308 fills / 1,014 events, fill price 94.79¢, hold 0.62d.
+| scenario | capital | trade $/d | reward $/d | **TOTAL** |
+|---|---|---|---|---|
+| conservative (25 mkts × 20ct) | $1,000 | 9.38 | 0.48 | **+$9.9** |
+| **central (capital-bound)** | **$1,000** | 23.76 | 1.01 | **+$24.8** |
+| optimistic | $1,000 | 31.68 | 1.01 | +$32.7 |
+| central (adds non-reward rule B) | $2,000 | 47.52 | 2.02 | **+$49.5** |
+| **CURRENT SEATS** | $1,000 | **−72** | +42 | **−$31.2** |
+Risk: daily +1.886¢ ± **3.141¢ sd**, **82.9% of days positive**, worst day −9.50¢ = **−$114 (11% of
+stack)**; 30-day +$679 ± $206. 3.3% of fills lose ~93¢.
+Flow (the right measure — a live snapshot over-samples long-dated markets; 296 qualify now but median
+**146.7 days** to close): **72.7 qualifying reward markets/day**, median hold **14.9h**. Top flow:
+KXWCMENTION 8.6/d (+2.37) · KXSILVERD 5.9/d (+0.86) · KXAAAGASD 3.3/d (+3.96) · KXNATGASD 3.6/d
+(+3.37) · KXHIGH* ~4/d each · KXGOLDD 5.3/d (**−3.31**). NO-side queue at touch median **18 contracts**
+(p75 120) — thin; a 20-contract seat is the whole touch.
+Gates: 1 correct mirror (fav-NO +1.884 / longshot-YES −1.511; **fav-YES only +0.438, t=0.54 — the edge
+is NO-favourite specific**) · 2 placebo passes (shuffled-within-series×day +1.441 vs real +1.884,
+frac≥real **0.010**; displaced price anchor NO 50–60¢ = **−0.345, t=−0.52**) · 4 split-half day
+1.676/2.097, hash 1.664/2.103, **20/26 reward series positive** · 5 one-obs-per-market **+1.934
+(t=3.95)** · 7 depth-invariance monotone, no pathology.
+**⇒ THE ACTION: stop making markets; stop quoting the 10–25¢ shoulder; buy NO-side favourites ≥90¢ in
+markets open ≥6h with spread ≤10¢ and hold to settlement.** The series it wants are ones seats already
+touches (KXAAAGASD, KXTRUEV, KXRAIN, KXWCMENTION, KXHIGH*) — **the plumbing exists.** Reward-pool
+selection stays as a free tiebreaker (+1.884 vs +0.933) but **must not drive sizing.**
+**UNPROVEN BEFORE FUNDING:** the own-tape +7.3¢ rests on 709 contracts / 14 events; and the fav-YES
+asymmetry (+0.438 vs +1.884) has **no mechanism yet**.
+Artifacts: `~/kalshi_data/hunt/syn_*.{json,log}`.
