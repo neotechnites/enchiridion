@@ -518,3 +518,54 @@ of HANDOFF §2's priors were re-verifiable in this pass. Source used: `survey_ca
 session's capture; numbers firm up at its 3,797-market target.
 Artifacts: `~/kalshi_data/mentionsurf/` (`mention_load.py`, `mention_final.py`, `mention_extreme.py`,
 `mention_sim.py`, `mention_focus.py`, `mention_gated.py`, `mention_anchor.py`, `mention_FINAL.json`).
+
+## ☠️ VENUE-WIDE VERDICT (2026-08-06): KALSHI IS CALIBRATED. The crypto result is a VENUE property.
+Survey: **94 series · 1,332 events · 3,770 markets · 144,358 market-hours**, 30 non-mention families
++ 65 mention series, keyless candlesticks, event-clustered.
+- **Venue-wide gap: −0.15¢ (se 0.93, t=−0.17, nev=1,010).** Blind taker EV: YES −2.73¢, NO −2.41¢.
+  Mean spread 2.88¢, mean fee 1.52¢ ⇒ **toll ~3.0–3.5¢ round against a mispricing of ~0.**
+- Full 6×7 price×time grid (42 cells): **max |t| = 2.74**, and expected max |z| over 42 null cells
+  ≈ 2.7. **Nothing survives selection.**
+- Zero-sum gate passes cleanly: all 20 bins sum to 0 ± 2.1¢ from the YES and NO sides independently.
+
+🔧 **PRINT-WEIGHTING IS WHAT MANUFACTURED MISPRICING ALL DAY.** Same data, 70–75¢ bin:
+**print-weighted −21.74¢ · event-clustered/market-weighted −0.53¢.**
+**LAW: if a calibration surface is not event-clustered, it is not a surface.**
+
+🔧 **THE MENTION 3¢/7.8¢ RETAIL-YES-OVERPRICE DOES NOT REPLICATE OUT-OF-SAMPLE.**
+27 series held out by hash, 38 searched. Mid ∈[30,80): **SEARCH −6.16¢ (t=−2.32, nev=169) →
+HELD-OUT −0.61¢ (t=−0.18, nev=108)**; series-clustered −6.13 → −1.10. Tradeable rule
+"buy NO when mid ∈[40,90)": **+1.39¢ → −3.56¢**. Chronological split disagrees too.
+The one bin whose sign replicated (5–10¢) is a lottery: only **15.2% of events positive**, median
+event −10.2¢, mean carried by 5 events. **Treat HANDOFF §2's ~3¢/7.8¢ as IN-SAMPLE until rerun
+with series held out.**
+
+**FOUR FOR FOUR — every family's best in-sample rule is ≤0 held-out** (the `heldout_longshot.py`
+kill, reproduced on four independent market structures):
+| group | held out | best in-sample rule | in-sample | **held-out** |
+|---|---|---|---|---|
+| WEATHER | NY, PHIL | buy NO @70–80¢ | +5.01¢ | **+0.01¢** |
+| METALS/ENERGY | BRENTD, NATGASD | buy NO @80–90¢ | +2.41¢ | **−4.49¢** |
+| INDEX | KXNASDAQ100 | buy YES @0–5¢ | +4.63¢ | **−2.62¢** |
+| SPORTS | WNBAGAME, MLBHR | buy YES @10–20¢ | +10.65¢ | **−5.72¢** |
+
+**Liquidity is anti-correlated with apparent edge:** the two genuinely large markets (KXMLBGAME
+61.3M contracts/day, KXWNBAGAME 9.2M) have the smallest/zero EXCESS; the families with the biggest
+apparent calibration error are the illiquid ones. *That is what noise looks like.*
+
+**⇒ THE ONLY POSITIVE NUMBER THAT SURVIVES ANYWHERE IS THE HALF-SPREAD TO A MAKER** (held-out
+mention sell-YES-at-ask ≈ +2.97¢ gross ≈ half of the 3.59¢ spread, less the measured −0.45..−0.63¢
+fill markout ⇒ ~+2.4¢ before fill probability). **That is the existing LIP/seats business.** This
+survey neither adds to it nor subtracts from it, and it is NOT a taker edge.
+
+⚠️ **POWER — the honest limit.** Kalshi hard-rate-limited at ~4,000 candlestick calls, so families
+landed at ~100 events with cell SEs of **3–9¢**. **These nulls rule out ≥5¢ edges, NOT 2¢ ones** —
+and 2–3¢ is exactly the size that matters against a 1.5¢ fee. Resolving ±1¢/cell needs ~10× the
+events per family: a multi-day authenticated pull.
+**STILL GENUINELY UNTESTED:** (a) **ECON** — KXCPI/KXCPIYOY/KXFED/KXPAYROLLS/KXU3/KXGDP have only
+1–2 events in this pull; full history is 20–50 events each, one gentle pull, and release-timing is
+the one wing where a structural mispricing is plausible a priori. (b) **SPORTS PROPS** —
+KXMLBHR (3.2M contracts/day) plus the unsampled KXMLB{TB,HIT,RFI}: the highest-liquidity untested
+surface on the venue. (c) a **maker-side** survey, which needs `λ_side · markout` per market and
+cannot be done from bid/ask closes.
+Artifacts: `~/kalshi_data/survey_*.{py,jsonl.gz,pkl,json}`.
