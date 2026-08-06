@@ -196,6 +196,34 @@
   (Z≥4, 0.5¢ spread) and cannot be narrowed from data on disk. **Highest-value outstanding
   measurement if this is ever revisited: log real-time WS spot alongside each signal for ~2
   weeks, then re-run the ablation with a third arm.** Note this cuts toward the edge, not away.
+  **RAW-DISTANCE GATE: TESTED, FAILS — and the mechanism closes the question (2026-08-06).**
+  A raw |spot−strike| floor on top of Z≥4 makes EV monotonically WORSE: floor 0 → −0.38¢,
+  10bp → −0.57, 15bp → −1.33, 20bp → −1.59, 30bp → −1.76 (all @1.80¢, conv=end). **Losses sit
+  at HIGHER raw distance than wins** (median 14.2bp vs 12.1bp) — the exact reverse of the
+  hypothesis. A *ceiling* is what helps (dbp<5 → +1.05¢), i.e. the gradient runs the other way.
+  WHY, and this retires the idea: inside a 93–97¢ band **the market has already pinned Z**
+  (p10 4.07, p50 4.64), so `dbp = Z·mv·√min` varies almost entirely through volatility —
+  **corr(log dbp, log mv) = +0.823** vs −0.170 with log Z. **A raw-distance floor IS a
+  minimum-volatility gate wearing a different hat**, and a min-vol gate is also monotone
+  destructive (0 → −0.38; 1.0bp → −0.72; 2.0bp → −1.12). Both together = worst cell (−1.96¢).
+  ⇒ **The 2-year low-vol failure mode does NOT transfer to the traded set.** That 8.5× decile
+  spread was measured on the UNCONDITIONAL Z≥4 universe (all prices, no band, no on-side
+  filter). Conditioning on *the market pricing the favorite at 93–97¢* removes that population
+  entirely — in calm regimes the market is over-cautious in the band, making decile 1 the BEST
+  traded cell (flip 1.449%, +1.31¢). Within-asset vol terciles show flip rate RISING with vol
+  (1.96% → 3.02% → 3.88%), opposite to the synthetic study. The earlier "raw-distance floor
+  didn't help" note was right, for a reason nobody had stated until now.
+  Only positive floors are the 40/50bp tail: n=41, 0 losses, but **Wilson95 UB on 0/41 = 8.57%
+  vs 2.63% breakeven** (3.3× over) and 22 of 41 are DOGE. Not a result. Converse cell (Z<4 &
+  large distance) fails split-half: H1 +2.01 (n=189) vs **H2 −4.56 (n=44)**.
+  **XRP, pre-empted by this lane — passes split-half, fails everything else.** n=331, 4 losses,
+  +1.46¢@1.8. But day-clustered **t=1.92** (doesn't reach 2); **Wilson95 UB on its flip rate
+  3.07% vs 2.67% breakeven — does not clear**; **selection Monte Carlo: P(best-of-5 ≥ observed
+  | one shared true rate) = 13.5%**; the advantage is flat across distance buckets (an asset
+  effect, not a mechanism); and **structurally it goes the WRONG way** — XRP's book is THINNER
+  (median 626 ticks/market vs BTC 1,921; 31% of next prints ≥2¢ vs BTC 11%), so its true cost
+  is plausibly ABOVE the pooled 1.80¢, which would eat the entire +1.46¢. Establishing it needs
+  **n≈441 ≈ 98 more days**. The whole per-asset difference is 4 loss events.
   ⚠️ **UNRECONCILED:** the recon lane counts ~20 signals/day pooled (n=840 / 6wk) on lagged
   spot, while the `lock-dryrun` on LIVE books + real-time spot found **0 in ~25 window-series**
   (max Z below 97¢ = 3.46). Both are credible and they disagree on whether the entry population
