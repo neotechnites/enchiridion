@@ -60,6 +60,21 @@ someone who knows something, because nobody else is trading (−7c per fill, 4 o
 zero fills forever means either the perfect rewards venue or a market nobody wants — the
 difference is whether anyone ever trades there at all.
 
+## 5b. The clock you anchor on can BE the signal (lookahead that looks like alpha)
+Anchoring a backtest at "T−30m before close" is lookahead for any market that **closes when
+the real-world contest ends**. Conditioning on "this ends in 30 minutes" conditions on a
+SHORT match — which is correlated with the favourite having closed it out. Measured
+2026-08-05: tennis favourites 85–97c looked like **+6.11c/contract** at T−30m (n=146, 140
+events, t_day +2.86, zero fill problems, 53k contracts of volume behind it, both halves
+positive, 20/21 days positive — it passed every test we knew how to run). At **T−70m**, the
+only anchor not conditioned on duration, the same cell prices 90.15c and realizes 90.24%:
+**+0.10pp, net −0.69c, t=−0.22.** The edge is monotone in how close the anchor sits to the
+true end, and at T−20m through T−5m the winrate is **exactly 100%** — a cell that never loses
+is a leak, not a mispricing. **Therefore: split every board into FIXED-CLOSE markets (weather,
+crypto, index, fx, metals, gas — the clock is exogenous) and EVENT-CLOSE markets (sports,
+esports, mentions — the clock is the outcome), and never anchor the second kind on
+time-to-close. Anchor on the scheduled START, or the result is the clock.**
+
 ## 6. Time structure
 Everything here is windowed: markets open/close, reward windows start AND end, programs are
 mortal (and their pools re-price without notice). **Read every horizon from the market's own

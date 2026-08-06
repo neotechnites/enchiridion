@@ -137,6 +137,20 @@ Data: `~/calib2.json` on the VPS. One observation per market, real two-sided quo
 | 61–80¢ | 707 | 71.7% | **84.9%** | **+18.4%** |
 | 81–99¢ | 1,852 | — | — | +2.1 to +5.6% |
 
+⚠⚠ **CORRECTION 2026-08-05 — THIS TABLE IS TRUE AND UNHARVESTABLE. Do not build on it.**
+Screened at EXECUTABLE prices with volume (5,846 settled markets, 103 series, 22 days, real
+per-minute bid/ask + traded volume): to harvest "1c realizes 0.03%" you must SELL the cheap
+side, i.e. buy NO at `1 − yes_bid`. **All 633 of the 1c observations have NO RESTING BID** —
+the mirror costs 100c to make 100c. There are ZERO transactable observations behind the
+−94.8%. The 2c row (n=70 fillable, 44% have no bid) needs a 99.07% true win rate to clear the
+fee at a 99.00c NO ask; 70/70 gives a 95% lower bound of 95.81%, so **one loss erases 106
+wins and the data cannot rule it out.** 3–5c and 6–10c are negative at the touch. Likewise
+the 41–80c band from the TAKER side: those cells fill perfectly and lose badly (crypto YES
+31–50c **−11.31c**, baseball YES 51–70c −25.73c, weather NO 51–70c −38.31c) — **the band is
+not an edge, it is where the spread is widest in dollars.** 342 cells tested, Bonferroni
+needs |z|≥3.8, **nothing clears it.** The whole board is efficient or adverse wherever a
+taker can actually be filled.
+
 Consequences:
 - Our 15-of-15 wipeout was **~98% likely**, not variance. It was the price of the trade.
 - **On Kalshi a resting cheap BID IS A BUY.** We were not selling lottery tickets; we were holding
