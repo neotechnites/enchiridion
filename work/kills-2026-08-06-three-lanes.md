@@ -171,3 +171,59 @@ Everything above rests on 5-12 trading days of one regime. The captures
 What is needed before any capital: (i) enough dates to contain at least one EIA/OPEC shock;
 (ii) the simultaneous-hit count on those dates; (iii) the same band curve re-measured
 out-of-sample on the new dates. **No new idea is required. The lane needs calendar time.**
+
+---
+
+# 6. THE GATE, ANSWERED — from WTI's history, not from waiting
+
+"Wait 3 more weeks of capture" was the same stall the energy-wings lane has sat in since
+07-25. It was unnecessary: **the tail question is about WTI, not about Kalshi**, and two
+years of WTI already exists.
+
+**Step 1 — calibrate price to distance** (201 KXWTIH hourly events with a T-30m book):
+a rung priced 1-5c sits **1.137% of spot** away; 5-10c = 0.867%; 10-20c = **0.627%**;
+20-40c = 0.373%. (median spot $81.38)
+
+**Step 2 — ask WTI how often it actually moves that far in 30 minutes.**
+CL=F, 13,397 hourly bars 2024-03-14 -> 2026-08-06 (30-min equivalent = hourly/sqrt2), plus
+1,153 exact 30-min terminal moves rebuilt from 5-minute bars over the last 60 days.
+
+| band | distance | Kalshi implied | realized 2yr | realized 60d (exact) | sell-YES EV |
+|---|---|---|---|---|---|
+| 1-5c | 1.137% | 3.0% | 1.88% | 1.47% | **+1.12c** |
+| 5-10c | 0.867% | 7.5% | 3.52% | 3.99% | **+3.98c** |
+| 10-20c | 0.627% | 14.6% | **7.23%** | 8.50% | **+7.37c** |
+| 20-40c | 0.373% | 27.5% | 18.20% | 22.90% | **+9.30c** |
+
+**Every band is overpriced against TWO YEARS of the underlying, shocks included.** This is no
+longer an 11-quiet-day artifact. And it cross-validates: Kalshi's own settled outcomes put
+the 10-20c band at **6.25% realized** (10 of 160) against 7.23% from WTI history. Two
+independent measurements, different data, same answer.
+
+## THE CORRELATED TAIL — REAL, MEASURED, AND IT IS THE BINDING CONSTRAINT
+At the 10-20c distance over 2 years: **969 breaches in 13,397 hours (7.23%)**.
+- Breaches occur on **51.5% of days** — they are NOT confined to rare shock days.
+- **The worst 5% of days carry 31% of all breaches.** Clustering is real but not total.
+- **Worst days: 2026-03-10 breached 17 of 23 hours (74%). And it ran three days:
+  Mar 9 (57%), Mar 10 (74%), Mar 11 (61%).** Also 2025-04-09 (52%), 2026-04-07 (52%).
+
+**Per-cycle economics (10-20c):** sell at 14.6c against 85.4c collateral. Win 92.8% for
++17.1% of collateral, lose 7.2% for -100%. **EV = +8.6% of collateral per cycle.**
+Independent-Kelly says 50% of bank. **Independent-Kelly is WRONG here and would be fatal.**
+
+**Sizing against the measured cluster, not against independence:** deploying f of bank per
+hourly cycle, a Mar-10 day (17 losses, 6 wins) costs **-16f of bank in one day**, and those
+days come in threes.
+- f = 3%: +5.9%/day normal (**~$58/day on $991**), but -48% on a bad day and a 3-day run
+  leaves **14% of bank** — effectively ruin.
+- f = 1%: +2.0%/day (**~$20/day on $991**), -16% on a bad day, 3-day run leaves 59%. Survives.
+Capacity is irrelevant at these sizes: median 2,000 contracts rest at the bid; f=1% is ~11.
+
+## WHAT IS STILL UNPROVEN (the honest weak point)
+The price->distance mapping comes from **one 12-day quiet regime**; the realized rates come
+from 2 years spanning all regimes. If Kalshi re-prices distance when vol rises, the gap in a
+high-vol regime is not measured. **Next test, and it needs no new data: recompute the
+implied-vs-realized gap within matched vol regimes** using the 60-day 5m series to bucket
+days by realized vol, and check the gap holds in the top vol quartile. If it collapses there,
+the strategy must stand down when vol rises — which is exactly when it would otherwise
+be sized largest.
