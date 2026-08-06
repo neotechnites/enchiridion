@@ -603,3 +603,45 @@ dead, OI=0" reading that was exactly backwards (KXBTCY has 6.8M OI). Spot-checke
 🔧 **KXBTC15M IS NOW A *RELATIVE* CONTRACT** — "BTC price up in next 15 min?", target = the **60s
 average at window OPEN**, published only once the window starts (`floor_strike` is null before then).
 Not a fixed pre-announced strike. Any analysis assuming a static strike is describing an old product.
+
+## WEATHER — ☠️ DEAD 2026-08-06 (was "parked, unverdicted"). The forecast is worse than the price.
+**Settlement reproduction PASSED at 99.9%** — rebuilt from raw METAR (6-hourly `1sTxTxTx` max groups
++ RMK `T`-group tenths, exact C→F round-half-up), 11 stations, 814 city-days: **813/814**.
+🔧 **THE NAMED DEFECT WAS MISATTRIBUTED — correct the record.** IEM `daily.json` is **NOT** biased:
+mean **−0.02°F** vs CLI, disagrees on only **2.4%** of days. The series that IS 1–2°F low on ~68% of
+days is **hourly METAR spot max** (`tenths − cli`: −1 on 491, −2 on 102, −3 on 14 of 880).
+**So `engine/weather.rs` was never calibrating on the wrong target, and fixing the truth series
+cannot rescue anything.** (Repro by candidate: cli 99.9% · g6 99.6% · **daily.json 99.1%** · METAR
+body 59.3% · RMK tenths 62.0%.)
+**THE KILL — the forecast is worse than the unconditional base rate.** Brier at lead-24h, n=2,008:
+**market 0.1174 · base rate 0.1516 · model 0.1553 · market+25% model 0.1186.** Blending the forecast
+INTO the price **degrades** the price. Incremental-information test (10 cells, within price bin,
+split on model-vs-market direction): gaps −0.1 to −10.6pp; the largest-|t| cell is **−7.3pp,
+t=−2.01 — the wrong direction.**
+Per-city bias is **non-stationary** (fit→OOS r=0.607, slope 0.688) and bias-correction makes OOS MAE
+WORSE for DEN/LAX/NY/SFO — that is the mechanism behind "the 8-city calibration does not transfer."
+The spec's 1.03–1.85°F MAEs do not reproduce against correct truth (OOS d1 MAE 2.47).
+**It loses MORE when it is more confident:** OOS ¢/ct at threshold 0/8/16¢ = **−3.50 / −5.02 / −7.80**
+(t −2.77 / −3.27 / −4.25). Live morning-of forward evidence (`ens_forward.jsonl`, 20 events):
+**−3.52¢/ct**, predicted EV **+21.02¢** vs realised **−4.07¢** — the raw ensemble spread is
+drastically too narrow. (That capture DIED 2026-07-27 and only restarted 08-06, so it is NOT the
+14-day set this note previously cited.)
+Gates: 1 PASS · **2 PASS with a working placebo — feeding TRUTH (illegal) yields +22.94¢, t=44.49,
+so the machinery finds an edge when one exists** · 3 PASS · **4 FAIL** (half A +0.46 t=0.39 vs half B
++1.73 t=3.57; 7/11 cities) · **5 FAIL** (68-cell grid, best t=1.98, permutation **FWER p=1.0000**) ·
+6 PASS · 7 PASS (retrieved vs unretrieved P(yes) differs only +1.43pp, vs the 8–14pt trap elsewhere).
+Best cell = +0.90¢/ct = 0.93%/trade, 6.42 fills/day, **$9.36/day at $1,000**, capacity ceiling
+≈$3,400/turn — **capacity is not the constraint, the edge is.**
+ADJACENT: **deep-favourite taker** 16 cells all "not established" (95% binomial UB on the loss rate
+exceeds break-even everywhere; the apparent t=6–8 was a zero-variance-tail illusion).
+**Hourly temperature** (`KXTEMP*H`, 14,868 settled markets): NO-taker at ≥98¢ is −0.66¢ to −3.45¢;
+the 723k contracts of ≤2¢ late flow is real but 406k is taker-side YES, so the pocket is
+**maker-only at 98–99¢ where queue position is unmeasurable**; 53% rate-limit-truncated so gate 7
+cannot be cleared there.
+🔧 **NEW PSEUDO-REPLICATION INSTANCE:** a row-pooled band scan showed **+5.5¢/ct net at the ask**
+(60–75¢ favourite band); with **one fill per market and event-clustered t it inverts to −4.14¢
+(t=−1.32)**. Pooling every hourly snapshot weights each market by how long it STAYED in the band,
+which is outcome-correlated. Same family as the print-weighting law.
+⇒ **Archive `implementation/01 - Weather Sleeve Spec.md`.** Its central claim — bias-corrected
+early-entry forecast beats the market before it converges — is refuted.
+Artifacts: `~/kalshi_data/wx_*.{json,pkl,jsonl,csv}`, `scripts/wx_*.py`.
