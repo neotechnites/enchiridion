@@ -43,10 +43,16 @@
 
 ## GRADUATED (implemented, live)
 - **STREAK — DEAD 2026-08-05 AT TRADEABLE PRICES. Do not run at $1,000.**
-  **THE $106.03 WAS A CATEGORY ERROR: it is `state.json.peak`, nestor's peak account
-  BANKROLL, not strategy P&L. Real STREAK lifetime realized P&L is +$3.20** (15 live
-  market-windows, 148 contracts, avg entry 37.55c, win **6/15 = 40.0%**, fees $1.22). The old
-  line here was wrong by ~33×. Bankroll now $78.94, `halted: true`, no fill since 2026-07-29.
+  **LIVE MONEY: STREAK HAS LOST −$65.22, profitable in 5 of 19 settled windows**
+  (source `/home/ubuntu/all_setts.json`, verified). Jun 24 early config −$39.13 (1/3);
+  **Jul 24–29 live era −$26.09, 4/16 = 25% win rate against a 41.7% breakeven** — and that era
+  is entirely AFTER the 2026-07-25 retry binary, so **the retry did not help.** Last fill
+  2026-07-29, nothing since. **The old "$106.03 banked" line is not this strategy's P&L and no
+  source for it could be located** (there is no `state.json` on the VPS). *(An intermediate
+  claim of "+$3.20 / state.json.peak / 40% win / bankroll $78.94" was itself unverified and is
+  FALSIFIED — do not cite it. Recorded because it was briefly written here.)*
+  **Live is WORSE than the backtest and in the same direction** — 25% live win rate vs the
+  recent backtest's 39.8% — so the kill rests on real money, not a model.
   Measured at prices volume actually crossed, net of real fees, day-clustered:
   Jun 25–Jul 22 **+6.44c, t=+1.48** (n=221, CI [−2.10,+14.98]) · **Jul 20–Aug 6 −2.95c,
   t=−0.91** (n=123) · pooled +3.08c, t=+1.03. **It never cleared t=2 in any period** — this is
@@ -55,9 +61,9 @@
   **The underlying reversal rate broke:** 4-streak reversal 55.27% (n=474) → **48.28%**
   (n=408) at Jul 20, **z=+2.07**, replicated independently on SOL/XRP/DOGE (54.85% → 50.46%,
   z=+2.04). Last three weeks all below 50%. The vault's 55.8%/56.0% anchors are stale.
-  **Our own fills corroborate the kill** — live win rate 40.0% (n=15) matches the recent
-  backtest's 39.8% (n=123) almost exactly. The backtest predicts our real fills; it just never
-  predicted the vault's 54.7%. Capacity binds before capital: $1,000 at 41c is 2,440 contracts
+  **Our own fills corroborate the kill** — live 25% (4/16) against the recent backtest's 39.8%
+  (n=123). The backtest is if anything optimistic; nothing ever predicted the vault's 54.7%.
+  Capacity binds before capital: $1,000 at 41c is 2,440 contracts
   = **104–169% of ALL flow crossing the ≤44c gate in the first 60s**. At $25/trade the NEW era
   is **−$18.95/day, maxDD 50% of bank, 67% down days**; at $50/trade maxDD is 105% = ruin.
   Retry binary is UNEVALUABLE (first live fill 2026-07-25, so there is no pre-retry live P&L).
