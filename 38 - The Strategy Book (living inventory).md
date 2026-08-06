@@ -232,7 +232,17 @@
   reading LOW vs the real book by median +1.30¢ in 93–97¢ (p90 +8.0¢; **29% of moments exceed
   the entire claimed edge**) and +5.00¢ in 90–93¢ (61% exceed 3¢). Corroborated on the tape by
   next-print drift (median +0.8¢ at 95–97¢, +1.0¢ at 90–93¢, cheap bands worst).
-  **THE STRUCTURAL KILL (independent, and the cleanest — live books, 2026-08-06).** The
+  🔧 **CORRECTION 2026-08-06 (adversarial XRP lane): THE "STRUCTURAL KILL" BELOW IS FALSIFIED
+  AS AN ABSOLUTE. Do not cite it.** Re-run with 7 windows instead of 5: **BTC FIRED — 28 rows
+  in one window, max Z 7.82 below 97¢.** Reconstruction predicts P(fire|window)=4.80% for BTC;
+  observed 1/7 = 14%, fully consistent. **The dryrun's zero was a small-sample zero, not a
+  structural impossibility, and the UNRECONCILED conflict is resolved in favour of the tape.**
+  The entry population exists. LOCK still dies — on the lookahead and on execution cost — but
+  on TWO kills, not three, and I over-claimed this one. Per-asset max Z below 97¢ across 7
+  windows: BTC 7.82 (fires) · SOL 3.48 · ETH 3.22 · DOGE 3.21 · **XRP 2.75 (lowest of five)**;
+  XRP 0 fires in 7 windows is **UNDERPOWERED — P(0|7)=70.8%, cannot reject**. ~60 windows
+  (~10h of recorder time) makes it decisive.
+  ~~**THE STRUCTURAL KILL (independent, and the cleanest — live books, 2026-08-06).**~~ The
   `lock-dryrun` replay over 4,338 in-window rows / 25 window-series: **721 rows had a favorite
   in 93–97¢, 480 rows had Z≥4, and ZERO had both.** Not a small-sample zero — **max Z over
   every favorite priced under 97¢ is 3.46**, the cheapest Z≥4 favorite is **98.20¢** (median
@@ -314,3 +324,54 @@ family) · crypto favorite-buying 95-98¢ (n≈4,700) · xvenue MLB arb (pre+in-
 deribit hourly gate (tenor artifact) · earnings-MENTION lag (closes-on-occurrence) · naive
 count-lag (29/29 priced) · buy-the-jump on liquid ladders (n≈1,576) · thin-frontier structural
 locks (4,740-event scan).
+
+## FAVOURITE-BIAS MAKER (crypto 15m) — NEW 2026-08-06, the day's only survivor
+**Found by the calibration-surface sweep after LOCK died.** 28.9M prints, 34,440 markets, 5 assets,
+74d (2026-05-25→08-05). Market-level YES rate **0.4944** (per-asset .4917–.4966) so there is no
+bull/bear drift contaminating it.
+
+**THE FINDING: the market systematically underprices the FAVOURITE, everywhere.** Buy-favourite-
+always = **+1.842¢/contract, clustered t=+18.8**. Every surface cell above 55¢ is positive. This is
+the favourite-longshot bias, finally measured cleanly on the whole surface rather than one band.
+
+**BUT TAKER IS DEAD IN 62 OF 70 CELLS** — fee+spread 1.4–3.1¢ against an edge of 0.3–1.7¢. The
+mispricing is real and smaller than the toll. *This is the day's governing arithmetic and it killed
+eight strategies before this one.*
+
+**THE RULE (maker-only, the sole survivor):** every 30s, per crypto 15m market, with **120–420s
+left**, if the favourite's last trade is **96–98¢**, rest a buy on the favourite **at that price**;
+cancel after 60s; one fill per market; hold to settlement; **never cross**.
+- EV **+0.313¢/contract = +0.32%/trade**, win 96.8%, n=**21,769 fills**, 294/day, fill rate 0.899
+- clustered **t=+3.02** (370 asset-day clusters) · split-half H1 +0.30 / H2 +0.33
+- per-asset **5/5** (BTC .31 ETH .36 SOL .33 XRP .28 DOGE .28) · asset×half **10/10** · weekly **11/11**
+- selection-corrected: 36-cell Romano-Wolf, cluster bootstrap 3,000 reps → p_adj ≈ **0.005–0.01**
+- maker fee **$0.00**; the taker bar in this same cell is 1.51¢ = **4.8× the edge**
+
+⚠️ **QUEUE POSITION IS THE WHOLE REMAINING QUESTION.** off1 (1¢ inside): FRONT **+0.772¢** ·
+MID +0.579¢ · **BACK −0.423¢**. ~60% of the attractive version is queue rent that trade-print data
+**cannot** verify. Only logging our OWN resting orders' queue position and fill outcomes resolves it.
+⚠️ **SIZING: 10% BUSTS.** $100 bank at 10% → $9.21/day but daily sd $32.95, worst day −$59.10,
+**max DD $134 on a $100 bank**. Honest sizing ≈2% → ~$1.8/day at $100. A 96.8%-win/−97¢-tail payoff
+does not tolerate 10%.
+
+**NOT PROVEN — a coverage artifact, do not trade:** fav 85–99¢ @ 420–870s (+1.7¢, +1.9%/trade,
+t=+6.2) is the `limit=1000` pagination trap again. BTC's tape does not reach past ~300s (median
+prints in 420–870s = **0**). Markets whose tape reaches 800s show +2.26¢, those that don't −0.93¢.
+Retrieval gradient, not price gradient.
+
+**INDEPENDENT CORROBORATION OF THE LOCK KILL.** Favourite edge by |Z| at 92–99¢/120–420s:
++0.60 (Z 0–1) · +1.19 (1–2) · +0.94 (2–3) · +1.03 (3–4) · **−0.49 (4–6, n=1,488)** · −0.67 (6–9).
+**The edge dies exactly where LOCK traded.** Z≥4 selects the cells where the bias is gone.
+
+**Ryan's three hypotheses, answered, none tradeable on its own:** (a) under/over-reaction — neither,
+the favourite edge is FLAT across 60s velocity buckets (+0.87 to +1.57¢, 8 buckets) — a *level*
+effect, not a *reaction* effect, so no conditioning value; (b) late-window settlement drift —
+falsified in the expected direction, the bias SHRINKS into the close (+1.49¢ at 450–900s → +0.47¢ at
+0–10s): the market gets MORE accurate as the 60s index average locks; (c) deep-lock band — see the
+LOCK corroboration above.
+
+**NEXT MEASUREMENT (live, not backtest):** log our own resting-order queue position and fill
+outcomes at 96–98¢ with 2–7 min left for ~2 weeks. That single capture separates +0.80%/trade from
+−0.44%/trade. Everything else is settled.
+Artifacts: scratchpad `calib_*.py|.out|.npz` (build, surface, drift, rule, maker, valid, select,
+probe, queue, econ).
