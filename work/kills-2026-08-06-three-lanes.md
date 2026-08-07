@@ -335,3 +335,52 @@ using station history instead of futures.
 **Honest arithmetic to $65/day at 1%-of-bank sizing:** WTI hourly $20 + 15M metals (if it
 confirms at 96 cycles/day, potentially $40-80 alone) + temp hourlies $20. **Two confirmations
 beyond WTI gets there. Zero new Kalshi data is required to run either test.**
+
+---
+
+# 9. STRUCTURAL SCREEN — THE 15-MINUTE "PRIZE" IS DEAD. Ladder count kills it.
+
+Before calibrating anything, screened every short-cycle venue for the three properties the
+trade requires. **Markets-per-event is the decisive one: no ladder = no wings = no trade.**
+
+| series | events | mkts/event | wings | med spread | 2-sided |
+|---|---|---|---|---|---|
+| **KXWTIH** | 2 | **40.0** | **26/38** | 4c (p25 3c) | 76% |
+| KXTEMPAUSH | 1 | 13.0 | 3/7 | 4c (p25 1c) | 54% |
+| KXTEMPLAXH | 1 | 10.0 | 1/4 | 1c | 40% |
+| KXTEMPNYCH | 1 | 10.0 | 1/4 | 3.5c | 40% |
+| KXTEMPCHIH | 1 | 10.0 | 0/4 | **63c** | 40% |
+| KXTEMPDCH | 1 | 10.0 | 0/2 | **93c** | 20% |
+| **KXWTI15M** | 1 | **1.0** | 0/1 | 1c | 100% |
+| **KXBTC15M** | 1 | **1.0** | 0/1 | 1c | 100% |
+| KXGOLD15M / KXSILVER15M | - | - | - | - | no open markets at screen time |
+| KXINXHUD / KXNDQHUD | - | - | - | - | no open markets at screen time |
+
+**KXWTI15M lists ONE market per event — exactly like KXBTC15M. The 15-minute venues are
+single at-the-money strikes, not ladders.** The $1,920/day pools sit on a single ATM binary.
+**Therefore the "96 cycles/day prize" from note 8 does not exist, and it died of the same
+defect as crypto: no wing to sell.** I flagged it as the ballgame one note ago; it is not.
+
+**KXWTIH remains structurally the best venue on the board** — 40 markets per event, 26 of 38
+priced in wing bands, 4c median spread, 76% two-sided. That is why it is the one that worked.
+
+## TEMP HOURLIES — the only survivor, and only in 2 of 5 cities
+Real ladders (10-13 strikes/event) and 24 cycles/day, but the books split hard:
+**Austin (4c med, 1c p25, 3/7 wings) and LAX (1c) are crossable. Chicago (63c) and DC (93c)
+are not** — those are one-sided books wearing a spread. NY marginal at 3.5c.
+Their tails are the most genuinely independent of anything on the board (an oil shock does not
+move the Austin temperature), which is exactly what the breadth arithmetic needs.
+
+**CAVEAT ON THIS SCREEN: it is ONE snapshot.** Gold/silver 15M and both index hourlies had no
+open markets at screen time — these venues list in bursts. Re-run across a full day before
+treating any "no open markets" row as final.
+
+## WHERE $65/DAY STANDS, HONESTLY
+- **WTI hourly: CONFIRMED, ~$20/day** at 1%-of-bank sizing.
+- **Temp hourlies: the only remaining untested candidate with a real ladder**, and usable in
+  ~2-3 cities. If it confirms at WTI-like economics: **+$20-40/day.**
+- Everything else short-cycle on this board has no wing ladder.
+**Realistic ceiling on what is now visible: $40-60/day, not $65+.** The temp calibration is
+the single test standing between here and that number, and it needs station history
+(METAR/ASOS — `engine/weather.rs` already ingests these, and note 38's KNOWN DEFECT applies:
+IEM daily.json runs 1-2F low, use METAR 6-hourly max groups) rather than futures history.
