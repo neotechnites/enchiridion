@@ -283,3 +283,55 @@ history:** (1) calibrate price->distance from the captured ladders; (2) ask the 
 own multi-year history how often it moves that far in the cycle window; (3) run the vol-quartile
 flatness test; (4) measure cross-series breach-day correlation to confirm the tails really are
 independent before counting a series toward N. Each series either confirms or dies on its own.
+
+---
+
+# 8. CRYPTO 15M — DEAD FOR THE WING TRADE (wrong instrument, not a failed edge)
+
+Decode corrected (`snaps[i] = [time, yes_best_bid, no_best_bid, coin_price, d5y,d5n,dy,dn]`,
+confirmed against `capture_kbt.py:compact()`). My earlier 0.06-0.15 ratios were MY bug: I
+required `d/z>0`, which silently discarded every strike below spot, and near-the-money rungs
+drove `z->0` so implied sigma exploded. Corrected, and the ladder fit then returned zero
+events — because **KXBTC15M et al. list ONE strike per 15-minute window, not a ladder.**
+There is no sigma to fit and, more importantly, **there are no wings to sell.**
+
+Direct calibration test instead (797 markets, 459 windows, 5 coins, T-7.5m, two-sided books):
+
+| price band | n | implied | realized | SELL@bid | BUY@ask |
+|---|---|---|---|---|---|
+| 25-40c | 35 | 36.0% | 25.7% | +7.03c | -13.46c |
+| **40-60c** | **716** | 49.7% | 52.4% | **-11.22c** | **-5.96c** |
+| 60-75c | 41 | 63.2% | 61.0% | -3.95c | -8.32c |
+
+**90% of the sample is 40-60c — these are at-the-money coin flips, not wings.** And both
+directions lose: SELL -11.22c AND BUY -5.96c in the same band means **~8.5c of half-spread**.
+A taker pays 8.5c to express a view worth at most 2-3c. Day-clustered, the only large cell is
+**-16.57c, t=-2.54 (8 days)**.
+
+**Therefore crypto 15M cannot host this trade at any size.** Not because the mispricing failed
+— because the instrument has no wing and the spread is 3x any edge. **The $82/day crypto
+throughput hope is dead. Do not revisit without a wing ladder AND a sub-2c spread.**
+
+## WHAT $65/DAY NOW REQUIRES
+The trade needs a venue with ALL THREE: short cycle (throughput), a STRIKE LADDER (wings to
+sell), and a tight spread (we cross to enter). Scored against that:
+
+| venue | cycles/day | ladder? | spread | status |
+|---|---|---|---|---|
+| **KXWTIH (WTI hourly)** | 23 | yes | tight | **CONFIRMED, ~$20/day at 1% sizing** |
+| KX{GOLD,SILVER,WTI}15M | **96** | yes (live board shows strikes) | unmeasured | **UNTESTED — the prize** |
+| KXTEMP*H (5 cities) | 24 x5 | yes | unmeasured | UNTESTED — most independent tail |
+| KXINXHUD / KXNDQHUD | ~7 | yes | unmeasured | UNTESTED, low throughput |
+| commodity DAILIES | 1 | yes | tight | **WORTHLESS — 1 cycle/day = 0.09%/day of bank** |
+| crypto 15M | 96 | **NO** | 8.5c half | **DEAD (this note)** |
+
+**The 15-minute metals are the whole ballgame: 96 cycles/day at 4x WTI hourly's throughput,
+and they carry the fattest pools on the board ($1,920/day each).** They have NO historical
+capture — but they do not need one. **The two-step method needs only (a) live ladder
+snapshots to calibrate price->distance and (b) multi-year gold/silver/WTI futures history for
+the realized-move distribution — both available immediately.** Same for the temp hourlies,
+using station history instead of futures.
+
+**Honest arithmetic to $65/day at 1%-of-bank sizing:** WTI hourly $20 + 15M metals (if it
+confirms at 96 cycles/day, potentially $40-80 alone) + temp hourlies $20. **Two confirmations
+beyond WTI gets there. Zero new Kalshi data is required to run either test.**
