@@ -227,3 +227,59 @@ implied-vs-realized gap within matched vol regimes** using the 60-day 5m series 
 days by realized vol, and check the gap holds in the top vol quartile. If it collapses there,
 the strategy must stand down when vol rises — which is exactly when it would otherwise
 be sized largest.
+
+---
+
+# 7. VOL-REGIME TEST: PASSED. And the $100/day arithmetic.
+
+## The kill test the lane could have failed
+For each of 185 KXWTIH hourly events with a T-30m ladder AND a clean settle boundary:
+fit implied sd from the whole ladder (`sigma_i = d / Phi^-1(1-p)` per rung, median), and
+compare to the realized |move| from pseudo-spot to settlement. Ratio < 1 = market overprices
+movement (E|move| = 0.7979*sigma for a normal).
+
+| implied-vol quartile | n | implied sd $ | realized \|move\| $ | ratio |
+|---|---|---|---|---|
+| Q1 (calmest) | 46 | 0.2605 | 0.1116 | 0.537 |
+| Q2 | 46 | 0.3880 | 0.1710 | 0.552 |
+| Q3 | 46 | 0.5117 | 0.1623 | 0.398 |
+| Q4 (most vol) | 47 | 0.6903 | 0.2581 | **0.469** |
+| **ALL** | **185** | | | **0.474** |
+
+**Kalshi's WTI hourly ladder implies ~2x the movement WTI actually makes, and the ratio is
+FLAT across the vol range.** The market widens when vol rises, but it widens proportionally.
+**The regime objection is answered: the edge does not collapse when it would be sized largest.**
+
+## CRYPTO 15M — NOT A FINDING. Unverified decode, do not cite.
+Same test on `kbt_books_{btc,eth,sol,xrp,doge}.jsonl` returned ratios of **0.06-0.15**, i.e.
+"the market implies 7-16x the realized move". **That is not credible and is being recorded as
+a DEFECT, not an edge.** n collapsed to 29-94 rows per coin out of thousands of markets, which
+means the snapshot-field decode (`snaps[i] = [ts, ?, ?, spot, ...]`) is wrong and is silently
+dropping almost everything — the same class of error as the `capture_kbt` inverted decode that
+retracted RENTEC R1 (note 38). **Gate: verify the snaps schema against `ws_capture.py` /
+`capture_kbt.py` before ANY crypto number from this file is used.**
+
+## HOW $100/DAY IS REACHED — it is a BREADTH problem, not an edge problem
+Confirmed economics, WTI hourly, 10-20c band: **+8.6% of collateral per cycle**, 23 cycles/day.
+The binding constraint is the measured correlated tail (worst day 74% of hours, in 3-day runs),
+which caps size at **~1% of bank per cycle => ~2%/day => ~$20/day on $991.**
+
+Three routes to 5x, only one of which is available at this bank:
+- **Capital**: same edge, same 1% sizing, **$5,000 of bank = $100/day.** Not available.
+- **Size up to 3%/cycle**: $58/day, but a 3-day cluster leaves 14% of bank. **Rejected — ruin.**
+- **BREADTH — the only viable route.** The tail constraint is per-underlying. N genuinely
+  INDEPENDENT settle sources, each sized 1% of bank, run simultaneously => **N x $20/day.**
+  $100/day needs **N = 5 confirmed independent short-cycle series.** We have **N = 1**.
+
+**Independence is the whole game and it is not the ticker count** (LIP STATEMENTS 21/36).
+WTI and Brent are ~95% correlated and count as ONE. Gold/silver ~0.8, one and a bit.
+The realistic five: **energy (WTI hourly, CONFIRMED) · metals · crypto 15M · weather hourlies
+· equity-index hourlies.** Weather is the most genuinely independent of the five — an oil
+shock does not move the Chicago temperature — and its hourly programs are also the fattest
+LIP pools on the board ($117k/cycle-set per city).
+
+**The procedure is mechanical and needs no new Kalshi data for any series with public price
+history:** (1) calibrate price->distance from the captured ladders; (2) ask the underlying's
+own multi-year history how often it moves that far in the cycle window; (3) run the vol-quartile
+flatness test; (4) measure cross-series breach-day correlation to confirm the tails really are
+independent before counting a series toward N. Each series either confirms or dies on its own.
