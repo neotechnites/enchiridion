@@ -1041,3 +1041,40 @@ $2,000 buys $21/day, not $37.**
 **⇒ FINAL: keep the rule exactly as written, set the rest cap to 2–6h. Expect $18–19/day at $1,000
 with $806 deployed and a −$244 worst day. Add nothing — every filter tested loses dollars.**
 Artifacts: `~/kalshi_data/hunt/deep_*.{json,log,py}`, `deep_parts/`, `deep_ff/`, `deep_meta.npy`.
+
+## ☠️ KXBTC15M ORDER-FLOW ATTACK — DEAD 2026-08-06. Placebo fired; the signals did not.
+Attacked with everything the prediction lane never touched: Binance spot OFI + lead-lag, perp flow /
+basis / liquidations, ETH cross-asset, Kalshi's own taker flow. **No signal beat Brier(market) at any
+horizon.** dB at D=−60: Binance −0.00214 · perp −0.00579 · ETH −0.00109 · ALL combined −0.00777.
+**Placebo (+10s illegal lookahead) fired correctly on EVERY pipeline: +0.0026 to +0.0065** — the tests
+had the power to find an edge and found none. Brier(mkt) 0.027644 at D=−60 reproduces 0.02784.
+🔑 **WHY BINANCE FLOW FAILS — it predicts its OWN BASIS, not the future.** On the continuous target
+(ev−fs in dollars, far more power than binary) the only stable feature is `ofi300`, and its
+coefficient is **NEGATIVE** at D=−60/−30/−10 (t = −3.68 / −3.23 / −3.77). Aggressive taker buying
+pushes Binance AHEAD of the index; the signal CORRECTS the basis, it does not forecast. Forward-OOS
+ΔR² from the whole flow block is negative at every horizon. **No lead-lag exists** (Binance returns
+over 5–300s add dB −0.00004 to −0.00441). **Binance is USDT-quoted and NOT a BRTI constituent** — its
+level residual is **$17.38 at D=−10** vs Kraken's $7.58, against a market at ±$1.1.
+🔧 **THE NEAR-MISS, AND WHAT KILLED IT.** On TRADE prices the market's calibration slope is
+significantly >1 (**1.280 ± 0.057 at D=−600**, 1.201 at −300, 1.105 at −180). Recalibration gave
+**dB +0.00144 (t=+3.29)**, positive in all 4 chronological blocks and both sides, **EV +4.39¢/contract,
+18.6 trades/day**. Staleness ruled out (median trade-price age 0–1s). **It died on EXECUTABLE QUOTES**
+— real `yes_bid`/`yes_ask` closes give dB −0.00046 to +0.00013, |t|≤1.12 everywhere.
+**⇒ NEW LAW: the QUOTE MID is calibrated; the TRADE PRINT is not. Never calibrate against trade
+prices when quotes exist.**
+**STRUCTURAL CAP:** at D=−60, **2,371 of 2,759 markets are already outside [0.05, 0.95]** — the
+informative middle holds only 43–114 markets per bin. Economics: best cells +0.82¢ (t=0.26) and
++0.33¢ (t=0.19); all others −1.50¢ to −11.08¢. **$/day at $1,000 negative or zero at every horizon.**
+**UNATTACKED, the last piece:** a true multi-venue **BRTI-CONSTITUENT ORDER BOOK** reconstruction
+(Coinbase + Bitstamp + Gemini + LMAX + Kraken *books*, not trades — no resting book on any actual
+constituent has ever been used), and Kalshi L2 depth (not exposed by `/markets/trades` or
+`/candlesticks`).
+Artifacts: `~/kalshi_data/hunt/of_*` incl. `of_bn_1s_*.npy` (3.09M 1s bars), `of_perp_1s.npy` (47M
+perp trades, 31d), `of_candles.jsonl` (2,827 markets × bid/ask).
+
+## 🔧 CORRECTION 2026-08-06: SEATS IS NOT RUNNING — it stopped 15:13:20Z and is DISABLED
+`systemctl is-active`: nestor **active** · seats **inactive (dead)** · virgil **inactive**.
+**The "−$31/day live bleed / $217 per week" figure repeated through this session was STALE** — seats
+was active at session start and was stopped mid-session. **There is no ongoing leak. The −$1.13¢/
+contract-day LIP measurement stands as history, not as a live cost.** Re-check service state before
+citing any live P&L rate.
