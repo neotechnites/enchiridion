@@ -384,3 +384,30 @@ treating any "no open markets" row as final.
 the single test standing between here and that number, and it needs station history
 (METAR/ASOS — `engine/weather.rs` already ingests these, and note 38's KNOWN DEFECT applies:
 IEM daily.json runs 1-2F low, use METAR 6-hourly max groups) rather than futures history.
+
+---
+
+# 10. WHY THE BACKTEST CANNOT EXIST: KXWTIH IS 11 DAYS OLD
+
+Chased every historical source rather than accepting "Kalshi has no book history":
+- **KalshiBackTest** (bearer in SECRETS.local.md, already used by `capture_kbt.py` with
+  `include_orderbook=true`): **crypto only.** API states `available: btc:15m, doge:15m,
+  eth:15m, sol:15m, xrp:15m`. No commodities, no hourlies. Cannot test WTIH.
+- **Predexon** (key in SECRETS.local.md): v1 **deprecated**, v2 returns
+  `access_denied — API key tier does not allow this endpoint`. Inaccessible at our tier.
+- **Kalshi candlesticks** (carry yes_bid/yes_ask OHLC per minute — the right instrument,
+  and I wrongly dismissed it as "not order books"): full settled pull for KXWTIH returns
+  **8,000 markets / 198 hourly events spanning 2026-07-27 -> 2026-08-06.** Pagination
+  completed; that is the whole population.
+
+**KXWTIH did not exist before ~2026-07-27.** The venue is eleven days old — which is why
+`capture_cwing_books.py` (written 07-26) picked it up new. **There is no longer history to
+backtest against, anywhere, because the instrument has no longer history.** The 123 events in
+the surviving cell are **62% of every event that has ever occurred in this market.**
+
+**Therefore the demand for a long backtest is unsatisfiable here, and this is a CLASS-B edge
+under Ryan's 2026-07-25 ruling** (note 38): short history means not "more likely wrong" but
+"more likely to STOP EXISTING" — harvest at appropriate size while alive, with tight decay
+tripwires and low weight in long-horizon projections. **The correct response is a decay
+tripwire on the implied-vs-realized ratio (currently 0.474), not a backtest that cannot be
+run.** If that ratio drifts toward 1.0, the edge is being arbitraged and the lane closes.
