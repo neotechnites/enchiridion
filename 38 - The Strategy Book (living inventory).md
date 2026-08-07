@@ -1078,3 +1078,45 @@ perp trades, 31d), `of_candles.jsonl` (2,827 markets × bid/ask).
 was active at session start and was stopped mid-session. **There is no ongoing leak. The −$1.13¢/
 contract-day LIP measurement stands as history, not as a live cost.** Re-check service state before
 citing any live P&L rate.
+
+## 🔑 THE BAR, QUANTIFIED (2026-08-06) — the most useful number produced all day
+Mechanical-driver lane (dealer gamma, liquidation clusters, cascade structure, forced-flow
+one-sidedness, vol spikes). **No mechanism beat the price.** Harness validated: Brier(mkt) 0.027679 at
+D=−60 vs the established 0.027644. **Placebo fires at +0.005138 (t=+8.32)** — the null is real.
+8 features × 3 horizons: every dB between −0.00037 and +0.00041; 24 tests, Bonferroni t≈3.1, **max
+observed |t| = 2.18**, signs incoherent across bins and horizons.
+
+**THE CEILING — what any signal must deliver.** Synthetic feature with correlation ρ to the
+REMAINING move:
+| ρ | dB @−60 | dB @−300 | dB @−600 |
+|---|---|---|---|
+| 0.05 | −0.00030 | +0.00020 | +0.00041 |
+| 0.10 | −0.00008 | +0.00035 | +0.00056 |
+| 0.20 | −0.00005 | +0.00200 | +0.00261 |
+| **0.30** | +0.00080 | **+0.00342** | +0.00626 |
+| 0.50 | +0.00135 | +0.00894 | +0.01659 |
+**You need ρ ≈ 0.30 against the next 300s.** Measured mechanical ρ: casc_fade 0.006 · pin1000 0.006 ·
+clust_sig 0.006 · shock_ofi 0.012 · prox_high 0.012 · volspike_mom 0.022 — **15 to 50× short.**
+🔑 **THE SHARPEST STATEMENT OF THE PROBLEM: an ILLEGAL 10-SECOND CRYSTAL BALL on BTC price is only
+ρ = 0.167 and yields dB = +0.0037. Any signal must OUT-PREDICT LITERALLY SEEING THE NEXT 10 SECONDS.**
+At D=−60 nothing works at any ρ — even ρ=0.50 gives only +0.0013, because 60s of BTC is $13.8 of noise
+and the market is already there.
+
+**GAMMA PINNING FALSIFIED SPECIFICALLY, not just weakly.** Round-strike reversion IS real on 2.4M
+1-min bars (bin [0,50) −$3.51, bin [950,1000) +$3.76 — a clean sawtooth toward the strike). **But it
+is NOT dealer gamma:** live Deribit chain has 70000 = 6.8% of all OI, 60000 = 6.2%, top-5 = 27% —
+and the walls show **nothing** while ordinary $1000 strikes carry the entire effect (K mult of 10000:
+t=−0.69 · mult of 5000: t=−1.09 · mult of 1000: **t=−2.91** · NOT mult of 5000: **t=−2.61**). Expiry
+conditioning does not rescue it (tte 0–0.5h: t=−0.06). **It is round-number microstructure**, magnitude
+**$0.66 over 300s = 0.011σ = 0.44¢ at ATM.**
+
+**STILL OPEN — mechanism 3, constituent resting walls.** Depth is NOT negligible: within ±$100,
+Coinbase 2.24M + Kraken 6.63M + Bitstamp 2.09M + Gemini 0.55M = **$11.52M**, against **$18.4M** of
+Binance perp flow per median 300s window — **same order of magnitude, so a wall genuinely can be a
+barrier.** No L2 history exists anywhere, so it cannot be backtested. **Forward capture IS LIVE** at
+10s (4 constituent books + full Deribit chain every 120s) → `~/kalshi_data/hunt/mech/`.
+**Power: 3.8–4.9 days of markets to detect an effect as strong as a 10s lookahead; 20 days for half
+that; 45 days for a third. DO NOT LOOK before ~5 days of capture.**
+CME and on-chain netflow not run — both strictly slower than drivers already measured at ρ≈0.01, and
+on-chain confirmation latency exceeds the entire tradeable window.
+Artifacts: `~/kalshi_data/hunt/mech_*.{py,npy}`, live capture `mech_cap.py` → `mech/`.
