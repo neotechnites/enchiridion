@@ -677,12 +677,14 @@ Full writeup + artifacts: `work/fullpower-survey-2026-08.md`, `~/kalshi_data/hun
   volume-weighted mean spread 1.51¢** (minute-weighted 4.60¢ — wide books exist, nothing trades in
   them). **Only 2.50% of volume is in books ≥6¢**, the minimum that could yield a 3¢ half-spread.
   ⇒ **In the liquid half of Kalshi the whole maker prize is ≤0.5¢/contract before adverse selection.**
-- **CLOSEST CELLS (do not trade):** KXMLBSPREAD no @30–45¢, T−30m…2h: **+5.91 ± 2.88, t=2.05,
-  FWER 0.960**, 245 events — needs **523 events** (2.1×) for t=3; would be $91/day at $1k ± $44.
-  Same trade at T−0…30m **+5.24 ± 2.86** (674 events needed); KXMLBTOTAL no @30–45 **+5.23 ± 3.93**
-  (801). **All twelve highest-net cells are MLB props and all are the same 30–45¢-NO structure** —
-  one real family mechanism or one shared mis-specification. The corpus is 4-for-4 that held-out
-  families kill these.
+- **CLOSEST CELLS — and they are DEAD, five for five.** The top twelve net cells are all MLB props
+  and all the same "buy NO at 30–45¢" structure; best was KXMLBSPREAD T−30m…2h **+5.91 ± 2.88
+  (t=2.05, FWER 0.960)**, which would have been $91/day at $1k ± $44.
+  **Pooled over all 15 MLB prop families: +0.01¢ ± 1.00 (t=+0.01), 2,672 events — exactly zero.**
+  **All 15 leave-one-family-out complements |t| ≤ 0.75** (KXMLBSPREAD's complement −0.80 ± 1.07).
+  KXMLBSPREAD **fails Gate 4 inside itself**: hash halves +2.52 / +7.91, chronological +0.79 /
+  **+9.04**. ⇒ one family's small-sample noise. **The held-out kill is now 5-for-5 across five
+  independent market structures — treat any single-family in-sample cell as dead on arrival.**
 - **ECON is closed BY THE API, not by power.** `/events` lists 61 CPI events back to 2021; markets
   are returned for the **two most recent only** (26JUN 9, 26MAY 14, all other 59 = **0**), same for
   KXFED and KXPAYROLLS, verified authenticated on both endpoints. **154 markets / 11 clusters,

@@ -118,11 +118,25 @@ would be **$91/day at $1,000** (1,538 contracts × 5.91¢, one turn/day) — but
 family-wise p = 0.96. **Do not trade this. It is the leading candidate for the next pass,
 not a result.**
 
-⚠️ Note the shape of the top-12 list: **every one of the twelve highest-net cells is an MLB
-prop family**, and the same 30–45¢-NO structure recurs across KXMLBSPREAD / KXMLBTOTAL /
-KXMLBF5TOTAL / KXMLBRBI. That is either one real family-wide mechanism or one shared
-mis-specification. Held-out families are the test, and the corpus's record on this is
-**four for four against** (`heldout_longshot.py`).
+### ☠️ …and the held-out test kills all three. **Five for five.**
+
+Every one of the twelve highest-net cells is an MLB prop family, and the same 30–45¢-NO
+structure recurs across KXMLBSPREAD / KXMLBTOTAL / KXMLBF5TOTAL / KXMLBRBI — so it is either
+one family-wide mechanism or one family's noise. It is the noise.
+
+- **Pooled across all 15 MLB prop families, buy NO at 30–45¢: +0.01¢ ± 1.00 (t = +0.01),
+  n = 18,553, 2,672 events.** Exactly zero, with a 2¢ MDE.
+- **Leave-one-family-out: all 15 complements are indistinguishable from zero**
+  (+0.39, −0.80, +0.05, +0.26, −0.21, +0.07, +0.07, −0.10, +0.05, +0.38, −0.15, +0.17,
+  +0.12, −0.06, −0.03; every |t| ≤ 0.75). The complement of KXMLBSPREAD is **−0.80 ± 1.07**.
+- **KXMLBSPREAD fails Gate 4 inside itself:** hash halves **+2.52 vs +7.91**;
+  chronological halves **+0.79 vs +9.04**. An 11× disagreement across halves on a cell
+  whose whole claim is +5.9¢.
+- Chronological split of the pooled universe: **+0.19 / −0.17.** Hash halves: **−1.21 / +1.39.**
+
+⇒ **The single leading candidate on the entire surface is one family's small-sample noise.**
+The corpus's held-out record is now **five for five**: every family's best in-sample rule is
+≤0 out of sample.
 
 ### Achieved MDE — the claim is now bounded by data, not by power
 
