@@ -1226,3 +1226,64 @@ as a past-markout filter** (which was already shown to raise ¢/contract and los
 the thing to hunt next.**
 Artifacts: `~/kalshi_data/hunt/br_{final,rest3,q,live,pull}.py`, `br_c/` (349MB, 167 new tail series),
 `br_live_ob.jsonl` (8,817 real touch-queue reads), `br_queue_by_series.json`, `br_p3/`.
+
+## ☠️☠️ RULE B IS DEAD (2026-08-06, final). It was never a measurement.
+**+7.315¢ = 100 − 92.68 EXACTLY.** All **14 events** settled NO. **Zero adverse settlements.**
+**P(0 adverse | LITERALLY ZERO EDGE) = 0.327.** The reported SE 0.929 / t=7.87 measured only PRICE
+dispersion (91¢ vs 97.5¢), not outcome risk — **the bootstrap could not produce a loss because no
+loss existed to resample.**
+| perturbation | ¢/ctr |
+|---|---|
+| as observed (0 adverse) | +7.32 |
+| **1 median event (39ct) adverse** | **+2.18** |
+| 2 adverse | −2.96 |
+| 3 adverse | −8.09 |
+| Jeffreys posterior after 14/14 | median +5.74, **5th pct −5.28** |
+**P(true edge ≤ +0.679¢, the queue-blind sim number) = 0.161 · P(edge ≤ 0) = 0.141.** The +7.315¢ and
++0.679¢ were **never in conflict — they are statistically indistinguishable at n=14.**
+
+🔑 **GATE 1 KILLS IT OUTRIGHT — Rule B is a SIDE-LABEL SUBSET OF A LOSING TRADE.** Buying the
+favourite at ≥90¢, split only by API side label:
+| cell | events | contracts | avg px | ¢/ctr | USD |
+|---|---|---|---|---|---|
+| via **NO** (Rule B) | 14 | 709 | 92.68 | **+7.315** | +$51.84 |
+| via **YES** (mirror) | 10 | 727 | 97.13 | **−34.319** | −$249.37 |
+| **BOTH — the actual trade** | **19** | **1,435** | 94.94 | **−13.763** | **−$197.53** |
+
+**OUR SEATS WERE NOT IN THIN QUEUE.** `seats_log.jsonl:touch_depth` (`rival` = contracts ahead),
+n=3,562 side-observations: median K = **124 NO-side / 200 all**; only **23–26% sat at K<50** (venue
+median ~300). `depth_cache.json` gives median NO-touch depth ≈ **640** on 12 Rule-B tickers. The
+K-decomposition is structurally impossible: touch_depth starts 08-04 21:25Z, the last Rule-B fill was
+08-04 20:55Z — **zero overlap** — and with 14/14 wins there is no outcome variation to decompose.
+
+🔑 **THE K-INSENSITIVITY LEAD IS DEAD, and the way it died is the lesson.**
+- sd(level, K=0) = **2.883¢** vs sd(decay K0→K50) = **1.179¢** — level variance is **2.45×** decay
+  variance; corr(level, decay) = **−0.508**, so "K-insensitive" is 26% just a restatement of "high level".
+- **THE NULL BAND, MEASURED: the KXLOWT\* family — 20 STRUCTURALLY IDENTICAL series (daily-low-temp
+  by city) — has K=0 markout ranging −4.78 to +6.53, sd 3.05¢, mean −0.30¢. An 11.3¢ spread among
+  markets that differ only by city. EVERY "good" series sits inside that band.**
+- Held-out (split each series by event-day median, rank on A, evaluate B): corr(A,B) = **+0.016** ·
+  top-half in-sample **+2.526¢** → **held-out +0.015¢** vs **unfiltered baseline +0.280¢**, at 51.2%
+  of the flow. **Selecting series on markout makes held-out markout WORSE than no filter while halving
+  flow** — the identical failure mode as the past-markout filter.
+
+🔑 **STRUCTURAL BLOCKER: THIN QUEUE AND REWARD POOLS ARE ANTI-CORRELATED BY CONSTRUCTION.**
+Of 8,817 live qualifying markets only 907 (10.3%) carry a program:
+| K bucket | markets | w/ pool | % | pool $/day |
+|---|---|---|---|---|
+| **<20** | 1,172 | 23 | **2.0%** | 379 |
+| 20–50 | 522 | 44 | 8.4% | 360 |
+| 100–200 | 1,122 | 108 | 9.6% | 710 |
+| **≥500** | 3,491 | **573** | **16.4%** | **8,610** |
+**Pools live where the queue is deep.** Short-dated (≤80h) AND thin (<50ct): 187 markets → 56/day
+flow, but **only 9 carry a pool**. All thin pool-carrying markets: **67 markets, $738/day total pool.**
+**The only END-TO-END MEASURED configuration returned −1.132¢/resting-contract-day (reward +1.518,
+fill cost −2.65) ≈ −$122/day.** Model rows range +$23 to +$117/day but rest on the sim markout, and
+`mkrown_SUMMARY` records model/measured capacity = **38×** ($1,610 model vs $42 measured at $1,000).
+
+**⇒ THE HONEST STATE: nothing on Kalshi is established as positive.** Rule B is unmeasured (14 events,
+0 losses, indistinguishable from zero AND from its own −13.8¢ two-sided version); series selection
+fails held-out; thin queue and pools are anti-correlated; the only measured deployment lost money.
+**THE NEXT DECISIVE QUESTION IS THE UNEXPLAINED 38× MODEL/MEASURED REWARD GAP — not breadth, not
+thresholds, not series selection.**
+Artifacts: `~/kalshi_data/hunt/rec_*.{py,json,jsonl}`.
