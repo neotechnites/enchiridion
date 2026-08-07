@@ -88,7 +88,25 @@ now emits `asrc` per row (1 = scheduled-time-from-ticker, 2 = close_ts shared by
 in the event ⇒ a scheduled boundary, outcome-independent, 0 = close_ts that *varies* inside
 the event ⇒ outcome-dependent, dropped from every primary scan).
 
-Current mix: **60–67% ticker-scheduled, 33–40% shared-close, 0 rows on a varying close.**
+### 1b. THE SAME TRAP, SECOND INSTANCE: **shared close ≠ scheduled close**
+
+The first fix classed "every market in the event shares one `close_ts`" as outcome-independent
+(true for ladders: the boundary was fixed before anyone traded). As the tennis families landed,
+the surface produced **KXATPCHALLENGERMATCH yes 70–85¢: +15.97¢ ± 0.81, t = +19.82, FWER 0.000,
+482 events**, plus five more ATP cells at +10 to +15¢ — a whole family of "edges" at 20% of capital.
+
+A tennis match's two legs also close together — **at the moment the match ends.** Shared, and
+still post-outcome. The clean discriminator, measured: **ladders close on an exact 15-minute
+boundary 100% of the time (KXBTCD 136/136, KXWTIH 400/400); ATP match markets 3/400 (0.75%).**
+`asrc = 2` now additionally requires `close_ts % 900 == 0`. Every ATP cell vanished.
+
+**Corollary law: "outcome-independent" is a property you must be able to demonstrate from the
+field's own structure, not infer from the fact that several markets agree on it.**
+
+Cost of the fix: **137,373 rows dropped**, MDE widened from 0.33–1.45¢ back to 0.50–2.51¢.
+That is the honest price of the hygiene, and §2b recovers those families properly.
+
+Current mix: **40% ticker-scheduled, 10% clock-boundary shared-close, the rest dropped.**
 
 ---
 
@@ -159,6 +177,30 @@ long tail; families below ~150 event clusters remain unresolvable at this scale 
 will be — they do not have enough history to test.
 
 ---
+
+## 2b. THE MATCH FAMILIES, RECOVERED ON A CLEAN AXIS — also null
+
+Tennis / esports / club-football markets have no time in the ticker and close at match end,
+so neither anchor works and §1b drops them. But **`open_ts` (when the market was listed) is
+strictly pre-outcome**, so they can be surveyed at `open_ts + Δ` for Δ ∈ {30m, 1h, 3h, 6h, 12h,
+24h}, stopping at `min(close_ts)` so every market is still trading (`fp_fwd.py`).
+
+**565 families, 21,230 markets, 34,424 rows, 13,838 events. Null everywhere:**
+
+| price | events | gap | t | yesEV | noEV | MDE |
+|---|---|---|---|---|---|---|
+| 5–15¢ | 1,738 | −1.96 | −2.63 | −6.77 | −2.41 | 1.46¢ |
+| 15–30¢ | 3,161 | −1.62 | −1.87 | −8.58 | −4.93 | 1.69¢ |
+| 30–45¢ | 3,688 | +0.56 | +0.60 | −6.90 | −7.82 | 1.83¢ |
+| **45–55¢** | **2,965** | **−0.10** | **−0.10** | **−8.58** | **−8.36** | **2.12¢** |
+| 70–85¢ | 1,557 | +1.03 | +0.86 | −4.11 | −6.45 | 2.35¢ |
+| 85–95¢ | 555 | +2.38 | +1.74 | −0.48 | −5.49 | 2.68¢ |
+
+The only band with |t| > 2 is 5–15¢ at **−1.96¢** — the corpus's existing "cheap YES is dear by
+~1¢" mechanism, wrong-signed for buying. Best single cell anywhere: KXATPCHALLENGERMATCH yes
+45–55¢, **+3.61¢ ± 2.54 (t = 1.42)**, does not clear. **Both taker sides are −6 to −8.6¢ at mid**
+— these books are wide, and the toll, not the calibration, is what kills them. The +15.97¢ was
+entirely the anchor.
 
 ## 3. THE MAKER SIDE — surveyed for the first time
 

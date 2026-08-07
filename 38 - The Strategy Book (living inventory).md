@@ -706,6 +706,19 @@ Every panel must print its ANCHOR PROVENANCE and cluster count.** `fp_lib.panel`
 1 = scheduled-time-from-ticker · 2 = close_ts shared by every market in the event (a scheduled
 boundary, outcome-independent) · 0 = close_ts that VARIES inside the event (outcome-dependent,
 dropped from every primary scan).
+🔧 **SAME TRAP, SECOND INSTANCE — SHARED CLOSE ≠ SCHEDULED CLOSE.** The first fix trusted "all
+markets in the event share one close_ts" as outcome-independent. The tennis families then produced
+**KXATPCHALLENGERMATCH yes @70–85¢ +15.97 ± 0.81, t=19.82, FWER 0.000, 482 events** plus five more
+ATP cells at +10…+15¢ — because a match's two legs also close together, **at the moment the match
+ends**. Discriminator, measured: **ladders close on an exact 15-min boundary 100% of the time
+(KXBTCD 136/136, KXWTIH 400/400); ATP match markets 0.75% (3/400).** Requiring
+`close_ts % 900 == 0` deleted every ATP cell — at a cost of 137,373 dropped rows.
+**⇒ "outcome-independent" must be DEMONSTRABLE from the field's own structure, never inferred from
+several markets agreeing on it.**
+✅ Those families are recoverable on `open_ts + Δ` (listing time is strictly pre-outcome):
+`fp_fwd.py`, 565 families / 13,838 events — **null everywhere** (mid 45–55 gap −0.10, t=−0.10; both
+taker sides −8.4 to −8.6¢ because the books are wide). Only 5–15¢ moves: **−1.96¢ (t=−2.63)**, the
+existing cheap-YES-is-dear effect, wrong-signed for buying.
 🔑 **DESIGN LAW FROM THE SAME PASS: MDE is bought with EVENT CLUSTERS, not rows.** The settled
 catalogue holds **157,195 distinct events** across 1,124,409 markets. A breadth pull (120 markets ×
 2,283 series) covers **≤19,473** of them; **one hash-chosen market per event covers all 157,195 —
