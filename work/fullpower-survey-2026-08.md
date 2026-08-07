@@ -158,23 +158,25 @@ The corpus's held-out record is now **five for five**: every family's best in-sa
 
 ### Achieved MDE — the claim is now bounded by data, not by power
 
+Post-hygiene (§1b applied — this is the conservative, leak-free panel):
+
 | price band | events | gap | SE | **MDE (95%)** |
 |---|---|---|---|---|
-| 1–5¢ | 3,252 | −1.23 | 0.210 | **0.41¢** |
-| 5–15¢ | 5,980 | −1.04 | 0.466 | **0.91¢** |
-| 15–30¢ | 6,351 | −0.21 | 0.652 | **1.28¢** |
-| 30–45¢ | 5,920 | −2.43 | 0.774 | **1.52¢** |
-| **45–55¢** | **4,498** | **−0.45** | **0.933** | **1.83¢** |
-| 55–70¢ | 3,632 | +0.35 | 1.031 | **2.02¢** |
-| 70–85¢ | 2,627 | +1.96 | 1.083 | **2.12¢** |
-| 85–95¢ | 1,985 | +1.39 | 0.887 | **1.74¢** |
-| 95–99¢ | 1,364 | +1.76 | 0.399 | **0.78¢** |
+| 1–5¢ | 2,067 | −1.22 | 0.254 | **0.50¢** |
+| 5–15¢ | 4,224 | −0.44 | 0.547 | **1.07¢** |
+| 15–30¢ | 4,405 | +0.61 | 0.743 | **1.46¢** |
+| 30–45¢ | 4,290 | −2.02 | 0.846 | **1.66¢** |
+| **45–55¢** | **3,505** | **−0.28** | **0.986** | **1.93¢** |
+| 55–70¢ | 2,551 | +0.16 | 1.138 | **2.23¢** |
+| 70–85¢ | 1,680 | +0.80 | 1.282 | **2.51¢** |
+| 85–95¢ | 1,352 | +1.22 | 1.016 | **1.99¢** |
+| 95–99¢ | 973 | +1.79 | 0.468 | **0.92¢** |
 
-**First survey: 3–9¢. This survey: 0.41–2.12¢, and the pull is ~17% complete.**
-The 1¢ mandate is met at the extremes already and will be met across the middle at
-full pull. Per-family MDE currently spans **3.5¢ (KXMLBRFI, 849 events)** to 17¢ for the
-long tail; families below ~150 event clusters remain unresolvable at this scale and always
-will be — they do not have enough history to test.
+**First survey: 3–9¢. This survey: 0.50–2.51¢ at ~21% of the pull**, and the pre-hygiene
+panel (which included the leaked families' extra rows) had already reached **0.33–1.45¢** —
+so ~1¢ across the whole grid is reachable on the remaining 79%. Per-family MDE currently
+spans **3.5¢ (KXMLBRFI, 849 events)** to 17¢ for the long tail; families below ~150 event
+clusters are unresolvable at this scale and always will be — they do not have the history.
 
 ---
 
