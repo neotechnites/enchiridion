@@ -1302,3 +1302,52 @@ fails held-out; thin queue and pools are anti-correlated; the only measured depl
 **THE NEXT DECISIVE QUESTION IS THE UNEXPLAINED 38× MODEL/MEASURED REWARD GAP — not breadth, not
 thresholds, not series selection.**
 Artifacts: `~/kalshi_data/hunt/rec_*.{py,json,jsonl}`.
+
+## ☠️ THE MARTINGALE VARIANCE-BUDGET TEST (2026-08-06) — the market burns EXACTLY its budget
+Ryan's argument in its strongest testable form: *if prices swing more than information justifies,
+fading the swing is +EV, and it requires forecasting nothing.* Under the martingale property
+`E[Σ(Δp)²] = p0(1−p0)` **exactly**, so `R = realised_QV / p0(1−p0)` is a hard, assumption-free test.
+**RESULT: R = 0.9793 ± 0.0133 on KXBTC15M (n=4,999); POOLED across all five crypto-15m series
+R = 0.9868 ± 0.0082, 95% CI [0.971, 1.003]. On budget.**
+**AND IT IS FLAT ACROSS SAMPLING FREQUENCY — `QV@1s == QV@15s == QV@30s` to five decimals** on live
+top-of-book (1,740 1-Hz polls). The classic microstructure blow-up is empirically ABSENT at the touch
+in this series (median spread 1.0¢). Independent replication on a separate candle pull: R@60s =
+0.9830 ± 0.0192. Insensitive to every knob (p0∈[0.20,0.80] → 0.9885; anchor spread ≤2¢ → 0.9869;
+bid-path 0.9794; ask-path 0.9801). AC1 noise-robust estimator agrees (0.9701). *(TSRV discarded — at
+≤15 points per path it subtracts ~1/3 of genuine QV and returned a nonsense 0.590.)*
+
+🔑 **VENUE-WIDE: EVERY APPARENT OVERREACTION IS BID-ASK BOUNCE.** 55 series, 70,309 markets:
+median R@60s **1.400** (87% read >1) → median R@1h **1.001** (51% read >1); ratio **1.560**. The 19
+series with R@60s>2 have median R_whole **0.927** — calibrated end-to-end, the excess lives entirely
+in the fine grid. Worst offenders decay monotonically: KXMLBTB **11.18 → 6.97 → 4.22 → 2.78 → 1.04**;
+KXCOPPERD **8.42 → 4.68 → 3.13 → 2.01 → 0.99**. **ZERO series has a stable R materially above 1**, and
+KXBTC15M is the flattest of the 13 frequency-flat series (60s/1h = 0.991).
+⚠️ Anchor gating mattered enormously: ungated, KXETHD read R=0.34 and KXBTCD 0.59 — a wide opening
+quote puts the mid near 0.5 and inflates the denominator. Gated: 0.80 and 1.10.
+
+**THE ONE REAL DEVIATION — early-life excess variance, and it is not tradeable.** Local-budget
+identity `E[(Δp)²|F_t] = p_t(1−p_t) − E[p_{t+1}(1−p_{t+1})]`, pooled 5 series, 14,968 markets:
+min-14 **R=1.1406 (z=+6.51)** · min-13 **1.2724 (z=+7.93)** · min-11 **1.2700 (z=+6.77)** · mid-life
+min-7/4/3 **0.892/0.885/0.871 (z=−4.3/−4.5/−5.3)** · net **0.987**. **~+14 to +27% excess in the first
+four minutes, ~−11 to −13% in mid-life.** Buckets 13 and 11 do not touch the anchor, replicates
+independently in BTC15M and ETH15M, survives Bonferroni over 15 buckets.
+**The classic "overreaction is strongest mid-range" prediction is ABSENT** — the middle is the most
+exactly-on-budget region (**1.0069 ± 0.0025 at p∈[0.45,0.50]**). And **overreaction does not persist**:
+markets in the high QV-so-far tercile at minute 5 have **R_rest = 0.9955 ± 0.0177** — nothing to
+condition on.
+**THE TRADE: every one of 144 cells is negative.** Best = **−0.602¢ ± 0.660** (fade, X=5¢, T=60s,
+minutes 0–6), Bonferroni p=1.000. Toll at that cell = half-spread 0.521¢ + fee 1.521¢ = **2.042¢**
+against gross-at-mid +1.440¢. **The gross does NOT replicate**: pooled over all five series it is
+**+0.299¢ ± 0.383 (t=0.78)**; executable −1.963¢ (BTC −0.62 · ETH −2.67 · SOL −1.99 · XRP −2.19 ·
+DOGE −3.70). The BTC-only +1.44¢ was a one-series draw inside a 96-cell grid.
+**$/day at $1,000 = −$1,522.** Ceiling if the toll were zero: +$3,639/day on BTC15M — but pooled that
+ceiling is +0.30¢, i.e. **$0**. Break-even needs the round trip under 1.44¢; it is 2.04¢.
+**PLACEBO FIRES BOTH DIRECTIONS — this is why the null is trustworthy:** planted λ=1.10 → R=1.1404
+(z=+9.02); λ=0.90 → R=0.8034 (z=−17.86); illegal +2-bar lookahead on the trade pipeline → momentum
+**+9.560¢ (t=14.81)** and **+12.156¢ (t=19.07)**.
+🔧 **Trade prints vs quote mids, same 1,999 markets:** print-path R = 0.860 @1s vs mid-path 0.979 —
+**a 12% swing from the data source alone.** Prints skip untraded stretches here rather than bouncing.
+**The mid is the estimator; the print is not.**
+Artifacts: `~/kalshi_data/hunt/qv_{core,venue,term,trade,prints,live,subminute,pull15m}.py`,
+`qv_venue_ams10.json`, `qv_trade_KXBTC15M.json`, `qv_live_ticks.jsonl`, `qv_crypto15m_summary.json`,
+plus fresh `recal_c/KX{ETH,SOL,XRP,DOGE}15M.jsonl`.
