@@ -655,6 +655,59 @@ venue-wide survey at ~4,000 calls and left cell SEs of **3–9¢**, i.e. able to
 survey managed 1–2 events per econ series.
 **⇒ ALL future calibration work must authenticate. The venue survey should be re-run at full power
 before its "calibrated to ~1¢" verdict is treated as final at the 2¢ scale.**
+✅ **DONE — see the FULL-POWER RE-RUN below. The ~1¢ verdict holds at the 1¢ scale.**
+
+## ☠️ FULL-POWER RE-RUN (2026-08-06 night) — the "3¢ once a day" trade does NOT exist
+Full writeup + artifacts: `work/fullpower-survey-2026-08.md`, `~/kalshi_data/hunt/fp_*.py|json|out`.
+**MDE improved from 3–9¢ to 0.41–2.12¢ per price band** (taker) and **0.18–0.29¢** (maker markout).
+- **TAKER, mid 40–60¢, 7,534 events: gap −0.85 ± 0.69; buy-YES-at-ask −4.53; buy-NO-at-ask −2.82.**
+  Toll = half-spread 1.96 + fee 1.72 = **3.68¢**, so netting +3¢ needs a **+6.68¢** gross gap.
+  **Excluded at 10.9 σ** (8.0 σ at 45–55¢, 15.2 σ at 30–70¢). No longer a power statement.
+- **202-cell scan** (61 families × 2 sides × 9 prices × 3 taus), 250-draw event-sign-flip maxT:
+  **best FWER on any positive cell = 0.960. Nothing survives selection.**
+- 🔑 **MAKER, first survey of that wing. λ IS NEVER THE CONSTRAINT** — 0.69–0.98 fill per 30 min in
+  liquid books; a resting quote trades many times a day. **The edge is.** Mid 30–70, 14,067 events:
+  sell-YES markout **−1.70 ± 0.18**, buy-YES **−2.38 ± 0.21**. Both sides negative ⇒ adverse
+  selection exceeds the half-spread.
+- 🔑 **ADVERSE SELECTION GROWS WITH SPREAD FASTER THAN THE HALF-SPREAD DOES** (markout by spread,
+  mid 30–70): 1–3¢ **−0.80/−1.47** · 3–6¢ **−2.39/−2.47** · 6–10¢ **−3.38/−3.41** · 20–61¢
+  **−9.01/−6.56**, while λ collapses 0.21 → 0.02. **A wide book is a warning, not an invitation.**
+- 🔑 **ARITHMETIC CEILING, assumption-free** (70,985 markets, 27.0M quoted min, **9.94bn contracts**
+  of causal same-minute volume): **84.0% of all traded volume is in a 1¢ book, 93.4% in ≤2¢;
+  volume-weighted mean spread 1.51¢** (minute-weighted 4.60¢ — wide books exist, nothing trades in
+  them). **Only 2.50% of volume is in books ≥6¢**, the minimum that could yield a 3¢ half-spread.
+  ⇒ **In the liquid half of Kalshi the whole maker prize is ≤0.5¢/contract before adverse selection.**
+- **CLOSEST CELLS (do not trade):** KXMLBSPREAD no @30–45¢, T−30m…2h: **+5.91 ± 2.88, t=2.05,
+  FWER 0.960**, 245 events — needs **523 events** (2.1×) for t=3; would be $91/day at $1k ± $44.
+  Same trade at T−0…30m **+5.24 ± 2.86** (674 events needed); KXMLBTOTAL no @30–45 **+5.23 ± 3.93**
+  (801). **All twelve highest-net cells are MLB props and all are the same 30–45¢-NO structure** —
+  one real family mechanism or one shared mis-specification. The corpus is 4-for-4 that held-out
+  families kill these.
+- **ECON is closed BY THE API, not by power.** `/events` lists 61 CPI events back to 2021; markets
+  are returned for the **two most recent only** (26JUN 9, 26MAY 14, all other 59 = **0**), same for
+  KXFED and KXPAYROLLS, verified authenticated on both endpoints. **154 markets / 11 clusters,
+  MDE ≈15¢, permanently.** Retire the "full history is 20–50 events, one gentle pull" note.
+
+## 🔧 GATE 10 — AN ABSENT FIELD MUST FAIL LOUD, NOT FAIL SHUT (2026-08-06, cost: one perfect survivor)
+The strongest cell of the full-power survey — **KXMLBGAME buy-YES-at-ask, 85–95¢, T−30m:
++5.79¢ ± 1.12, t=+5.15, FWER 0.000, 165 events, 6.3% of 91¢ capital** — was *numerically exactly*
+Ryan's claim, and was **100% lookahead**. `anc = sc if (... and m['a'] and sc > m['a'])` — the
+`ig_K` rows carry **no `open_ts`**, so the guard short-circuited, the scheduled-time override never
+fired, and **every anchor silently became `close_ts` = the moment the game ended.** A 90.7¢
+favourite realising **97.6% YES** is the ninth inning, not a mispricing. Repaired, the cell holds
+**zero rows**.
+**It passed Gate 2 (displaced anchor flipped to −8.45), Gate 4 on hash AND chronological halves,
+Gate 7 (shallow +6.56 / deep +5.06), price-band smoothness, and one-obs-per-event (+5.16, t=3.86).**
+No split can see a leak that is present in both halves — same failure mode as the crypto
+early-window pocket. **LAW: guard on a possibly-absent field ⇒ raise, never take the other branch.
+Every panel must print its ANCHOR PROVENANCE and cluster count.** `fp_lib.panel` now tags each row:
+1 = scheduled-time-from-ticker · 2 = close_ts shared by every market in the event (a scheduled
+boundary, outcome-independent) · 0 = close_ts that VARIES inside the event (outcome-dependent,
+dropped from every primary scan).
+🔑 **DESIGN LAW FROM THE SAME PASS: MDE is bought with EVENT CLUSTERS, not rows.** The settled
+catalogue holds **157,195 distinct events** across 1,124,409 markets. A breadth pull (120 markets ×
+2,283 series) covers **≤19,473** of them; **one hash-chosen market per event covers all 157,195 —
+8× the power per API call.** `fp_plan.py` / `fp_pull.py` are the reusable, resumable harness.
 
 ## ECON RELEASES — ☠️ STRUCTURALLY DEAD 2026-08-06. There is no repricing moment.
 **Every scheduled-release series freezes trading BEFORE the print** — not just INFLATION-FLASH:
