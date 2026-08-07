@@ -1120,3 +1120,56 @@ that; 45 days for a third. DO NOT LOOK before ~5 days of capture.**
 CME and on-chain netflow not run — both strictly slower than drivers already measured at ρ≈0.01, and
 on-chain confirmation latency exceeds the entire tradeable window.
 Artifacts: `~/kalshi_data/hunt/mech_*.{py,npy}`, live capture `mech_cap.py` → `mech/`.
+
+## 🔧 RULE-B CEILING: ~$14/DAY AT EXECUTABLE SIZE (2026-08-06 breadth pass). $65/day is NOT reachable.
+**THE $18–19/day WAS QUEUE-BLIND.** `deep_rest.py` fills us whenever a trade prints at or through our
+level, ignoring FIFO position. **The live book says we are behind a median of 175 contracts
+(short-dated) to 250 (all) at the touch** — Q=20 is 10.3% of the level, exactly reproducing the
+earlier "median queue share @20ct = 0.110". Rebuilt queue-aware (`br_rest3.py`, K = contracts ahead;
+K=0 reproduces the old convention exactly):
+| K ahead | fill | markout | t |
+|---|---|---|---|
+| 0 (old convention) | 0.663 | **+0.679** | 3.05 |
+| 20 | 0.605 | +0.475 | 2.03 |
+| 50 | 0.567 | +0.216 | 0.88 |
+| 100 | 0.525 | −0.066 | −0.25 |
+| 200 | 0.422 | **−0.433** | −1.20 |
+| 500 | 0.339 | **−1.114** | −2.63 |
+**Live touch-queue distribution: <20ct 19.4% · 20–50 4.6% · 50–100 4.5% · 100–200 15.3% · 200–500
+16.0% · ≥500 40.3%. Quote everywhere and your average fill sits at K≈200–500 — NEGATIVE.**
+**And you cannot buy priority: the edge is SMALLER THAN ONE TICK** — improving 1¢ costs 1.0¢ against
+a +0.68¢ edge.
+**THE THIN-TAIL THESIS IS REJECTED.** 264 series candled = **91.8% of the eligible settled
+population** (was 80). Tail vs measured, one obs/market: K=0 **+0.478 ± 0.439 (t=1.09)** vs
++0.729 ± 0.256 · K=50 **−0.306** vs +0.322 · K=200 **−1.437** vs −0.330. **The tail is weaker and
+thinner** — fill rate 9 points lower, markout decays ~3× faster with queue. Held-out tail: A +0.366,
+B −0.159 — no signal either way. Base rule DOES survive held-out (three hash seeds at K=0, **all six
+halves positive**); the earlier apparent failure was population-weight variance, not reversal.
+**BREADTH IS REAL BUT SMALLER THAN HOPED:** 8,818 markets qualify NOW across 1,689 series, but
+**median time-to-close is 3,543h (148 days)** — long-dated markets are 89% of the count and yield
+**<0.02¢/contract-day**, i.e. capital dead weight. Real breadth is the **630 short-dated** vs the 61
+the deployed set saw = **10.3×, not 145×**.
+**CAPACITY, 696 qualifying attempts/day venue-wide, 0.310 capital-days each:**
+| Q | queue-blind | at LIVE queue mix | thin-queue only (<20ct) | collateral |
+|---|---|---|---|---|
+| 20 | $49 | **−$22** | $7.6 | $785 |
+| 50 | $90 | −$63 | $13.4 | $1,962 |
+| **100** | $103 | −$146 | **$14.0** | **$3,925** |
+| 200 | $26 | −$347 | −$2.7 | $7,849 |
+**⇒ THE HONEST CEILING IS ~$14/day on ~$3,925, quoting ONLY thin-queue markets.** $65/day exists
+only on the queue-blind convention (Q≈30, ~$6,100) and **is not executable.** Daily sd/mean ≈ 4.0,
+67.5% of days positive, worst day ≈ −13× the daily mean.
+⚠️ **OPEN RECONCILIATION — decisive for whether $14 is really the ceiling.** Our own 709 contracts
+earned **+7.315¢ (t=+7.87)** with λ_NO = 1.023 fills/resting-contract/day — real money, real fills —
+while the queue model says the median market pays ≈0. **Both can only be true if the live seat was
+resting in the thin-queue quarter of the book. PULL THE FILL TIMESTAMPS FOR THOSE 709 CONTRACTS AND
+MEASURE THE TOUCH QUEUE AT EACH PLACEMENT.** If it was thin-queue, the lever is finding more of those
+(~1,700 exist concurrently, but mostly long-dated ⇒ capital-inefficient).
+🔑 **THE FORWARD LEAD: THE BEST SERIES ARE K-INSENSITIVE** — their edge survives 50 contracts of
+queue. KXLOVEISLMENTION +4.54→+4.26 · KXLIUSAELIMINATION +3.58→**+3.67** · KXAAAGASD +3.23→+2.97 ·
+KXITFWMATCH +2.97→+2.79 · KXWCMENTION +1.99→+1.96 · KXMLBHR +2.05→+1.62 · vs KXMLBSPREAD −0.33→−1.18
+· KXGOLDD −4.62→−4.27 · KXMLBTB −21.8. **K-insensitivity is a STRUCTURAL feature and is NOT the same
+as a past-markout filter** (which was already shown to raise ¢/contract and lose dollars). **This is
+the thing to hunt next.**
+Artifacts: `~/kalshi_data/hunt/br_{final,rest3,q,live,pull}.py`, `br_c/` (349MB, 167 new tail series),
+`br_live_ob.jsonl` (8,817 real touch-queue reads), `br_queue_by_series.json`, `br_p3/`.
